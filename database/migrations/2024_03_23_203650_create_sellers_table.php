@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('phone', 20);
             $table->string('address');
             $table->string('image')->nullable();
-            $table->string('payment_method');
-            $table->string('account_number');
+            $table->string('payment_method')->nullable();
+            $table->string('account_number')->nullable();
             $table->tinyInteger('is_active')->default(0);
             $table->timestamps();
         });

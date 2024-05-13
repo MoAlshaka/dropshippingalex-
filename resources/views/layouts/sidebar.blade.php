@@ -192,7 +192,5 @@
                 <div> {{ __('site.Leads') }}</div>
             </a>
         </li>
-
-
     </ul>
 </aside>

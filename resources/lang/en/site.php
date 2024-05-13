@@ -187,6 +187,12 @@ return [
     'AllTransaction' => 'All Transaction',
     'DateTransaction' => 'Date Transaction',
     'Notification' => 'Notification',
+    'Setting' => 'Setting',
+    'Orders' => 'Orders',
+    'Type' => 'Type',
+    'LeadShow' => 'Lead Show',
+    'LeadDetails' => 'Lead Details',
+    'Item' => 'Item',
 
 
 ];

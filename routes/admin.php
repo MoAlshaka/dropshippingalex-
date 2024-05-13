@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\ActiveSellerController;
 use App\Http\Controllers\Admin\AffiliateProductController;
 use App\Http\Controllers\Admin\Auth\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ErrorController;
@@ -78,6 +79,15 @@ Route::group(['middleware' => ['lang']], function () {
         Route::get('leads/edit/{id}', [LeadController::class, 'edit'])->name('admin.leads.edit');
         Route::match(['post', 'put', 'patch'], 'leads/update/{id}', [LeadController::class, 'update'])->name('admin.leads.update');
         Route::post('leads/delete/{id}', [LeadController::class, 'delete'])->name('admin.leads.delete');
+        Route::get('lead/show/{id}', [LeadController::class, 'show'])->name('admin.lead.show');
+        Route::post('lead/search', [LeadController::class, 'search'])->name('admin.leads.search');
+        Route::post('lead/filter', [LeadController::class, 'filter'])->name('admin.leads.filter');
+        // orders
+        Route::resource('orders', OrderController::class);
+
+
+
+
         //logout
         Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout');
 

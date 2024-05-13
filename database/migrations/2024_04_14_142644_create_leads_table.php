@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('customer_country');
             $table->string('item_sku');
             $table->string('warehouse');
+            $table->string('type')->nullable();
             $table->unsignedInteger('quantity');
             $table->decimal('total', 10, 2);
             $table->string('currency');

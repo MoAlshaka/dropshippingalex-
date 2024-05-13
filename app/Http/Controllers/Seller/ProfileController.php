@@ -80,4 +80,20 @@ class ProfileController extends Controller
         ]);
         return redirect()->route('seller.profile')->with('Update', 'Password changed successfully');
     }
+
+    public function payment_details(Request $request, $id)
+    {
+        $request->validate([
+            'payment_method' => 'required|max:50',
+            'account_number' => 'required|max:100',
+        ]);
+        $seller = Seller::findOrFail($id);
+        $seller->update([
+            'payment_method' => $request->payment_method,
+            'account_number' => $request->account_number,
+
+        ]);
+        return redirect()->route('seller.profile')->with(['Update' => 'update Profile successfully']);
+
+    }
 }

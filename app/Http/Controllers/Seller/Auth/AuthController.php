@@ -26,8 +26,6 @@ class AuthController extends Controller
             'phone' => 'required|max:50',
             'image' => 'required|image|mimes:png,jpg,jpeg|max:2048',
             'national_id' => 'required|image|mimes:png,jpg,jpeg|max:2048',
-            'payment_method' => 'required|max:50',
-            'account_number' => 'required|max:100',
         ]);
 
         $image = $request->file('image');
@@ -47,8 +45,6 @@ class AuthController extends Controller
             'address' => $request->address,
             'image' => $image_name,
             'national_id' => $national_id_name,
-            'payment_method' => $request->payment_method,
-            'account_number' => $request->account_number,
         ]);
 
         Auth::login($seller);

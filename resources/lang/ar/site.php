@@ -187,4 +187,9 @@ return [
     'AllTransaction' => 'كل التحويلات',
     'DateTransaction' => 'تاريخ التحويل',
     'Notification' => 'الإشعارات',
+    'Setting' => 'الإعدادات',
+    'Orders' => 'الطلبات',
+    'Type' => 'النوع',
+    'LeadShow' => 'عرض',
+
 ];

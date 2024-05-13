@@ -7,11 +7,12 @@
 
 
 @section('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-        integrity="sha512-c5dyc+3ht10w+7s6OfBxHwZZkm5A+qLmLaB+pa3RFsKcOCme7/uBv2mtUfFjS+2b2q5j//BXJsW0sB2EhfaR6A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+{{--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"--}}
+{{--        integrity="sha512-c5dyc+3ht10w+7s6OfBxHwZZkm5A+qLmLaB+pa3RFsKcOCme7/uBv2mtUfFjS+2b2q5j//BXJsW0sB2EhfaR6A=="--}}
+{{--        crossorigin="anonymous" referrerpolicy="no-referrer" />--}}
 
     <link rel="stylesheet" href="{{ asset('assets/css/product.css') }}" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .accordion-button {
             width: 0% !important;
@@ -25,6 +26,44 @@
             {{ __('site.AffiliateProducts') }}</h4>
 
         <div class="flex flex-col gap-6">
+            @isset($offer)
+            <div class="bg-gray-200">
+                <div
+                    class="flex justify-between items-center p-4 sm:m-6 lg:m-8 bg-white rounded-xl ltr:bg-gradient-to-r ltr:from-purple-700 ltr:to-white-500 rtl:bg-gradient-to-l rtl:from-purple-700 rtl:to-white-500"
+                >
+                    <div>
+                        <!-- offer desc and title -->
+                        <h4 class="text-sm text-gray-200">Active Offers</h4>
+                        <p class="my-2 text-2xl font-bold text-white mt-2">
+                            {{$offer->title}}
+                        </p>
+                        <span class="relative inline-flex mt-4">
+            <button
+
+                class="px-6 py-2 font-semibold rounded-2xl text-white bg-purple-300 bg-opacity-20 hover:bg-opacity-30 hover:bg-purple-500 transition ease-in-out"
+            >
+             <a href="{{route('offers.show',$offer->id)}}" > View the offer</a>
+            </button>
+            <span class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
+              <span
+                  class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"
+              ></span>
+              <span
+                  class="relative inline-flex rounded-full h-3 w-3 bg-sky-500"
+              ></span>
+            </span>
+          </span>
+                    </div>
+                    <div class="w-[200px] h-[110px] hidden md:block">
+                        <img
+                            class="w-full h-full object-cover rounded-xl"
+                            src="{{asset('assets/svg/icons/undraw_discount_d-4-bd.svg')}}"
+                            alt="offer-image"
+                        />
+                    </div>
+                </div>
+            </div>
+            @endisset
             <div class="col-md mb-4 mb-md-2">
                 <div class="accordion mt-3" id="accordionWithIcon">
                     <div class="accordion-item">

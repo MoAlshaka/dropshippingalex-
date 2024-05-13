@@ -211,6 +211,7 @@ return [
         'stock.*'             => 'الدوله',
         'minimum_selling_price' => 'أدنى سعر بيع',
         'country.distinct' => 'حقل البلد يحتوي على قيم مكررة.',
+        'seller_id'             => 'البائع',
 
     ],
 

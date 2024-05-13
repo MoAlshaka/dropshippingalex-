@@ -61,8 +61,12 @@ class SharedProductController extends Controller
                 },
             ],
             'country.*' => 'exists:countries,id',
-            'stock' => 'required|array',
-            'stock.*' => 'integer',
+            'stock' => [
+                'required_if:country,*', // Require 'stock' when 'country' is present
+                'array',
+            ],
+            'stock.*' => 'required|integer|min:0', // Each stock item must be required, an integer, and greater than or equal to 0
+
         ]);
         if ($validator->fails()) {
             $errors = [];

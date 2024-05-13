@@ -67,6 +67,8 @@ Route::group(['middleware' => ['lang']], function () {
             Route::match(['post', 'put', 'patch'], 'profile/update/{id}', [ProfileController::class, 'update_profile'])->name('seller.update.profile');
             Route::get('edit-password', [ProfileController::class, 'edit_password'])->name('seller.edit.password');
             Route::match(['post', 'put', 'patch'], 'update-password/{id}', [ProfileController::class, 'change_password'])->name('seller.change.password');
+            Route::match(['post', 'put', 'patch'], 'payment-details/update/{id}', [ProfileController::class, 'payment_details'])->name('seller.update.payment');
+
             //transaction
             Route::get('transactions', [TransactionController::class, 'index'])->name('seller.transactions.index');
             Route::get('notification/{id}', [TransactionController::class, 'notification'])->name('seller.notification');

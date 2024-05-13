@@ -44,6 +44,7 @@ class AffiliateProductController extends Controller
             'title' => 'required|max:100',
             'sku' => 'required|max:100',
             'brand' => 'required|max:100',
+            'image' => 'required|mimes:png,jpg',
             'description' => 'required',
             'minimum_selling_price' => 'required|numeric',
             'comission' => 'required|numeric',
@@ -60,20 +61,12 @@ class AffiliateProductController extends Controller
                 },
             ],
             'country.*' => 'exists:countries,id',
-            'image' => 'required|mimes:png,jpg',
             'stock' => [
-                function ($attribute, $value, $fail) use ($request) {
-                    // Check if country field is present and not empty
-                    if ($request->has('country') && !empty($request->country)) {
-                        // If country is selected, stock field is required
-                        if (empty($value)) {
-                            $fail('The ' . $attribute . ' field is required when selecting a country.');
-                        }
-                    }
-                },
+                'required_if:country,*', // Require 'stock' when 'country' is present
                 'array',
             ],
-            'stock.*' => 'required|min:0',
+            'stock.*' => 'required|integer|min:0', // Each stock item must be required, an integer, and greater than or equal to 0
+
         ]);
         if ($validator->fails()) {
             $errors = [];

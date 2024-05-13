@@ -19,7 +19,6 @@ let columns = [
     {
         type: "dropdown",
         title: "Warehouse *",
-        source: ["Ali mahdy", "Hossam", "Zayed", "Ahmed", "Mohamed"],
         width: 180,
     },
     {
@@ -43,7 +42,7 @@ let columns = [
         width: 180,
     },
     {
-        type: "text",
+        type: "dropdown",
         title: "Customer Country *",
         width: 180,
     },
@@ -61,13 +60,7 @@ let columns = [
         type: "dropdown",
         title: "Items SKU *",
         width: 180,
-        source: [
-            "JIAW2697145",
-            "UOP84932124",
-            "XWAOL120957",
-            "KLIQ1209687",
-            "UI120952232",
-        ],
+
     },
     {
         type: "numeric",
@@ -81,8 +74,8 @@ let columns = [
     },
     {
         type: "dropdown",
-        title: "Currncy *",
-        source: ["MAD", "USD", "XOF"],
+        title: "Currency *",
+        source: ["AED","BHD","KWD","MAD","OMR","QAR","USD", "XOF"],
         width: 180,
     },
     {
@@ -98,6 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const sku = document.querySelector(`.excel_container`).getAttribute("data-sku");
     console.log(countries);
     columns[3].source = countries.split(",");
+    columns[8].source = countries.split(",");
     columns[11].source = sku.split(",");
 
 });

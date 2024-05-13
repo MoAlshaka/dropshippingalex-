@@ -27,6 +27,11 @@
         @endif
         <div class="card">
             <h5 class="card-header">{{ __('site.Leads') }}</h5>
+            <form action="{{route('admin.leads.search')}}" method="post">
+                @csrf
+                <input type="text" name="ref" placeholder="ref">
+                <button type="submit">search</button>
+            </form>
             <div class="table-responsive text-nowrap">
                 <table class="table">
                     <thead>
@@ -38,8 +43,10 @@
                             <th>{{ __('site.Phone') }}</th>
                             <th>{{ __('site.SKU') }}</th>
                             <th>{{ __('site.Total') }}</th>
+                            <th>{{ __('site.Type') }}</th>
                             <th>{{ __('site.Status') }}</th>
                             <th>{{ __('site.Actions') }}</th>
+
                         </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
@@ -56,10 +63,17 @@
                                     <td>{{ $lead->customer_phone }}</td>
                                     <td>{{ $lead->item_sku }}</td>
                                     <td>{{ $lead->total }}</td>
+                                    <td>{{ $lead->type }}</td>
                                     <td> {{ $lead->status }}</td>
                                     <td style="display: flex;
                                         gap: 6px;">
+                                        <a class="  text-primary hover:bg-success hover:text-white"
+                                           href="{{ route('admin.lead.show', $lead->id) }}">
+                                            <button type="button" class="btn btn-icon btn-info waves-effect waves-light">
+                                                <span class="tf-icons mdi mdi-information-outline"></span>
 
+                                            </button>
+                                        </a>
                                         <a class="  text-primary hover:bg-success hover:text-white"
                                             href="{{ route('admin.leads.edit', $lead->id) }}">
                                             <button type="button"
@@ -89,8 +103,10 @@
                                 </td>
                             </tr>
                         @endif
+
                     </tbody>
                 </table>
+                {{ $leads->links() }}
             </div>
         </div>
     </div>

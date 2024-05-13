@@ -25,6 +25,7 @@ class Lead extends Model
         'total',
         'currency',
         'status',
+        'type',
         'seller_id',
     ];
 

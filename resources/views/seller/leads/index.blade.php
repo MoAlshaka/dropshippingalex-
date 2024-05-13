@@ -72,6 +72,7 @@
                             <th>{{ __('site.Phone') }}</th>
                             <th>{{ __('site.SKU') }}</th>
                             <th>{{ __('site.Total') }}</th>
+                            <th>{{ __('site.Type') }}</th>
                             <th>{{ __('site.Status') }}</th>
                             <th>{{ __('site.Actions') }}</th>
                         </tr>
@@ -90,9 +91,17 @@
                                     <td>{{ $lead->customer_phone }}</td>
                                     <td>{{ $lead->item_sku }}</td>
                                     <td>{{ $lead->total }}</td>
+                                    <td> {{ $lead->type }}</td>
                                     <td> {{ $lead->status }}</td>
                                     <td style="display: flex;
                                         gap: 6px;">
+                                        <a class="  text-primary hover:bg-success hover:text-white"
+                                           href="{{ route('leads.show', $lead->id) }}">
+                                            <button type="button" class="btn btn-icon btn-info waves-effect waves-light">
+                                                <span class="tf-icons mdi mdi-information-outline"></span>
+
+                                            </button>
+                                        </a>
                                         @if ($lead->status == 'pending')
                                             <a class="  text-primary hover:bg-success hover:text-white"
                                                 href="{{ route('leads.edit', $lead->id) }}">
@@ -128,6 +137,7 @@
                         @endif
                     </tbody>
                 </table>
+                {{ $leads->links() }}
             </div>
         </div>
     </div>

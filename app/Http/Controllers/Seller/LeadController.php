@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateLeadRequest;
 use App\Models\AffiliateProduct;
 use App\Models\Country;
 use App\Models\Lead;
+use App\Models\Order;
 use App\Models\SharedProduct;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class LeadController extends Controller
      */
     public function index()
     {
-        $leads = Lead::where('seller_id', auth()->guard('seller')->id())->get();
+        $leads = Lead::where('seller_id', auth()->guard('seller')->id())->orderBy('id', 'DESC')->paginate(PAGINATION_COUNT);
         return view('seller.leads.index', compact('leads'));
     }
 
@@ -125,8 +126,9 @@ class LeadController extends Controller
         }
         if (empty($errors)) {
             foreach ($filteredData as $index => $row) {
-                // If no errors, create Lead record
-                Lead::create([
+                $regular=SharedProduct::where('sku',$row[11]);
+                $commission=AffiliateProduct::where('sku',$row[11]);
+                $lead=Lead::create([
                     'order_date' => $row[0] ?? now()->toDateString(),
                     'store_reference' => $row[1],
                     'store_name' => $row[2] ?? null,
@@ -143,6 +145,11 @@ class LeadController extends Controller
                     'total' => $row[13],
                     'currency' => $row[14],
                     'notes' => $row[15] ?? null,
+                    'type' => isset($regular) ? 'regular' : 'commission',
+                    'seller_id' => auth()->guard('seller')->id(),
+                ]);
+                Order::create([
+                    'lead_id' => $lead->id,
                     'seller_id' => auth()->guard('seller')->id(),
                 ]);
             }
@@ -167,7 +174,11 @@ class LeadController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $lead = Lead::findorfail($id);
+        $sharedproduct=SharedProduct::where('sku',$lead->item_sku)->first();
+        $affiliateproduct=AffiliateProduct::where('sku',$lead->item_sku)->first();
+        $country= Country::where('name' ,$lead->warehouse )->first();
+        return view('seller.leads.show', compact('lead','country' , 'sharedproduct' , 'affiliateproduct'));
     }
 
     /**

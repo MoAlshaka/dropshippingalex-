@@ -43,13 +43,13 @@
 
                             <div class="form-floating form-floating-outline mb-4">
                                 <input type="text" class="form-control" id="basic-default-company"
-                                    placeholder="Store Name" value="{{ $lead->store_reference }}" name="store_name" />
+                                    placeholder="Store Name" value="{{ $lead->store_name }}" name="store_name" />
                                 <label for="basic-default-company"> {{ __('site.StoreName') }}</label>
                             </div>
                             @error('store_name')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
-                            <div class="col-md-6">
+                            <div class="mb-4">
                                 <div class="form-floating form-floating-outline">
                                     <select id="multicol-country" class="select2 form-select" data-allow-clear="true"
                                         name="warehouse">
@@ -130,7 +130,7 @@
                             @error('customer_address')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
-                            <div class="col-md-6">
+                            <div class="mb-4">
                                 <div class="form-floating form-floating-outline">
                                     <select id="multicol-country" class="select2 form-select" data-allow-clear="true"
                                         name="item_sku">

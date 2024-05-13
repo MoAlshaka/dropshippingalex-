@@ -143,35 +143,7 @@
                                 @error('address')
                                     <div class="text-danger mb-3">{{ $message }}</div>
                                 @enderror
-                                <div class="col-md-6">
-                                    <div class="form-floating form-floating-outline">
-                                        <input type="text" class="form-control" id="account_number"
-                                            name="account_number" placeholder="account_number"
-                                            value="{{ Auth::guard('seller')->user()->account_number }}" />
-                                        <label for="account_number"> {{ __('site.AccountNumber') }}</label>
-                                    </div>
-                                </div>
-                                @error('account_number')
-                                    <div class="text-danger mb-3">{{ $message }}</div>
-                                @enderror
-                                <div class="col-md-6">
-                                    <div class="form-floating form-floating-outline">
-                                        <select id="multiStepsState" class="select2 form-select" data-allow-clear="true"
-                                            name="payment_method">
 
-                                            <option value="Visa" @if (Auth::guard('seller')->user()->payment_method == 'Visa') selected @endif>Visa
-                                            </option>
-                                            <option value="InstPay" @if (Auth::guard('seller')->user()->payment_method == 'InstPay') selected @endif>
-                                                InstPay</option>
-                                            <option value="Vodafone Cash"
-                                                @if (Auth::guard('seller')->user()->payment_method == 'Vodafone Cash') selected @endif>Vodafone Cash</option>
-                                        </select>
-                                        <label for="payment_method"> {{ __('site.PaymentMethod') }}</label>
-                                    </div>
-                                </div>
-                                @error('payment_method')
-                                    <div class="text-danger mb-3">{{ $message }}</div>
-                                @enderror
 
                             </div>
                             <div class="mt-4">
@@ -183,12 +155,64 @@
                     </div>
                     <!-- /Account -->
                 </div>
+<!-- payment details -->
+                <div class="card mb-4">
+                    <h4 class="card-header"> {{ __('site.PaymentDetails') }}</h4>
 
+
+                    <div class="card-body pt-2 mt-1">
+                        <form id="PaymentSettings" method="POST"
+                              action="{{ route('seller.update.payment', Auth::guard('seller')->user()->id) }}"
+                              >
+                            @csrf
+                            @method('PUT')
+
+                            <div class="row mt-2 gy-4">
+
+                                <div class="col-md-12">
+                                    <div class="form-floating form-floating-outline">
+                                        <input type="text" class="form-control" id="account_number"
+                                               name="account_number" placeholder="account_number"
+                                               value="{{ Auth::guard('seller')->user()->account_number }}" />
+                                        <label for="account_number"> {{ __('site.AccountNumber') }}</label>
+                                    </div>
+                                </div>
+                                @error('account_number')
+                                <div class="text-danger mb-3">{{ $message }}</div>
+                                @enderror
+                                <div class="col-md-12">
+                                    <div class="form-floating form-floating-outline">
+                                        <select id="multiStepsState" class="select2 form-select" data-allow-clear="true"
+                                                name="payment_method">
+
+                                            <option value="Visa" @if (Auth::guard('seller')->user()->payment_method == 'Visa') selected @endif>Visa
+                                            </option>
+                                            <option value="InstPay" @if (Auth::guard('seller')->user()->payment_method == 'InstPay') selected @endif>
+                                                InstPay</option>
+                                            <option value="Vodafone Cash"
+                                                    @if (Auth::guard('seller')->user()->payment_method == 'Vodafone Cash') selected @endif>Vodafone Cash</option>
+                                        </select>
+                                        <label for="payment_method"> {{ __('site.PaymentMethod') }}</label>
+                                    </div>
+                                </div>
+                                @error('payment_method')
+                                <div class="text-danger mb-3">{{ $message }}</div>
+                                @enderror
+
+                            </div>
+                            <div class="mt-4">
+                                <button type="submit" class="btn btn-primary me-2">
+                                    {{ __('site.SaveChanges') }}</button>
+                                <button type="reset" class="btn btn-outline-secondary">{{ __('site.Cancel') }}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
 
 
-    </div>
+
 @endsection
 
 

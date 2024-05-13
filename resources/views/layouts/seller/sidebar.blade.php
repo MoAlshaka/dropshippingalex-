@@ -130,6 +130,13 @@
             </a>
         </li>
 
+        <li class="menu-item">
+            <a href="{{ route('seller.profile') }}" class="menu-link ">
+                <i class="menu-icon tf-icons mdi mdi-cog-outline"></i>
+                <div> {{ __('site.Setting') }}</div>
+            </a>
+        </li>
+
 
 
     </ul>
