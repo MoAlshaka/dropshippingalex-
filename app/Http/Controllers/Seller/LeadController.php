@@ -20,8 +20,11 @@ class LeadController extends Controller
      */
     public function index()
     {
+        $countries=Country::all();
+        $status = Lead::distinct()->pluck('status');
+        $types = Lead::distinct()->pluck('type');
         $leads = Lead::where('seller_id', auth()->guard('seller')->id())->orderBy('id', 'DESC')->paginate(PAGINATION_COUNT);
-        return view('seller.leads.index', compact('leads'));
+        return view('seller.leads.index', compact('leads','countries','status','types'));
     }
 
     /**
@@ -243,5 +246,44 @@ class LeadController extends Controller
             return redirect()->route('leads.index')->with(['Delete' => 'Lead deleted successfully.']);
         }
         return redirect()->route('leads.index')->with(['Warning' => 'Lead cannot be deleted.']);
+    }
+
+    public function search(Request $request)
+    {
+        $request->validate([
+            'ref' => 'required|max:50'
+        ]);
+        $leads=Lead::where('store_reference',$request->ref)->orderBy('id', 'DESC')->paginate(COUNT);
+        return view('admin.leads.index', compact('leads'));
+    }
+    public function filter(Request $request)
+    {
+
+        $query = Lead::where('seller_id', auth()->guard('seller')->id());
+
+        if ($request->has('order_date') && $request->date != '') {
+            $query->whereBetween('order_date', [now(), $request->date]);
+        }
+
+        if ($request->has('warehouse') && $request->warehouse != '') {
+            $query->whereIn('warehouse',  $request->warehouse );
+        }
+
+        if ($request->has('country') && $request->country != '') {
+            $query->whereIn('customer_country', $request->country);
+        }
+        if ($request->has('status') && $request->status != '') {
+            $query->whereIn('status', $request->status);
+        }
+        if ($request->has('type') && $request->type != '') {
+            $query->whereIn('type', $request->type);
+        }
+
+        $leads = $query->orderBy('id', 'DESC')->paginate(COUNT);// Replace 10 with your desired number of items per page
+        $countries=Country::all();
+        $status = Lead::distinct()->pluck('status');
+        $types = Lead::distinct()->pluck('type');
+        return view('seller.leads.index', compact('leads','countries','status','types'));
+
     }
 }

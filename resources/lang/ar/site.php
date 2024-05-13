@@ -191,5 +191,8 @@ return [
     'Orders' => 'الطلبات',
     'Type' => 'النوع',
     'LeadShow' => 'عرض',
+    'LeadDetails' => 'Lead Details',
+    'Item' => 'Item',
+    'FliterLeads' => 'Fliter Leads',
 
 ];

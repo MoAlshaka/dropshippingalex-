@@ -62,6 +62,8 @@ Route::group(['middleware' => ['lang']], function () {
             Route::get('import-products', [ImportProductController::class, 'imported_products'])->name('seller.products.imported');
             //leads
             Route::resource('leads', LeadController::class);
+            Route::post('lead/search', [LeadController::class, 'search'])->name('seller.leads.search');
+            Route::post('lead/filter', [LeadController::class, 'filter'])->name('seller.leads.filter');
             // profile
             Route::get('profile', [ProfileController::class, 'index'])->name('seller.profile');
             Route::match(['post', 'put', 'patch'], 'profile/update/{id}', [ProfileController::class, 'update_profile'])->name('seller.update.profile');

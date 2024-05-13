@@ -193,6 +193,7 @@ return [
     'LeadShow' => 'Lead Show',
     'LeadDetails' => 'Lead Details',
     'Item' => 'Item',
+    'FliterLeads' => 'Fliter Leads',
 
 
 ];
