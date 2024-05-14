@@ -13,8 +13,11 @@ class LeadController extends Controller
 {
     public function index()
     {
+        $countries=Country::all();
+        $status = Lead::distinct()->pluck('status');
+        $types = Lead::distinct()->pluck('type');
         $leads = Lead::orderBy('id', 'DESC')->paginate(COUNT);
-        return view('admin.leads.index', compact('leads'));
+        return view('admin.leads.index', compact('leads','countries','status','types'));
     }
 
     public function edit($id)
@@ -65,27 +68,41 @@ class LeadController extends Controller
 
         $query = Lead::query();
 
-        if ($request->has('order_date') && $request->date != '') {
-            $query->whereBetween('order_date', [now(), $request->date]);
+        if ($request->has('created_at') && $request->created_at != '') {
+            $dates = explode(' - ', $request->created_at);
+
+            // Ensure both start and end dates are available
+            if (count($dates) === 2) {
+                $start_date = \Carbon\Carbon::createFromFormat('m/d/Y', trim($dates[0]))->format('Y-m-d');
+                $end_date = \Carbon\Carbon::createFromFormat('m/d/Y', trim($dates[1]))->format('Y-m-d');
+
+                // Apply the whereBetween condition on the 'order_date' column
+                $query->whereBetween('order_date', [$start_date, $end_date]);
+            }
         }
 
+
+
         if ($request->has('warehouse') && $request->warehouse != '') {
-            $query->orWhere('warehouse',  $request->warehouse );
+            $query->orWhereIn('warehouse',  $request->warehouse );
         }
 
         if ($request->has('country') && $request->country != '') {
-            $query->orWhere('country', $request->country);
+            $query->orWhereIn('customer_country', $request->country);
         }
         if ($request->has('status') && $request->status != '') {
-            $query->orWhere('status', $request->status);
+            $query->orWhereIn('status', $request->status);
         }
         if ($request->has('type') && $request->type != '') {
-            $query->orWhere('type', $request->type);
+            $query->orWhereIn('type', $request->type);
         }
 
         $leads = $query->orderBy('id', 'DESC')->paginate(COUNT);// Replace 10 with your desired number of items per page
+        $countries=Country::all();
+        $status = Lead::distinct()->pluck('status');
+        $types = Lead::distinct()->pluck('type');
+        return view('admin.leads.index', compact('leads','countries','status','types'));
 
-        return view('admin.leads.index', compact('leads'));
     }
 
 }

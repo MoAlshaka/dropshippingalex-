@@ -144,16 +144,29 @@ class SharedProductController extends Controller
             'title' => 'required|max:100',
             'sku' => 'required|max:100',
             'brand' => 'required|max:100',
+            'image' => 'nullable|mimes:png,jpg',
             'description' => 'required',
             'unit_cost' => 'required|numeric',
             'recommended_price' => 'required|numeric',
             'weight' => 'required|numeric',
             'category_id' => 'required',
-            'country' => 'required|array',
+            'country' => [
+                'required',
+                'array',
+                function ($attribute, $value, $fail) {
+                    // Check for duplicate values in the country array
+                    if (count($value) !== count(array_unique($value))) {
+                        $fail('The ' . $attribute . ' field contains duplicate values.');
+                    }
+                },
+            ],
             'country.*' => 'exists:countries,id',
-            'stock' => 'required|array',
-            'stock.*' => 'required|integer',
-            'image' => 'nullable|mimes:png,jpg',
+            'stock' => [
+                'required_if:country,*', // Require 'stock' when 'country' is present
+                'array',
+            ],
+            'stock.*' => 'required|integer|min:0', // Each stock item must be required, an integer, and greater than or equal to 0
+
         ]);
         if ($validator->fails()) {
             $errors = [];

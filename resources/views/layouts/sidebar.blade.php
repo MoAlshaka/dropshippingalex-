@@ -128,6 +128,24 @@
         </li>
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons mdi mdi-cash"></i>
+                <div> {{ __('site.Payments') }}</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{ route('payments.index') }}" class="menu-link">
+                        <div> {{ __('site.AllPayments') }}</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ route('payments.create') }}" class="menu-link">
+                        <div> {{ __('site.CreatePayments') }}</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons mdi mdi-earth"></i>
                 <div> {{ __('site.Countries') }}</div>
             </a>
@@ -190,6 +208,12 @@
             <a href="{{ route('admin.leads.index') }}" class="menu-link ">
                 <i class="menu-icon tf-icons mdi mdi-view-list-outline"></i>
                 <div> {{ __('site.Leads') }}</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="{{ route('orders.index') }}" class="menu-link ">
+                <i class="menu-icon tf-icons mdi mdi-view-list-outline"></i>
+                <div> {{ __('site.Orders') }}</div>
             </a>
         </li>
     </ul>

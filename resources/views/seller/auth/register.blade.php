@@ -149,8 +149,8 @@
                                     <span class="bs-stepper-label">
                                         <span class="bs-stepper-number">03</span>
                                         <span class="d-flex flex-column gap-1 ms-2">
-                                            <span class="bs-stepper-title"> {{ __('site.Billing') }}</span>
-                                            <span class="bs-stepper-subtitle"> {{ __('site.PaymentDetails') }}</span>
+                                            <span class="bs-stepper-title"> {{ __('site.Personal') }}</span>
+                                            <span class="bs-stepper-subtitle"> {{ __('site.EnterInformation') }}</span>
                                         </span>
                                     </span>
                                 </button>
@@ -310,35 +310,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6">
-                                            <div class="form-floating form-floating-outline">
-                                                <input type="text" id="multiStepsAddress" name="address"
-                                                    class="form-control" placeholder="{{ __('site.Address') }}"
-                                                    value="{{ old('address') }}" />
-                                                <label for="multiStepsAddress"> {{ __('site.Address') }}</label>
-                                            </div>
-                                            @error('address')
-                                                <div
-                                                    class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                                    <div data-field="multiStepsUsername" data-validator="notEmpty">
-                                                        {{ $message }} </div>
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <div class="form-floating form-floating-outline">
-                                                <input type="file" id="image" name="image"
-                                                    class="form-control" placeholder="{{ __('site.Image') }} " />
-                                                <label for="multiStepsFirstName"> {{ __('site.Image') }} </label>
-                                            </div>
-                                            @error('image')
-                                                <div
-                                                    class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                                    <div data-field="multiStepsUsername" data-validator="notEmpty">
-                                                        {{ $message }} </div>
-                                                </div>
-                                            @enderror
-                                        </div>
+
                                         <div class="col-12 d-flex justify-content-between">
                                             <button class="btn btn-secondary btn-prev">
                                                 <i class="mdi mdi-arrow-left me-sm-1 me-0"></i>
@@ -361,59 +333,33 @@
                                     </div>
                                     <!-- Credit Card Details -->
                                     <div class="row g-3">
-                                        <div class="col-sm-12">
+                                        <div class="col-md-12 mb-4" >
                                             <div class="form-floating form-floating-outline">
-                                                <select id="payment_method" class="select2 form-select"
-                                                    data-allow-clear="true" name="payment_method">
-                                                    <option value="">Select</option>
-                                                    <option value="Visa">Visa</option>
-                                                    <option value="InstPay">InstPay</option>
-                                                    <option value="Vodafone Cash">Vodafone Cash</option>
-                                                </select>
-                                                <label for="payment_method"> {{ __('site.PaymentMethod') }}</label>
+                                                <input type="text" id="multiStepsAddress" name="address"
+                                                       class="form-control" placeholder="{{ __('site.Address') }}"
+                                                       value="{{ old('address') }}" />
+                                                <label for="multiStepsAddress"> {{ __('site.Address') }}</label>
                                             </div>
-                                            @error('payment_method')
-                                                <div
-                                                    class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                                    <div data-field="multiStepsUsername" data-validator="notEmpty">
-                                                        {{ $message }} </div>
-                                                </div>
+                                            @error('address')
+                                            <div
+                                                class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                                                <div data-field="multiStepsUsername" data-validator="notEmpty">
+                                                    {{ $message }} </div>
+                                            </div>
                                             @enderror
                                         </div>
-                                        {{-- <div class="col-md-12">
-                                            <div class="input-group input-group-merge">
-                                                <div class="form-floating form-floating-outline">
-                                                    <input id="AccountNumber" class="form-control multi-steps-card"
-                                                        name="account_number" type="text"
-                                                        placeholder="1356 3215 6548 7898"
-                                                        aria-describedby="Account Number"
-                                                        value="{{ old('account_number') }}" />
-                                                    <label for="AccountNumber">
-                                                        {{ __('site.AccountNumber') }}</label>
-                                                </div>
-                                            </div>
-                                            @error('account_number')
-                                                <div
-                                                    class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                                    <div data-field="multiStepsUsername" data-validator="notEmpty">
-                                                        {{ $message }} </div>
-                                                </div>
-                                            @enderror
-                                        </div> --}}
                                         <div class="col-sm-12">
                                             <div class="form-floating form-floating-outline">
-                                                <input type="text" name="account_number" id="account_number"
-                                                    class="form-control" placeholder="{{ __('site.AccountNumber') }}"
-                                                    aria-label="account_number"
-                                                    value="{{ old('account_number') }}" />
-                                                <label for="account_number"> {{ __('site.AccountNumber') }}</label>
+                                                <input type="file" id="image" name="image"
+                                                       class="form-control" placeholder="{{ __('site.Image') }} " />
+                                                <label for="multiStepsFirstName"> {{ __('site.Image') }} </label>
                                             </div>
-                                            @error('account_number')
-                                                <div
-                                                    class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
-                                                    <div data-field="multiStepsUsername" data-validator="notEmpty">
-                                                        {{ $message }} </div>
-                                                </div>
+                                            @error('image')
+                                            <div
+                                                class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+                                                <div data-field="multiStepsUsername" data-validator="notEmpty">
+                                                    {{ $message }} </div>
+                                            </div>
                                             @enderror
                                         </div>
                                         <div class="col-12 d-flex justify-content-between">

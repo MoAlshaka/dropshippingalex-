@@ -158,33 +158,60 @@
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div id="stock_container" data-country="{{ $countries }}">
-                                <div class="row mb-4 mt-4">
-                                    <div class="col">
-                                        <div class="form-floating form-floating-outline">
-                                            <select class="form-select form-select-lg country" name="country[]">
-                                                <option value=""> {{ __('site.SelectCountry') }}</option>
-                                                @foreach ($countries as $country)
-                                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            <label for="country"> {{ __('site.Country') }}</label>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-floating form-floating-outline mb-4">
-                                            <input type="number" class="form-control" id="Stock"
-                                                placeholder="Stock" name="stock[]"
-                                                aria-label="Product discounted price" />
-                                            <label for="Stock"> {{ __('site.Stock') }}</label>
-                                        </div>
+                            <!-- Form Repeater -->
+                            <div class="col-12">
+                                <div class="card">
+                                    <h5 class="card-header">{{ __('site.Country') }}</h5>
+                                    <div class="card-body">
+                                        <form class="form-repeater">
+                                            <div data-repeater-list="group-a">
+                                                <div data-repeater-item>
+                                                    <div class="row">
+                                                        <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
+                                                            <div class="form-floating form-floating-outline">
+                                                                <select id="form-repeater-1-4" class="form-select country" name="country[]">
+                                                                    <option value="">{{ __('site.SelectCountry') }}</option>--}}
+                                                                    @foreach ($countries as $country)
+                                                                        <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                                <label for="form-repeater-1-4">{{ __('site.Country') }}</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
+                                                            <div class="form-floating form-floating-outline">
+                                                                <input
+                                                                    type="number"
+                                                                    name="stock[]"
 
+                                                                    class="form-control stock"
+                                                                    placeholder="{{ __('site.Stock') }}" />
+                                                                <label for="Stock">{{ __('site.Stock') }}</label>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="mb-3 col-lg-12 col-xl-2 col-12 d-flex align-items-center mb-0">
+                                                            <button class="btn btn-outline-danger" data-repeater-delete>
+                                                                <i class="mdi mdi-close me-1"></i>
+                                                                <span class="align-middle">Delete</span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <hr />
+                                                </div>
+                                            </div>
+                                            <div class="mb-0">
+                                                <button class="btn btn-primary" data-repeater-create>
+                                                    <i class="mdi mdi-plus me-1"></i>
+                                                    <span class="align-middle">Add</span>
+                                                </button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
-
                             </div>
-                            <button id="addstock" class="btn rounded-pill btn-outline-primary waves-effect">
-                                {{ __('site.Add') }}</button>
+                            <!-- /Form Repeater -->
                         </div>
                     </div>
                     <!-- /Product Information -->

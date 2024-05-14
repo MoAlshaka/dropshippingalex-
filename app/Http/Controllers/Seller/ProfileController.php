@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Models\Payment;
 use App\Models\Seller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -12,8 +13,9 @@ class ProfileController extends Controller
     public function index()
     {
         $seller = auth()->guard('seller')->user();
+        $payments = Payment::all();
 
-        return view('seller.auth.profile', compact('seller'));
+        return view('seller.auth.profile', compact('seller','payments'));
     }
     public function update_profile(Request $request, $id)
     {

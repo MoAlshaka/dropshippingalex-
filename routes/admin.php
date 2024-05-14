@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\ActiveSellerController;
 use App\Http\Controllers\Admin\AffiliateProductController;
 use App\Http\Controllers\Admin\Auth\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -41,6 +42,8 @@ Route::group(['middleware' => ['lang']], function () {
         Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
         //Categories
         Route::resource('categories', CategoryController::class);
+        //payment_methods
+        Route::resource('payments', PaymentController::class);
         //Countries
         Route::resource('countries', CountryController::class);
         //offers
@@ -84,6 +87,8 @@ Route::group(['middleware' => ['lang']], function () {
         Route::post('lead/filter', [LeadController::class, 'filter'])->name('admin.leads.filter');
         // orders
         Route::resource('orders', OrderController::class);
+        Route::post('orders/search', [OrderController::class, 'search'])->name('admin.orders.search');
+        Route::post('orders/filter', [OrderController::class, 'filter'])->name('admin.orders.filter');
 
 
 

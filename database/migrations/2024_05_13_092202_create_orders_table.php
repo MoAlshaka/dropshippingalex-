@@ -14,8 +14,11 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('shipment_status')->default('pending');
-            $table->foreignId('lead_id')->constrained('leads');
-            $table->foreignId('seller_id')->constrained('sellers');
+            $table->string('payment_status')->nullable();
+            $table->string('payment_type')->nullable();
+            $table->integer('calls')->nullable();
+            $table->foreignId('lead_id')->constrained('leads')->onDelete('cascade')->onUpdate('cascade');;
+            $table->foreignId('seller_id')->constrained('sellers')->onDelete('cascade')->onUpdate('cascade');;
             $table->timestamps();
         });
     }

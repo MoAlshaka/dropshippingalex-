@@ -7,7 +7,7 @@ let columns = [
         width: 180,
     },
     {
-        type: "text",
+        type: "dropdown",
         title: "Store Refence *",
         width: 180,
     },
@@ -89,7 +89,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const countries = document.querySelector(`.excel_container`).getAttribute("data-country");
     const sku = document.querySelector(`.excel_container`).getAttribute("data-sku");
+    const ref = document.querySelector(`.excel_container`).getAttribute("data-ref");
     console.log(countries);
+    columns[1].source = ref.split(",");
     columns[3].source = countries.split(",");
     columns[8].source = countries.split(",");
     columns[11].source = sku.split(",");

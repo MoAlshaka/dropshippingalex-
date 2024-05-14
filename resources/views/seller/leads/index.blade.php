@@ -36,11 +36,13 @@
     <link rel="stylesheet" href="{{asset('assets/vendor/libs/select2/select2.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}"/>
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}"/>
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/typeahead-js/typeahead.css')}}" />
     <link rel="stylesheet" href="{{asset('assets/vendor/libs/tagify/tagify.css')}}" />
     <link rel="stylesheet" href="{{asset('assets/vendor/libs/bootstrap-select/bootstrap-select.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/typeahead-js/typeahead.css')}}" />
-
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/flatpickr/flatpickr.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/jquery-timepicker/jquery-timepicker.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/pickr/pickr-themes.css')}}" />
     <!-- Page CSS -->
 
     <!-- Helpers -->
@@ -76,7 +78,12 @@
                         <form action="{{route('seller.leads.filter')}}" method="post">
                             @csrf
                             <div class="mb-3">
-
+                                <div class="mb-4">
+                                    <div class="form-floating form-floating-outline">
+                                        <input type="text" id="bs-rangepicker-range" class="form-control" name="created_at">
+                                        <label for="bs-rangepicker-range">{{__('site.CreatedAt')}}</label>
+                                    </div>
+                                </div>
                                 <div class=" mb-4">
                                     <div class="form-floating form-floating-outline">
                                         <select
@@ -171,6 +178,11 @@
         <div class="card">
             <div class="row">
                 <h5 class="card-header col-10"> {{ __('site.Leads') }}</h5>
+                <form action="{{route('seller.leads.search')}}" method="post">
+                    @csrf
+                    <input type="text" name="ref" placeholder="ref">
+                    <button type="submit">search</button>
+                </form>
                 <div class="col-2 mt-3">
                     <a href="{{ route('leads.create') }}" class="btn rounded btn-success waves-effect waves-light">
                         {{ __('site.Add') }}</a>
@@ -278,12 +290,18 @@
     <script src="{{asset('assets/vendor/libs/typeahead-js/typeahead.js')}}"></script>
     <script src="{{asset('assets/vendor/libs/bloodhound/bloodhound.js')}}"></script>
 
+    <script src="{{asset('assets/vendor/libs/moment/moment.js')}}"></script>
+    <script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
+    <script src="{{asset('assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js')}}"></script>
+    <script src="{{asset('assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js')}}"></script>
+    <script src="{{asset('assets/vendor/libs/jquery-timepicker/jquery-timepicker.js')}}"></script>
+    <script src="{{asset('assets/vendor/libs/pickr/pickr.js')}}"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
 
     <!-- Main JS -->
     <script src="{{asset('assets/js/main.js')}}"></script>
-    {{--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>--}}
     <script src="{{asset('assets/js/forms-selects.js')}}"></script>
+    <script src="{{asset('assets/js/forms-pickers.js')}}"></script>
 @endsection

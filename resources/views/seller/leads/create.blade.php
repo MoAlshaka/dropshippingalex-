@@ -31,7 +31,7 @@
         <h4 class="py-3 mb-4"><span class="text-muted fw-light"> {{ __('site.Dashboard') }} /</span>
             {{ __('site.CreateLeads') }}</h4>
         <div class="card">
-            <div class="excel_container" data-country="{{ $countries }}" data-sku="{{ $sku }}">
+            <div class="excel_container" data-country="{{ $countries }}" data-sku="{{ $sku }}" data-ref="{{auth()->guard('seller')->user()->id + 1000}}">
                 <div id="spreadsheet"></div>
             </div>
             @csrf

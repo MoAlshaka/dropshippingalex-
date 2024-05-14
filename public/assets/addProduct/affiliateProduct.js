@@ -20,7 +20,7 @@ document.querySelector('[type="submit"]').addEventListener('click', (event) => {
     formData.append('category_id', document.querySelector('#category-org').selectedOptions[0].value);
 
 
-    document.querySelectorAll('#Stock').forEach(element => {
+    document.querySelectorAll('.stock').forEach(element => {
         formData.append('stock[]', Number(element.value));
         return
     });

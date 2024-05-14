@@ -194,6 +194,19 @@ return [
     'LeadDetails' => 'Lead Details',
     'Item' => 'Item',
     'FliterLeads' => 'Fliter Leads',
+    'Payments' => 'Payments',
+    'Payment' => 'Payment',
+    'AllPayments' => 'All Payments',
+    'CreatePayments' => 'Create Payments',
+    'EditPayment' => 'Edit Payment',
+    'FliterOrders' => 'Fliter Orders',
+    'ShippingDetails' => 'Shipping Details',
+    'ShipmentStatus' => 'Shipment Status',
+    'PaymentType' => 'Payment Type',
+    'PaymentStatus' => 'Payment Status',
+    'EditOrderStatus' => 'Edit Order Status',
+    'Calls' => 'Calls',
+
 
 
 ];
