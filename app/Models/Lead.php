@@ -33,4 +33,8 @@ class Lead extends Model
     {
         return $this->belongsTo(Seller::class);
     }
+
+    public function order(){
+        return $this->hasOne(Order::class);
+    }
 }

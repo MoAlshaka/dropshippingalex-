@@ -155,6 +155,44 @@
                                         <label for="type">{{__('site.Type')}}</label>
                                     </div>
                                 </div>
+                                <div class=" mb-4">
+                                    <div class="form-floating form-floating-outline">
+                                        <select
+                                            name="shipment_status[]"
+                                            id="type"
+                                            class="selectpicker w-100"
+                                            data-style="btn-default"
+                                            multiple
+                                            data-actions-box="true">
+                                            @isset($shipment_status)
+                                                @foreach($shipment_status as $info )
+                                                    <option value="{{$info}}">{{$info}}</option>
+                                                @endforeach
+                                            @endisset
+                                        </select>
+                                        <label for="type">{{__('site.ShipmentStatus')}}</label>
+                                    </div>
+                                </div>
+                                <div class=" mb-4">
+                                    <div class="form-floating form-floating-outline">
+                                        <select
+                                            name="payment_status[]"
+                                            id="type"
+                                            class="selectpicker w-100"
+                                            data-style="btn-default"
+                                            multiple
+                                            data-actions-box="true">
+                                            @isset($payment_status)
+                                                @foreach($payment_status as $info )
+                                                    <option value="{{$info}}">{{$info}}</option>
+                                                @endforeach
+                                            @endisset
+                                        </select>
+                                        <label for="type">{{__('site.PaymentStatus')}}</label>
+                                    </div>
+                                </div>
+
+
                             </div>
                             <button type="submit" class="btn btn-primary waves-effect waves-light">filter</button>
                             <button type="reset" class="btn btn-outline-danger waves-effect">reset</button>
@@ -178,7 +216,7 @@
         <div class="card">
             <div class="row">
                 <h5 class="card-header col-10"> {{ __('site.Orders') }}</h5>
-                <form action="{{route('admin.leads.search')}}" method="post">
+                <form action="{{route('admin.orders.search')}}" method="post">
                     @csrf
                     <input type="text" name="ref" placeholder="ref">
                     <button type="submit">search</button>

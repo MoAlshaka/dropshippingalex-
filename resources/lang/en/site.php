@@ -189,6 +189,7 @@ return [
     'Notification' => 'Notification',
     'Setting' => 'Setting',
     'Orders' => 'Orders',
+    'Order' => 'Order',
     'Type' => 'Type',
     'LeadShow' => 'Lead Show',
     'LeadDetails' => 'Lead Details',
@@ -206,6 +207,7 @@ return [
     'PaymentStatus' => 'Payment Status',
     'EditOrderStatus' => 'Edit Order Status',
     'Calls' => 'Calls',
+    'OrderDetails' => 'Order Details',
 
 
 

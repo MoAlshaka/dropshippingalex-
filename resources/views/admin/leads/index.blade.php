@@ -200,6 +200,7 @@
                         <th>{{ __('site.SKU') }}</th>
                         <th>{{ __('site.Total') }}</th>
                         <th>{{ __('site.Type') }}</th>
+                        <th>{{ __('site.Calls') }}</th>
                         <th>{{ __('site.Status') }}</th>
                         <th>{{ __('site.Actions') }}</th>
                     </tr>
@@ -219,6 +220,7 @@
                                 <td>{{ $lead->item_sku }}</td>
                                 <td>{{ $lead->total }}</td>
                                 <td> {{ $lead->type }}</td>
+                                <td> {{ $lead->order->calls ?? 0 }}</td>
                                 <td> {{ $lead->status }}</td>
                                 <td style="display: flex;
                                         gap: 6px;">

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AffiliateProduct;
 use App\Models\Country;
 use App\Models\Lead;
 use App\Models\Order;
+use App\Models\SharedProduct;
 use App\Models\Shippingdetail;
 use Illuminate\Http\Request;
 
@@ -17,7 +19,13 @@ class OrderController extends Controller
     public function index()
     {
         $orders=Order::orderBy('id', 'DESC')->paginate(COUNT);
-        return view('admin.orders.index', compact('orders'));
+        $countries=Country::all();
+        $status = Lead::distinct()->pluck('status');
+        $types = Lead::distinct()->pluck('type');
+        $shipment_status = Order::distinct()->pluck('shipment_status');
+        $payment_status = Order::distinct()->pluck('payment_status');
+        return view('admin.orders.index', compact('orders','countries','status','types','shipment_status','payment_status'));
+
 
     }
 
@@ -43,7 +51,15 @@ class OrderController extends Controller
     public function show(string $id)
     {
         $order=Order::findorfail($id);
-        return view('admin.orders.show',compact('order'));
+        $country= Country::where('name' ,$order->lead->warehouse )->first();
+        $sharedproduct=SharedProduct::where('sku',$order->lead->item_sku)->first();
+        $affiliateproduct=AffiliateProduct::where('sku',$order->lead->item_sku)->first();
+        if(isset($sharedproduct)){
+            $product=$sharedproduct;
+        }else{
+            $product=$affiliateproduct;
+        }
+        return view('admin.orders.show',compact('order','product','country'));
     }
 
     /**
@@ -102,7 +118,8 @@ class OrderController extends Controller
         $request->validate([
             'ref' => 'required|max:50'
         ]);
-        $orders=Order::where('store_reference',$request->ref)->orderBy('id', 'DESC')->paginate(COUNT);
+        $leads=Lead::where('store_reference',$request->ref)->pluck('id');
+        $orders=Order::whereIn('lead_id',$leads)->orderBy('id', 'DESC')->paginate(COUNT);
         return view('admin.orders.index', compact('orders'));
     }
     public function filter(Request $request)
@@ -117,35 +134,45 @@ class OrderController extends Controller
             if (count($dates) === 2) {
                 $start_date = \Carbon\Carbon::createFromFormat('m/d/Y', trim($dates[0]))->format('Y-m-d');
                 $end_date = \Carbon\Carbon::createFromFormat('m/d/Y', trim($dates[1]))->format('Y-m-d');
-
+                $leads=Lead::whereBetween('order_date', [$start_date, $end_date])->pluck('id');
                 // Apply the whereBetween condition on the 'order_date' column
-                $query->whereBetween('order_date', [$start_date, $end_date]);
+                $query->orWhereIn('lead_id',  $leads );
             }
         }
 
 
 
         if ($request->has('warehouse') && $request->warehouse != '') {
-            $query->orWhereIn('warehouse',  $request->warehouse );
+            $leads=Lead::whereIn('warehouse',$request->warehouse)->pluck('id');
+            $query->orWhereIn('lead_id',  $leads );
         }
 
         if ($request->has('country') && $request->country != '') {
-            $query->orWhereIn('customer_country', $request->country);
+            $leads=Lead::whereIn('customer_country',$request->country)->pluck('id');
+            $query->orWhereIn('lead_id', $leads);
         }
         if ($request->has('status') && $request->status != '') {
-            $query->orWhereIn('status', $request->status);
+            $leads=Lead::whereIn('status',$request->status)->pluck('id');
+            $query->orWhereIn('lead_id', $leads);
         }
         if ($request->has('type') && $request->type != '') {
-            $query->orWhereIn('type', $request->type);
+            $leads=Lead::whereIn('type',$request->type)->pluck('id');
+            $query->orWhereIn('lead_id', $leads);
+        }
+        if ($request->has('shipment_status') && $request->shipment_status != '') {
+            $query->orWhereIn('shipment_status', $request->type);
+        }
+        if ($request->has('payment_status') && $request->payment_status != '') {
+            $query->orWhereIn('payment_status', $request->payment_status);
         }
 
-        $leads = $query->orderBy('id', 'DESC')->paginate(COUNT);// Replace 10 with your desired number of items per page
+        $orders = $query->orderBy('id', 'DESC')->paginate(COUNT);// Replace 10 with your desired number of items per page
         $countries=Country::all();
         $status = Lead::distinct()->pluck('status');
         $types = Lead::distinct()->pluck('type');
-        $shippment_status = Order::distinct()->pluck('shippment_status');
+        $shipment_status = Order::distinct()->pluck('shipment_status');
         $payment_status = Order::distinct()->pluck('payment_status');
-        return view('admin.leads.index', compact('leads','countries','status','types','shippment_status','payment_status'));
+        return view('admin.orders.index', compact('orders','countries','status','types','shipment_status','payment_status'));
 
     }
 }

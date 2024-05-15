@@ -148,7 +148,7 @@ class LeadController extends Controller
                     'total' => $row[13],
                     'currency' => $row[14],
                     'notes' => $row[15] ?? null,
-                    'type' => isset($regular) ? 'regular' : 'commission',
+                    'type' => ($commission) ? 'commission' : 'regular',
                     'seller_id' => auth()->guard('seller')->id(),
                 ]);
                 Order::create([

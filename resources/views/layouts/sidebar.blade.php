@@ -212,7 +212,7 @@
         </li>
         <li class="menu-item">
             <a href="{{ route('orders.index') }}" class="menu-link ">
-                <i class="menu-icon tf-icons mdi mdi-view-list-outline"></i>
+                <i class="menu-icon tf-icons mdi mdi-text-box-multiple-outline"></i>
                 <div> {{ __('site.Orders') }}</div>
             </a>
         </li>
