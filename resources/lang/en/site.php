@@ -210,6 +210,12 @@ return [
     'OrderDetails' => 'Order Details',
     'Report' => 'Report',
     'Analytics' => 'Analytics',
+    'NotAvailable' => 'Not available',
+    'OutForDelivery' => 'Out for delivery',
+    'Returned' => 'Returned',
+    'Unpaid' => 'Unpaid',
+    'Paid' => 'Paid',
+    'CashOnDelivery' => 'Cash on delivery',
 
 
 

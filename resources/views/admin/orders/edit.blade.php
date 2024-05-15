@@ -59,12 +59,15 @@
                                             <select id="shipment_status" class="select2 form-select form-select-lg"
                                                     data-allow-clear="true" name="shipment_status">
 
-                                                <option value="{{ $order->shipment_status }}" selected>
-                                                    {{ $order->shipment_status }}</option>
-                                                <option value="pending">{{ __('site.Pending') }}</option>
-                                                <option value="approved">{{ __('site.Approved') }}</option>
-                                                <option value="shipping">{{ __('site.Shipping') }}</option>
-                                                <option value="delivered">{{ __('site.Delivered') }}</option>
+{{--                                                <option value="{{ $order->shipment_status }}" selected>--}}
+{{--                                                    {{ $order->shipment_status }}</option>--}}
+                                                <option value="pending" @if($order->shipment_status === 'pending') selected @endif>{{ __('site.Pending') }}</option>
+                                                <option value="approved" @if($order->shipment_status === 'approved') selected @endif>{{ __('site.Approved') }}</option>
+                                                <option value="out_for_delivery" @if($order->shipment_status === 'out_for_delivery') selected @endif>{{ __('site.OutForDelivery') }}</option>
+                                                <option value="shipping" @if($order->shipment_status === 'shipping') selected @endif>{{ __('site.Shipping') }}</option>
+                                                <option value="delivered" @if($order->shipment_status === 'delivered') selected @endif>{{ __('site.Delivered') }}</option>
+                                                <option value="returned" @if($order->shipment_status === 'returned') selected @endif>{{ __('site.Returned') }}</option>
+                                                <option value="not_available" @if($order->shipment_status === 'not_available') selected @endif>{{ __('site.NotAvailable') }}</option>
 
                                             </select>
                                             <label for="shipment_status">{{ __('site.ShipmentStatus') }}</label>
@@ -77,12 +80,9 @@
                                             <select id="payment_type" class="select2 form-select form-select-lg"
                                                     data-allow-clear="true" name="payment_type">
 
-                                                <option value="{{ $order->payment_type }}" selected>
-                                                    {{ $order->payment_type }}</option>
-                                                <option value="pending">{{ __('site.Pending') }}</option>
-                                                <option value="approved">{{ __('site.Approved') }}</option>
-                                                <option value="shipping">{{ __('site.Shipping') }}</option>
-                                                <option value="delivered">{{ __('site.Delivered') }}</option>
+                                                <option value="pending" @if($order->payment_type === 'pending') selected @endif>{{ __('site.Pending') }}</option>
+                                                <option value="unpaid" @if($order->payment_type === 'unpaid') selected @endif>{{ __('site.Unpaid') }}</option>
+                                                <option value="Paid" @if($order->payment_type === 'Paid') selected @endif>{{ __('site.Paid') }}</option>
 
                                             </select>
                                             <label for="payment_type">{{ __('site.PaymentType') }}</label>
@@ -92,38 +92,19 @@
                                         <div class="form-floating form-floating-outline">
                                             <select id="payment_status" class="select2 form-select form-select-lg"
                                                     data-allow-clear="true" name="payment_status">
+                                                <option value="pending" @if($order->payment_status === 'pending') selected @endif>{{ __('site.Pending') }}</option>
+                                                <option value="cash_on_delivery" @if($order->payment_status === 'cash_on_delivery') selected @endif>{{ __('site.CashOnDelivery') }}</option>
 
-                                                <option value="{{ $order->payment_status }}" selected>
-                                                    {{ $order->payment_status }}</option>
-                                                <option value="pending">{{ __('site.Pending') }}</option>
-                                                <option value="approved">{{ __('site.Approved') }}</option>
-                                                <option value="shipping">{{ __('site.Shipping') }}</option>
-                                                <option value="delivered">{{ __('site.Delivered') }}</option>
 
                                             </select>
                                             <label for="payment_status">{{ __('site.PaymentStatus') }}</label>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-4">
-                                        <div class="form-floating form-floating-outline">
-                                            <select id="shipping_details" class="select2 form-select form-select-lg"
-                                                    data-allow-clear="true" name="shipping_details">
 
-                                                <option value="{{ $order->shipping_details }}" selected>
-                                                    {{ $order->shipping_details }}</option>
-                                                <option value="pending">{{ __('site.Pending') }}</option>
-                                                <option value="approved">{{ __('site.Approved') }}</option>
-                                                <option value="shipping">{{ __('site.Shipping') }}</option>
-                                                <option value="delivered">{{ __('site.Delivered') }}</option>
-
-                                            </select>
-                                            <label for="shipping_details">{{ __('site.ShippingDetails') }}</label>
-                                        </div>
-                                    </div>
                                     <div>
                                         <div class="col-md-6 mb-4">
                                             <div class="form-floating form-floating-outline">
-                                                <input class="form-control" type="number" name="calls" id="calls">
+                                                <input class="form-control" type="number" name="calls" id="calls" value="{{$order->calls}}">
                                                 <label for="calls">{{ __('site.Calls') }}</label>
                                             </div>
                                         </div>

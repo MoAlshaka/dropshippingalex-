@@ -76,12 +76,7 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'shipping_details' => 'required',
-            'shipment_status' => 'required',
-            'payment_status' => 'required',
-            'payment_type' => 'required'
-        ]);
+
 
         $order=Order::findorfail($id);
 
@@ -92,11 +87,6 @@ class OrderController extends Controller
             'calls' => $request->calls,
         ]);
 
-        Shippingdetail::create([
-            'details' => $request->shipping_details,
-
-            'order_id' => $order->id,
-        ]);
         return redirect()->route('orders.index')->with(['Update'=>'Update Successfully']);
     }
 

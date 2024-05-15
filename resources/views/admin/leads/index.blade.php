@@ -175,25 +175,31 @@
         @if (session()->has('Warning'))
             <div class="alert alert-warning" role="alert">{{ session()->get('Warning') }}</div>
         @endif
-        <div class="card">
+        <div class="d-flex flex-row-reverse mb-4">
+            <button class="btn rounded btn-success  col-2">
+                <a href="{{ route('leads.create') }}" class="text-white" >
+                    {{ __('site.Add') }}</a>
+            </button>
+        </div>
+        <div class="card p-4">
             <div class="row">
-                <h5 class="card-header col-10"> {{ __('site.Leads') }}</h5>
+                <h5 class="card-header col-7"> {{ __('site.Leads') }}</h5>
+                <div class="col-5">
                 <form action="{{route('admin.leads.search')}}" method="post">
                     @csrf
 
-                    <div class="form-floating form-floating-outline col-3">
+                    <div class="form-floating form-floating-outline  d-flex ms-4 mb-4">
                         <input type="text" id="ref" name="ref"
                                class="form-control" placeholder="{{ __('site.REF') }}"
                         />
                         <label for="ref"> {{ __('site.REF') }}</label>
+                        <button type="submit" class="btn btn-primary btn-next btn-submit ms-2">
+                            {{ __('site.Search') }}</button>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-next btn-submit">
-                        {{ __('site.Search') }}</button>
+
                 </form>
-                <div class="col-2 mt-3">
-                    <a href="{{ route('leads.create') }}" class="btn rounded btn-success waves-effect waves-light">
-                        {{ __('site.Add') }}</a>
                 </div>
+
             </div>
             <div class="table-responsive text-nowrap">
                 <table class="table">
