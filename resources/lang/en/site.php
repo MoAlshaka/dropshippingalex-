@@ -208,6 +208,8 @@ return [
     'EditOrderStatus' => 'Edit Order Status',
     'Calls' => 'Calls',
     'OrderDetails' => 'Order Details',
+    'Report' => 'Report',
+    'Analytics' => 'Analytics',
 
 
 

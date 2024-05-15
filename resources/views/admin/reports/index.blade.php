@@ -1,26 +1,28 @@
-@extends('layouts.seller.master')
+@extends('layouts.master')
 
 
 @section('title')
+    {{ __('site.Report') }}
 @endsection
 
 
 @section('css')
+
 @endsection
+
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Logistics /</span> Dashboard</h4>
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">{{ __('site.Dashboard') }} /</span>  {{ __('site.Report') }}
+        </h4>
     </div>
-    <!-- / Content -->
 @endsection
+
 
 
 
 @section('js')
-    <!-- Core JS -->
-     <!-- build:js assets/vendor/js/core.js -->
-
+    <!-- build:js assets/vendor/js/core.js -->
     <script src="{{ asset('assets/vendor/libs/jquery/jquery.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/popper/popper.js') }}"></script>
     <script src="{{ asset('assets/vendor/js/bootstrap.js') }}"></script>

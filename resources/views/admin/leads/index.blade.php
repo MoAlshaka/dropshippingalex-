@@ -180,8 +180,15 @@
                 <h5 class="card-header col-10"> {{ __('site.Leads') }}</h5>
                 <form action="{{route('admin.leads.search')}}" method="post">
                     @csrf
-                    <input type="text" name="ref" placeholder="ref">
-                    <button type="submit">search</button>
+
+                    <div class="form-floating form-floating-outline col-3">
+                        <input type="text" id="ref" name="ref"
+                               class="form-control" placeholder="{{ __('site.REF') }}"
+                        />
+                        <label for="ref"> {{ __('site.REF') }}</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-next btn-submit">
+                        {{ __('site.Search') }}</button>
                 </form>
                 <div class="col-2 mt-3">
                     <a href="{{ route('leads.create') }}" class="btn rounded btn-success waves-effect waves-light">

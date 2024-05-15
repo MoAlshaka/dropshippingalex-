@@ -216,5 +216,18 @@
                 <div> {{ __('site.Orders') }}</div>
             </a>
         </li>
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons mdi mdi-chart-bar-stacked"></i>
+                <div> {{ __('site.Report') }}</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{ route('admin.reports.index') }}" class="menu-link">
+                        <div> {{ __('site.Analytics') }}</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
     </ul>
 </aside>

@@ -129,8 +129,8 @@ class LeadController extends Controller
         }
         if (empty($errors)) {
             foreach ($filteredData as $index => $row) {
-                $regular=SharedProduct::where('sku',$row[11]);
-                $commission=AffiliateProduct::where('sku',$row[11]);
+                $regular = SharedProduct::where('sku', $row[11])->exists();
+                $commission = AffiliateProduct::where('sku', $row[11])->exists();
                 $lead=Lead::create([
                     'order_date' => $row[0] ?? now()->toDateString(),
                     'store_reference' => $row[1],
@@ -148,9 +148,10 @@ class LeadController extends Controller
                     'total' => $row[13],
                     'currency' => $row[14],
                     'notes' => $row[15] ?? null,
-                    'type' => ($commission) ? 'commission' : 'regular',
+                    'type' => $commission ? 'commission' : ($regular ? 'regular' : null),
                     'seller_id' => auth()->guard('seller')->id(),
                 ]);
+
                 Order::create([
                     'lead_id' => $lead->id,
                     'seller_id' => auth()->guard('seller')->id(),

@@ -61,14 +61,14 @@
                          lead information
                      </h2>
                      <div class="mobile flex items-center gap-1 text-gray-600">
-                         <span class="material-symbols-outlined text-md"> call </span>
+                         <span class="mdi mdi-phone-outline"></span>
                          <span class="text-sm"> {{$lead->customer_phone}} </span>
                      </div>
                      <div class="adrdress">
                          <div
                              class="adrdress_title flex items-center gap-1 text-gray-600 text-md mt-4 mb-2"
                          >
-                             <span class="material-symbols-outlined"> map </span>
+                             <span class="mdi mdi-map-outline"></span>
                              <span class="font-bold text-black text-sm">Address</span>
                          </div>
                          <p class="text-gray-600 text-sm text-pretty">
@@ -79,11 +79,11 @@
                          <div
                              class="country_title flex items-center gap-1 text-gray-600 text-md mt-4 mb-2"
                          >
-                             <span class="material-symbols-outlined"> location_on </span>
+                             <span class="mdi mdi-map-marker-outline"></span>
                              <span class="font-bold text-black text-sm">  Country </span>
                          </div>
-                         <div class="text-gray-600 text-md mt-2 mb-2">
-               <span class="material-symbols-outlined relative top-[5px]">
+                         <div class="text-gray-600 text-md mt-2 mb-2 flex gap-2 items-center">
+               <span class="material-symbols-outlined relative top-[0px]">
                  <img src="{{ asset('assets/countries/flags/' . $country->flag) }}" alt="{{ $country->name }}"
                       width="30" height="30">
                </span>
@@ -120,7 +120,7 @@
                                  {{__('site.LeadDetails')}}
                              </h4>
                              <hr />
-                             <div>
+                             <div class="overflow-auto">
                                  <!-- but table here -->
                                  <div class="col-span-8 bg-white drop-shadow rounded-md px-4 py-4">
                                      <table class="table">
@@ -161,7 +161,7 @@
                                  Products
                              </h4>
                              <hr />
-                             <div>
+                             <div class="overflow-auto">
                                  <div class="col-span-8 bg-white drop-shadow rounded-md px-4 py-4">
                                      <table class="table">
                                          <thead>

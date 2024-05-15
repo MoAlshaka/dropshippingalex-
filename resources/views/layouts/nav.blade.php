@@ -26,15 +26,13 @@
                     <i class="mdi mdi-translate mdi-24px"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                        <a class="dropdown-item" href="{{ route('admin.lang.en') }}">
-                            <span class="align-middle">English</span>
-                        </a>
-                    </li>
-
-                    <a class="dropdown-item" href="{{ route('admin.lang.ar') }}">
-                        <span class="align-middle">Arabic</span>
-                    </a>
+                    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                        <li>
+                            <a class="dropdown-item" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                <span class="align-middle"> {{ $properties['native'] }} </span>
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
             </li>
 

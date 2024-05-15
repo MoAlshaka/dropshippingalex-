@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Auth\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ErrorController;
@@ -28,16 +29,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 define('COUNT', 30);
-Route::group(['middleware' => ['lang']], function () {
-    // lang
-    Route::get('lang/en', [LangController::class, 'en'])->name('admin.lang.en');
-    Route::get('lang/ar', [LangController::class, 'ar'])->name('admin.lang.ar');
-    Route::group(['prefix' => 'admin', 'middleware' => ['guest:admin']], function () {
-        Route::get('/login', [AuthController::class, 'get_admin_login'])->name('get.admin.login');
-        Route::post('login', [AuthController::class, 'login'])->name('admin.login');
-    });
-    Route::group(['prefix' => 'admin', 'middleware' => ['auth:admin']], function () {
-
+Route::group([
+    //    'namespace' => 'Admin',
+    'prefix' => LaravelLocalization::setLocale() . '/admin',
+    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath','guest:admin']
+], function () {
+    Route::get('/login', [AuthController::class, 'get_admin_login'])->name('get.admin.login');
+    Route::post('login', [AuthController::class, 'login'])->name('admin.login');
+});
+Route::group([
+    //    'namespace' => 'Admin',
+    'prefix' => LaravelLocalization::setLocale() . '/admin',
+    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath','auth:admin']
+], function () {
         //Dashboard
         Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
         //Categories
@@ -89,6 +93,8 @@ Route::group(['middleware' => ['lang']], function () {
         Route::resource('orders', OrderController::class);
         Route::post('orders/search', [OrderController::class, 'search'])->name('admin.orders.search');
         Route::post('orders/filter', [OrderController::class, 'filter'])->name('admin.orders.filter');
+        //Reports
+        Route::get('reports', [ReportController::class, 'index'])->name('admin.reports.index');
 
 
 
@@ -97,5 +103,5 @@ Route::group(['middleware' => ['lang']], function () {
         Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout');
 
         Route::fallback([ErrorController::class, 'error'])->name('admin.error');
-    });
+
 });

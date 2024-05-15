@@ -22,24 +22,20 @@
             <!-- Language -->
             <li class="nav-item dropdown-language dropdown me-1 me-xl-0">
                 <a class="nav-link btn btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow"
-                    href="javascript:void(0);" data-bs-toggle="dropdown">
+                   href="javascript:void(0);" data-bs-toggle="dropdown">
                     <i class="mdi mdi-translate mdi-24px"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                        <a class="dropdown-item" href="{{ route('admin.lang.en') }}">
-                            <span class="align-middle">English</span>
-                        </a>
-                    </li>
-
-                    <a class="dropdown-item" href="{{ route('admin.lang.ar') }}">
-                        <span class="align-middle">Arabic</span>
-                    </a>
+                    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                        <li>
+                            <a class="dropdown-item" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                <span class="align-middle"> {{ $properties['native'] }} </span>
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
             </li>
 
-
-            <!--/ Language -->
             <!--/ Language -->
             <!-- Notification -->
             <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-2 me-xl-1">

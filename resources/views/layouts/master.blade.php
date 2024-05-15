@@ -1,8 +1,12 @@
 <!doctype html>
 
-<html @if (session()->has('lang')) lang="{{ session()->get('lang') }}" @endif
-    class="light-style layout-navbar-fixed layout-menu-fixed layout-compact" dir="ltr" data-theme="theme-default"
-    data-assets-path="../../../assets/" data-template="vertical-menu-template">
+<html
+    lang="en"
+    class="light-style layout-navbar-fixed layout-menu-fixed layout-compact"
+    dir="{{ LaravelLocalization::getCurrentLocaleDirection() }}"
+    data-theme="theme-default"
+    data-assets-path="{{asset('assets').'/'}}"
+    data-template="vertical-menu-template">
 
 <head>
     <meta charset="utf-8" />
@@ -123,19 +127,7 @@
     <!-- Page JS -->
     <script src="{{ asset('assets/js/app-logistics-dashboard.js') }}"></script> --}}
     @yield('js')
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
 
-            const currentLang = document.querySelector("html").getAttribute("lang");
-            if (currentLang == "ar") {
-                document.querySelector("html").setAttribute("dir", "rtl");
-
-            } else {
-                document.querySelector("html").setAttribute("dir", "ltr");
-
-            }
-        })
-    </script>
 </body>
 
 </html>

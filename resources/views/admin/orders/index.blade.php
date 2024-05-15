@@ -218,8 +218,14 @@
                 <h5 class="card-header col-10"> {{ __('site.Orders') }}</h5>
                 <form action="{{route('admin.orders.search')}}" method="post">
                     @csrf
-                    <input type="text" name="ref" placeholder="ref">
-                    <button type="submit">search</button>
+                    <div class="form-floating form-floating-outline col-3">
+                        <input type="text" id="ref" name="ref"
+                               class="form-control" placeholder="{{ __('site.REF') }}"
+                        />
+                        <label for="ref"> {{ __('site.REF') }}</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-next btn-submit">
+                        {{ __('site.Search') }}</button>
                 </form>
 
             </div>

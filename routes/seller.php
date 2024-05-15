@@ -24,18 +24,21 @@ use App\Http\Controllers\Seller\TransactionController;
 */
 
 define('PAGINATION_COUNT', 30);
-Route::group(['middleware' => ['lang']], function () {
-    // lang
-    Route::get('lang/en', [LangController::class, 'en'])->name('admin.lang.en');
-    Route::get('lang/ar', [LangController::class, 'ar'])->name('admin.lang.ar');
-    Route::group(['prefix' => 'seller', 'middleware' => ['guest:seller']], function () {
-
+Route::group([
+    //    'namespace' => 'Admin',
+    'prefix' => LaravelLocalization::setLocale() . '/seller',
+    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath','guest:seller']
+], function () {
         Route::get('/register', [AuthController::class, 'get_seller_register'])->name('get.seller.register');
         Route::post('register', [AuthController::class, 'register'])->name('seller.register');
         Route::get('/login', [AuthController::class, 'get_seller_login'])->name('get.seller.login');
         Route::post('login', [AuthController::class, 'login'])->name('seller.login');
-    });
-    Route::group(['prefix' => 'seller', 'middleware' => ['auth:seller']], function () {
+});
+Route::group([
+    //    'namespace' => 'Admin',
+    'prefix' => LaravelLocalization::setLocale() . '/seller',
+    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath','auth:seller']
+], function () {
         Route::get('active-page', [AuthController::class, 'deactivate'])->name('seller.deactivate')->withoutMiddleware('auth:seller');
         Route::middleware(['is_active'])->group(function () {
             //Dashboard
@@ -79,5 +82,5 @@ Route::group(['middleware' => ['lang']], function () {
             Route::fallback([ErrorController::class, 'error'])->name('admin.error');
         });
         Route::get('logout', [AuthController::class, 'logout'])->name('seller.logout');
-    });
+
 });
