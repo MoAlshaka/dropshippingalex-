@@ -39,7 +39,7 @@ Route::group([
     'prefix' => LaravelLocalization::setLocale() . '/seller',
     'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath','auth:seller']
 ], function () {
-        Route::get('active-page', [AuthController::class, 'deactivate'])->name('seller.deactivate')->withoutMiddleware('auth:seller');
+        Route::get('active-page', [AuthController::class, 'deactivate'])->name('seller.deactivate');
         Route::middleware(['is_active'])->group(function () {
             //Dashboard
             Route::get('/', [DashboardController::class, 'index'])->name('seller.dashboard');
@@ -80,6 +80,7 @@ Route::group([
             Route::get('notifications/read-all', [TransactionController::class, 'read_all'])->name('seller.notification.read.all');
             // error
             Route::fallback([ErrorController::class, 'error'])->name('admin.error');
+
         });
         Route::get('logout', [AuthController::class, 'logout'])->name('seller.logout');
 

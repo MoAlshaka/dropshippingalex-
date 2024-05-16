@@ -39,4 +39,9 @@ class Seller extends Authenticatable
     {
         return $this->hasMany(Lead::class);
     }
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'seller_id');
+    }
+
 }

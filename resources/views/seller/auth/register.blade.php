@@ -334,7 +334,8 @@
                                 <div id="billingLinksValidation" class="content">
                                     <!--/ Custom plan options -->
                                     <div class="content-header mb-3">
-                                        <h4 class="mb-0">{{ __('site.PaymentInformation') }}</h4>
+                                        <h4 class="mb-0"> {{ __('site.PersonalInformation') }}</h4>
+                                        <small>{{ __('site.EnterPersonal') }}</small>
                                     </div>
                                     <!-- Credit Card Details -->
                                     <div class="row g-3">

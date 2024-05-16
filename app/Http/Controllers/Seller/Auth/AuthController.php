@@ -47,7 +47,7 @@ class AuthController extends Controller
             'national_id' => $national_id_name,
         ]);
 
-        Auth::login($seller);
+        auth()->guard('seller')->login($seller);
 
         return redirect()->route('seller.deactivate');
     }

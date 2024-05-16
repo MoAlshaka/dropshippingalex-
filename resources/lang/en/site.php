@@ -216,7 +216,9 @@ return [
     'Unpaid' => 'Unpaid',
     'Paid' => 'Paid',
     'CashOnDelivery' => 'Cash on delivery',
-
+    'PendingLeads' => 'Pending Leads',
+    'Ranking' => 'Ranking',
+    'Chat' => 'Chat',
 
 
 ];
