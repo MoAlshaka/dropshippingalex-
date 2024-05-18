@@ -34,13 +34,14 @@
     <link rel="stylesheet" href="{{asset('assets/vendor/libs/select2/select2.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}"/>
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}"/>
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/tagify/tagify.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/bootstrap-select/bootstrap-select.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/flatpickr/flatpickr.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/jquery-timepicker/jquery-timepicker.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/pickr/pickr-themes.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/tagify/tagify.css')}}"/>
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/bootstrap-select/bootstrap-select.css')}}"/>
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/flatpickr/flatpickr.css')}}"/>
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css')}}"/>
+    <link rel="stylesheet"
+          href="{{asset('assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css')}}"/>
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/jquery-timepicker/jquery-timepicker.css')}}"/>
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/pickr/pickr-themes.css')}}"/>
     <!-- Page CSS -->
 
     <!-- Helpers -->
@@ -78,7 +79,8 @@
                             <div class="mb-3">
                                 <div class="mb-4">
                                     <div class="form-floating form-floating-outline">
-                                        <input type="text" id="bs-rangepicker-range" class="form-control" name="created_at">
+                                        <input type="text" id="bs-rangepicker-range" class="form-control"
+                                               name="created_at">
                                         <label for="bs-rangepicker-range">{{__('site.CreatedAt')}}</label>
                                     </div>
                                 </div>
@@ -215,18 +217,18 @@
             <div class="row">
                 <h5 class="card-header col-7"> {{ __('site.Orders') }}</h5>
                 <div class="col-5">
-                <form action="{{route('admin.orders.search')}}" method="post" >
-                    @csrf
-                    <div class="form-floating form-floating-outline  d-flex ms-4 mb-4">
-                        <input type="text" id="ref" name="ref"
-                               class="form-control" placeholder="{{ __('site.REF') }}"
-                        />
-                        <label for="ref"> {{ __('site.REF') }}</label>
-                        <button type="submit" class="btn btn-primary btn-next btn-submit ms-2">
-                            {{ __('site.Search') }}</button>
-                    </div>
+                    <form action="{{route('admin.orders.search')}}" method="post">
+                        @csrf
+                        <div class="form-floating form-floating-outline  d-flex ms-4 mb-4">
+                            <input type="text" id="ref" name="ref"
+                                   class="form-control" placeholder="{{ __('site.REF') }}"
+                            />
+                            <label for="ref"> {{ __('site.REF') }}</label>
+                            <button type="submit" class="btn btn-primary btn-next btn-submit ms-2">
+                                {{ __('site.Search') }}</button>
+                        </div>
 
-                </form>
+                    </form>
                 </div>
             </div>
             <div class="table-responsive text-nowrap">
@@ -239,7 +241,7 @@
                         <th>{{ __('site.Customer') }}</th>
                         <th>{{ __('site.Total') }}</th>
                         <th>{{ __('site.Warehouse') }}</th>
-                        <th>{{ __('site.ShippingDetails') }}</th>
+                        {{--                        <th>{{ __('site.ShippingDetails') }}</th>--}}
                         <th>{{ __('site.Type') }}</th>
                         <th>{{ __('site.ShipmentStatus') }}</th>
                         <th>{{ __('site.PaymentStatus') }}</th>
@@ -260,9 +262,9 @@
                                 <td>{{ $order->lead->customer_name }}</td>
                                 <td>{{ $order->lead->total }}</td>
                                 <td>{{ $order->lead->warehouse }}</td>
-                                <td> @foreach ($order->shippingdetails as $shippingdetail)
-                                    {{ $shippingdetail->details }}
-                                    @endforeach</td>
+                                {{--                                <td> @foreach ($order->shippingdetails as $shippingdetail)--}}
+                                {{--                                    {{ $shippingdetail->details }}--}}
+                                {{--                                    @endforeach</td>--}}
                                 <td> {{ $order->lead->type }}</td>
                                 <td>{{ $order->shipment_status }}</td>
                                 <td>{{ $order->payment_status }}</td>
@@ -278,24 +280,24 @@
                                         </button>
                                     </a>
 
-                                        <a class="  text-primary hover:bg-success hover:text-white"
-                                           href="{{ route('orders.edit', $order->id) }}">
-                                            <button type="button"
-                                                    class="btn btn-icon btn-primary waves-effect waves-light">
-                                                <span class="tf-icons mdi mdi-tag-edit-outline"></span>
+                                    <a class="  text-primary hover:bg-success hover:text-white"
+                                       href="{{ route('orders.edit', $order->id) }}">
+                                        <button type="button"
+                                                class="btn btn-icon btn-primary waves-effect waves-light">
+                                            <span class="tf-icons mdi mdi-tag-edit-outline"></span>
 
-                                            </button>
-                                        </a>
-                                        <form action="{{ route('orders.destroy', $order->id) }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
+                                        </button>
+                                    </a>
+                                    <form action="{{ route('orders.destroy', $order->id) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
 
-                                            <button type="submit"
-                                                    class="btn btn-icon btn-danger waves-effect waves-light">
-                                                <span class="tf-icons mdi mdi-trash-can-outline"></span>
+                                        <button type="submit"
+                                                class="btn btn-icon btn-danger waves-effect waves-light">
+                                            <span class="tf-icons mdi mdi-trash-can-outline"></span>
 
-                                            </button>
-                                        </form>
+                                        </button>
+                                    </form>
 
                                 </td>
                             </tr>

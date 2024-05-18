@@ -209,5 +209,16 @@ return [
     'OrderDetails' => 'تفاصيل الطلب',
     'Report' => 'تقرير',
     'Analytics' => 'تحليلات',
-
+    'NotAvailable' => 'Not available',
+    'OutForDelivery' => 'Out for delivery',
+    'Returned' => 'Returned',
+    'Unpaid' => 'Unpaid',
+    'Paid' => 'Paid',
+    'CashOnDelivery' => 'Cash on delivery',
+    'PendingLeads' => 'Pending Leads',
+    'Ranking' => 'Ranking',
+    'Chat' => 'Chat',
+    'Transferred' => 'Transferred',
+    'Canceled' => 'Canceled',
+    'UnderProcesses' => 'UnderProcesses',
 ];

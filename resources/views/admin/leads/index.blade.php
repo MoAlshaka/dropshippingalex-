@@ -34,13 +34,14 @@
     <link rel="stylesheet" href="{{asset('assets/vendor/libs/select2/select2.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}"/>
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}"/>
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/tagify/tagify.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/bootstrap-select/bootstrap-select.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/flatpickr/flatpickr.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/jquery-timepicker/jquery-timepicker.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/pickr/pickr-themes.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/tagify/tagify.css')}}"/>
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/bootstrap-select/bootstrap-select.css')}}"/>
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/flatpickr/flatpickr.css')}}"/>
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css')}}"/>
+    <link rel="stylesheet"
+          href="{{asset('assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css')}}"/>
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/jquery-timepicker/jquery-timepicker.css')}}"/>
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/pickr/pickr-themes.css')}}"/>
     <!-- Page CSS -->
 
     <!-- Helpers -->
@@ -78,7 +79,8 @@
                             <div class="mb-3">
                                 <div class="mb-4">
                                     <div class="form-floating form-floating-outline">
-                                        <input type="text" id="bs-rangepicker-range" class="form-control" name="created_at">
+                                        <input type="text" id="bs-rangepicker-range" class="form-control"
+                                               name="created_at">
                                         <label for="bs-rangepicker-range">{{__('site.CreatedAt')}}</label>
                                     </div>
                                 </div>
@@ -173,29 +175,24 @@
         @if (session()->has('Warning'))
             <div class="alert alert-warning" role="alert">{{ session()->get('Warning') }}</div>
         @endif
-        <div class="d-flex flex-row-reverse mb-4">
-            <button class="btn rounded btn-success  col-2">
-                <a href="{{ route('leads.create') }}" class="text-white" >
-                    {{ __('site.Add') }}</a>
-            </button>
-        </div>
+
         <div class="card p-4">
             <div class="row">
                 <h5 class="card-header col-7"> {{ __('site.Leads') }}</h5>
                 <div class="col-5">
-                <form action="{{route('admin.leads.search')}}" method="post">
-                    @csrf
+                    <form action="{{route('admin.leads.search')}}" method="post">
+                        @csrf
 
-                    <div class="form-floating form-floating-outline  d-flex ms-4 mb-4">
-                        <input type="text" id="ref" name="ref"
-                               class="form-control" placeholder="{{ __('site.REF') }}"
-                        />
-                        <label for="ref"> {{ __('site.REF') }}</label>
-                        <button type="submit" class="btn btn-primary btn-next btn-submit ms-2">
-                            {{ __('site.Search') }}</button>
-                    </div>
+                        <div class="form-floating form-floating-outline  d-flex ms-4 mb-4">
+                            <input type="text" id="ref" name="ref"
+                                   class="form-control" placeholder="{{ __('site.REF') }}"
+                            />
+                            <label for="ref"> {{ __('site.REF') }}</label>
+                            <button type="submit" class="btn btn-primary btn-next btn-submit ms-2">
+                                {{ __('site.Search') }}</button>
+                        </div>
 
-                </form>
+                    </form>
                 </div>
 
             </div>

@@ -8,9 +8,7 @@
 
 @section('css')
     <!-- Favicon -->
-    /*
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">*/
+
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}"/>
 
     <!-- Fonts -->
@@ -36,13 +34,14 @@
     <link rel="stylesheet" href="{{asset('assets/vendor/libs/select2/select2.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}"/>
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}"/>
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/tagify/tagify.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/bootstrap-select/bootstrap-select.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/flatpickr/flatpickr.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/jquery-timepicker/jquery-timepicker.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/pickr/pickr-themes.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/tagify/tagify.css')}}"/>
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/bootstrap-select/bootstrap-select.css')}}"/>
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/flatpickr/flatpickr.css')}}"/>
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css')}}"/>
+    <link rel="stylesheet"
+          href="{{asset('assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css')}}"/>
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/jquery-timepicker/jquery-timepicker.css')}}"/>
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/pickr/pickr-themes.css')}}"/>
     <!-- Page CSS -->
 
     <!-- Helpers -->
@@ -80,7 +79,8 @@
                             <div class="mb-3">
                                 <div class="mb-4">
                                     <div class="form-floating form-floating-outline">
-                                        <input type="text" id="bs-rangepicker-range" class="form-control" name="created_at">
+                                        <input type="text" id="bs-rangepicker-range" class="form-control"
+                                               name="created_at">
                                         <label for="bs-rangepicker-range">{{__('site.CreatedAt')}}</label>
                                     </div>
                                 </div>
@@ -93,11 +93,11 @@
                                             data-style="btn-default"
                                             multiple
                                             data-actions-box="true">
-                                                @isset($countries)
+                                            @isset($countries)
                                                 @foreach($countries as $country )
                                                     <option value="{{$country->name}}">{{$country->name}}</option>
                                                 @endforeach
-                                                @endisset
+                                            @endisset
                                         </select>
                                         <label for="warehouse">{{__('site.Warehouse')}}</label>
                                     </div>
@@ -175,23 +175,29 @@
         @if (session()->has('Warning'))
             <div class="alert alert-warning" role="alert">{{ session()->get('Warning') }}</div>
         @endif
-        <div class="card">
+        <div class="d-flex flex-row-reverse mb-4">
+            <button class="btn rounded btn-success  col-2">
+                <a href="{{ route('leads.create') }}" class="text-white">
+                    {{ __('site.Add') }}</a>
+            </button>
+        </div>
+        <div class="card p-4">
             <div class="row">
-                <h5 class="card-header col-10"> {{ __('site.Leads') }}</h5>
-                <form action="{{route('seller.leads.search')}}" method="post">
-                    @csrf
-                    <div class="form-floating form-floating-outline col-3">
-                        <input type="text" id="ref" name="ref"
-                               class="form-control" placeholder="{{ __('site.REF') }}"
-                        />
-                        <label for="ref"> {{ __('site.REF') }}</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-next btn-submit">
-                        {{ __('site.Search') }}</button>
-                </form>
-                <div class="col-2 mt-3">
-                    <a href="{{ route('leads.create') }}" class="btn rounded btn-success waves-effect waves-light">
-                        {{ __('site.Add') }}</a>
+                <h5 class="card-header col-7"> {{ __('site.Leads') }}</h5>
+
+                <div class="col-5">
+                    <form action="{{route('seller.leads.search')}}" method="post">
+                        @csrf
+                        <div class="form-floating form-floating-outline  d-flex ms-4 mb-4">
+                            <input type="text" id="ref" name="ref"
+                                   class="form-control" placeholder="{{ __('site.REF') }}"
+                            />
+                            <label for="ref"> {{ __('site.REF') }}</label>
+                            <button type="submit" class="btn btn-primary btn-next btn-submit ms-2">
+                                {{ __('site.Search') }}</button>
+                        </div>
+
+                    </form>
                 </div>
             </div>
             <div class="table-responsive text-nowrap">

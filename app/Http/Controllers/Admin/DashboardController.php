@@ -35,16 +35,12 @@ class DashboardController extends Controller
 
         // charts
 
-        $leads_date = Lead::groupBy('order_date')->pluck('order_date')->toArray();
-//        $leads_count = Lead::selectRaw('order_date, COUNT(*) as count')
-//            ->groupBy('order_date')
-//            ->pluck('count');
         $minMaxDates = Lead::selectRaw('MIN(order_date) as min_date, MAX(order_date) as max_date')->first();
 
         $startDate = $minMaxDates->min_date;
-        $endDate = $minMaxDates->max_date;
+        $endDate = now()->toDateString();
 
-// Generate all dates within the range
+        // Generate all dates within the range
         $allDates = [];
         $currentDate = $startDate;
         while ($currentDate <= $endDate) {
@@ -52,24 +48,21 @@ class DashboardController extends Controller
             $currentDate = date('Y-m-d', strtotime($currentDate . ' + 1 day'));
         }
 
-// Execute the query to get counts for existing dates
+        // Execute the query to get counts for existing dates
         $existingCounts = Lead::selectRaw('order_date, COUNT(*) as count')
             ->groupBy('order_date')
             ->pluck('count', 'order_date')
             ->toArray();
 
-// Fill in missing counts with zero
+        // Fill in missing counts with zero
         $leads_count = [];
         foreach ($allDates as $date) {
             $count = isset($existingCounts[$date]) ? $existingCounts[$date] : 0;
-            $leads_count[] = (object) ['date' => $date, 'count' => $count];
+            $leads_count[] = (object)['date' => $date, 'count' => $count];
         }
 
 
-
-
-
         //return $leads_count;
-        return view('admin.dashboard', compact('leads', 'approvedLeadsCount', 'deliveredLeadsCount', 'pendingLeadsCount','sellers','leads_count'));
+        return view('admin.dashboard', compact('leads', 'approvedLeadsCount', 'deliveredLeadsCount', 'pendingLeadsCount', 'sellers', 'leads_count'));
     }
 }

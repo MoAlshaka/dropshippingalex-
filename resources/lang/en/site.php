@@ -219,6 +219,12 @@ return [
     'PendingLeads' => 'Pending Leads',
     'Ranking' => 'Ranking',
     'Chat' => 'Chat',
+    'Transferred' => 'Transferred',
+    'Canceled' => 'Canceled',
+    'UnderProcesses' => 'Under Processes',
+    'Confirmed' => 'Confirmed',
+    'Fulfilled' => 'Fulfilled',
+    'Shipped' => 'Shipped',
 
 
 ];
