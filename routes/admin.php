@@ -32,7 +32,7 @@ define('COUNT', 30);
 Route::group([
     //    'namespace' => 'Admin',
     'prefix' => LaravelLocalization::setLocale() . '/admin',
-    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath','guest:admin']
+    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'guest:admin']
 ], function () {
     Route::get('/login', [AuthController::class, 'get_admin_login'])->name('get.admin.login');
     Route::post('login', [AuthController::class, 'login'])->name('admin.login');
@@ -40,68 +40,67 @@ Route::group([
 Route::group([
     //    'namespace' => 'Admin',
     'prefix' => LaravelLocalization::setLocale() . '/admin',
-    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath','auth:admin']
+    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth:admin']
 ], function () {
-        //Dashboard
-        Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
-        //Categories
-        Route::resource('categories', CategoryController::class);
-        //payment_methods
-        Route::resource('payments', PaymentController::class);
-        //Countries
-        Route::resource('countries', CountryController::class);
-        //offers
-        Route::resource('offers', OfferController::class);
-        //transactions
-        Route::resource('transactions', TransactionController::class);
-        Route::get('transaction/seller/{id}', [TransactionController::class, 'get_seller_info'])->name('admin.seller.info');
-        // products
-        Route::resource('shared-products', SharedProductController::class);
-        Route::match(['post', 'put', 'patch'], 'shared-products/{id}', [SharedProductController::class, 'update'])->name('admin.sharedproducts.update');
-        Route::get('/shared-product/new-products', [SharedProductController::class, 'new_product'])->name('admin.new.shared.product');
-        Route::get('/shared-product/suggested-products', [SharedProductController::class, 'suggested_product'])->name('admin.suggested.shared.product');
-        Route::post('/shared-product/search', [SharedProductController::class, 'search'])->name('admin.search.shared.product');
+    //Dashboard
+    Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+    //Categories
+    Route::resource('categories', CategoryController::class);
+    //payment_methods
+    Route::resource('payments', PaymentController::class);
+    //Countries
+    Route::resource('countries', CountryController::class);
+    //offers
+    Route::resource('offers', OfferController::class);
+    //transactions
+    Route::resource('transactions', TransactionController::class);
+    Route::get('transaction/seller/{id}', [TransactionController::class, 'get_seller_info'])->name('admin.seller.info');
+    // products
+    Route::resource('shared-products', SharedProductController::class);
+    Route::match(['post', 'put', 'patch'], 'shared-products/{id}', [SharedProductController::class, 'update'])->name('admin.sharedproducts.update');
+    Route::get('/shared-product/new-products', [SharedProductController::class, 'new_product'])->name('admin.new.shared.product');
+    Route::get('/shared-product/suggested-products', [SharedProductController::class, 'suggested_product'])->name('admin.suggested.shared.product');
+    Route::post('/shared-product/search', [SharedProductController::class, 'search'])->name('admin.search.shared.product');
 
-        //
-        Route::resource('affiliate-products', AffiliateProductController::class);
-        Route::match(['post', 'put', 'patch'], 'affiliate-products/{id}', [AffiliateProductController::class, 'update'])->name('admin.affiliateproducts.update');
-        Route::get('/affiliate-product/new-products', [AffiliateProductController::class, 'new_product'])->name('admin.new.affiliate.product');
-        Route::get('/affiliate-product/suggested-products', [AffiliateProductController::class, 'suggested_product'])->name('admin.suggested.affiliate.product');
+    //
+    Route::resource('affiliate-products', AffiliateProductController::class);
+    Route::match(['post', 'put', 'patch'], 'affiliate-products/{id}', [AffiliateProductController::class, 'update'])->name('admin.affiliateproducts.update');
+    Route::get('/affiliate-product/new-products', [AffiliateProductController::class, 'new_product'])->name('admin.new.affiliate.product');
+    Route::get('/affiliate-product/suggested-products', [AffiliateProductController::class, 'suggested_product'])->name('admin.suggested.affiliate.product');
 
-        Route::post('/affiliate-product/search', [AffiliateProductController::class, 'search'])->name('admin.search.affiliate.product');
+    Route::post('/affiliate-product/search', [AffiliateProductController::class, 'search'])->name('admin.search.affiliate.product');
 
-        Route::get('/affiliate-product/search', [AffiliateProductController::class, 'search'])->name('admin.search.affiliate.product');
-
-
-        //
-        Route::get('filter/shared-products/{country}', [SharedProductController::class, 'country_filter'])->name('admin.shared.country.filter');
-        Route::get('filter/affiliate-products/{country}', [AffiliateProductController::class, 'country_filter'])->name('admin.affiliate.country.filter');
-        //Seller
-        Route::get('sellers', [ActiveSellerController::class, 'index'])->name('admin.sellers.index');
-        Route::get('seller/show/{id}', [ActiveSellerController::class, 'show'])->name('admin.sellers.show');
-        Route::match(['post', 'put', 'patch'], 'active-sellers/{id}', [ActiveSellerController::class, 'active'])->name('admin.sellers.active');
-        Route::delete('sellers/delete/{id}', [ActiveSellerController::class, 'delete'])->name('admin.sellers.delete');
-        //Leads
-        Route::get('leads', [LeadController::class, 'index'])->name('admin.leads.index');
-        Route::get('leads/edit/{id}', [LeadController::class, 'edit'])->name('admin.leads.edit');
-        Route::match(['post', 'put', 'patch'], 'leads/update/{id}', [LeadController::class, 'update'])->name('admin.leads.update');
-        Route::post('leads/delete/{id}', [LeadController::class, 'delete'])->name('admin.leads.delete');
-        Route::get('lead/show/{id}', [LeadController::class, 'show'])->name('admin.lead.show');
-        Route::post('lead/search', [LeadController::class, 'search'])->name('admin.leads.search');
-        Route::post('lead/filter', [LeadController::class, 'filter'])->name('admin.leads.filter');
-        // orders
-        Route::resource('orders', OrderController::class);
-        Route::post('orders/search', [OrderController::class, 'search'])->name('admin.orders.search');
-        Route::post('orders/filter', [OrderController::class, 'filter'])->name('admin.orders.filter');
-        //Reports
-        Route::get('reports', [ReportController::class, 'index'])->name('admin.reports.index');
+    Route::get('/affiliate-product/search', [AffiliateProductController::class, 'search'])->name('admin.search.affiliate.product');
 
 
+    //
+    Route::get('filter/shared-products/{country}', [SharedProductController::class, 'country_filter'])->name('admin.shared.country.filter');
+    Route::get('filter/affiliate-products/{country}', [AffiliateProductController::class, 'country_filter'])->name('admin.affiliate.country.filter');
+    //Seller
+    Route::get('sellers', [ActiveSellerController::class, 'index'])->name('admin.sellers.index');
+    Route::get('seller/show/{id}', [ActiveSellerController::class, 'show'])->name('admin.sellers.show');
+    Route::match(['post', 'put', 'patch'], 'active-sellers/{id}', [ActiveSellerController::class, 'active'])->name('admin.sellers.active');
+    Route::delete('sellers/delete/{id}', [ActiveSellerController::class, 'delete'])->name('admin.sellers.delete');
+    //Leads
+    Route::get('leads', [LeadController::class, 'index'])->name('admin.leads.index');
+    Route::get('leads/edit/{id}', [LeadController::class, 'edit'])->name('admin.leads.edit');
+    Route::match(['post', 'put', 'patch'], 'leads/update/{id}', [LeadController::class, 'update'])->name('admin.leads.update');
+    Route::post('leads/delete/{id}', [LeadController::class, 'delete'])->name('admin.leads.delete');
+    Route::get('lead/show/{id}', [LeadController::class, 'show'])->name('admin.lead.show');
+    Route::post('lead/search', [LeadController::class, 'search'])->name('admin.leads.search');
+    Route::post('lead/filter', [LeadController::class, 'filter'])->name('admin.leads.filter');
+    // orders
+    Route::resource('orders', OrderController::class);
+    Route::post('orders/search', [OrderController::class, 'search'])->name('admin.orders.search');
+    Route::post('orders/filter', [OrderController::class, 'filter'])->name('admin.orders.filter');
+    //Reports
+    Route::get('reports', [ReportController::class, 'index'])->name('admin.reports.index');
+    Route::get('filter/report/{country}', [ReportController::class, 'filter_country'])->name('admin.report.country.filter');
 
 
-        //logout
-        Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout');
+    //logout
+    Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout');
 
-        Route::fallback([ErrorController::class, 'error'])->name('admin.error');
+    Route::fallback([ErrorController::class, 'error'])->name('admin.error');
 
 });
