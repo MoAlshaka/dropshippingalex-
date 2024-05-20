@@ -225,6 +225,7 @@ return [
     'Confirmed' => 'Confirmed',
     'Fulfilled' => 'Fulfilled',
     'Shipped' => 'Shipped',
+    'RevenueLeads' => 'Revenue Leads',
 
 
 ];

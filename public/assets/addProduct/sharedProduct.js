@@ -13,7 +13,7 @@ document.querySelector('[type="submit"]').addEventListener('click', (event) => {
     formData.append('title', document.querySelector('[name="title"]').value);
     formData.append('sku', document.querySelector('[name="sku"]').value);
     formData.append('brand', document.querySelector('[name="brand"]').value);
-    formData.append('description', document.querySelector('[data-placeholder="Product Description"]').innerText);
+    formData.append('description', document.querySelector("body > div.layout-wrapper.layout-content-navbar > div.layout-container > div > div > div.container-xxl.flex-grow-1.container-p-y > div > div.row > div.col-12.col-lg-8 > div > div.card-body > div.mb-3 > div > div.ck.ck-editor__main > div").innerHTML);
     formData.append('unit_cost', document.querySelector('[name="unit_cost"]').value);
     formData.append('recommended_price', document.querySelector('[name="recommended_price"]').value);
     formData.append('weight', document.querySelector('[name="weight"]').value);

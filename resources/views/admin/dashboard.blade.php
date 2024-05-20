@@ -23,17 +23,12 @@
                             <h5 class="card-title mb-0">Statistics</h5>
                             <small class="text-muted">Commercial networks and enterprises</small>
                         </div>
-                        <div class="card-header-elements ms-auto py-0">
-                            <h5 class="mb-0 me-4">$ 78,000</h5>
-                            <span class="badge bg-label-secondary rounded-pill">
-                                <i class='ri-arrow-up-line ri-14px text-success'></i>
-                                <span class="align-middle">37%</span>
-                              </span>
-                        </div>
+                  
                     </div>
                     <div class="card-body pt-2">
-                        <canvas id="lineChart" class="chartjs" data-height="700"
-                                data-chart="{{json_encode($leads_count)}}"></canvas>
+                        <canvas id="lineChart" class="lg:w-[500px]" data-height="700"
+                                data-chart-leads="{{json_encode($leads_count)}}"
+                                data-chart-orders="{{json_encode($orders_count)}}"></canvas>
                     </div>
                 </div>
             </div>
@@ -215,22 +210,25 @@
             tickColor = 'rgba(0, 0, 0, 0.75)'; // x & y axis tick color
         }
         const lineChart = document.getElementById('lineChart');
-        const dataChart = document.getElementById("lineChart").getAttribute("data-chart")
-        const data = JSON.parse(dataChart)
+        const dataChartLeads = document.getElementById("lineChart").getAttribute("data-chart-leads")
+        const dataChartOrder = document.getElementById("lineChart").getAttribute("data-chart-orders")
+        const dataLeads = JSON.parse(dataChartLeads);
+        const dataOrders = JSON.parse(dataChartOrder);
+
         if (lineChart) {
             const lineChartVar = new Chart(lineChart,
                 {
                     type: 'line',
                     data: {
-                        labels: data.map(row => row.date),
+                        labels: dataLeads.map(row => row.date),
                         datasets: [
                             {
-                                label: 'Acquisitions by year',
-                                data: data.map(row => row.count)
+                                label: 'Leads',
+                                data: dataLeads.map(row => row.count)
                             },
                             {
-                                label: 'GAGA',
-                                data: data.map(row => row.count)
+                                label: 'Orders',
+                                data: dataOrders.map(row => row.count)
                             }
                         ]
                     }

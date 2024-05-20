@@ -58,6 +58,7 @@ class ReportController extends Controller
 
         $confirmed_rate = intval(($confirmed / $orders) * 100);
         $delivered_rate = intval(($delivered / $orders) * 100);
+        
         return view('admin.reports.index', compact('leads', 'under_process', 'confirmed', 'canceled', 'fulfilled', 'shipped', 'delivered', 'returned', 'countries', 'confirmed_rate', 'delivered_rate'));
     }
 }

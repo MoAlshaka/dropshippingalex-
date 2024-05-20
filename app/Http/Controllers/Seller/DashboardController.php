@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lead;
+use App\Models\Order;
 use App\Models\Seller;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class DashboardController extends Controller
 {
@@ -32,12 +34,15 @@ class DashboardController extends Controller
             });
         // charts
 
-        $minMaxDates = Lead::selectRaw('MIN(order_date) as min_date, MAX(order_date) as max_date')->where('seller_id', auth()->guard('seller')->id())->first();
+        // Get the minimum and maximum dates for the leads associated with the authenticated seller
+        $minMaxDates = Lead::selectRaw('MIN(order_date) as min_date, MAX(order_date) as max_date')
+            ->where('seller_id', auth()->guard('seller')->id())
+            ->first();
 
         $startDate = $minMaxDates->min_date;
         $endDate = now()->toDateString();
 
-        // Generate all dates within the range
+// Generate all dates within the range
         $allDates = [];
         $currentDate = $startDate;
         while ($currentDate <= $endDate) {
@@ -45,19 +50,56 @@ class DashboardController extends Controller
             $currentDate = date('Y-m-d', strtotime($currentDate . ' + 1 day'));
         }
 
-        // Execute the query to get counts for existing dates
+// Execute the query to get counts for existing dates, filtered by the authenticated seller
         $existingCounts = Lead::selectRaw('order_date, COUNT(*) as count')
+            ->where('seller_id', auth()->guard('seller')->id())
             ->groupBy('order_date')
             ->pluck('count', 'order_date')
             ->toArray();
 
-        // Fill in missing counts with zero
+// Fill in missing counts with zero
         $leads_count = [];
         foreach ($allDates as $date) {
             $count = isset($existingCounts[$date]) ? $existingCounts[$date] : 0;
             $leads_count[] = (object)['date' => $date, 'count' => $count];
         }
 
-        return view('seller.dashboard', compact('leads', 'approvedLeadsCount', 'deliveredLeadsCount', 'revenue', 'sellers', 'leads_count'));
+
+// orders
+// Get the minimum and maximum dates for the orders associated with the authenticated seller
+        $minMaxOrderDates = Order::selectRaw('MIN(created_at) as min_date, MAX(created_at) as max_date')
+            ->where('seller_id', auth()->guard('seller')->id())
+            ->first();
+
+        $startOrderDate = Carbon::parse($minMaxOrderDates->min_date)->format('Y-m-d');
+
+
+        $endOrderDate = now()->toDateString();
+
+// Generate all dates within the range for orders
+        $allOrderDates = [];
+        $currentOrderDate = $startOrderDate;
+        while ($currentOrderDate <= $endOrderDate) {
+            $allOrderDates[] = $currentOrderDate;
+            $currentOrderDate = date('Y-m-d', strtotime($currentOrderDate . ' + 1 day'));
+        }
+
+// Execute the query to get counts for existing dates, filtered by the authenticated seller
+        $existingOrderCounts = Order::selectRaw('DATE(created_at) as order_date, COUNT(*) as count')
+            ->where('seller_id', auth()->guard('seller')->id())
+            ->where('shipment_status', 'approved')
+            ->groupBy('order_date')
+            ->pluck('count', 'order_date')
+            ->toArray();
+
+// Fill in missing counts with zero for orders
+        $orders_count = [];
+        foreach ($allOrderDates as $date) {
+            $count = isset($existingOrderCounts[$date]) ? $existingOrderCounts[$date] : 0;
+            $orders_count[] = (object)['date' => $date, 'count' => $count];
+        }
+
+
+        return view('seller.dashboard', compact('leads', 'approvedLeadsCount', 'deliveredLeadsCount', 'revenue', 'sellers', 'leads_count', 'orders_count'));
     }
 }

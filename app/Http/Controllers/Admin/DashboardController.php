@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lead;
+use App\Models\Order;
 use App\Models\Seller;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -60,9 +62,34 @@ class DashboardController extends Controller
             $count = isset($existingCounts[$date]) ? $existingCounts[$date] : 0;
             $leads_count[] = (object)['date' => $date, 'count' => $count];
         }
+// orders
+// Charts for Orders
+        $minMaxOrderDates = Order::selectRaw('MIN(created_at) as min_date, MAX(created_at) as max_date')->first();
+        $startOrderDate = Carbon::parse($minMaxOrderDates->min_date)->format('Y-m-d');
+        $endOrderDate = now()->toDateString();
 
+// Generate all dates within the range for orders
+        $allOrderDates = [];
+        $currentOrderDate = $startOrderDate;
+        while ($currentOrderDate <= $endOrderDate) {
+            $allOrderDates[] = $currentOrderDate;
+            $currentOrderDate = date('Y-m-d', strtotime($currentOrderDate . ' + 1 day'));
+        }
 
-        //return $leads_count;
-        return view('admin.dashboard', compact('leads', 'approvedLeadsCount', 'deliveredLeadsCount', 'pendingLeadsCount', 'sellers', 'leads_count'));
+// Execute the query to get counts for existing dates
+        $existingOrderCounts = Order::selectRaw('DATE(created_at) as order_date, COUNT(*) as count')
+            ->where('shipment_status', 'approved')
+            ->groupBy('order_date')
+            ->pluck('count', 'order_date')
+            ->toArray();
+
+// Fill in missing counts with zero for orders
+        $orders_count = [];
+        foreach ($allOrderDates as $date) {
+            $count = isset($existingOrderCounts[$date]) ? $existingOrderCounts[$date] : 0;
+            $orders_count[] = (object)['date' => $date, 'count' => $count];
+        }
+        
+        return view('admin.dashboard', compact('leads', 'approvedLeadsCount', 'deliveredLeadsCount', 'pendingLeadsCount', 'sellers', 'leads_count', 'orders_count'));
     }
 }
