@@ -18,21 +18,11 @@ class AffiliateProductController extends Controller
      */
     public function index()
     {
-        $offer= Offer::where('end_date','>',now())->orderBy('id', 'DESC')->first();
+        $offer = Offer::where('end_date', '>', now())->orderBy('id', 'DESC')->first();
         $countries = Country::all();
         $categories = Category::all();
         $products = AffiliateProduct::orderBy('id', 'DESC')->paginate(COUNT);
-        return view('admin.affiliateproduct.index', compact('products', 'countries', 'categories','offer'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        $countries = Country::all();
-        $categories = Category::all();
-        return view('admin.affiliateproduct.create', compact('categories', 'countries'));
+        return view('admin.affiliateproduct.index', compact('products', 'countries', 'categories', 'offer'));
     }
 
     /**
@@ -49,6 +39,7 @@ class AffiliateProductController extends Controller
             'minimum_selling_price' => 'required|numeric',
             'comission' => 'required|numeric',
             'weight' => 'required|numeric',
+            'type' => 'required',
             'category_id' => 'required',
             'country' => [
                 'required',
@@ -95,11 +86,12 @@ class AffiliateProductController extends Controller
             'title' => $request->title,
             'brand' => $request->brand,
             'description' => $request->description,
-            'image' =>  $imageName,
+            'image' => $imageName,
             'weight' => $request->weight,
             'minimum_selling_price' => $request->minimum_selling_price,
             'comission' => $request->comission,
             'category_id' => $request->category_id,
+            'type' => $request->type,
             'admin_id' => auth()->guard('admin')->user()->id,
         ]);
         foreach ($request->country as $index => $countryId) {
@@ -107,6 +99,16 @@ class AffiliateProductController extends Controller
         }
 
         return response()->json(['message' => 'Product created successfully'], 200);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $countries = Country::all();
+        $categories = Category::all();
+        return view('admin.affiliateproduct.create', compact('categories', 'countries'));
     }
 
     /**
@@ -280,6 +282,11 @@ class AffiliateProductController extends Controller
         if ($request->has('category_id') && $request->category_id != '') {
             $query->orWhere('category_id', $request->category_id);
         }
+
+        if ($request->has('type') && $request->type != '') {
+            $query->orWhere('type', $request->type);
+        }
+
 
         $products = $query->orderBy('id', 'DESC')->paginate(COUNT);// Replace 10 with your desired number of items per page
 

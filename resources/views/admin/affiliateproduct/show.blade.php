@@ -12,17 +12,18 @@
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">{{ __('site.Dashboard') }} /</span> {{ __('site.Show') }}</h4>
+        <h4 class="py-3 mb-4"><span
+                class="text-muted fw-light">{{ __('site.Dashboard') }} /</span> {{ __('site.Show') }}</h4>
 
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-8 gap-4 p-4">
             <div class="product-card col-span-8 lg:col-span-3 py-2 px-4 rounded-md drop-shadow bg-white">
                 <div class="product-img flex mb-4">
                     <img src="{{ asset('assets/products/affiliateproduct/images/' . $product->image) }}" alt=""
-                        class="w-full h-full object-cover" />
+                         class="w-full h-full object-cover"/>
                 </div>
                 <div style="display: flex; gap: 6px;">
                     <a href="{{ route('affiliate-products.edit', $product->id) }}"
-                        class="btn btn-primary waves-effect waves-light">
+                       class="btn btn-primary waves-effect waves-light">
 
                         {{ __('site.Edit') }}</a>
                     <form action="{{ route('affiliate-products.destroy', $product->id) }}" method="POST">
@@ -38,7 +39,7 @@
                 <div class="py-8 px-4">
                     <h3 class="text-2xl font-bold">{{ $product->title }}</h3>
                 </div>
-                <hr />
+                <hr/>
                 <div class="px-2">
                     <div class="py-6 px-2 flex flex-col lg:flex-row gap-2 lg:gap-12 lg:items-center">
                         <div class="flex items-center">
@@ -54,7 +55,7 @@
                             <span class="text-green-600">{{ $product->comission }}$</span>
                         </div>
                     </div>
-                    <hr />
+                    <hr/>
                     <div class="py-6 px-2">
                         <h3 class="text-md font-bold mb-4">{{ __('site.Specifications') }}:</h3>
                         <div class="flex flex-col gap-2 lg:items-start">
@@ -63,9 +64,9 @@
                                     {{ __('site.SKU') }}:
                                 </h3>
                                 <span class="text-white bg-violet-500 px-3 py-1 rounded hover:bg-violet-600"
-                                    id="sku">{{ $product->sku }}
+                                      id="sku">{{ $product->sku }}
                                     <i class="mdi mdi-content-copy ml-2 cursor-pointer text-white text-xl "
-                                        id="copySku"></i>
+                                       id="copySku"></i>
                                 </span>
                             </div>
                             <div class="flex items-center">
@@ -82,45 +83,44 @@
                             </div>
                         </div>
                     </div>
-                    <hr />
+                    <hr/>
                 </div>
             </div>
             <!-- But Table hre -->
             <div class="col-span-8 bg-white drop-shadow rounded-md px-4 py-4">
                 <table class="table">
                     <thead>
-                        <tr class="text-nowrap">
-                            <th>{{ __('site.Warehouse') }}</th>
-                            <th>{{ __('site.minimumsellingprice') }}</th>
-                            <th>{{ __('site.Comission') }}</th>
-                            <th> {{ __('site.ShippingCost') }}</th>
-                            <th> {{ __('site.Status') }}</th>
-                        </tr>
+                    <tr class="text-nowrap">
+                        <th>{{ __('site.Warehouse') }}</th>
+                        <th>{{ __('site.minimumsellingprice') }}</th>
+                        <th>{{ __('site.Comission') }}</th>
+                        <th> {{ __('site.ShippingCost') }}</th>
+                        <th> {{ __('site.Status') }}</th>
+                    </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                        @foreach ($product->affiliatecountries as $country)
-                            <tr>
+                    @foreach ($product->affiliatecountries as $country)
+                        <tr>
 
-                                <td><object type="image/svg+xml"
-                                        data="{{ asset('assets/countries/flags/' . $country->flag) }}" width="20"
-                                        height="20"></object></td>
-                                <td>${{ $product->minimum_selling_price }}</td>
-                                <td>${{ $product->comission }}</td>
-                                <td>${{ $country->shipping_cost }}</td>
-                                <td>
+                            <td><img src="{{ asset('assets/countries/flags/' . $country->flag) }}"
+                                     width="20" height="20"></td>
+                            <td>${{ $product->minimum_selling_price }}</td>
+                            <td>${{ $product->comission }}</td>
+                            <td>${{ $country->shipping_cost }}</td>
+                            <td>
 
-                                    @if ($country->pivot->stock >= 20)
-                                        <span class="badge rounded-pill bg-success"> {{ __('site.AvailableNow') }} </span>
-                                    @elseif ($country->pivot->stock < 20 && $country->pivot->stock >= 10)
-                                        <span class="badge rounded-pill bg-primary"> {{ __('site.MediumStock') }} </span>
-                                    @elseif($country->pivot->stock < 10 && $country->pivot->stock >= 1)
-                                        <span class="badge rounded-pill bg-warning"> {{ __('site.LowStock') }} </span>
-                                    @else
-                                        <span class="badge rounded-pill bg-danger"> {{ __('site.OutOfStock') }} </span>
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
+                                @if ($country->pivot->stock >= 20)
+                                    <span class="badge rounded-pill bg-success"> {{ __('site.AvailableNow') }} </span>
+                                @elseif ($country->pivot->stock < 20 && $country->pivot->stock >= 10)
+                                    <span class="badge rounded-pill bg-primary"> {{ __('site.MediumStock') }} </span>
+                                @elseif($country->pivot->stock < 10 && $country->pivot->stock >= 1)
+                                    <span class="badge rounded-pill bg-warning"> {{ __('site.LowStock') }} </span>
+                                @else
+                                    <span class="badge rounded-pill bg-danger"> {{ __('site.OutOfStock') }} </span>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
 
                     </tbody>
                 </table>
@@ -168,7 +168,7 @@
         }
     </script>
     <script>
-        document.getElementById("copySku").addEventListener("click", function() {
+        document.getElementById("copySku").addEventListener("click", function () {
             const copyText = document.getElementById("sku").innerText;
             navigator.clipboard.writeText(copyText);
             alert("SKU Copied");

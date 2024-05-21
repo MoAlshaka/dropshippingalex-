@@ -23,39 +23,19 @@
                     </div>
                     <div class="card-body">
                         <form class="flex flex-col gap-6" action="{{ route('offers.store') }}" method="post"
-                            enctype="multipart/form-data">
+                              enctype="multipart/form-data">
                             @csrf
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="basic-default-name">
-                                    {{ __('site.Title') }}</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="basic-default-name" name="title"
-                                        placeholder="{{ __('site.Title') }}" />
-                                </div>
-                                @error('title')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="basic-default-company">
-                                    {{ __('site.Description') }}</label>
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" rows="5" name="description"></textarea>
-                                </div>
-                            </div>
-                            @error('description')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
+
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="basic-default-company">
                                     {{ __('site.Image') }}</label>
                                 <div class="col-sm-10">
                                     <input type="file" step="0.01" class="form-control" id="basic-default-company"
-                                        name="image" placeholder="{{ __('site.Image') }}" />
+                                           name="image" placeholder="{{ __('site.Image') }}"/>
                                 </div>
                             </div>
                             @error('image')
-                                <div class="text-danger">{{ $message }}</div>
+                            <div class="text-danger">{{ $message }}</div>
                             @enderror
 
                             <div class="row mb-3">
@@ -63,10 +43,10 @@
                                     {{ __('site.StartDate') }}</label>
                                 <div class="col-sm-10">
                                     <input type="date" class="form-control" id="basic-default-name" name="start_date"
-                                        placeholder="{{ __('site.StartDate') }}" />
+                                           placeholder="{{ __('site.StartDate') }}"/>
                                 </div>
                                 @error('start_date')
-                                    <div class="text-danger">{{ $message }}</div>
+                                <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="row mb-3">
@@ -74,10 +54,10 @@
                                     {{ __('site.EndDate') }}</label>
                                 <div class="col-sm-10">
                                     <input type="date" class="form-control" id="basic-default-name" name="end_date"
-                                        placeholder="{{ __('site.EndDate') }}" />
+                                           placeholder="{{ __('site.EndDate') }}"/>
                                 </div>
                                 @error('end_date')
-                                    <div class="text-danger">{{ $message }}</div>
+                                <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 

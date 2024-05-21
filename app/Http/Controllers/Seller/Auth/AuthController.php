@@ -24,13 +24,8 @@ class AuthController extends Controller
             'confirm_password' => 'required|same:password|max:50|min:8',
             'address' => 'required|max:250',
             'phone' => 'required|max:50',
-            'image' => 'required|image|mimes:png,jpg,jpeg|max:2048',
             'national_id' => 'required|image|mimes:png,jpg,jpeg|max:2048',
         ]);
-
-        $image = $request->file('image');
-        $image_name = time() . '.' . $image->getClientOriginalExtension();
-        $image->move(public_path('assets/sellers/images'), $image_name);
 
         $national_id = $request->file('national_id');
         $national_id_name = time() . '.' . $national_id->getClientOriginalExtension();
@@ -41,9 +36,8 @@ class AuthController extends Controller
             'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'phone' =>  str_replace(' ', '', $request->phone),
+            'phone' => str_replace(' ', '', $request->phone),
             'address' => $request->address,
-            'image' => $image_name,
             'national_id' => $national_id_name,
         ]);
 
@@ -52,10 +46,6 @@ class AuthController extends Controller
         return redirect()->route('seller.deactivate');
     }
 
-    public function get_seller_login()
-    {
-        return view('seller.auth.login');
-    }
     public function login(Request $request)
     {
         $request->validate([
@@ -80,6 +70,11 @@ class AuthController extends Controller
                 'error' => 'The email or password is incorrect.'
             ]);
         }
+    }
+
+    public function get_seller_login()
+    {
+        return view('seller.auth.login');
     }
 
     public function logout()

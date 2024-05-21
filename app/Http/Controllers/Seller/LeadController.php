@@ -20,11 +20,117 @@ class LeadController extends Controller
      */
     public function index()
     {
-        $countries=Country::all();
+        $countries = Country::all();
         $status = Lead::distinct()->pluck('status');
         $types = Lead::distinct()->pluck('type');
         $leads = Lead::where('seller_id', auth()->guard('seller')->id())->orderBy('id', 'DESC')->paginate(PAGINATION_COUNT);
-        return view('seller.leads.index', compact('leads','countries','status','types'));
+        return view('seller.leads.index', compact('leads', 'countries', 'status', 'types'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        // Filter out rows where all indices are empty
+        $filteredData = array_filter($request->input('data'), function ($row) {
+            // Filter out empty values in the row
+            $filteredRow = array_filter($row);
+            // Check if the filtered row is empty
+            return !empty($filteredRow);
+        });
+
+        // If there are no valid rows after filtering, return an error
+        if (empty($filteredData)) {
+            return response()->json(['errors' => ['data' => ['At least one row of data is required.']]], 422);
+        }
+        $errors = [];
+        foreach ($filteredData as $index => $row) {
+
+            if (empty($row[3])) {
+                $errors['warehouse'] = "Warehouse is required";
+            }
+            if (empty($row[3])) {
+                $errors['customer_name'] = "Customer name is required";
+            }
+            if (empty($row[4])) {
+                $errors['customer_phone'] = "Customer phone is required";
+            }
+            if (!empty($row[6])) {
+                if (!filter_var($row[6], FILTER_VALIDATE_EMAIL)) {
+
+                    $errors['customer_email'] = "Customer email mmust be valid";
+                }
+            }
+            if (empty($row[7])) {
+                $errors['customer_country'] = "Customer country is required";
+            }
+            if (empty($row[10])) {
+                $errors['item_sku'] = "Item SKU is required";
+            }
+            if (!empty($row[11])) {
+                if (!is_numeric($row[11])) {
+                    $errors['quantity'] = "Quantity must be a number.";
+                } else {
+                    $maxInt = PHP_INT_MAX;
+                    if ($row[11] > $maxInt) {
+                        $errors['quantity'] = "Quantity exceeds the maximum value of integer type.";
+                    }
+                }
+            } else {
+                $errors['quantity'] = "Quantity is required.";
+            }
+            if (!empty($row[12])) {
+                if (!is_numeric($row[12])) {
+                    $errors['total'] = "Total must be a number.";
+                }
+            } else {
+                $errors['total'] = "Total is required.";
+            }
+            if (empty($row[13])) {
+                $errors['currency'] = "Currency is required";
+            }
+
+            // If there are errors for this row, add them to the allErrors array
+            if (!empty($errors)) {
+                $allErrors["data.$index"] = $errors;
+            }
+        }
+        if (empty($errors)) {
+            foreach ($filteredData as $index => $row) {
+                $regular = SharedProduct::where('sku', $row[10])->exists();
+                $commission = AffiliateProduct::where('sku', $row[10])->exists();
+                $lead = Lead::create([
+                    'order_date' => $row[0] ?? now()->toDateString(),
+                    'store_reference' => auth()->guard('seller')->user()->id,
+                    'store_name' => $row[1] ?? null,
+                    'warehouse' => $row[2],
+                    'customer_name' => $row[3],
+                    'customer_phone' => $row[4],
+                    'customer_mobile' => $row[5] ?? null,
+                    'customer_email' => $row[6] ?? null,
+                    'customer_country' => $row[7],
+                    'customer_city' => $row[8] ?? null,
+                    'customer_address' => $row[9] ?? null,
+                    'item_sku' => $row[10],
+                    'quantity' => $row[11],
+                    'total' => $row[12],
+                    'currency' => $row[13],
+                    'notes' => $row[14] ?? null,
+                    'type' => $commission ? 'commission' : ($regular ? 'regular' : null),
+                    'seller_id' => auth()->guard('seller')->id(),
+                ]);
+
+
+            }
+        }
+
+        // If there are errors for any row, return all errors
+        if (!empty($allErrors)) {
+            return response()->json(['errors' => $allErrors], 422);
+        }
+
+        return response()->json(['Add' => 'Lead stored successfully'], 200);
     }
 
     /**
@@ -55,119 +161,6 @@ class LeadController extends Controller
     }
 
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        // Filter out rows where all indices are empty
-        $filteredData = array_filter($request->input('data'), function ($row) {
-            // Filter out empty values in the row
-            $filteredRow = array_filter($row);
-            // Check if the filtered row is empty
-            return !empty($filteredRow);
-        });
-
-        // If there are no valid rows after filtering, return an error
-        if (empty($filteredData)) {
-            return response()->json(['errors' => ['data' => ['At least one row of data is required.']]], 422);
-        }
-        $errors = [];
-        foreach ($filteredData as $index => $row) {
-
-            if (empty($row[1])) {
-                $errors['store_reference'] = "Store reference is required";
-            }
-            if (empty($row[3])) {
-                $errors['warehouse'] = "Warehouse is required";
-            }
-            if (empty($row[4])) {
-                $errors['customer_name'] = "Customer name is required";
-            }
-            if (empty($row[5])) {
-                $errors['customer_phone'] = "Customer phone is required";
-            }
-            if (!empty($row[7])) {
-                if (!filter_var($row[7], FILTER_VALIDATE_EMAIL)) {
-
-                    $errors['customer_email'] = "Customer email mmust be valid";
-                }
-            }
-            if (empty($row[8])) {
-                $errors['customer_country'] = "Customer country is required";
-            }
-            if (empty($row[11])) {
-                $errors['item_sku'] = "Item SKU is required";
-            }
-            if (!empty($row[12])) {
-                if (!is_numeric($row[12])) {
-                    $errors['quantity'] = "Quantity must be a number.";
-                } else {
-                    $maxInt = PHP_INT_MAX;
-                    if ($row[12] > $maxInt) {
-                        $errors['quantity'] = "Quantity exceeds the maximum value of integer type.";
-                    }
-                }
-            } else {
-                $errors['quantity'] = "Quantity is required.";
-            }
-            if (!empty($row[13])) {
-                if (!is_numeric($row[13])) {
-                    $errors['total'] = "Total must be a number.";
-                }
-            } else {
-                $errors['total'] = "Total is required.";
-            }
-            if (empty($row[14])) {
-                $errors['currency'] = "Currency is required";
-            }
-
-            // If there are errors for this row, add them to the allErrors array
-            if (!empty($errors)) {
-                $allErrors["data.$index"] = $errors;
-            }
-        }
-        if (empty($errors)) {
-            foreach ($filteredData as $index => $row) {
-                $regular = SharedProduct::where('sku', $row[11])->exists();
-                $commission = AffiliateProduct::where('sku', $row[11])->exists();
-                $lead=Lead::create([
-                    'order_date' => $row[0] ?? now()->toDateString(),
-                    'store_reference' => $row[1],
-                    'store_name' => $row[2] ?? null,
-                    'warehouse' => $row[3],
-                    'customer_name' => $row[4],
-                    'customer_phone' => $row[5],
-                    'customer_mobile' => $row[6] ?? null,
-                    'customer_email' => $row[7] ?? null,
-                    'customer_country' => $row[8],
-                    'customer_city' => $row[9] ?? null,
-                    'customer_address' => $row[10] ?? null,
-                    'item_sku' => $row[11],
-                    'quantity' => $row[12],
-                    'total' => $row[13],
-                    'currency' => $row[14],
-                    'notes' => $row[15] ?? null,
-                    'type' => $commission ? 'commission' : ($regular ? 'regular' : null),
-                    'seller_id' => auth()->guard('seller')->id(),
-                ]);
-
-                Order::create([
-                    'lead_id' => $lead->id,
-                    'seller_id' => auth()->guard('seller')->id(),
-                ]);
-            }
-        }
-
-        // If there are errors for any row, return all errors
-        if (!empty($allErrors)) {
-            return response()->json(['errors' => $allErrors], 422);
-        }
-
-        return response()->json(['Add' => 'Lead stored successfully'], 200);
-    }
-
-
 
 
 
@@ -179,10 +172,10 @@ class LeadController extends Controller
     public function show(string $id)
     {
         $lead = Lead::findorfail($id);
-        $sharedproduct=SharedProduct::where('sku',$lead->item_sku)->first();
-        $affiliateproduct=AffiliateProduct::where('sku',$lead->item_sku)->first();
-        $country= Country::where('name' ,$lead->warehouse )->first();
-        return view('seller.leads.show', compact('lead','country' , 'sharedproduct' , 'affiliateproduct'));
+        $sharedproduct = SharedProduct::where('sku', $lead->item_sku)->first();
+        $affiliateproduct = AffiliateProduct::where('sku', $lead->item_sku)->first();
+        $country = Country::where('name', $lead->warehouse)->first();
+        return view('seller.leads.show', compact('lead', 'country', 'sharedproduct', 'affiliateproduct'));
     }
 
     /**
@@ -254,9 +247,10 @@ class LeadController extends Controller
         $request->validate([
             'ref' => 'required|max:50'
         ]);
-        $leads=Lead::where('store_reference',$request->ref)->orderBy('id', 'DESC')->paginate(COUNT);
+        $leads = Lead::where('store_reference', $request->ref)->orderBy('id', 'DESC')->paginate(COUNT);
         return view('admin.leads.index', compact('leads'));
     }
+
     public function filter(Request $request)
     {
 
@@ -276,7 +270,7 @@ class LeadController extends Controller
         }
 
         if ($request->has('warehouse') && $request->warehouse != '') {
-            $query->orWhereIn('warehouse',  $request->warehouse );
+            $query->orWhereIn('warehouse', $request->warehouse);
         }
 
         if ($request->has('country') && $request->country != '') {
@@ -290,10 +284,10 @@ class LeadController extends Controller
         }
 
         $leads = $query->orderBy('id', 'DESC')->paginate(PAGINATION_COUNT);// Replace 10 with your desired number of items per page
-        $countries=Country::all();
+        $countries = Country::all();
         $status = Lead::distinct()->pluck('status');
         $types = Lead::distinct()->pluck('type');
-        return view('seller.leads.index', compact('leads','countries','status','types'));
+        return view('seller.leads.index', compact('leads', 'countries', 'status', 'types'));
 
     }
 }

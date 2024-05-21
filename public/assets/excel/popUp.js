@@ -15,34 +15,27 @@ document.getElementById("addRow").addEventListener("click", () => {
         },
         {
             id: 1,
-            name: "store Reference",
-            msgErr: "Please Enter a valid Store Reference",
-            required: true,
-            regex: /[^$][.*\d+]?.*/gi,
-        },
-        {
-            id: 2,
             name: "store Name",
             msgErr: "Please Enter a valid Store Name",
             required: false,
             regex: /[^$][.*\d+]?.*/gi,
         },
         {
-            id: 3,
+            id: 2,
             name: "warehouse",
             msgErr: "Please Enter a valid Warehouse",
             required: true,
             regex: /[^$][.*\d+]?.*/gi,
         },
         {
-            id: 4,
+            id: 3,
             name: "customer Name",
             msgErr: "Please Enter a valid Customer Name",
             required: true,
             regex: /[^$][.*\d+]?.*/gi,
         },
         {
-            id: 5,
+            id: 4,
             name: "customer Phone",
             msgErr: "Please Enter a valid Customer Phone",
             required: true,
@@ -50,7 +43,7 @@ document.getElementById("addRow").addEventListener("click", () => {
                 /^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$/g,
         },
         {
-            id: 6,
+            id: 5,
             name: "customer Phone 2",
             msgErr: "Please Enter a valid Customer Phone",
             required: false,
@@ -58,56 +51,56 @@ document.getElementById("addRow").addEventListener("click", () => {
                 /^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$/g,
         },
         {
-            id: 7,
+            id: 6,
             name: "customer Email",
             msgErr: "Please Enter a valid Customer Email",
             required: false,
             regex: /([\w\.\-_]+)?\w+@[\w-_]+(\.\w+){1,}/g,
         },
         {
-            id: 8,
+            id: 7,
             name: "customer Country",
             msgErr: "Please Enter a valid Customer Country",
             required: true,
             regex: /[^$][.*\d+]?.*/gi,
         },
         {
-            id: 9,
+            id: 8,
             name: "customer City",
             msgErr: "Please Enter a valid Customer City",
             required: false,
             regex: /[^$][.*\d+]?.*/gi,
         },
         {
-            id: 10,
+            id: 9,
             name: "customer Address",
             msgErr: "Please Enter a valid Customer Address",
             required: false,
             regex: /[^$][.*\d+]?.*/gi,
         },
         {
-            id: 11,
+            id: 10,
             name: "SKU",
             msgErr: "Please Enter a valid SKU",
             required: true,
             regex: /[^$][.*\d+]?.*/gi,
         },
         {
-            id: 12,
+            id: 11,
             name: "Quantity",
             msgErr: "Please Enter a valid Quantity",
             required: true,
             regex: /(^(0{0,1}|([1-9][0-9]*))?$)/g,
         },
         {
-            id: 13,
+            id: 12,
             name: "total",
             msgErr: "Please Enter a valid total",
             required: true,
             regex: /(^(0{0,1}|([1-9][0-9]*))(\.[0-9]{1,3})?$)/g,
         },
         {
-            id: 14,
+            id: 13,
             name: "curency",
             msgErr: "Please Enter a valid curency",
             required: true,
@@ -115,7 +108,7 @@ document.getElementById("addRow").addEventListener("click", () => {
             regex: /[^$][.*\d+]?.*/gi,
         },
         {
-            id: 15,
+            id: 14,
             name: "notes",
             msgErr: "Please Enter a valid notes",
             required: false,
@@ -124,15 +117,15 @@ document.getElementById("addRow").addEventListener("click", () => {
     ];
     const data = myTable.getJson().filter((row) => {
         if (
-            row[1] &&
+
+            row[2] &&
             row[3] &&
             row[4] &&
-            row[5] &&
-            row[8] &&
+            row[7] &&
+            row[10] &&
             row[11] &&
             row[12] &&
-            row[13] &&
-            row[14]
+            row[13]
         ) {
             return true;
         }

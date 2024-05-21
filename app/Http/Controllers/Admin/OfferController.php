@@ -15,21 +15,11 @@ class OfferController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.offers.create');
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|max:50',
-            'description' => 'required',
             'image' => 'required|mimes:png,jpg',
             'start_date' => 'required|date',
             'end_date' => 'required|date',
@@ -40,14 +30,21 @@ class OfferController extends Controller
         $image->move(public_path('assets/offers/images'), $imageName);
 
         Offer::create([
-            'title' => $request->title,
-            'description' => $request->description,
+            
             'image' => $imageName,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'admin_id' => auth()->guard('admin')->user()->id,
         ]);
         return redirect()->route('offers.index')->with(['Add' => 'Add Offer successfully']);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('admin.offers.create');
     }
 
     /**

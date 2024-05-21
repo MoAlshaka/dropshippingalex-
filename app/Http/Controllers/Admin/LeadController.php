@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AffiliateProduct;
 use App\Models\Country;
 use App\Models\Lead;
+use App\Models\Order;
 use App\Models\SharedProduct;
 use Illuminate\Http\Request;
 
@@ -13,11 +14,11 @@ class LeadController extends Controller
 {
     public function index()
     {
-        $countries=Country::all();
+        $countries = Country::all();
         $status = Lead::distinct()->pluck('status');
         $types = Lead::distinct()->pluck('type');
         $leads = Lead::orderBy('id', 'DESC')->paginate(COUNT);
-        return view('admin.leads.index', compact('leads','countries','status','types'));
+        return view('admin.leads.index', compact('leads', 'countries', 'status', 'types'));
     }
 
     public function edit($id)
@@ -25,6 +26,7 @@ class LeadController extends Controller
         $lead = Lead::findorfail($id);
         return view('admin.leads.edit', compact('lead'));
     }
+
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -34,8 +36,14 @@ class LeadController extends Controller
         $lead->update([
             'status' => $request->status
         ]);
+
+        Order::create([
+            'lead_id' => $lead->id,
+            'seller_id' => $lead->seller_id,
+        ]);
         return redirect()->route('admin.leads.index')->with(['Update' => 'Lead status updated successfully']);
     }
+
     public function delete($id)
     {
         $lead = Lead::findorfail($id);
@@ -49,10 +57,10 @@ class LeadController extends Controller
     public function show($id)
     {
         $lead = Lead::findorfail($id);
-        $sharedproduct=SharedProduct::where('sku',$lead->item_sku)->first();
-        $affiliateproduct=AffiliateProduct::where('sku',$lead->item_sku)->first();
-        $country= Country::where('name' ,$lead->warehouse )->first();
-        return view('admin.leads.show', compact('lead' , 'country' , 'affiliateproduct' , 'sharedproduct'));
+        $sharedproduct = SharedProduct::where('sku', $lead->item_sku)->first();
+        $affiliateproduct = AffiliateProduct::where('sku', $lead->item_sku)->first();
+        $country = Country::where('name', $lead->warehouse)->first();
+        return view('admin.leads.show', compact('lead', 'country', 'affiliateproduct', 'sharedproduct'));
     }
 
     public function search(Request $request)
@@ -60,9 +68,10 @@ class LeadController extends Controller
         $request->validate([
             'ref' => 'required|max:50'
         ]);
-        $leads=Lead::where('store_reference',$request->ref)->orderBy('id', 'DESC')->paginate(COUNT);
+        $leads = Lead::where('store_reference', $request->ref)->orderBy('id', 'DESC')->paginate(COUNT);
         return view('admin.leads.index', compact('leads'));
     }
+
     public function filter(Request $request)
     {
 
@@ -82,9 +91,8 @@ class LeadController extends Controller
         }
 
 
-
         if ($request->has('warehouse') && $request->warehouse != '') {
-            $query->orWhereIn('warehouse',  $request->warehouse );
+            $query->orWhereIn('warehouse', $request->warehouse);
         }
 
         if ($request->has('country') && $request->country != '') {
@@ -98,10 +106,10 @@ class LeadController extends Controller
         }
 
         $leads = $query->orderBy('id', 'DESC')->paginate(COUNT);// Replace 10 with your desired number of items per page
-        $countries=Country::all();
+        $countries = Country::all();
         $status = Lead::distinct()->pluck('status');
         $types = Lead::distinct()->pluck('type');
-        return view('admin.leads.index', compact('leads','countries','status','types'));
+        return view('admin.leads.index', compact('leads', 'countries', 'status', 'types'));
 
     }
 

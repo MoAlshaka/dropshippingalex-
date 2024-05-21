@@ -7,10 +7,10 @@
 
 
 @section('css')
-{{--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"--}}
-{{--        integrity="sha512-c5dyc+3ht10w+7s6OfBxHwZZkm5A+qLmLaB+pa3RFsKcOCme7/uBv2mtUfFjS+2b2q5j//BXJsW0sB2EhfaR6A=="--}}
-{{--        crossorigin="anonymous" referrerpolicy="no-referrer" />--}}
-    <link rel="stylesheet" href="{{ asset('assets/css/product.css') }}" />
+    {{--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"--}}
+    {{--        integrity="sha512-c5dyc+3ht10w+7s6OfBxHwZZkm5A+qLmLaB+pa3RFsKcOCme7/uBv2mtUfFjS+2b2q5j//BXJsW0sB2EhfaR6A=="--}}
+    {{--        crossorigin="anonymous" referrerpolicy="no-referrer" />--}}
+    <link rel="stylesheet" href="{{ asset('assets/css/product.css') }}"/>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .accordion-button {
@@ -20,9 +20,6 @@
 @endsection
 
 @section('content')
-
-
-
 
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="py-3 mb-4"><span class="text-muted fw-light"> {{ __('site.Dashboard') }} /</span>
@@ -56,7 +53,7 @@
 
                 class="px-6 py-2 font-semibold rounded-2xl text-white bg-purple-300 bg-opacity-20 hover:bg-opacity-30 hover:bg-purple-500 transition ease-in-out"
             >
-             <a href="{{route('offers.show',$offer->id)}}" > View the offer</a>
+             <a href="{{route('offers.show',$offer->id)}}"> View the offer</a>
             </button>
             <span class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
               <span
@@ -86,17 +83,17 @@
 
                             <div class=" h-full flex flex-fill gap-6">
                                 <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
-                                    href="{{ route('affiliate-products.index') }}">
+                                   href="{{ route('affiliate-products.index') }}">
                                     <i class="mdi mdi-select-all"></i>
                                     {{ __('site.AllProducts') }}
                                 </a>
                                 <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
-                                    href="{{ route('admin.new.affiliate.product') }}">
+                                   href="{{ route('admin.new.affiliate.product') }}">
                                     <i class="mdi mdi-new-box"></i>
                                     {{ __('site.NewProducts') }}
                                 </a>
                                 <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
-                                    href="{{ route('admin.suggested.affiliate.product') }}">
+                                   href="{{ route('admin.suggested.affiliate.product') }}">
                                     <i class="mdi mdi-rocket-launch-outline"></i>
                                     {{ __('site.SuggestedProducts') }}
                                 </a>
@@ -105,23 +102,23 @@
                             </div>
 
                             <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse"
-                                data-bs-target="#accordionWithIcon-1" aria-expanded="false">
+                                    data-bs-target="#accordionWithIcon-1" aria-expanded="false">
                             </button>
                         </div>
 
                         <div id="accordionWithIcon-1" class="accordion-collapse collapse" style="">
                             <div class="accordion-body">
                                 <form id="formAuthentication" class="mb-3 row"
-                                    action="{{ route('admin.search.affiliate.product') }}" method="post">
+                                      action="{{ route('admin.search.affiliate.product') }}" method="post">
                                     @csrf
                                     <div class="form-floating form-floating-outline mb-3 col ">
                                         <input type="text" class="form-control" id="title" name="title"
-                                            placeholder="Enter your product title" autofocus />
+                                               placeholder="Enter your product title" autofocus/>
                                         <label for="title"> {{ __('site.Title') }}</label>
                                     </div>
                                     <div class="form-floating form-floating-outline mb-3 col">
                                         <input type="text" class="form-control" id="sku" name="sku"
-                                            placeholder="Enter your product sku" autofocus />
+                                               placeholder="Enter your product sku" autofocus/>
                                         <label for="sku"> {{ __('site.SKU') }}</label>
                                     </div>
                                     <div class="form-floating form-floating-outline mb-3 col">
@@ -133,6 +130,15 @@
                                         </select>
                                         <label for="country"> {{ __('site.Category') }}</label>
                                     </div>
+                                    <div class="form-floating form-floating-outline mb-3 col">
+                                        <select id="type" class="select2 form-select" name="type"
+                                                data-placeholder="{{ __('site.SelectCommissionType') }}">
+                                            <option value="">{{ __('site.SelectCommissionType') }}</option>
+                                            <option value="on_delivered">{{ __('site.OnDelivered')}}</option>
+                                            <option value="on_confirmed">{{ __('site.OnConfirmed')}}</option>
+                                        </select>
+                                        <label for="type"> {{ __('site.CommissionType') }}</label>
+                                    </div>
                                     <button class="btn btn-primary mb-3 col" type="submit">
                                         {{ __('site.Search') }}</button>
                                 </form>
@@ -141,24 +147,23 @@
                     </div>
 
 
-
                 </div>
             </div>
             <div class="bg-white drop-shadow h-full p-4 rounded-md flex gap-6">
                 <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
-                    href="{{ route('affiliate-products.index') }}">
+                   href="{{ route('affiliate-products.index') }}">
                     <i class="menu-icon tf-icons mdi mdi-earth"></i>
                     {{ __('site.AllCountries') }}
                 </a>
 
 
-
                 @isset($countries)
                     @foreach ($countries as $country)
                         <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
-                            href="{{ route('admin.affiliate.country.filter', $country->id) }}">
-                            <img src="{{ asset('assets/countries/flags/' . $country->flag) }}" alt="{{ $country->name }}"
-                                width="40" height="40">
+                           href="{{ route('admin.affiliate.country.filter', $country->id) }}">
+                            <img src="{{ asset('assets/countries/flags/' . $country->flag) }}"
+                                 alt="{{ $country->name }}"
+                                 width="40" height="40">
                             <span>{{ $country->name }}</span></a>
                     @endforeach
                 @endisset
@@ -167,7 +172,8 @@
                 class="bg-white drop-shadow h-full p-4 rounded-md grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 justify-items-center">
 
                 @if ($products->isEmpty())
-                    <div class="px-4 py-4 text-center text-gray-500 dark:text-gray-400">{{ __('site.NoProducts') }}</div>
+                    <div
+                        class="px-4 py-4 text-center text-gray-500 dark:text-gray-400">{{ __('site.NoProducts') }}</div>
                 @endif
                 @isset($products)
                     @foreach ($products as $product)
@@ -178,15 +184,15 @@
                                     class="absolute w-full h-full bg-black opacity-0 ease-in-out duration-300 group-hover:opacity-40">
                                 </div>
                                 <img class="w-full h-full object-cover"
-                                    src="{{ asset('assets/products/affiliateproduct/images/' . $product->image) }}"
-                                    alt="..."
-                                    onerror="this.onerror=null;this.src='https://app.codpartner.com/images/no_image_found.jpg';" />
+                                     src="{{ asset('assets/products/affiliateproduct/images/' . $product->image) }}"
+                                     alt="..."
+                                     onerror="this.onerror=null;this.src='https://app.codpartner.com/images/no_image_found.jpg';"/>
                             </div>
 
                             <div class="relative">
                                 <a href="{{ route('affiliate-products.show', $product->id) }}"
-                                    class="absolute opacity-0 top-[-60px] left-[-50%] group-hover:left-0 group-hover:!opacity-100 bg-purple-700 text-white p-2 rounded-tr-xl rounded-br-xl ease-out duration-100"
-                                    target="_blank">
+                                   class="absolute opacity-0 top-[-60px] left-[-50%] group-hover:left-0 group-hover:!opacity-100 bg-purple-700 text-white p-2 rounded-tr-xl rounded-br-xl ease-out duration-100"
+                                   target="_blank">
                                     <i class="far fa-eye"></i> <b> {{ __('site.ViewDetails') }} </b>
                                 </a>
                             </div>
@@ -198,15 +204,14 @@
                                 <div class="d-flex gap-2 my-2" style="grid-row-gap: 0.3rem; grid-column-gap: 0.3rem">
                                     @foreach ($product->affiliatecountries as $country)
                                         <span class="rounded-md font-bold text-sm">
-                                            <object type="image/svg+xml"
-                                                data="{{ asset('assets/countries/flags/' . $country->flag) }}" width="20"
-                                                height="20"></object>
+                                            <img src="{{ asset('assets/countries/flags/' . $country->flag) }}"
+                                                 width="20" height="20">
                                         </span>
                                     @endforeach
                                 </div>
                                 <div>
                                     <div>
-                                        <b>${{ $product->minimum_selling_price }} - ${{ $product->comission }}</b>
+                                        <b>${{ $product->comission }}</b>
                                     </div>
                                 </div>
                             </div>
@@ -217,8 +222,6 @@
             {{ $products->links() }}
         </div>
     </div>
-
-
 
 @endsection
 

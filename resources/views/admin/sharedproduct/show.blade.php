@@ -103,9 +103,8 @@
                         <tr>
 
                             <td>
-                                <object type="image/svg+xml"
-                                        data="{{ asset('assets/countries/flags/' . $country->flag) }}" width="20"
-                                        height="20"></object>
+                                <img src="{{ asset('assets/countries/flags/' . $country->flag) }}"
+                                     width="20" height="20">
                             </td>
                             <td>${{ $product->unit_cost }}</td>
                             <td>${{ $product->recommended_price }}</td>

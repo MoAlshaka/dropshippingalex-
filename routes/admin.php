@@ -96,7 +96,7 @@ Route::group([
     //Reports
     Route::get('reports', [ReportController::class, 'index'])->name('admin.reports.index');
     Route::get('filter/report/{country}', [ReportController::class, 'filter_country'])->name('admin.report.country.filter');
-
+    Route::post('reports/filter', [ReportController::class, 'filter'])->name('admin.reports.filter');
 
     //logout
     Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout');

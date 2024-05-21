@@ -1,8 +1,8 @@
-@extends('layouts.master')
+@extends('layouts.seller.master')
 
 
 @section('title')
-    {{ __('site.Leads') }}
+    {{ __('site.Orders') }}
 @endsection
 
 
@@ -58,7 +58,7 @@
         <h4 class="py-3 mb-4 d-flex justify-content-between">
             <div>
                 <span class="text-muted fw-light"> {{ __('site.Dashboard') }} /</span>
-                {{ __('site.Leads') }}
+                {{ __('site.Orders') }}
             </div>
             <div>
                 <button class="btn btn-outline-primary waves-effect waves-light" type="button"
@@ -70,11 +70,11 @@
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
                      aria-labelledby="offcanvasRightLabel">
                     <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasRightLabel">{{__('site.FliterLeads')}}</h5>
+                        <h5 class="offcanvas-title" id="offcanvasRightLabel">{{__('site.FliterOrders')}}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
-                        <form action="{{route('admin.leads.filter')}}" method="post">
+                        <form action="{{route('seller.orders.filter')}}" method="post">
                             @csrf
                             <div class="mb-3">
                                 <div class="mb-4">
@@ -155,6 +155,44 @@
                                         <label for="type">{{__('site.Type')}}</label>
                                     </div>
                                 </div>
+                                <div class=" mb-4">
+                                    <div class="form-floating form-floating-outline">
+                                        <select
+                                            name="shipment_status[]"
+                                            id="type"
+                                            class="selectpicker w-100"
+                                            data-style="btn-default"
+                                            multiple
+                                            data-actions-box="true">
+                                            @isset($shipment_status)
+                                                @foreach($shipment_status as $info )
+                                                    <option value="{{$info}}">{{$info}}</option>
+                                                @endforeach
+                                            @endisset
+                                        </select>
+                                        <label for="type">{{__('site.ShipmentStatus')}}</label>
+                                    </div>
+                                </div>
+                                <div class=" mb-4">
+                                    <div class="form-floating form-floating-outline">
+                                        <select
+                                            name="payment_status[]"
+                                            id="type"
+                                            class="selectpicker w-100"
+                                            data-style="btn-default"
+                                            multiple
+                                            data-actions-box="true">
+                                            @isset($payment_status)
+                                                @foreach($payment_status as $info )
+                                                    <option value="{{$info}}">{{$info}}</option>
+                                                @endforeach
+                                            @endisset
+                                        </select>
+                                        <label for="type">{{__('site.PaymentStatus')}}</label>
+                                    </div>
+                                </div>
+
+
                             </div>
                             <button type="submit" class="btn btn-primary waves-effect waves-light">filter</button>
                             <button type="reset" class="btn btn-outline-danger waves-effect">reset</button>
@@ -175,25 +213,9 @@
         @if (session()->has('Warning'))
             <div class="alert alert-warning" role="alert">{{ session()->get('Warning') }}</div>
         @endif
-
         <div class="card p-4">
             <div class="row">
-                <h5 class="card-header col-7"> {{ __('site.Leads') }}</h5>
-                <div class="col-5">
-                    <form action="{{route('admin.leads.search')}}" method="post">
-                        @csrf
-
-                        <div class="form-floating form-floating-outline  d-flex ms-4 mb-4">
-                            <input type="text" id="ref" name="ref"
-                                   class="form-control" placeholder="{{ __('site.REF') }}"
-                            />
-                            <label for="ref"> {{ __('site.REF') }}</label>
-                            <button type="submit" class="btn btn-primary btn-next btn-submit ms-2">
-                                {{ __('site.Search') }}</button>
-                        </div>
-
-                    </form>
-                </div>
+                <h5 class="card-header col-7"> {{ __('site.Orders') }}</h5>
 
             </div>
             <div class="table-responsive text-nowrap">
@@ -204,64 +226,46 @@
                         <th>{{ __('site.REF') }}</th>
                         <th>{{ __('site.CreatedAt') }}</th>
                         <th>{{ __('site.Customer') }}</th>
-                        <th>{{ __('site.Phone') }}</th>
-                        <th>{{ __('site.SKU') }}</th>
                         <th>{{ __('site.Total') }}</th>
+                        <th>{{ __('site.Warehouse') }}</th>
+                        {{--                        <th>{{ __('site.ShippingDetails') }}</th>--}}
                         <th>{{ __('site.Type') }}</th>
-                        <th>{{ __('site.Calls') }}</th>
-                        <th>{{ __('site.Status') }}</th>
+                        <th>{{ __('site.ShipmentStatus') }}</th>
+                        <th>{{ __('site.PaymentStatus') }}</th>
+                        <th>{{ __('site.PaymentType') }}</th>
                         <th>{{ __('site.Actions') }}</th>
                     </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                    @if (isset($leads))
+                    @if (isset($orders))
                         @php
                             $i = 1;
                         @endphp
-                        @foreach ($leads as $lead)
+                        @foreach ($orders as $order)
                             <tr>
                                 <th scope="row">{{ $i++ }}</th>
-                                <td>{{ $lead->store_reference }}</td>
-                                <td>{{ $lead->order_date }}</td>
-                                <td>{{ $lead->customer_name }}</td>
-                                <td>{{ $lead->customer_phone }}</td>
-                                <td>{{ $lead->item_sku }}</td>
-                                <td>{{ $lead->total }}</td>
-                                <td> {{ $lead->type }}</td>
-                                <td> {{ $lead->order->calls ?? 0 }}</td>
-                                <td> {{ $lead->status }}</td>
+                                <td>{{ $order->lead->store_reference }}</td>
+                                <td>{{ $order->lead->order_date }}</td>
+                                <td>{{ $order->lead->customer_name }}</td>
+                                <td>{{ $order->lead->total }}</td>
+                                <td>{{ $order->lead->warehouse }}</td>
+                                {{--                                <td> @foreach ($order->shippingdetails as $shippingdetail)--}}
+                                {{--                                    {{ $shippingdetail->details }}--}}
+                                {{--                                    @endforeach</td>--}}
+                                <td> {{ $order->lead->type }}</td>
+                                <td>{{ $order->shipment_status }}</td>
+                                <td>{{ $order->payment_status }}</td>
+                                <td> {{ $order->payment_type }}</td>
+
                                 <td style="display: flex;
                                         gap: 6px;">
                                     <a class="  text-primary hover:bg-success hover:text-white"
-                                       href="{{ route('admin.lead.show', $lead->id) }}">
+                                       href="{{ route('seller.orders.show', $order->id) }}">
                                         <button type="button" class="btn btn-icon btn-info waves-effect waves-light">
                                             <span class="tf-icons mdi mdi-information-outline"></span>
 
                                         </button>
                                     </a>
-                                    @if ($lead->status == 'pending')
-                                        <a class="  text-primary hover:bg-success hover:text-white"
-                                           href="{{ route('admin.leads.edit', $lead->id) }}">
-                                            <button type="button"
-                                                    class="btn btn-icon btn-primary waves-effect waves-light">
-                                                <span class="tf-icons mdi mdi-tag-edit-outline"></span>
-
-                                            </button>
-                                        </a>
-                                        <form action="{{ route('admin.leads.delete', $lead->id) }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-
-                                            <button type="submit"
-                                                    class="btn btn-icon btn-danger waves-effect waves-light">
-                                                <span class="tf-icons mdi mdi-trash-can-outline"></span>
-
-                                            </button>
-                                        </form>
-                                    @else
-                                        {{ __('site.NoAction') }}
-                                    @endif
-
 
                                 </td>
                             </tr>
@@ -274,7 +278,7 @@
                     @endif
                     </tbody>
                 </table>
-                {{ $leads->links() }}
+                {{ $orders->links() }}
             </div>
         </div>
     </div>

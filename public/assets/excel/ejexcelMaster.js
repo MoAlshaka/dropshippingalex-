@@ -1,16 +1,12 @@
 const data = [];
-const minDimensions = [16, 10];
+const minDimensions = [15, 10];
 let columns = [
     {
         type: "calendar",
         title: "Order Date",
         width: 180,
     },
-    {
-        type: "dropdown",
-        title: "Store Refence *",
-        width: 180,
-    },
+
     {
         type: "text",
         title: "Store Name",
@@ -75,7 +71,7 @@ let columns = [
     {
         type: "dropdown",
         title: "Currency *",
-        source: ["AED","BHD","KWD","MAD","OMR","QAR","USD", "XOF"],
+        source: ["AED", "BHD", "KWD", "MAD", "OMR", "QAR", "USD", "XOF"],
         width: 180,
     },
     {
@@ -89,12 +85,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const countries = document.querySelector(`.excel_container`).getAttribute("data-country");
     const sku = document.querySelector(`.excel_container`).getAttribute("data-sku");
-    const ref = document.querySelector(`.excel_container`).getAttribute("data-ref");
+    
     console.log(countries);
-    columns[1].source = ref.split(",");
-    columns[3].source = countries.split(",");
-    columns[8].source = countries.split(",");
-    columns[11].source = sku.split(",");
+
+    columns[2].source = countries.split(",");
+    columns[7].source = countries.split(",");
+    columns[10].source = sku.split(",");
 
 });
 

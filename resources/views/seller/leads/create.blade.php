@@ -6,10 +6,10 @@
 
 @section('css')
 
-    <link rel="stylesheet" href="https://bossanova.uk/jspreadsheet/v4/jexcel.css" type="text/css" />
+    <link rel="stylesheet" href="https://bossanova.uk/jspreadsheet/v4/jexcel.css" type="text/css"/>
 
-    <link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css" />
-    <link rel="stylesheet" href="{{ asset('assets/excel/ejexcelMaster.css') }}" />
+    <link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css"/>
+    <link rel="stylesheet" href="{{ asset('assets/excel/ejexcelMaster.css') }}"/>
     <script src="https://bossanova.uk/jspreadsheet/v4/jexcel.js"></script>
     <script src="https://jsuites.net/v4/jsuites.js"></script>
 
@@ -31,13 +31,13 @@
         <h4 class="py-3 mb-4"><span class="text-muted fw-light"> {{ __('site.Dashboard') }} /</span>
             {{ __('site.CreateLeads') }}</h4>
         <div class="card">
-            <div class="excel_container" data-country="{{ $countries }}" data-sku="{{ $sku }}" data-ref="{{auth()->guard('seller')->user()->id + 1000}}">
+            <div class="excel_container" data-country="{{ $countries }}" data-sku="{{ $sku }}">
                 <div id="spreadsheet"></div>
             </div>
             @csrf
             <div>
                 <button id="addRow" class="btn btn-primary waves-effect waves-light"
-                    data-route="{{ route('leads.store') }}"> {{ __('site.Save') }}</button>
+                        data-route="{{ route('leads.store') }}"> {{ __('site.Save') }}</button>
             </div>
         </div>
 

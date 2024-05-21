@@ -18,14 +18,6 @@ class CountryController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.countries.create');
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -33,8 +25,14 @@ class CountryController extends Controller
         $request->validate([
             'name' => 'required|max:100',
             'shipping_cost' => 'required|numeric',
-            'flag' => 'required|max:100|mimes:svg'
+            'flag' => 'required|max:100|mimes:png,svg,jpg,jpeg'
         ]);
+
+        $country = $request->name;
+        if (Country::where('name', $country)->exists()) {
+            return redirect()->route('countries.index')->with(['Warning' => 'This Category already exists']);
+        }
+
         $flag = $request->file('flag');
         $flagName = uniqid() . '.' . $flag->getClientOriginalExtension();
         $request->flag->move(public_path('assets/countries/flags'), $flagName);
@@ -44,6 +42,14 @@ class CountryController extends Controller
             'flag' => $flagName,
         ]);
         return redirect()->route('countries.index')->with(['Add' => 'Add Country successfully']);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('admin.countries.create');
     }
 
     /**
@@ -89,8 +95,6 @@ class CountryController extends Controller
         } else {
             $flagName = $oldFlag;
         }
-
-
 
 
         $country->update([

@@ -226,6 +226,11 @@ return [
     'Fulfilled' => 'Fulfilled',
     'Shipped' => 'Shipped',
     'RevenueLeads' => 'Revenue Leads',
+    'SelectCommissionType' => 'Select Commission Type',
+    'CommissionType' => 'Commission Type',
+    'OnDelivered' => 'On Delivered',
+    'OnConfirmed' => 'On Confirmed',
+    'Date' => 'Date',
 
 
 ];

@@ -69,13 +69,70 @@
             text-anchor: middle;
         }
     </style>
+    <!-- Menu waves for no-customizer fix -->
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/node-waves/node-waves.css') }}"/>
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/core.css') }}" class="template-customizer-core-css"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/theme-default.css') }}"
+          class="template-customizer-theme-css"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}"/>
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/tagify/tagify.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/flatpickr/flatpickr.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css') }}"/>
+    <link rel="stylesheet"
+          href="{{ asset('assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/jquery-timepicker/jquery-timepicker.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/pickr/pickr-themes.css') }}"/>
 @endsection
 
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="py-3 mb-4"><span
-                class="text-muted fw-light">{{ __('site.Dashboard') }} /</span> {{ __('site.Report') }}
+        <h4 class="py-3 mb-4 d-flex justify-content-between">
+            <div>
+                <span class="text-muted fw-light"> {{ __('site.Dashboard') }} /</span>
+                {{ __('site.Report') }}
+            </div>
+            <div>
+                <button class="btn btn-outline-primary waves-effect waves-light" type="button"
+                        data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                    <span class="tf-icons mdi mdi-filter-check-outline me-1"></span>
+                    Filter
+                </button>
+                {{--                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button> --}}
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+                     aria-labelledby="offcanvasRightLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasRightLabel">{{ __('site.FliterOrders') }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <form action="{{ route('admin.reports.filter') }}" method="post">
+                            @csrf
+                            <div class="mb-3">
+                                <div class="mb-4">
+                                    <div class="form-floating form-floating-outline">
+                                        <input type="text" id="bs-rangepicker-range" class="form-control"
+                                               name="created_at">
+                                        <label for="bs-rangepicker-range">{{ __('site.Date') }}</label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">filter</button>
+                            <button type="reset" class="btn btn-outline-danger waves-effect">reset</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </h4>
         <div class="bg-white drop-shadow p-4 rounded-md flex flex-col md:flex-row gap-6">
             <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
@@ -97,154 +154,132 @@
         </div>
         <div class="card_chart_cont  lg:flex ">
 
-            <div
-                class="card_container mt-4 mx-auto md:mx-6 grid grid-cols-12  gap-6  w-full"
-            >
+            <div class="card_container mt-4 mx-auto md:mx-6 grid grid-cols-12  gap-6  w-full">
                 <div
-                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md"
-                >
+                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
                     <div class="flex flex-col gap-10 h-full">
                         <h2 class="text-[15px] lg:text-[20px] lg:text-[18px] text-gray-800 font-bold uppercase">
-                            {{__('site.TotalLeads')}}
+                            {{ __('site.TotalLeads') }}
                         </h2>
                         <div class="flex justify-between items-center">
-                            <div
-                                class="bg-blue-700 rounded-full text-white px-4 py-2 flex justify-center items-center"
-                            >
-                <span class="menu-icon tf-icons mdi mdi-view-list-outline">
+                            <div class="bg-blue-700 rounded-full text-white px-4 py-2 flex justify-center items-center">
+                                <span class="menu-icon tf-icons mdi mdi-view-list-outline">
 
-                </span>
+                                </span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{$leads}}</span>
+                            <span class="text-gray-600 text-3xl font-bold">{{ $leads }}</span>
                         </div>
                     </div>
                 </div>
                 <div
-                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md"
-                >
+                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
                     <div class="flex flex-col gap-10 h-full">
                         <h2 class="text-[15px] lg:text-[20px] lg:text-[18px] text-gray-800 font-bold uppercase">
-                            {{__('site.UnderProcesses')}}
+                            {{ __('site.UnderProcesses') }}
                         </h2>
                         <div class="flex justify-between items-center">
                             <div
-                                class="bg-yellow-300 rounded-full text-white px-4 py-2 flex justify-center items-center"
-                            >
-                <span class="mdi mdi-phone-outline">
+                                class="bg-yellow-300 rounded-full text-white px-4 py-2 flex justify-center items-center">
+                                <span class="mdi mdi-phone-outline">
 
-                </span>
+                                </span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{$under_process}}</span>
+                            <span class="text-gray-600 text-3xl font-bold">{{ $under_process }}</span>
                         </div>
                     </div>
                 </div>
                 <div
-                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md"
-                >
+                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
                     <div class="flex flex-col gap-10 h-full">
                         <h2 class="text-[15px] lg:text-[20px] lg:text-[18px] text-gray-800 font-bold uppercase">
-                            {{__('site.Confirmed')}}
+                            {{ __('site.Confirmed') }}
                         </h2>
                         <div class="flex justify-between items-center">
                             <div
-                                class="bg-green-500 rounded-full text-white px-4 py-2 flex justify-center items-center"
-                            >
+                                class="bg-green-500 rounded-full text-white px-4 py-2 flex justify-center items-center">
                                 <span class="mdi mdi-check-circle-outline"></span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{$confirmed}}</span>
+                            <span class="text-gray-600 text-3xl font-bold">{{ $confirmed }}</span>
                         </div>
                     </div>
                 </div>
                 <div
-                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md"
-                >
+                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
                     <div class="flex flex-col gap-10 h-full">
                         <h2 class="text-[15px] lg:text-[20px] lg:text-[18px] text-gray-800 font-bold uppercase">
-                            {{__('site.Canceled')}}
+                            {{ __('site.Canceled') }}
                         </h2>
                         <div class="flex justify-between items-center">
-                            <div
-                                class="bg-red-700 rounded-full text-white px-4 py-2 flex justify-center items-center"
-                            >
-                <span class="mdi mdi-cancel">
+                            <div class="bg-red-700 rounded-full text-white px-4 py-2 flex justify-center items-center">
+                                <span class="mdi mdi-cancel">
 
-                </span>
+                                </span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{$canceled}}</span>
+                            <span class="text-gray-600 text-3xl font-bold">{{ $canceled }}</span>
                         </div>
                     </div>
                 </div>
                 <div
-                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md"
-                >
+                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
                     <div class="flex flex-col gap-10 h-full">
                         <h2 class="text-[15px] lg:text-[20px] lg:text-[18px] text-gray-800 font-bold uppercase">
-                            {{__('site.Fulfilled')}}
+                            {{ __('site.Fulfilled') }}
                         </h2>
                         <div class="flex justify-between items-center">
                             <div
-                                class="bg-orange-500 rounded-full text-white px-4 py-2 flex justify-center items-center"
-                            >
-                <span class="mdi mdi-package-variant-closed">
+                                class="bg-orange-500 rounded-full text-white px-4 py-2 flex justify-center items-center">
+                                <span class="mdi mdi-package-variant-closed">
 
-                </span>
+                                </span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{$fulfilled}}</span>
+                            <span class="text-gray-600 text-3xl font-bold">{{ $fulfilled }}</span>
                         </div>
                     </div>
                 </div>
                 <div
-                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md"
-                >
+                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
                     <div class="flex flex-col gap-10 h-full">
                         <h2 class="text-[15px] lg:text-[20px] lg:text-[18px] text-gray-800 font-bold uppercase">
-                            {{__('site.Shipped')}}
+                            {{ __('site.Shipped') }}
                         </h2>
                         <div class="flex justify-between items-center">
-                            <div
-                                class="bg-pink-600 rounded-full text-white px-4 py-2 flex justify-center items-center"
-                            >
-                <span class="mdi mdi-bus-school mdi-20px">
+                            <div class="bg-pink-600 rounded-full text-white px-4 py-2 flex justify-center items-center">
+                                <span class="mdi mdi-bus-school mdi-20px">
 
-                </span>
+                                </span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{$shipped}}</span>
+                            <span class="text-gray-600 text-3xl font-bold">{{ $shipped }}</span>
                         </div>
                     </div>
                 </div>
                 <div
-                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md"
-                >
+                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
                     <div class="flex flex-col gap-10 h-full">
                         <h2 class="text-[15px] lg:text-[20px] lg:text-[18px] text-gray-800 font-bold uppercase">
-                            {{__('site.Delivered')}}
+                            {{ __('site.Delivered') }}
                         </h2>
                         <div class="flex justify-between items-center">
                             <div
-                                class="bg-green-500 rounded-full text-white px-4 py-2 flex justify-center items-center"
-                            >
+                                class="bg-green-500 rounded-full text-white px-4 py-2 flex justify-center items-center">
                                 <span class="mdi mdi-package-check"></span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{$delivered}}</span>
+                            <span class="text-gray-600 text-3xl font-bold">{{ $delivered }}</span>
                         </div>
                     </div>
                 </div>
                 <div
-                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md"
-                >
+                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
                     <div class="flex flex-col gap-10 h-full">
                         <h2 class="text-[15px] lg:text-[25px] text-gray-800 font-bold uppercase">
-                            {{__('site.Returned')}}
+                            {{ __('site.Returned') }}
                         </h2>
                         <div class="flex justify-between items-center">
-                            <div
-                                class="bg-red-500 rounded-full text-white px-4 py-2 flex justify-center items-center"
-                            >
-                <span class="mdi mdi-keyboard-return">
+                            <div class="bg-red-500 rounded-full text-white px-4 py-2 flex justify-center items-center">
+                                <span class="mdi mdi-keyboard-return">
 
-                </span>
+                                </span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{$returned}}</span>
+                            <span class="text-gray-600 text-3xl font-bold">{{ $returned }}</span>
                         </div>
                     </div>
                 </div>
@@ -254,25 +289,17 @@
             <div
                 class="value_container pt-[15px] bg-white flex flex-col rounded-xl lg:flex-row drop-shadow-lg lg:col-span-3">
                 <div class="relative min-w-[250px]">
-      <span
-          class="text-gray-600 text-5xl absolute top-[50%] right-[50%] translate-x-[50%] translate-y-[-50%] font-bold"
-      >{{$delivered_rate}} %</span
-      >
+                    <span
+                        class="text-gray-600 text-5xl absolute top-[50%] right-[50%] translate-x-[50%] translate-y-[-50%] font-bold">{{ $delivered_rate }}
+                        %</span>
                     <svg viewBox="0 0 36 36" class="circular-chart orange">
-                        <path
-                            class="circle-bg"
-                            d="M18 2.0845
-            a 15.9155 15.9155 0 0 1 0 31.831
-            a 15.9155 15.9155 0 0 1 0 -31.831"
-                        />
+                        <path class="circle-bg" d="M18 2.0845
+                        a 15.9155 15.9155 0 0 1 0 31.831
+                        a 15.9155 15.9155 0 0 1 0 -31.831"/>
                         <!-- place the 60 in the stroke-dasharray with the persentage -->
-                        <path
-                            class="circle"
-                            stroke-dasharray="{{$delivered_rate}}, 100"
-                            d="M18 2.0845
-            a 15.9155 15.9155 0 0 1 0 31.831
-            a 15.9155 15.9155 0 0 1 0 -31.831"
-                        />
+                        <path class="circle" stroke-dasharray="{{ $delivered_rate }}, 100" d="M18 2.0845
+                        a 15.9155 15.9155 0 0 1 0 31.831
+                        a 15.9155 15.9155 0 0 1 0 -31.831"/>
                     </svg>
                 </div>
                 <div class="flex flex-col justify-center px-4 ">
@@ -287,25 +314,17 @@
             <div
                 class="value_container pt-[15px] bg-white flex flex-col rounded-xl lg:flex-row drop-shadow-lg lg:col-span-3">
                 <div class="relative min-w-[250px]">
-      <span
-          class="text-gray-600 text-5xl absolute top-[50%] right-[50%] translate-x-[50%] translate-y-[-50%] font-bold"
-      >{{$confirmed_rate}} %</span
-      >
+                    <span
+                        class="text-gray-600 text-5xl absolute top-[50%] right-[50%] translate-x-[50%] translate-y-[-50%] font-bold">{{ $confirmed_rate }}
+                        %</span>
                     <svg viewBox="0 0 36 36" class="circular-chart green">
-                        <path
-                            class="circle-bg"
-                            d="M18 2.0845
-            a 15.9155 15.9155 0 0 1 0 31.831
-            a 15.9155 15.9155 0 0 1 0 -31.831"
-                        />
+                        <path class="circle-bg" d="M18 2.0845
+                        a 15.9155 15.9155 0 0 1 0 31.831
+                        a 15.9155 15.9155 0 0 1 0 -31.831"/>
                         <!-- place the 60 in the stroke-dasharray with the persentage -->
-                        <path
-                            class="circle"
-                            stroke-dasharray="{{$confirmed_rate}}, 100"
-                            d="M18 2.0845
-            a 15.9155 15.9155 0 0 1 0 31.831
-            a 15.9155 15.9155 0 0 1 0 -31.831"
-                        />
+                        <path class="circle" stroke-dasharray="{{ $confirmed_rate }}, 100" d="M18 2.0845
+                        a 15.9155 15.9155 0 0 1 0 31.831
+                        a 15.9155 15.9155 0 0 1 0 -31.831"/>
                     </svg>
                 </div>
                 <div class="flex flex-col justify-center px-4 ">
@@ -346,6 +365,29 @@
     <!-- Main JS -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
 
-    <!-- Page JS -->
-    <script src="{{ asset('assets/js/app-logistics-dashboard.js') }}"></script>
+    <!-- build:js assets/vendor/js/core.js -->
+
+    <script src="{{ asset('assets/vendor/libs/i18n/i18n.js') }}"></script>
+
+
+    <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/tagify/tagify.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/bootstrap-select/bootstrap-select.js') }}"></script>
+
+    <script src="{{ asset('assets/vendor/libs/bloodhound/bloodhound.js') }}"></script>
+
+    <script src="{{ asset('assets/vendor/libs/moment/moment.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/pickr/pickr.js') }}"></script>
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+
+    <!-- Main JS -->
+
+    <script src="{{ asset('assets/js/forms-selects.js') }}"></script>
+    <script src="{{ asset('assets/js/forms-pickers.js') }}"></script>
 @endsection
