@@ -6,6 +6,7 @@ document.querySelector('[type="submit"]').addEventListener('click', (event) => {
 
     // Fetch route URL
     const routeUrl = document.getElementById("route").getAttribute("data-route");
+    const productType = document.querySelector('#type').selectedOptions[0].value;
 
     // Gather form data
     const formData = new FormData();
@@ -18,6 +19,7 @@ document.querySelector('[type="submit"]').addEventListener('click', (event) => {
     formData.append('comission', document.querySelector('[name="comission"]').value);
     formData.append('weight', document.querySelector('[name="weight"]').value);
     formData.append('category_id', document.querySelector('#category-org').selectedOptions[0].value);
+    formData.append('type', document.querySelector('#type').selectedOptions[0].value);
 
 
     document.querySelectorAll('.stock').forEach(element => {
@@ -49,7 +51,7 @@ document.querySelector('[type="submit"]').addEventListener('click', (event) => {
             // Handle response data here
             if (!data.errors) {
                 console.log('Data stored successfully');
-                window.location.href = "/admin/affiliate-products";
+                window.location.href = productType === "delivered" ? "/admin/affiliate-per-delivered" : "/admin/affiliate-per-confirmed";
             }
         })
         .catch(error => console.error(error));

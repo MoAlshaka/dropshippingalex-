@@ -69,7 +69,7 @@ return [
     'AdminLogin' => 'Admin Login',
     'Welcome' => 'Welcome to Dropshipping',
     'MessageLogin' => 'Please sign-in to your account and start the adventure',
-    'UserName' => 'UserName',
+    'UserName' => 'Username',
     'Password' => 'Password',
     'Signin' => 'Sign in',
     'CategoryName' => 'Category Name',
@@ -228,9 +228,20 @@ return [
     'RevenueLeads' => 'Revenue Leads',
     'SelectCommissionType' => 'Select Commission Type',
     'CommissionType' => 'Commission Type',
-    'OnDelivered' => 'On Delivered',
-    'OnConfirmed' => 'On Confirmed',
+    'PerDelivered' => 'Per Delivered',
+    'PerConfirmed' => 'Per Confirmed',
     'Date' => 'Date',
-
+    'Filter' => 'Filter',
+    'AfillatePerDelivered' => 'Afillate Per Delivered',
+    'AfillatePerConfirmed' => 'Afillate Per Confirmed',
+    'EditAffillateProduct' => 'Edit Affillate Product',
+    'SelectPaymentMethod' => 'select payment method',
+    'DeliveredRate' => 'DeliveredRate',
+    'ConfirmationRate' => 'Confirmation Rate',
+    'ConfirmationRateDesc' => 'Confirmation rate is the number of confirmed leads out of the total processed leads (excluding duplicate & wrong leads)',
+    'DeliveredRateDesc' => 'Delivered rate is the number of delivered shipments out of the total shipments',
+    'Statistics' => 'Statistics',
+    'StatisticsDesc' => 'Commercial networks and enterprises',
+    
 
 ];

@@ -12,7 +12,7 @@ class Transaction extends Model
     protected $fillable = [
         'seller_id',
         'payment_method',
-        'account_number',
+        'account',
         'amount',
         'status',
         'admin_id',
@@ -22,6 +22,7 @@ class Transaction extends Model
     {
         return $this->belongsTo(Admin::class);
     }
+
     public function seller()
     {
         return $this->belongsTo(Seller::class);

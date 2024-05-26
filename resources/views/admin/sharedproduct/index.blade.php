@@ -8,7 +8,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('assets/css/product.css') }}"/>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/tailwindcss@^2.2/dist/tailwind.min.css" rel="stylesheet">
     <style>
         .accordion-button {
             width: 0% !important;
@@ -36,37 +36,46 @@
             @isset($offer)
                 <div class="bg-gray-200">
                     <div
-                        class="flex justify-between items-center p-4 sm:m-6 lg:m-8 bg-white rounded-xl ltr:bg-gradient-to-r ltr:from-purple-700 ltr:to-white-500 rtl:bg-gradient-to-l rtl:from-purple-700 rtl:to-white-500"
+                        class=""
                     >
-                        <div>
-                            <!-- offer desc and title -->
-                            <h4 class="text-sm text-gray-200">Active Offers</h4>
-                            <p class="my-2 text-2xl font-bold text-white mt-2">
-                                {{$offer->title}}
-                            </p>
-                            <span class="relative inline-flex mt-4">
-            <button
-
-                class="px-6 py-2 font-semibold rounded-2xl text-white bg-purple-300 bg-opacity-20 hover:bg-opacity-30 hover:bg-purple-500 transition ease-in-out"
-            >
-             <a href="{{route('offers.show',$offer->id)}}"> View the offer</a>
-            </button>
-            <span class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
-              <span
-                  class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"
-              ></span>
-              <span
-                  class="relative inline-flex rounded-full h-3 w-3 bg-sky-500"
-              ></span>
-            </span>
-          </span>
-                        </div>
-                        <div class="w-[200px] h-[110px] hidden md:block">
-                            <img
-                                class="w-full h-full object-cover rounded-xl"
-                                src="{{asset('assets/svg/icons/undraw_discount_d-4-bd.svg')}}"
-                                alt="offer-image"
-                            />
+                        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-indicators">
+                                <button
+                                    type="button"
+                                    data-bs-target="#carouselExample"
+                                    data-bs-slide-to="0"
+                                    class="active"
+                                    aria-current="true"
+                                    aria-label="Slide 1"></button>
+                                <button
+                                    type="button"
+                                    data-bs-target="#carouselExample"
+                                    data-bs-slide-to="1"
+                                    aria-label="Slide 2"></button>
+                                <button
+                                    type="button"
+                                    data-bs-target="#carouselExample"
+                                    data-bs-slide-to="2"
+                                    aria-label="Slide 3"></button>
+                            </div>
+                            <div class="carousel-inner" style="height:150px;">
+                                @foreach($offer as $info)
+                                    <div class="carousel-item active" style="max-height:150px;">
+                                        <img class="d-block w-100"
+                                             src="{{ asset('assets/offers/images/'.$info->image) }}"
+                                             style="max-height: 150px;object-fit: cover;"
+                                             alt="First slide"/>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExample" role="button" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExample" role="button" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </a>
                         </div>
                     </div>
                 </div>

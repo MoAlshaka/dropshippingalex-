@@ -260,8 +260,6 @@
 
                                             </button>
                                         </form>
-                                    @else
-                                        {{ __('site.NoAction') }}
                                     @endif
 
 

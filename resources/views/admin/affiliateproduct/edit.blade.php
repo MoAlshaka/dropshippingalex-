@@ -8,42 +8,43 @@
 
 @section('css')
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}"/>
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&ampdisplay=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&ampdisplay=swap"
+          rel="stylesheet"/>
 
     <!-- Icons -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/materialdesignicons.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/flag-icons.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/materialdesignicons.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/flag-icons.css') }}"/>
 
     <!-- Menu waves for no-customizer fix -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/node-waves/node-waves.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/node-waves/node-waves.css') }}"/>
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/core.css') }}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/core.css') }}" class="template-customizer-core-css"/>
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/theme-default.css') }}"
-        class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
+          class="template-customizer-theme-css"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}"/>
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/typography.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/katex.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/editor.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/dropzone/dropzone.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/flatpickr/flatpickr.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/tagify/tagify.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/excel/ejexcelMaster.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/typography.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/katex.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/editor.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/dropzone/dropzone.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/flatpickr/flatpickr.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/tagify/tagify.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/excel/ejexcelMaster.css') }}"/>
 
     <!-- Page CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}"/>
 
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}"/>
     <!-- Helpers -->
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
@@ -77,7 +78,7 @@
                 <div class="d-flex align-content-center flex-wrap gap-3">
 
                     <button type="submit" class="btn btn-primary" id="route"
-                        data-route="{{ route('admin.affiliateproducts.update', $product->id) }}">{{ __('site.PublishProduct') }}</button>
+                            data-route="{{ route('admin.affiliateproducts.update', $product->id) }}">{{ __('site.PublishProduct') }}</button>
                 </div>
             </div>
 
@@ -93,52 +94,52 @@
                             @csrf
                             <div class="form-floating form-floating-outline mb-4">
                                 <input type="text" name="title" class="form-control" id="ecommerce-product-name"
-                                    placeholder="Product title" name="productTitle" aria-label="Product title"
-                                    value="{{ $product->title }}" />
+                                       placeholder="Product title" name="productTitle" aria-label="Product title"
+                                       value="{{ $product->title }}"/>
                                 <label for="ecommerce-product-name">{{ __('site.Title') }}</label>
                             </div>
                             @error('title')
-                                <div class="text-danger">{{ $message }}</div>
+                            <div class="text-danger">{{ $message }}</div>
                             @enderror
 
                             <div class="row mb-4">
                                 <div class="col">
                                     <div class="form-floating form-floating-outline">
                                         <input type="text" class="form-control" id="ecommerce-product-sku"
-                                            placeholder="00000" name="sku" aria-label="Product SKU"
-                                            value="{{ $product->sku }}" />
+                                               placeholder="00000" name="sku" aria-label="Product SKU"
+                                               value="{{ $product->sku }}"/>
                                         <label for="ecommerce-product-sku">{{ __('site.SKU') }}</label>
                                     </div>
                                 </div>
                                 @error('sku')
-                                    <div class="text-danger">{{ $message }}</div>
+                                <div class="text-danger">{{ $message }}</div>
                                 @enderror
 
                                 <div class="col">
                                     <div class="form-floating form-floating-outline">
                                         <input type="text" class="form-control" id="brand" placeholder="0123-4567"
-                                            name="brand" aria-label="Product brand" value="{{ $product->brand }}" />
+                                               name="brand" aria-label="Product brand" value="{{ $product->brand }}"/>
                                         <label for="brand">{{ __('site.Brand') }}</label>
                                     </div>
                                 </div>
                                 @error('brand')
-                                    <div class="text-danger">{{ $message }}</div>
+                                <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="form-floating form-floating-outline mb-4">
-                                <input type="file" name="image" id="image" class="form-control" />
+                                <input type="file" name="image" id="image" class="form-control"/>
                                 <label for="image">{{ __('site.Image') }}</label>
 
                             </div>
                             @error('image')
-                                <div class="text-danger">{{ $message }}</div>
+                            <div class="text-danger">{{ $message }}</div>
                             @enderror
 
                             <!-- Comment -->
                             <div>
                                 <label class="form-label">{{ __('site.Description') }}</label>
                                 <div class="form-control p-0 pt-1" id="data-desc"
-                                    data-desc="{{ $product->description }}">
+                                     data-desc="{{ $product->description }}">
                                     <div class="comment-toolbar border-0 border-bottom">
                                         <div class="d-flex justify-content-start">
                                             <span class="ql-formats me-0">
@@ -155,39 +156,39 @@
                                     <div class="comment-editor border-0 pb-1" id="ecommerce-category-description"></div>
                                 </div>
                                 @error('description')
-                                    <div class="text-danger">{{ $message }}</div>
+                                <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-{{--                            @foreach ($product->affiliatecountries as $affiliateProduct)--}}
-{{--                                <div id="stock_container" data-country="{{ $countries }}">--}}
-{{--                                    <div class="row mb-4 mt-4">--}}
-{{--                                        <div class="col">--}}
-{{--                                            <div class="form-floating form-floating-outline">--}}
-{{--                                                <select class="form-select form-select-lg country" name="country[]">--}}
-{{--                                                    <option value="{{ $affiliateProduct->pivot->country_id }}">--}}
-{{--                                                        {{ $affiliateProduct->name }}</option>--}}
-{{--                                                    @foreach ($countries as $country)--}}
-{{--                                                        <option value="{{ $country->id }}">{{ $country->name }}</option>--}}
-{{--                                                    @endforeach--}}
-{{--                                                    <!-- Accessing the name of the country via pivot -->--}}
-{{--                                                </select>--}}
-{{--                                                <label for="country"> {{ __('site.Country') }}</label>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="col">--}}
-{{--                                            <div class="form-floating form-floating-outline mb-4">--}}
-{{--                                                <input type="number" class="form-control" id="Stock"--}}
-{{--                                                    placeholder="Stock" name="stock[]"--}}
-{{--                                                    aria-label="Product discounted price"--}}
-{{--                                                    value="{{ $affiliateProduct->pivot->stock }}" />--}}
-{{--                                                <label for="Stock"> {{ __('site.Stock') }}</label>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            @endforeach--}}
-{{--                            <button id="addstock"--}}
-{{--                                class="btn rounded-pill btn-outline-primary waves-effect">{{ __('site.Add') }}</button>--}}
+                            {{--                            @foreach ($product->affiliatecountries as $affiliateProduct)--}}
+                            {{--                                <div id="stock_container" data-country="{{ $countries }}">--}}
+                            {{--                                    <div class="row mb-4 mt-4">--}}
+                            {{--                                        <div class="col">--}}
+                            {{--                                            <div class="form-floating form-floating-outline">--}}
+                            {{--                                                <select class="form-select form-select-lg country" name="country[]">--}}
+                            {{--                                                    <option value="{{ $affiliateProduct->pivot->country_id }}">--}}
+                            {{--                                                        {{ $affiliateProduct->name }}</option>--}}
+                            {{--                                                    @foreach ($countries as $country)--}}
+                            {{--                                                        <option value="{{ $country->id }}">{{ $country->name }}</option>--}}
+                            {{--                                                    @endforeach--}}
+                            {{--                                                    <!-- Accessing the name of the country via pivot -->--}}
+                            {{--                                                </select>--}}
+                            {{--                                                <label for="country"> {{ __('site.Country') }}</label>--}}
+                            {{--                                            </div>--}}
+                            {{--                                        </div>--}}
+                            {{--                                        <div class="col">--}}
+                            {{--                                            <div class="form-floating form-floating-outline mb-4">--}}
+                            {{--                                                <input type="number" class="form-control" id="Stock"--}}
+                            {{--                                                    placeholder="Stock" name="stock[]"--}}
+                            {{--                                                    aria-label="Product discounted price"--}}
+                            {{--                                                    value="{{ $affiliateProduct->pivot->stock }}" />--}}
+                            {{--                                                <label for="Stock"> {{ __('site.Stock') }}</label>--}}
+                            {{--                                            </div>--}}
+                            {{--                                        </div>--}}
+                            {{--                                    </div>--}}
+                            {{--                                </div>--}}
+                            {{--                            @endforeach--}}
+                            {{--                            <button id="addstock"--}}
+                            {{--                                class="btn rounded-pill btn-outline-primary waves-effect">{{ __('site.Add') }}</button>--}}
                             <!-- Form Repeater -->
                             <div class="col-12">
                                 <div class="card">
@@ -196,42 +197,49 @@
                                         <form class="form-repeater">
                                             <div data-repeater-list="group-a">
                                                 @foreach ($product->affiliatecountries as $affiliateProduct)
-                                                <div data-repeater-item>
-                                                    <div class="row">
-                                                        <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
-                                                            <div class="form-floating form-floating-outline">
-                                                                <select id="form-repeater-1-4" class="form-select country" name="country[]">
-                                                                        <option value="{{ $affiliateProduct->pivot->country_id }}">
+                                                    <div data-repeater-item>
+                                                        <div class="row">
+                                                            <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
+                                                                <div class="form-floating form-floating-outline">
+                                                                    <select id="form-repeater-1-4"
+                                                                            class="form-select country"
+                                                                            name="country[]">
+                                                                        <option
+                                                                            value="{{ $affiliateProduct->pivot->country_id }}">
                                                                             {{ $affiliateProduct->name }}</option>
-                                                                    @foreach ($countries as $country)
-                                                                        <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                                <label for="form-repeater-1-4">{{ __('site.Country') }}</label>
+                                                                        @foreach ($countries as $country)
+                                                                            <option
+                                                                                value="{{ $country->id }}">{{ $country->name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                    <label
+                                                                        for="form-repeater-1-4">{{ __('site.Country') }}</label>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
-                                                            <div class="form-floating form-floating-outline">
-                                                                <input
-                                                                    type="number"
-                                                                    name="stock[]"
-                                                                    class="form-control stock"
-                                                                    placeholder="{{ __('site.Stock') }}"
-                                                                    value="{{ $affiliateProduct->pivot->stock }}" />
-                                                                <label for="Stock">{{ __('site.Stock') }}</label>
+                                                            <div class="mb-3 col-lg-6 col-xl-4 col-12 mb-0">
+                                                                <div class="form-floating form-floating-outline">
+                                                                    <input
+                                                                        type="number"
+                                                                        name="stock[]"
+                                                                        class="form-control stock"
+                                                                        placeholder="{{ __('site.Stock') }}"
+                                                                        value="{{ $affiliateProduct->pivot->stock }}"/>
+                                                                    <label for="Stock">{{ __('site.Stock') }}</label>
+                                                                </div>
                                                             </div>
-                                                        </div>
 
 
-                                                        <div class="mb-3 col-lg-12 col-xl-2 col-12 d-flex align-items-center mb-0">
-                                                            <button class="btn btn-outline-danger" data-repeater-delete>
-                                                                <i class="mdi mdi-close me-1"></i>
-                                                                <span class="align-middle">Delete</span>
-                                                            </button>
+                                                            <div
+                                                                class="mb-3 col-lg-12 col-xl-2 col-12 d-flex align-items-center mb-0">
+                                                                <button class="btn btn-outline-danger"
+                                                                        data-repeater-delete>
+                                                                    <i class="mdi mdi-close me-1"></i>
+                                                                    <span class="align-middle">Delete</span>
+                                                                </button>
+                                                            </div>
                                                         </div>
+                                                        <hr/>
                                                     </div>
-                                                    <hr />
-                                                </div>
                                                 @endforeach
                                             </div>
                                             <div class="mb-0">
@@ -265,34 +273,35 @@
                             <!-- Minimum Selling Price -->
                             <div class="form-floating form-floating-outline mb-4">
                                 <input type="number" step="0.01" class="form-control" id="Minimum Selling Price"
-                                    placeholder="minimum_selling_price" name="minimum_selling_price"
-                                    aria-label="Minimum Selling Price" value="{{ $product->minimum_selling_price }}" />
+                                       placeholder="minimum_selling_price" name="minimum_selling_price"
+                                       aria-label="Minimum Selling Price"
+                                       value="{{ $product->minimum_selling_price }}"/>
                                 <label for="Minimum Selling Price">{{ __('site.MinimumSellingPrice') }}</label>
                             </div>
                             @error('minimum_selling_price')
-                                <div class="text-danger">{{ $message }}</div>
+                            <div class="text-danger">{{ $message }}</div>
                             @enderror
 
                             <!-- comission -->
                             <div class="form-floating form-floating-outline mb-4">
                                 <input type="number" step="0.01" class="form-control" id="Comission"
-                                    placeholder="Comission" name="comission" aria-label="Product discounted price"
-                                    value="{{ $product->comission }}" />
+                                       placeholder="Comission" name="comission" aria-label="Product discounted price"
+                                       value="{{ $product->comission }}"/>
                                 <label for="Comission">{{ __('site.Comission') }}</label>
                             </div>
                             @error('comission')
-                                <div class="text-danger">{{ $message }}</div>
+                            <div class="text-danger">{{ $message }}</div>
                             @enderror
 
                             <!-- Weight -->
                             <div class="form-floating form-floating-outline mb-4">
                                 <input type="number" step="0.001" class="form-control" id="weight"
-                                    placeholder="weight" name="weight" aria-label="Product weight"
-                                    value="{{ $product->weight }}" />
+                                       placeholder="weight" name="weight" aria-label="Product weight"
+                                       value="{{ $product->weight }}"/>
                                 <label for="weight">{{ __('site.Weight') }}</label>
                             </div>
                             @error('weight')
-                                <div class="text-danger">{{ $message }}</div>
+                            <div class="text-danger">{{ $message }}</div>
                             @enderror
 
 
@@ -305,11 +314,25 @@
                             <h5 class="card-title mb-0">{{ __('site.Organize') }}</h5>
                         </div>
                         <div class="card-body">
+                            <div class="mb-4 col ecommerce-select2-dropdown">
+
+                                <div class="form-floating form-floating-outline w-100 me-3">
+                                    <select id="type" class="select2 form-select" name="type"
+                                            data-placeholder="{{ __('site.SelectCommissionType') }}">
+
+                                        <option value="delivered"
+                                                @if($product->type == 'delivered') selected @endif>{{ __('site.PerDelivered')}}</option>
+                                        <option value="confirmed"
+                                                @if($product->type == 'confirmed') selected @endif>{{ __('site.PerConfirmed')}}</option>
+                                    </select>
+                                    <label for="type">{{ __('site.CommissionType') }}</label>
+                                </div>
+                            </div>
                             <!-- Category -->
                             <div class="mb-4 col ecommerce-select2-dropdown">
                                 <div class="form-floating form-floating-outline w-100 me-3">
                                     <select id="category-org" class="select2 form-select" name="category_id"
-                                        data-placeholder="Select Category">
+                                            data-placeholder="Select Category">
                                         <option value="{{ $product->affiliate_category->id }}">
                                             {{ $product->affiliate_category->name }}</option>
                                         </option>
@@ -322,7 +345,7 @@
                             </div>
 
                             @error('category_id')
-                                <div class="text-danger">{{ $message }}</div>
+                            <div class="text-danger">{{ $message }}</div>
                             @enderror
 
 
@@ -366,5 +389,5 @@
     <!-- Page JS -->
     <script src="{{ asset('assets/js/app-ecommerce-product-add.js') }}"></script>
     <script src="{{ asset('assets/addProduct/affiliateProductEdit.js') }}"></script>
-{{--    <script src="{{ asset('assets/productjs/stock.js') }}"></script>--}}
+    {{--    <script src="{{ asset('assets/productjs/stock.js') }}"></script>--}}
 @endsection

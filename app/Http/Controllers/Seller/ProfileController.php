@@ -15,8 +15,9 @@ class ProfileController extends Controller
         $seller = auth()->guard('seller')->user();
         $payments = Payment::all();
 
-        return view('seller.auth.profile', compact('seller','payments'));
+        return view('seller.auth.profile', compact('seller', 'payments'));
     }
+
     public function update_profile(Request $request, $id)
     {
 
@@ -27,8 +28,7 @@ class ProfileController extends Controller
             'address' => 'required|max:250',
             'phone' => 'required|max:50',
             'image' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
-            'payment_method' => 'required|max:50',
-            'account_number' => 'required|max:100',
+
         ]);
         $seller = Seller::findorfail($id);
         $old_image = $seller->image;
@@ -49,8 +49,6 @@ class ProfileController extends Controller
             'phone' => str_replace(' ', '', $request->phone),
             'address' => $request->address,
             'image' => $image_name ?? $old_image,
-            'payment_method' => $request->payment_method,
-            'account_number' => $request->account_number,
 
         ]);
         return redirect()->route('seller.profile')->with(['Update' => 'update Profile successfully']);
@@ -87,14 +85,30 @@ class ProfileController extends Controller
     {
         $request->validate([
             'payment_method' => 'required|max:50',
-            'account_number' => 'required|max:100',
-        ]);
-        $seller = Seller::findOrFail($id);
-        $seller->update([
-            'payment_method' => $request->payment_method,
-            'account_number' => $request->account_number,
 
         ]);
+        $seller = Seller::findOrFail($id);
+        if ($request->payment_method === 'vodafone') {
+            $request->validate([
+                'account' => 'required|max:50',
+
+            ]);
+            $seller->update([
+                'payment_method' => $request->payment_method,
+                'account' => $request->account,
+
+            ]);
+        } else {
+            $request->validate([
+                'account' => 'required|email|max:50',
+
+            ]);
+            $seller->update([
+                'payment_method' => $request->payment_method,
+                'account' => $request->account,
+
+            ]);
+        }
         return redirect()->route('seller.profile')->with(['Update' => 'update Profile successfully']);
 
     }

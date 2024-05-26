@@ -13,6 +13,9 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="py-3 mb-4"><span class="text-muted fw-light">{{ __('site.Dashboard') }}/</span>
             {{ __('site.CreateOffer') }}</h4>
+        @if (session()->has('Add'))
+            <div class="alert alert-success" role="alert">{{ session()->get('Add') }}</div>
+        @endif
         <!-- Basic Layout & Basic with Icons -->
         <div class="row">
             <!-- Basic Layout -->

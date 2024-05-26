@@ -18,21 +18,11 @@ class SharedProductController extends Controller
      */
     public function index()
     {
-        $offer= Offer::where('end_date','>',now())->orderBy('id', 'DESC')->first();
+        $offer = Offer::where('end_date', '>', now())->orderBy('id', 'DESC')->get();
         $countries = Country::all();
         $categories = Category::all();
         $products = SharedProduct::orderBy('id', 'DESC')->paginate(COUNT);
-        return view('admin.sharedproduct.index', compact('products', 'countries', 'categories','offer'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        $countries = Country::all();
-        $categories = Category::all();
-        return view('admin.sharedproduct.create', compact('categories', 'countries'));
+        return view('admin.sharedproduct.index', compact('products', 'countries', 'categories', 'offer'));
     }
 
     /**
@@ -98,7 +88,7 @@ class SharedProductController extends Controller
             'title' => $request->title,
             'brand' => $request->brand,
             'description' => $request->description,
-            'image' =>  $imageName,
+            'image' => $imageName,
             'weight' => $request->weight,
             'unit_cost' => $request->unit_cost,
             'recommended_price' => $request->recommended_price,
@@ -114,6 +104,15 @@ class SharedProductController extends Controller
         return response()->json(['message' => 'Product created successfully'], 200);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $countries = Country::all();
+        $categories = Category::all();
+        return view('admin.sharedproduct.create', compact('categories', 'countries'));
+    }
 
     /**
      * Display the specified resource.
@@ -235,12 +234,13 @@ class SharedProductController extends Controller
         }
         $product->delete();
 
-        return redirect()->route('shared-products.index')->with('Delete', 'Product deleted successfully.');
+        return view('admin.sharedproduct.index', compact('products', 'countries', 'categories', 'offer'));
     }
 
     public function country_filter(Request $request, $country)
     {
 
+        $offer = Offer::where('end_date', '>', now())->orderBy('id', 'DESC')->get();
 
         // Now you can use the $selectedCountry variable to filter your products
         $products = SharedProduct::whereHas('sharedcountries', function ($query) use ($country) {
@@ -248,26 +248,34 @@ class SharedProductController extends Controller
         })->orderBy('id', 'DESC')->paginate(COUNT);
         $countries = Country::all();
         $categories = Category::all();
-        return view('admin.sharedproduct.index', compact('products', 'countries', 'categories'));
+        return view('admin.sharedproduct.index', compact('products', 'countries', 'categories', 'offer'));
     }
+
     public function new_product()
     {
+        $offer = Offer::where('end_date', '>', now())->orderBy('id', 'DESC')->get();
+
         $products = SharedProduct::orderBy('id', 'DESC')->paginate(COUNT);
         $countries = Country::all();
         $categories = Category::all();
-        return view('admin.sharedproduct.index', compact('products', 'countries', 'categories'));
+        return view('admin.sharedproduct.index', compact('products', 'countries', 'categories', 'offer'));
     }
+
     public function suggested_product()
     {
+        $offer = Offer::where('end_date', '>', now())->orderBy('id', 'DESC')->get();
+
         $shared_products = DB::table('shared_product_seller')->pluck('shared_product_id')->toArray();
         $products = SharedProduct::whereIn('id', $shared_products)->orderBy('id', 'DESC')->paginate(COUNT);
         $countries = Country::all();
         $categories = Category::all();
 
-        return view('admin.sharedproduct.index', compact('products', 'countries', 'categories'));
+        return view('admin.sharedproduct.index', compact('products', 'countries', 'categories', 'offer'));
     }
+
     public function search(Request $request)
     {
+        $offer = Offer::where('end_date', '>', now())->orderBy('id', 'DESC')->get();
 
         $query = SharedProduct::query();
 
@@ -287,6 +295,6 @@ class SharedProductController extends Controller
 
         $countries = Country::all();
         $categories = Category::all();
-        return view('admin.sharedproduct.index', compact('products', 'countries', 'categories'));
+        return view('admin.sharedproduct.index', compact('products', 'countries', 'categories', 'offer'));
     }
 }

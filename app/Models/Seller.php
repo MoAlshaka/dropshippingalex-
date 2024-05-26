@@ -22,7 +22,7 @@ class Seller extends Authenticatable
         'address',
         'image',
         'payment_method',
-        'account_number',
+        'account',
         'is_active',
     ];
 
@@ -35,10 +35,12 @@ class Seller extends Authenticatable
     {
         return $this->belongsToMany(AffiliateProduct::class, 'affiliate_product_seller');
     }
+
     public function leads()
     {
         return $this->hasMany(Lead::class);
     }
+
     public function transactions()
     {
         return $this->hasMany(Transaction::class, 'seller_id');

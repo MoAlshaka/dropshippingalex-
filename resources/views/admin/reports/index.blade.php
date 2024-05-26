@@ -121,7 +121,7 @@
                                 <div class="mb-4">
                                     <div class="form-floating form-floating-outline">
                                         <input type="text" id="bs-rangepicker-range" class="form-control"
-                                               name="created_at">
+                                               name="date">
                                         <label for="bs-rangepicker-range">{{ __('site.Date') }}</label>
                                     </div>
                                 </div>
@@ -134,6 +134,7 @@
                 </div>
             </div>
         </h4>
+
         <div class="bg-white drop-shadow p-4 rounded-md flex flex-col md:flex-row gap-6">
             <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
                href="{{ route('admin.reports.index') }}">
@@ -304,10 +305,10 @@
                 </div>
                 <div class="flex flex-col justify-center px-4 ">
                     <h3 class="text-gray-600 font-bold capitalize">
-                        DELIVERED RATE
+                        {{__('site.DeliveredRate')}}
                     </h3>
                     <p class="text-pretty">
-                        Delivered rate is the number of delivered shipments out of the total shipments
+                        {{__('site.DeliveredRateDesc')}}
                     </p>
                 </div>
             </div>
@@ -329,11 +330,10 @@
                 </div>
                 <div class="flex flex-col justify-center px-4 ">
                     <h3 class="text-gray-600 font-bold capitalize">
-                        Confirmation Rate
+                        {{__('site.ConfirmationRate')}}
                     </h3>
                     <p class="text-pretty">
-                        Confirmation rate is the number of confirmed leads out of the total processed leads (excluding
-                        duplicate & wrong leads)
+                        {{__('site.ConfirmationRateDesc')}})
                     </p>
                 </div>
             </div>

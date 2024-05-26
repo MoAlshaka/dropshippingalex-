@@ -9,34 +9,36 @@
 @section('css')
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}"/>
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&ampdisplay=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&ampdisplay=swap"
+          rel="stylesheet"/>
 
     <!-- Icons -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/materialdesignicons.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/flag-icons.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/materialdesignicons.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/flag-icons.css') }}"/>
 
     <!-- Menu waves for no-customizer fix -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/node-waves/node-waves.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/node-waves/node-waves.css') }}"/>
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/core.css') }}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/core.css') }}" class="template-customizer-core-css"/>
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/theme-default.css') }}"
-        class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
+          class="template-customizer-theme-css"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}"/>
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/apex-charts/apex-charts.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/apex-charts/apex-charts.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}"/>
     <link rel="stylesheet"
-        href="{{ asset('assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}" />
+          href="{{ asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}"/>
+    <link rel="stylesheet"
+          href="{{ asset('assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}"/>
 
     <!-- Page CSS -->
 
@@ -52,7 +54,8 @@
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">{{ __('site.Dashboard') }} /</span> {{ __('site.Show') }}
+        <h4 class="py-3 mb-4"><span
+                class="text-muted fw-light">{{ __('site.Dashboard') }} /</span> {{ __('site.Show') }}
         </h4>
         @if (session()->has('Add'))
             <div class="alert alert-success" role="alert">{{ session()->get('Add') }}</div>
@@ -72,14 +75,14 @@
             <div class="product-card col-span-8 lg:col-span-3 py-2 px-4 rounded-md drop-shadow bg-white">
                 <div class="product-img flex mb-4">
                     <img src="{{ asset('assets/sellers/images/national_id/' . $seller->national_id) }}" alt="id image"
-                        class="w-full h-full object-cover" />
+                         class="w-full h-full object-cover"/>
                 </div>
                 <div style="display: flex; gap: 6px;">
                     <form action="{{ route('admin.sellers.active', $seller->id) }}" method="post">
                         @csrf
                         @method('PUT')
                         <button type="submit"
-                            class=" @if ($seller->is_active == 0) btn bg-success text-white @else btn bg-warning text-white @endif">
+                                class=" @if ($seller->is_active == 0) btn bg-success text-white @else btn bg-warning text-white @endif">
                             @if ($seller->is_active == 0)
                                 {{ __('site.Active') }}
                             @else
@@ -98,7 +101,7 @@
                 <div class="py-8 px-4">
                     <h3 class="text-2xl font-bold">{{ $seller->first_name . ' ' . $seller->last_name }}</h3>
                 </div>
-                <hr />
+                <hr/>
                 <div class="px-2">
                     <div class="py-6 px-2">
                         <h3 class="text-md font-bold mb-4">{{ __('site.SellerInformations') }}:</h3>
@@ -122,21 +125,21 @@
                                 </h3>
                                 <span class="text-black">{{ $seller->address }}</span>
                             </div>
-                            <div class="flex items-center">
-                                <h3 class="text-md text-gray-500 lg:text-xl font-bold mr-6 lg:mr-2">
-                                    {{ __('site.PaymentMethod') }}:
-                                </h3>
-                                <span class="text-black">{{ $seller->payment_method }}</span>
-                            </div>
-                            <div class="flex items-center">
-                                <h3 class="text-md text-gray-500 lg:text-xl font-bold mr-6 lg:mr-2">
-                                    {{ __('site.AccountNumber') }}:
-                                </h3>
-                                <span class="text-black">{{ $seller->account_number }}</span>
-                            </div>
+                            {{--                            <div class="flex items-center">--}}
+                            {{--                                <h3 class="text-md text-gray-500 lg:text-xl font-bold mr-6 lg:mr-2">--}}
+                            {{--                                    {{ __('site.PaymentMethod') }}:--}}
+                            {{--                                </h3>--}}
+                            {{--                                <span class="text-black">{{ $seller->payment_method }}</span>--}}
+                            {{--                            </div>--}}
+                            {{--                            <div class="flex items-center">--}}
+                            {{--                                <h3 class="text-md text-gray-500 lg:text-xl font-bold mr-6 lg:mr-2">--}}
+                            {{--                                    {{ __('site.AccountNumber') }}:--}}
+                            {{--                                </h3>--}}
+                            {{--                                <span class="text-black">{{ $seller->account }}</span>--}}
+                            {{--                            </div>--}}
                         </div>
                     </div>
-                    <hr />
+                    <hr/>
                 </div>
             </div>
         </div>

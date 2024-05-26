@@ -87,12 +87,12 @@
 
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="basic-default-name">
-                                    {{ __('site.AccountNumber') }}</label>
+                                    {{ __('site.Account') }}</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="accountNumber" name="account_number"
-                                           placeholder="{{ __('site.AccountNumber') }}"/>
+                                    <input type="text" class="form-control" id="accountNumber" name="account"
+                                           placeholder="{{ __('site.Account') }}"/>
                                 </div>
-                                @error('account_number')
+                                @error('account')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>

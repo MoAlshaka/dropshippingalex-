@@ -10,8 +10,8 @@ class OfferController extends Controller
 {
     public function index()
     {
-        $offers = Offer::orderBy('id', 'DESC')->paginate(COUNT);
-        return view('admin.offers.index', compact('offers'));
+//        $offers = Offer::orderBy('id', 'DESC')->paginate(COUNT);
+//        return view('admin.offers.index', compact('offers'));
     }
 
     /**
@@ -30,13 +30,13 @@ class OfferController extends Controller
         $image->move(public_path('assets/offers/images'), $imageName);
 
         Offer::create([
-            
+
             'image' => $imageName,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'admin_id' => auth()->guard('admin')->user()->id,
         ]);
-        return redirect()->route('offers.index')->with(['Add' => 'Add Offer successfully']);
+        return redirect()->back()->with(['Add' => 'Add Offer successfully']);
     }
 
     /**
@@ -52,8 +52,8 @@ class OfferController extends Controller
      */
     public function show(string $id)
     {
-        $offer = Offer::findorfail($id);
-        return view('admin.offers.show', compact('offer'));
+//        $offer = Offer::findorfail($id);
+//        return view('admin.offers.show', compact('offer'));
     }
 
     /**
@@ -61,8 +61,8 @@ class OfferController extends Controller
      */
     public function edit(string $id)
     {
-        $offer = Offer::findorfail($id);
-        return view('admin.offers.edit', compact('offer'));
+//        $offer = Offer::findorfail($id);
+//        return view('admin.offers.edit', compact('offer'));
     }
 
     /**
@@ -70,38 +70,39 @@ class OfferController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'title' => 'required|max:50',
-            'description' => 'required',
-            'image' => 'nullable|mimes:png,jpg',
-            'start_date' => 'nullable|date',
-            'end_date' => 'nullable|date',
-        ]);
-        $offer = Offer::findorfail($id);
-        $oldImage = $offer->image;
-
-        if ($request->hasFile('image')) {
-
-            if ($oldImage) {
-                unlink(public_path('assets/offers/images/' . $oldImage));
-            }
-
-            $image = $request->file('image');
-            $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('assets/offers/images'), $imageName);
-        } else {
-            $imageName = $oldImage;
-        }
-
-        $offer->update([
-            'title' => $request->title,
-            'description' => $request->description,
-            'image' => $imageName,
-            'start_date' => $request->start_date ?? $offer->start_date,
-            'end_date' => $request->end_date ?? $offer->end_date,
-            'admin_id' => auth()->guard('admin')->user()->id,
-        ]);
-        return redirect()->route('offers.index')->with(['Update' => 'Update Offer successfully']);
+        //  $request->validate([
+//            'title' => 'required|max:50',
+//            'description' => 'required',
+//            'image' => 'nullable|mimes:png,jpg',
+//            'start_date' => 'nullable|date',
+//            'end_date' => 'nullable|date',
+//        ]);
+//        $offer = Offer::findorfail($id);
+//        $oldImage = $offer->image;
+//
+//        if ($request->hasFile('image')) {
+//
+//            if ($oldImage) {
+//                unlink(public_path('assets/offers/images/' . $oldImage));
+//            }
+//
+//            $image = $request->file('image');
+//            $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
+//            $image->move(public_path('assets/offers/images'), $imageName);
+//        } else {
+//            $imageName = $oldImage;
+//        }
+//
+//        $offer->update([
+//            'title' => $request->title,
+//            'description' => $request->description,
+//            'image' => $imageName,
+//            'start_date' => $request->start_date ?? $offer->start_date,
+//            'end_date' => $request->end_date ?? $offer->end_date,
+//            'admin_id' => auth()->guard('admin')->user()->id,
+//        ]);
+//        return redirect()->route('offers.index')->with(['Update' => 'Update Offer successfully']);
+//
     }
 
     /**
@@ -109,14 +110,14 @@ class OfferController extends Controller
      */
     public function destroy(string $id)
     {
-        $offer = Offer::findorfail($id);
-        if ($offer->image) {
-            $imagePath = public_path('assets/offers/images/' . $offer->image);
-            if (file_exists($imagePath)) {
-                unlink($imagePath);
-            }
-        }
-        $offer->delete();
-        return redirect()->route('offers.index')->with(['Delete' => 'Delete Offer successfully']);
+//        $offer = Offer::findorfail($id);
+//        if ($offer->image) {
+//            $imagePath = public_path('assets/offers/images/' . $offer->image);
+//            if (file_exists($imagePath)) {
+//                unlink($imagePath);
+//            }
+//        }
+//        $offer->delete();
+//        return redirect()->route('offers.index')->with(['Delete' => 'Delete Offer successfully']);
     }
 }

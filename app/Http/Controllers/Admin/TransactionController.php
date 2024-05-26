@@ -21,15 +21,6 @@ class TransactionController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        $sellers = Seller::all();
-        return view('admin.transactions.create', compact('sellers'));
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
@@ -37,7 +28,7 @@ class TransactionController extends Controller
         $request->validate([
             'seller_id' => 'required|exists:sellers,id',
             'payment_method' => 'required|exists:sellers,payment_method',
-            'account_number' => 'required|exists:sellers,account_number',
+            'account' => 'required|exists:sellers,account',
             'amount' => 'required|numeric',
             'status' => 'required|max:50',
         ]);
@@ -46,13 +37,22 @@ class TransactionController extends Controller
         $transaction = Transaction::create([
             'seller_id' => $request->seller_id,
             'payment_method' => $request->payment_method,
-            'account_number' => $request->account_number,
+            'account' => $request->account,
             'amount' => $request->amount,
             'status' => $request->status,
             'admin_id' => auth()->guard('admin')->user()->id,
         ]);
         $user->notify(new CreateTransaction($transaction->amount, $transaction->status, $transaction->payment_method, $transaction->account_number));
         return redirect()->route('transactions.index')->with(['Add' => 'Add Transaction Successfully']);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $sellers = Seller::all();
+        return view('admin.transactions.create', compact('sellers'));
     }
 
     /**
@@ -82,7 +82,7 @@ class TransactionController extends Controller
         $request->validate([
             'seller_id' => 'required|exists:sellers,id',
             'payment_method' => 'required|exists:sellers,payment_method',
-            'account_number' => 'required|exists:sellers,account_number',
+            'account' => 'required|exists:sellers,account',
             'amount' => 'required|numeric',
             'status' => 'required|max:50',
         ]);
@@ -90,7 +90,7 @@ class TransactionController extends Controller
         $transaction->update([
             'seller_id' => $request->seller_id,
             'payment_method' => $request->payment_method,
-            'account_number' => $request->account_number,
+            'account' => $request->account,
             'amount' => $request->amount,
             'status' => $request->status,
             'admin_id' => auth()->guard('admin')->user()->id,
@@ -115,7 +115,7 @@ class TransactionController extends Controller
         $result = Seller::where('id', $id)->first();
         $data = [];
         $data['payment_method'] = $result->payment_method;
-        $data['account_number'] = $result->account_number;
+        $data['account_number'] = $result->account;
 
 
         return response()->json($data);

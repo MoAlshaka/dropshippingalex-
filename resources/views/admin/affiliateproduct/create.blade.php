@@ -311,8 +311,8 @@
                                     <select id="type" class="select2 form-select" name="type"
                                             data-placeholder="{{ __('site.SelectCommissionType') }}">
                                         <option value="">{{ __('site.SelectCommissionType') }}</option>
-                                        <option value="on_delivered">{{ __('site.OnDelivered')}}</option>
-                                        <option value="on_confirmed">{{ __('site.OnConfirmed')}}</option>
+                                        <option value="delivered">{{ __('site.PerDelivered')}}</option>
+                                        <option value="confirmed">{{ __('site.PerConfirmed')}}</option>
                                     </select>
                                     <label for="type">{{ __('site.CommissionType') }}</label>
                                 </div>

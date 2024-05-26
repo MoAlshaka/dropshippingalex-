@@ -44,10 +44,11 @@ Route::group([
 ], function () {
     //Dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::post('/', [DashboardController::class, 'filter'])->name('admin.dashboard.filter');
     //Categories
     Route::resource('categories', CategoryController::class);
     //payment_methods
-    Route::resource('payments', PaymentController::class);
+//    Route::resource('payments', PaymentController::class);
     //Countries
     Route::resource('countries', CountryController::class);
     //offers
@@ -64,18 +65,20 @@ Route::group([
 
     //
     Route::resource('affiliate-products', AffiliateProductController::class);
+    Route::get('affiliate-per-delivered', [AffiliateProductController::class, 'per_delivered'])->name('admin.affiliate.per.delivered');
+    Route::get('affiliate-per-confirmed', [AffiliateProductController::class, 'per_confirmed'])->name('admin.affiliate.per.confirmed');
     Route::match(['post', 'put', 'patch'], 'affiliate-products/{id}', [AffiliateProductController::class, 'update'])->name('admin.affiliateproducts.update');
-    Route::get('/affiliate-product/new-products', [AffiliateProductController::class, 'new_product'])->name('admin.new.affiliate.product');
-    Route::get('/affiliate-product/suggested-products', [AffiliateProductController::class, 'suggested_product'])->name('admin.suggested.affiliate.product');
-
-    Route::post('/affiliate-product/search', [AffiliateProductController::class, 'search'])->name('admin.search.affiliate.product');
-
-    Route::get('/affiliate-product/search', [AffiliateProductController::class, 'search'])->name('admin.search.affiliate.product');
-
+    Route::get('/affiliate-per-delivered/new-products', [AffiliateProductController::class, 'new_product_per_delivered'])->name('admin.new.affiliate.per.delivered');
+    Route::get('/affiliate-per-delivered/suggested-products', [AffiliateProductController::class, 'suggested_product_per_delivered'])->name('admin.suggested.affiliate.per.delivered');
+    Route::post('/affiliate-per-delivered/search', [AffiliateProductController::class, 'search_per_delivered'])->name('admin.search.affiliate.per.delivered');
+    Route::get('/affiliate-per-confirmed/new-products', [AffiliateProductController::class, 'new_product_per_confirmed'])->name('admin.new.affiliate.per.confirmed');
+    Route::get('/affiliate-per-confirmed/suggested-products', [AffiliateProductController::class, 'suggested_product_per_confirmed'])->name('admin.suggested.affiliate.per.confirmed');
+    Route::post('/affiliate-per-confirmed/search', [AffiliateProductController::class, 'search_per_confirmed'])->name('admin.search.affiliate.per.confirmed');
 
     //
     Route::get('filter/shared-products/{country}', [SharedProductController::class, 'country_filter'])->name('admin.shared.country.filter');
-    Route::get('filter/affiliate-products/{country}', [AffiliateProductController::class, 'country_filter'])->name('admin.affiliate.country.filter');
+    Route::get('filter/affiliate-per-delivered/{country}', [AffiliateProductController::class, 'country_filter_per_delivered'])->name('admin.affiliate.per.delivered.country.filter');
+    Route::get('filter/affiliate-per-confirmed/{country}', [AffiliateProductController::class, 'country_filter_per_confirmed'])->name('admin.affiliate.per.confirmed.country.filter');
     //Seller
     Route::get('sellers', [ActiveSellerController::class, 'index'])->name('admin.sellers.index');
     Route::get('seller/show/{id}', [ActiveSellerController::class, 'show'])->name('admin.sellers.show');
@@ -95,7 +98,7 @@ Route::group([
     Route::post('orders/filter', [OrderController::class, 'filter'])->name('admin.orders.filter');
     //Reports
     Route::get('reports', [ReportController::class, 'index'])->name('admin.reports.index');
-    Route::get('filter/report/{country}', [ReportController::class, 'filter_country'])->name('admin.report.country.filter');
+    Route::get('filter/report/country/{country}', [ReportController::class, 'filter_country'])->name('admin.report.country.filter');
     Route::post('reports/filter', [ReportController::class, 'filter'])->name('admin.reports.filter');
 
     //logout

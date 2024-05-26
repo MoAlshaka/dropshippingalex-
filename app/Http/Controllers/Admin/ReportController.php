@@ -7,14 +7,27 @@ use App\Models\Country;
 use App\Models\Lead;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class ReportController extends Controller
 {
     public function index()
     {
+
         $orders = Order::count();
         $countries = Country::all();
         $leads = Lead::count();
+
+        $under_process = 0;
+        $confirmed = 0;
+        $canceled = 0;
+        $fulfilled = 0;
+        $shipped = 0;
+        $delivered = 0;
+        $returned = 0;
+        $confirmed_rate = 0;
+        $delivered_rate = 0;
+
         $under_process = Order::where('shipment_status', 'pending')->count();
         $confirmed = Order::where('shipment_status', 'approved')->count();
         $canceled = Order::where('shipment_status', 'canceled')->count();
@@ -23,8 +36,10 @@ class ReportController extends Controller
         $delivered = Order::where('shipment_status', 'delivered')->count();
         $returned = Order::where('shipment_status', 'returned')->count();
 
-        $confirmed_rate = intval(($confirmed / $orders) * 100);
-        $delivered_rate = intval(($delivered / $orders) * 100);
+        if ($orders > 0) {
+            $confirmed_rate = intval(($confirmed / $orders) * 100);
+            $delivered_rate = intval(($delivered / $orders) * 100);
+        }
         return view('admin.reports.index', compact('leads', 'under_process', 'confirmed', 'canceled', 'fulfilled', 'shipped', 'delivered', 'returned', 'countries', 'confirmed_rate', 'delivered_rate'));
     }
 
@@ -33,7 +48,7 @@ class ReportController extends Controller
         $orders = Order::count();
         $countries = Country::all();
         $country = Country::findOrFail($countryId);
-        $leads = Lead::count();
+        $leads = Lead::where('warehouse', $country->name)->count();
         $under_process = Order::whereHas('lead', function ($query) use ($country) {
             $query->where('warehouse', $country->name);
         })->where('shipment_status', 'pending')->count();
@@ -62,6 +77,7 @@ class ReportController extends Controller
         return view('admin.reports.index', compact('leads', 'under_process', 'confirmed', 'canceled', 'fulfilled', 'shipped', 'delivered', 'returned', 'countries', 'confirmed_rate', 'delivered_rate'));
     }
 
+
     public function filter(Request $request)
     {
         $orders = Order::count();
@@ -84,27 +100,59 @@ class ReportController extends Controller
 
             // Ensure both start and end dates are available
             if (count($dates) === 2) {
-                $start_date = $dates[0];
-                $end_date = $dates[1];
+                $start_date = Carbon::createFromFormat('m/d/Y', $dates[0])->startOfDay();
+                $end_date = Carbon::createFromFormat('m/d/Y', $dates[1])->endOfDay();
 
-                $under_process = Order::whereBetween('crated_at', [$start_date, $end_date])->where('shipment_status', 'pending')->count();
-                $confirmed = Order::whereBetween('crated_at', [$start_date, $end_date])->where('shipment_status', 'approved')->count();
-                $canceled = Order::whereBetween('crated_at', [$start_date, $end_date])->where('shipment_status', 'canceled')->count();
-                $fulfilled = Order::whereBetween('crated_at', [$start_date, $end_date])->where('shipment_status', 'fulfilled')->count();
-                $shipped = Order::whereBetween('crated_at', [$start_date, $end_date])->where('shipment_status', 'shipping')->count();
-                $delivered = Order::whereBetween('crated_at', [$start_date, $end_date])->where('shipment_status', 'delivered')->count();
-                $returned = Order::whereBetween('crated_at', [$start_date, $end_date])->where('shipment_status', 'returned')->count();
+                $under_process = Order::where('shipment_status', 'pending')
+                    ->whereBetween('created_at', [$start_date, $end_date])
+                    ->count();
 
-                // Ensure there are orders to avoid division by zero
+                $confirmed = Order::where('shipment_status', 'approved')
+                    ->whereBetween('created_at', [$start_date, $end_date])
+                    ->count();
 
+                $canceled = Order::where('shipment_status', 'canceled')
+                    ->whereBetween('created_at', [$start_date, $end_date])
+                    ->count();
+
+                $fulfilled = Order::where('shipment_status', 'fulfilled')
+                    ->whereBetween('created_at', [$start_date, $end_date])
+                    ->count();
+
+                $shipped = Order::where('shipment_status', 'shipping')
+                    ->whereBetween('created_at', [$start_date, $end_date])
+                    ->count();
+
+                $delivered = Order::where('shipment_status', 'delivered')
+                    ->whereBetween('created_at', [$start_date, $end_date])
+                    ->count();
+
+                $returned = Order::where('shipment_status', 'returned')
+                    ->whereBetween('created_at', [$start_date, $end_date])
+                    ->count();
             }
         }
 
-        $confirmed_rate = intval(($confirmed / $orders) * 100);
-        $delivered_rate = intval(($delivered / $orders) * 100);
+        // Calculate rates only if there are orders to avoid division by zero
+        if ($orders > 0) {
+            $confirmed_rate = intval(($confirmed / $orders) * 100);
+            $delivered_rate = intval(($delivered / $orders) * 100);
+        }
 
-
-        return view('admin.reports.index', compact('leads', 'under_process', 'confirmed', 'canceled', 'fulfilled', 'shipped', 'delivered', 'returned', 'countries', 'confirmed_rate', 'delivered_rate'));
+        return view('admin.reports.index', compact(
+            'leads',
+            'under_process',
+            'confirmed',
+            'canceled',
+            'fulfilled',
+            'shipped',
+            'delivered',
+            'returned',
+            'countries',
+            'confirmed_rate',
+            'delivered_rate'
+        ));
     }
+
 
 }

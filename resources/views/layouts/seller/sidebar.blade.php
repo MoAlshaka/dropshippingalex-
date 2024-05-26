@@ -63,11 +63,6 @@
 
             </a>
         </li>
-        <!-- Apps & Pages -->
-        <li class="menu-header fw-medium mt-4">
-            <span class="menu-header-text">{{ __('site.Apps') }} &amp; {{ __('site.Pages') }}</span>
-        </li>
-
 
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -81,8 +76,13 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="{{ route('seller.affiliateproducts.index') }}" class="menu-link">
-                        <div>{{ __('site.AffiliateProducts') }}</div>
+                    <a href="{{ route('seller.affiliate.per.delivered') }}" class="menu-link">
+                        <div> {{ __('site.AfillatePerDelivered') }}</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{ route('seller.affiliate.per.confirmed') }}" class="menu-link">
+                        <div> {{ __('site.AfillatePerConfirmed') }}</div>
                     </a>
                 </li>
             </ul>
@@ -135,7 +135,19 @@
                 <div> {{ __('site.Transactions') }}</div>
             </a>
         </li>
-
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons mdi mdi-chart-bar-stacked"></i>
+                <div> {{ __('site.Report') }}</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{ route('seller.reports.index') }}" class="menu-link">
+                        <div> {{ __('site.Analytics') }}</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
         <li class="menu-item">
             <a href="{{ route('seller.profile') }}" class="menu-link ">
                 <i class="menu-icon tf-icons mdi mdi-cog-outline"></i>

@@ -1,8 +1,8 @@
-@extends('layouts.master')
+@extends('layouts.seller.master')
 
 
 @section('title')
-    {{ __('site.AffiliateProducts') }}
+    {{ __('site.AfillatePerConfirmed') }}
 @endsection
 
 
@@ -11,10 +11,18 @@
     {{--        integrity="sha512-c5dyc+3ht10w+7s6OfBxHwZZkm5A+qLmLaB+pa3RFsKcOCme7/uBv2mtUfFjS+2b2q5j//BXJsW0sB2EhfaR6A=="--}}
     {{--        crossorigin="anonymous" referrerpolicy="no-referrer" />--}}
     <link rel="stylesheet" href="{{ asset('assets/css/product.css') }}"/>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/tailwindcss@^2.2/dist/tailwind.min.css" rel="stylesheet">
     <style>
         .accordion-button {
             width: 0% !important;
+        }
+
+        .ribbon {
+            z-index: 999;
+            width: 210px;
+            top: 30px;
+            right: -55px;
+            height: 30px;
         }
     </style>
 @endsection
@@ -23,7 +31,7 @@
 
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="py-3 mb-4"><span class="text-muted fw-light"> {{ __('site.Dashboard') }} /</span>
-            {{ __('site.AffiliateProducts') }}</h4>
+            {{ __('site.AfillatePerConfirme') }}</h4>
         @if (session()->has('Add'))
             <div class="alert alert-success" role="alert">{{ session()->get('Add') }}</div>
         @endif
@@ -40,37 +48,46 @@
             @isset($offer)
                 <div class="bg-gray-200">
                     <div
-                        class="flex justify-between items-center p-4 sm:m-6 lg:m-8 bg-white rounded-xl ltr:bg-gradient-to-r ltr:from-purple-700 ltr:to-white-500 rtl:bg-gradient-to-l rtl:from-purple-700 rtl:to-white-500"
+                        class=""
                     >
-                        <div>
-                            <!-- offer desc and title -->
-                            <h4 class="text-sm text-gray-200">Active Offers</h4>
-                            <p class="my-2 text-2xl font-bold text-white mt-2">
-                                {{$offer->title}}
-                            </p>
-                            <span class="relative inline-flex mt-4">
-            <button
-
-                class="px-6 py-2 font-semibold rounded-2xl text-white bg-purple-300 bg-opacity-20 hover:bg-opacity-30 hover:bg-purple-500 transition ease-in-out"
-            >
-             <a href="{{route('offers.show',$offer->id)}}"> View the offer</a>
-            </button>
-            <span class="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
-              <span
-                  class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"
-              ></span>
-              <span
-                  class="relative inline-flex rounded-full h-3 w-3 bg-sky-500"
-              ></span>
-            </span>
-          </span>
-                        </div>
-                        <div class="w-[200px] h-[110px] hidden md:block">
-                            <img
-                                class="w-full h-full object-cover rounded-xl"
-                                src="{{asset('assets/svg/icons/undraw_discount_d-4-bd.svg')}}"
-                                alt="offer-image"
-                            />
+                        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-indicators">
+                                <button
+                                    type="button"
+                                    data-bs-target="#carouselExample"
+                                    data-bs-slide-to="0"
+                                    class="active"
+                                    aria-current="true"
+                                    aria-label="Slide 1"></button>
+                                <button
+                                    type="button"
+                                    data-bs-target="#carouselExample"
+                                    data-bs-slide-to="1"
+                                    aria-label="Slide 2"></button>
+                                <button
+                                    type="button"
+                                    data-bs-target="#carouselExample"
+                                    data-bs-slide-to="2"
+                                    aria-label="Slide 3"></button>
+                            </div>
+                            <div class="carousel-inner" style="height:150px;">
+                                @foreach($offer as $info)
+                                    <div class="carousel-item active" style="max-height:150px;">
+                                        <img class="d-block w-100"
+                                             src="{{ asset('assets/offers/images/'.$info->image) }}"
+                                             style="max-height: 150px;object-fit: cover;"
+                                             alt="First slide"/>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExample" role="button" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExample" role="button" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -83,17 +100,17 @@
 
                             <div class=" h-full flex flex-fill gap-6">
                                 <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
-                                   href="{{ route('affiliate-products.index') }}">
+                                   href="{{ route('seller.affiliate.per.confirmed') }}">
                                     <i class="mdi mdi-select-all"></i>
                                     {{ __('site.AllProducts') }}
                                 </a>
                                 <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
-                                   href="{{ route('admin.new.affiliate.product') }}">
+                                   href="{{ route('seller.new.affiliate.per.confirmed') }}">
                                     <i class="mdi mdi-new-box"></i>
                                     {{ __('site.NewProducts') }}
                                 </a>
                                 <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
-                                   href="{{ route('admin.suggested.affiliate.product') }}">
+                                   href="{{ route('seller.suggested.affiliate.per.confirmed') }}">
                                     <i class="mdi mdi-rocket-launch-outline"></i>
                                     {{ __('site.SuggestedProducts') }}
                                 </a>
@@ -109,7 +126,7 @@
                         <div id="accordionWithIcon-1" class="accordion-collapse collapse" style="">
                             <div class="accordion-body">
                                 <form id="formAuthentication" class="mb-3 row"
-                                      action="{{ route('admin.search.affiliate.product') }}" method="post">
+                                      action="{{ route('seller.search.affiliate.per.confirmed') }}" method="post">
                                     @csrf
                                     <div class="form-floating form-floating-outline mb-3 col ">
                                         <input type="text" class="form-control" id="title" name="title"
@@ -151,7 +168,7 @@
             </div>
             <div class="bg-white drop-shadow h-full p-4 rounded-md flex gap-6">
                 <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
-                   href="{{ route('affiliate-products.index') }}">
+                   href="{{ route('seller.affiliate.per.confirmed') }}">
                     <i class="menu-icon tf-icons mdi mdi-earth"></i>
                     {{ __('site.AllCountries') }}
                 </a>
@@ -160,7 +177,7 @@
                 @isset($countries)
                     @foreach ($countries as $country)
                         <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
-                           href="{{ route('admin.affiliate.country.filter', $country->id) }}">
+                           href="{{ route('seller.affiliate.per.confirmed.country.filter', $country->id) }}">
                             <img src="{{ asset('assets/countries/flags/' . $country->flag) }}"
                                  alt="{{ $country->name }}"
                                  width="40" height="40">
@@ -178,7 +195,13 @@
                 @isset($products)
                     @foreach ($products as $product)
                         <div
-                            class="flex flex-col group rounded-md bg-gray-50 drop-shadow hover:border-2 hover:border-purple-700">
+                            class="flex flex-col group rounded-md bg-gray-50 drop-shadow hover:border-2 hover:border-purple-700 relative overflow-hidden">
+                            <div class="absolute right-0 top-0 h-16 w-16">
+                                <div
+                                    class="absolute transform rotate-45 bg-purple-700 text-center text-white font-semibold py-1 ribbon capitalize">
+                                    per confirmed
+                                </div>
+                            </div>
                             <div class="relative grow">
                                 <div
                                     class="absolute w-full h-full bg-black opacity-0 ease-in-out duration-300 group-hover:opacity-40">
@@ -190,7 +213,7 @@
                             </div>
 
                             <div class="relative">
-                                <a href="{{ route('affiliate-products.show', $product->id) }}"
+                                <a href="{{ route('seller.affiliateproduct.show', $product->id) }}"
                                    class="absolute opacity-0 top-[-60px] left-[-50%] group-hover:left-0 group-hover:!opacity-100 bg-purple-700 text-white p-2 rounded-tr-xl rounded-br-xl ease-out duration-100"
                                    target="_blank">
                                     <i class="far fa-eye"></i> <b> {{ __('site.ViewDetails') }} </b>
