@@ -47,51 +47,55 @@
         @endif
         <div class="flex flex-col gap-6">
             @isset($offer)
-                <div class="bg-gray-200">
-                    <div
-                        class=""
-                    >
-                        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-indicators">
-                                <button
-                                    type="button"
-                                    data-bs-target="#carouselExample"
-                                    data-bs-slide-to="0"
-                                    class="active"
-                                    aria-current="true"
-                                    aria-label="Slide 1"></button>
-                                <button
-                                    type="button"
-                                    data-bs-target="#carouselExample"
-                                    data-bs-slide-to="1"
-                                    aria-label="Slide 2"></button>
-                                <button
-                                    type="button"
-                                    data-bs-target="#carouselExample"
-                                    data-bs-slide-to="2"
-                                    aria-label="Slide 3"></button>
+                @if($offer->isNotEmpty())
+                    <div class="bg-gray-200">
+                        <div
+                            class=""
+                        >
+                            <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-indicators">
+                                    <button
+                                        type="button"
+                                        data-bs-target="#carouselExample"
+                                        data-bs-slide-to="0"
+                                        class="active"
+                                        aria-current="true"
+                                        aria-label="Slide 1"></button>
+                                    <button
+                                        type="button"
+                                        data-bs-target="#carouselExample"
+                                        data-bs-slide-to="1"
+                                        aria-label="Slide 2"></button>
+                                    <button
+                                        type="button"
+                                        data-bs-target="#carouselExample"
+                                        data-bs-slide-to="2"
+                                        aria-label="Slide 3"></button>
+                                </div>
+                                <div class="carousel-inner" style="height:150px;">
+                                    @foreach($offer as $info)
+                                        <div class="carousel-item active" style="max-height:150px;">
+                                            <img class="d-block w-100"
+                                                 src="{{ asset('assets/offers/images/'.$info->image) }}"
+                                                 style="max-height: 150px;object-fit: cover;"
+                                                 alt="First slide"/>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <a class="carousel-control-prev" href="#carouselExample" role="button"
+                                   data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExample" role="button"
+                                   data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </a>
                             </div>
-                            <div class="carousel-inner" style="height:150px;">
-                                @foreach($offer as $info)
-                                    <div class="carousel-item active" style="max-height:150px;">
-                                        <img class="d-block w-100"
-                                             src="{{ asset('assets/offers/images/'.$info->image) }}"
-                                             style="max-height: 150px;object-fit: cover;"
-                                             alt="First slide"/>
-                                    </div>
-                                @endforeach
-                            </div>
-                            <a class="carousel-control-prev" href="#carouselExample" role="button" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </a>
-                            <a class="carousel-control-next" href="#carouselExample" role="button" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </a>
                         </div>
                     </div>
-                </div>
+                @endif
             @endisset
             <div class="col-md mb-4 mb-md-2">
                 <div class="accordion mt-3" id="accordionWithIcon">
