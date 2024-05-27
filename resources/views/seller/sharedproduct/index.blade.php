@@ -163,12 +163,14 @@
                 class="bg-white drop-shadow h-full p-4 rounded-md grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 justify-items-center">
 
                 @if ($products->isEmpty())
-                    <div class="px-4 py-4 text-center text-gray-500 dark:text-gray-400">No products</div>
+                    <div
+                        class="px-4 py-4 text-center text-gray-500 dark:text-gray-400">{{ __('site.NoProducts') }}</div>
                 @endif
                 @isset($products)
                     @foreach ($products as $product)
                         <div
-                            class="flex flex-col group rounded-md bg-gray-50 drop-shadow hover:border-2 hover:border-purple-700">
+                            class="flex flex-col group rounded-md bg-gray-50 drop-shadow hover:border-2 hover:border-purple-700 relative overflow-hidden">
+
                             <div class="relative grow">
                                 <div
                                     class="absolute w-full h-full bg-black opacity-0 ease-in-out duration-300 group-hover:opacity-40">
@@ -180,7 +182,7 @@
                             </div>
 
                             <div class="relative">
-                                <a href="{{ route('seller.sharedproduct.show', $product->id) }}"
+                                <a href="{{route('seller.sharedproduct.show', $product->id) }}"
                                    class="absolute opacity-0 top-[-60px] left-[-50%] group-hover:left-0 group-hover:!opacity-100 bg-purple-700 text-white p-2 rounded-tr-xl rounded-br-xl ease-out duration-100"
                                    target="_blank">
                                     <i class="far fa-eye"></i> <b> {{ __('site.ViewDetails') }} </b>

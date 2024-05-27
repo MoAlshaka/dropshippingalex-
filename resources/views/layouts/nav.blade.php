@@ -1,5 +1,5 @@
 <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
-    id="layout-navbar">
+     id="layout-navbar">
     <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
         <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
             <i class="mdi mdi-menu mdi-24px"></i>
@@ -7,28 +7,20 @@
     </div>
 
     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-        <!-- Search -->
-        <div class="navbar-nav align-items-center">
-            <div class="nav-item navbar-search-wrapper mb-0">
-                <a class="nav-item nav-link search-toggler fw-normal px-0" href="javascript:void(0);">
-                    <i class="mdi mdi-magnify mdi-24px scaleX-n1-rtl"></i>
-                    <span class="d-none d-md-inline-block text-muted">Search (Ctrl+/)</span>
-                </a>
-            </div>
-        </div>
-        <!-- /Search -->
+
 
         <ul class="navbar-nav flex-row align-items-center ms-auto">
             <!-- Language -->
             <li class="nav-item dropdown-language dropdown me-1 me-xl-0">
                 <a class="nav-link btn btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow"
-                    href="javascript:void(0);" data-bs-toggle="dropdown">
+                   href="javascript:void(0);" data-bs-toggle="dropdown">
                     <i class="mdi mdi-translate mdi-24px"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                     @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                         <li>
-                            <a class="dropdown-item" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                            <a class="dropdown-item" rel="alternate" hreflang="{{ $localeCode }}"
+                               href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
                                 <span class="align-middle"> {{ $properties['native'] }} </span>
                             </a>
                         </li>
@@ -41,7 +33,7 @@
             <!-- Style Switcher -->
             <li class="nav-item dropdown-style-switcher dropdown me-1 me-xl-0">
                 <a class="nav-link btn btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow"
-                    href="javascript:void(0);" data-bs-toggle="dropdown">
+                   href="javascript:void(0);" data-bs-toggle="dropdown">
                     <i class="mdi mdi-24px"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end dropdown-styles">
@@ -68,12 +60,11 @@
             <!-- / Style Switcher-->
 
 
-
             <!-- User -->
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                        <img src="{{ asset('assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle" />
+                        <img src="{{ asset('assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle"/>
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -83,7 +74,7 @@
                                 <div class="flex-shrink-0 me-3">
                                     <div class="avatar avatar-online">
                                         <img src="{{ asset('assets/img/avatars/1.png') }}" alt
-                                            class="w-px-40 h-auto rounded-circle" />
+                                             class="w-px-40 h-auto rounded-circle"/>
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">

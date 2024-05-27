@@ -1,5 +1,5 @@
 <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
-    id="layout-navbar">
+     id="layout-navbar">
     <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
         <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
             <i class="mdi mdi-menu mdi-24px"></i>
@@ -7,16 +7,7 @@
     </div>
 
     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-        <!-- Search -->
-        <div class="navbar-nav align-items-center">
-            <div class="nav-item navbar-search-wrapper mb-0">
-                <a class="nav-item nav-link search-toggler fw-normal px-0" href="javascript:void(0);">
-                    <i class="mdi mdi-magnify mdi-24px scaleX-n1-rtl"></i>
-                    <span class="d-none d-md-inline-block text-muted">Search (Ctrl+/)</span>
-                </a>
-            </div>
-        </div>
-        <!-- /Search -->
+
 
         <ul class="navbar-nav flex-row align-items-center ms-auto">
             <!-- Language -->
@@ -28,7 +19,8 @@
                 <ul class="dropdown-menu dropdown-menu-end">
                     @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                         <li>
-                            <a class="dropdown-item" rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                            <a class="dropdown-item" rel="alternate" hreflang="{{ $localeCode }}"
+                               href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
                                 <span class="align-middle"> {{ $properties['native'] }} </span>
                             </a>
                         </li>
@@ -40,8 +32,8 @@
             <!-- Notification -->
             <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-2 me-xl-1">
                 <a class="nav-link btn btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow"
-                    href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside"
-                    aria-expanded="false">
+                   href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside"
+                   aria-expanded="false">
                     <i class="mdi mdi-bell-outline mdi-24px"></i>
                     <span
                         class="position-absolute top-0 start-50 translate-middle-y badge badge-dot bg-danger mt-2 border"></span>
@@ -60,7 +52,7 @@
                             @foreach (auth()->guard('seller')->user()->unreadNotifications as $notification)
                                 <li class="list-group-item list-group-item-action dropdown-notifications-item">
                                     <a href="{{ route('seller.notification', $notification->id) }}"
-                                        class="d-flex gap-2">
+                                       class="d-flex gap-2">
                                         <div class="d-flex flex-column flex-grow-1 overflow-hidden w-px-200">
                                             <h6 class="mb-1 text-truncate">Transaction </h6>
                                             <small class="text-truncate text-body">An amount of money has been
@@ -80,7 +72,7 @@
                     </li>
                     <li class="dropdown-menu-footer border-top p-2">
                         <a href="{{ route('seller.notification.read.all') }}"
-                            class="btn btn-primary d-flex justify-content-center">
+                           class="btn btn-primary d-flex justify-content-center">
                             Mark All As Read
                         </a>
                     </li>
@@ -91,7 +83,7 @@
             <!-- Style Switcher -->
             <li class="nav-item dropdown-style-switcher dropdown me-1 me-xl-0">
                 <a class="nav-link btn btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow"
-                    href="javascript:void(0);" data-bs-toggle="dropdown">
+                   href="javascript:void(0);" data-bs-toggle="dropdown">
                     <i class="mdi mdi-24px"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end dropdown-styles">
@@ -122,7 +114,7 @@
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
                         <img src="{{ asset('assets/sellers/images/' . Auth::guard('seller')->user()->image) }}" alt
-                            class="w-px-40 h-auto rounded-circle" />
+                             class="w-px-40 h-auto rounded-circle"/>
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -131,8 +123,9 @@
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
                                     <div class="avatar avatar-online">
-                                        <img src="{{ asset('assets/sellers/images/' . Auth::guard('seller')->user()->image) }}"
-                                            alt="" class="w-40 h-auto rounded-circle" />
+                                        <img
+                                            src="{{ asset('assets/sellers/images/' . Auth::guard('seller')->user()->image) }}"
+                                            alt="" class="w-40 h-auto rounded-circle"/>
 
                                     </div>
                                 </div>

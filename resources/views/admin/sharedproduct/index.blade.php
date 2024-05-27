@@ -34,38 +34,25 @@
         @endif
         <div class="flex flex-col gap-6">
             @isset($offer)
-                @if($offer->isNotEmpty())
+                @if ($offer->isNotEmpty())
                     <div class="bg-gray-200">
-                        <div
-                            class=""
-                        >
+                        <div class="">
                             <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-indicators">
-                                    <button
-                                        type="button"
-                                        data-bs-target="#carouselExample"
-                                        data-bs-slide-to="0"
-                                        class="active"
-                                        aria-current="true"
-                                        aria-label="Slide 1"></button>
-                                    <button
-                                        type="button"
-                                        data-bs-target="#carouselExample"
-                                        data-bs-slide-to="1"
-                                        aria-label="Slide 2"></button>
-                                    <button
-                                        type="button"
-                                        data-bs-target="#carouselExample"
-                                        data-bs-slide-to="2"
-                                        aria-label="Slide 3"></button>
+                                    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0"
+                                            class="active"
+                                            aria-current="true" aria-label="Slide 1"></button>
+                                    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1"
+                                            aria-label="Slide 2"></button>
+                                    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2"
+                                            aria-label="Slide 3"></button>
                                 </div>
                                 <div class="carousel-inner" style="height:150px;">
-                                    @foreach($offer as $info)
+                                    @foreach ($offer as $info)
                                         <div class="carousel-item active" style="max-height:150px;">
                                             <img class="d-block w-100"
-                                                 src="{{ asset('assets/offers/images/'.$info->image) }}"
-                                                 style="max-height: 150px;object-fit: cover;"
-                                                 alt="First slide"/>
+                                                 src="{{ asset('assets/offers/images/' . $info->image) }}"
+                                                 style="max-height: 150px;object-fit: cover;" alt="First slide"/>
                                         </div>
                                     @endforeach
                                 </div>
@@ -172,12 +159,13 @@
 
                 @if ($products->isEmpty())
                     <div
-                        class="px-4 py-4 text-center text-gray-500 dark:text-gray-400"> {{ __('site.NoProducts') }}</div>
+                        class="px-4 py-4 text-center text-gray-500 dark:text-gray-400">{{ __('site.NoProducts') }}</div>
                 @endif
                 @isset($products)
                     @foreach ($products as $product)
                         <div
-                            class="flex flex-col group rounded-md bg-gray-50 drop-shadow hover:border-2 hover:border-purple-700">
+                            class="flex flex-col group rounded-md bg-gray-50 drop-shadow hover:border-2 hover:border-purple-700 relative overflow-hidden">
+
                             <div class="relative grow">
                                 <div
                                     class="absolute w-full h-full bg-black opacity-0 ease-in-out duration-300 group-hover:opacity-40">
@@ -189,7 +177,7 @@
                             </div>
 
                             <div class="relative">
-                                <a href="{{ route('shared-products.show', $product->id) }}"
+                                <a href="{{route('seller.sharedproduct.show', $product->id) }}"
                                    class="absolute opacity-0 top-[-60px] left-[-50%] group-hover:left-0 group-hover:!opacity-100 bg-purple-700 text-white p-2 rounded-tr-xl rounded-br-xl ease-out duration-100"
                                    target="_blank">
                                     <i class="far fa-eye"></i> <b> {{ __('site.ViewDetails') }} </b>
@@ -197,7 +185,7 @@
                             </div>
 
                             <div class="p-2">
-                                <a href="{{ route('shared-products.show', $product->id) }}" target="_blank">
+                                <a href="{{ route('seller.sharedproduct.show', $product->id) }}" target="_blank">
                                     <h6 class="text-purple-900 line-clamp-1">{{ $product->title }}</h6>
                                 </a>
                                 <div class="d-flex gap-2 my-2" style="grid-row-gap: 0.3rem; grid-column-gap: 0.3rem">
@@ -210,7 +198,7 @@
                                 </div>
                                 <div>
                                     <div>
-                                        <b>${{ $product->unit_cost }} </b>
+                                        <b>${{ $product->unit_cost }}</b>
                                     </div>
                                 </div>
                             </div>
