@@ -254,7 +254,7 @@
                                             Advanced
                                         @elseif($seller->transactions->sum('amount') <= 100 && $seller->transactions->sum('amount') > 50)
                                             Worker
-                                        @elseif($seller->transactions->sum('amount') <= 50 && $seller->transactions->sum('amount') > 10)
+                                        @elseif($seller->transactions->sum('amount') <= 50)
                                             Novice
                                         @endif
 

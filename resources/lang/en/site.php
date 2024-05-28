@@ -242,6 +242,7 @@ return [
     'DeliveredRateDesc' => 'Delivered rate is the number of delivered shipments out of the total shipments',
     'Statistics' => 'Statistics',
     'StatisticsDesc' => 'Commercial networks and enterprises',
-    
+    'AboutUs' => 'About Us',
+
 
 ];

@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('last_name');
             $table->string('phone', 20);
             $table->string('address');
+            $table->text('about_us')->nullable();
             $table->string('image')->nullable();
             $table->string('payment_method')->nullable();
             $table->string('account')->nullable();

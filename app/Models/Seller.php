@@ -24,6 +24,7 @@ class Seller extends Authenticatable
         'payment_method',
         'account',
         'is_active',
+        'about_us',
     ];
 
     public function sharedProducts()
