@@ -71,8 +71,10 @@ class ReportController extends Controller
             $query->where('warehouse', $country->name);
         })->where('shipment_status', 'returned')->count();
 
-        $confirmed_rate = intval(($confirmed / $orders) * 100);
-        $delivered_rate = intval(($delivered / $orders) * 100);
+        if ($orders > 0) {
+            $confirmed_rate = intval(($confirmed / $orders) * 100);
+            $delivered_rate = intval(($delivered / $orders) * 100);
+        }
 
         return view('seller.reports.index', compact('leads', 'under_process', 'confirmed', 'canceled', 'fulfilled', 'shipped', 'delivered', 'returned', 'countries', 'confirmed_rate', 'delivered_rate'));
     }
@@ -103,7 +105,7 @@ class ReportController extends Controller
                 $end_date = Carbon::createFromFormat('m/d/Y', $dates[1])->endOfDay();
 
                 $leads = Lead::where('seller_id', auth()->guard('seller')->user()->id)->whereBetween('order_date', [$start_date, $end_date])->count();
-                
+
                 $under_process = Order::where('seller_id', auth()->guard('seller')->user()->id)->where('shipment_status', 'pending')
                     ->whereBetween('created_at', [$start_date, $end_date])
                     ->count();
@@ -154,5 +156,4 @@ class ReportController extends Controller
             'delivered_rate'
         ));
     }
-
 }

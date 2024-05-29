@@ -181,7 +181,6 @@
                                                                     name="country[]">
                                                                     <option value="">{{ __('site.SelectCountry') }}
                                                                     </option>
-                                                                    --}}
                                                                     @foreach ($countries as $country)
                                                                         <option value="{{ $country->id }}">
                                                                             {{ $country->name }}</option>
@@ -337,5 +336,4 @@
     <!-- Page JS -->
     <script src="{{ asset('assets/js/app-ecommerce-product-add.js') }}"></script>
     <script src="{{ asset('assets/addProduct/sharedProduct.js') }}"></script>
-    <script src="{{ asset('assets/productjs/stock.js') }}"></script>
 @endsection

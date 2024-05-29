@@ -243,6 +243,12 @@ return [
     'Statistics' => 'Statistics',
     'StatisticsDesc' => 'Commercial networks and enterprises',
     'AboutUs' => 'About Us',
+    'Marketplace' => 'Marketplace',
+    'Affiliate' => 'Affiliate',
+    'Totalcommisoins' => 'Total commisions',
+    'AverageComission' => 'Average comission',
+    'HighestComission' => 'Highest comission',
+    'ConfirmedRate' => 'Conf Rate',
 
 
 ];

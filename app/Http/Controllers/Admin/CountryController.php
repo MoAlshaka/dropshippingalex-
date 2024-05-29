@@ -25,7 +25,7 @@ class CountryController extends Controller
         $request->validate([
             'name' => 'required|max:100',
             'shipping_cost' => 'required|numeric',
-            'flag' => 'required|max:100|mimes:png,svg,jpg,jpeg'
+            'flag' => 'required|mimes:png,svg,jpg,jpeg'
         ]);
 
         $country = $request->name;

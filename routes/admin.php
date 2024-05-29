@@ -1,21 +1,22 @@
 <?php
 
-use App\Http\Controllers\Admin\ActiveSellerController;
-use App\Http\Controllers\Admin\AffiliateProductController;
-use App\Http\Controllers\Admin\Auth\AuthController;
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\PaymentController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LangController;
+use App\Http\Controllers\Admin\LeadController;
+use App\Http\Controllers\Admin\ErrorController;
+use App\Http\Controllers\Admin\OfferController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\CountryController;
+use App\Http\Controllers\Admin\PaymentController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\Auth\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\ErrorController;
-use App\Http\Controllers\Admin\LeadController;
-use App\Http\Controllers\Admin\OfferController;
-use App\Http\Controllers\Admin\SharedProductController;
 use App\Http\Controllers\Admin\TransactionController;
-use App\Http\Controllers\LangController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\ActiveSellerController;
+use App\Http\Controllers\Admin\SharedProductController;
+use App\Http\Controllers\Admin\AffiliateProductController;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,7 +49,7 @@ Route::group([
     //Categories
     Route::resource('categories', CategoryController::class);
     //payment_methods
-//    Route::resource('payments', PaymentController::class);
+    //    Route::resource('payments', PaymentController::class);
     //Countries
     Route::resource('countries', CountryController::class);
     //offers
@@ -100,10 +101,11 @@ Route::group([
     Route::get('reports', [ReportController::class, 'index'])->name('admin.reports.index');
     Route::get('filter/report/country/{country}', [ReportController::class, 'filter_country'])->name('admin.report.country.filter');
     Route::post('reports/filter', [ReportController::class, 'filter'])->name('admin.reports.filter');
+    Route::get('reports/affiliate-filter', [ReportController::class, 'affiliate_filter'])->name('admin.reports.affiliate.filter');
+    Route::get('reports/marketplace', [ReportController::class, 'marketplace'])->name('admin.reports.marketplace.filter');
 
     //logout
     Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout');
 
     Route::fallback([ErrorController::class, 'error'])->name('admin.error');
-
 });

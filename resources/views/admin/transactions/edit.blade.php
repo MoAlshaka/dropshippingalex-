@@ -92,11 +92,10 @@
                                 <label class="col-sm-2 col-form-label" for="basic-default-name">
                                     {{ __('site.AccountNumber') }}</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="accountNumber" name="account_number"
-                                        placeholder="{{ __('site.AccountNumber') }}"
-                                        value="{{ $transaction->account_number }}" />
+                                    <input type="text" class="form-control" id="accountNumber" name="account"
+                                        placeholder="{{ __('site.Account') }}" value="{{ $transaction->account }}" />
                                 </div>
-                                @error('account_number')
+                                @error('account')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
