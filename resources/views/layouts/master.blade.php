@@ -122,8 +122,7 @@
 <!-- Page JS -->
 <script src="{{ asset('assets/js/app-logistics-dashboard.js') }}"></script> --}}
     @yield('js')
-    <script src="{{ asset('assets/ckeditor/ckeditor.js') }}"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/super-build/ckeditor.js"></script>
+
     <script>
         // This sample still does not showcase all CKEditor&nbsp;5 features (!)
         // Visit https://ckeditor.com/docs/ckeditor5/latest/features/index.html to browse all the features.

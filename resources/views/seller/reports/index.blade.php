@@ -70,26 +70,26 @@
         }
     </style>
     <!-- Menu waves for no-customizer fix -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/node-waves/node-waves.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/node-waves/node-waves.css') }}" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/core.css') }}" class="template-customizer-core-css"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/core.css') }}" class="template-customizer-core-css" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/theme-default.css') }}"
-          class="template-customizer-theme-css"/>
-    <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}"/>
+        class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/tagify/tagify.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/flatpickr/flatpickr.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/tagify/tagify.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/flatpickr/flatpickr.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css') }}" />
     <link rel="stylesheet"
-          href="{{ asset('assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/jquery-timepicker/jquery-timepicker.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/pickr/pickr-themes.css') }}"/>
+        href="{{ asset('assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/jquery-timepicker/jquery-timepicker.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/pickr/pickr-themes.css') }}" />
 @endsection
 
 
@@ -101,15 +101,14 @@
                 {{ __('site.Report') }}
             </div>
             <div>
-                <button class="btn btn-outline-primary waves-effect waves-light" type="button"
-                        data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                <button class="btn btn-outline-primary waves-effect waves-light" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                     <span class="tf-icons mdi mdi-filter-check-outline me-1"></span>
                     Filter
                 </button>
                 {{--                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button> --}}
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
-                     aria-labelledby="offcanvasRightLabel">
+                    aria-labelledby="offcanvasRightLabel">
                     <div class="offcanvas-header">
                         <h5 class="offcanvas-title" id="offcanvasRightLabel">{{ __('site.FliterOrders') }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -120,8 +119,7 @@
                             <div class="mb-3">
                                 <div class="mb-4">
                                     <div class="form-floating form-floating-outline">
-                                        <input type="text" id="bs-rangepicker-range" class="form-control"
-                                               name="date">
+                                        <input type="text" id="bs-rangepicker-range" class="form-control" name="date">
                                         <label for="bs-rangepicker-range">{{ __('site.Date') }}</label>
                                     </div>
                                 </div>
@@ -134,10 +132,21 @@
                 </div>
             </div>
         </h4>
+        <div class="bg-white drop-shadow p-4 rounded-md flex flex-col md:flex-row gap-6 mb-6">
+            <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
+                href="{{ route('seller.reports.affiliate.filter') }}">
 
+                {{ __('site.Affiliate') }}
+            </a>
+            <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
+                href="{{ route('seller.reports.marketplace.filter') }}">
+
+                {{ __('site.Marketplace') }}
+            </a>
+        </div>
         <div class="bg-white drop-shadow p-4 rounded-md flex flex-col md:flex-row gap-6">
             <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
-               href="{{ route('seller.reports.index') }}">
+                href="{{ route('seller.reports.index') }}">
                 <i class="menu-icon tf-icons mdi mdi-earth"></i>
                 {{ __('site.AllCountries') }}
             </a>
@@ -146,9 +155,9 @@
             @isset($countries)
                 @foreach ($countries as $country)
                     <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
-                       href="{{ route('seller.report.country.filter', $country->id) }}">
+                        href="{{ route('seller.report.country.filter', $country->id) }}">
                         <img src="{{ asset('assets/countries/flags/' . $country->flag) }}" alt="{{ $country->name }}"
-                             width="40" height="40">
+                            width="40" height="40">
                         <span>{{ $country->name }}</span></a>
                 @endforeach
             @endisset
@@ -179,8 +188,7 @@
                             {{ __('site.UnderProcesses') }}
                         </h2>
                         <div class="flex justify-between items-center">
-                            <div
-                                class="bg-yellow-300 rounded-full text-white px-4 py-2 flex justify-center items-center">
+                            <div class="bg-yellow-300 rounded-full text-white px-4 py-2 flex justify-center items-center">
                                 <span class="mdi mdi-phone-outline">
 
                                 </span>
@@ -196,8 +204,7 @@
                             {{ __('site.Confirmed') }}
                         </h2>
                         <div class="flex justify-between items-center">
-                            <div
-                                class="bg-green-500 rounded-full text-white px-4 py-2 flex justify-center items-center">
+                            <div class="bg-green-500 rounded-full text-white px-4 py-2 flex justify-center items-center">
                                 <span class="mdi mdi-check-circle-outline"></span>
                             </div>
                             <span class="text-gray-600 text-3xl font-bold">{{ $confirmed }}</span>
@@ -227,8 +234,7 @@
                             {{ __('site.Fulfilled') }}
                         </h2>
                         <div class="flex justify-between items-center">
-                            <div
-                                class="bg-orange-500 rounded-full text-white px-4 py-2 flex justify-center items-center">
+                            <div class="bg-orange-500 rounded-full text-white px-4 py-2 flex justify-center items-center">
                                 <span class="mdi mdi-package-variant-closed">
 
                                 </span>
@@ -260,8 +266,7 @@
                             {{ __('site.Delivered') }}
                         </h2>
                         <div class="flex justify-between items-center">
-                            <div
-                                class="bg-green-500 rounded-full text-white px-4 py-2 flex justify-center items-center">
+                            <div class="bg-green-500 rounded-full text-white px-4 py-2 flex justify-center items-center">
                                 <span class="mdi mdi-package-check"></span>
                             </div>
                             <span class="text-gray-600 text-3xl font-bold">{{ $delivered }}</span>
@@ -295,20 +300,20 @@
                         %</span>
                     <svg viewBox="0 0 36 36" class="circular-chart orange">
                         <path class="circle-bg" d="M18 2.0845
-                        a 15.9155 15.9155 0 0 1 0 31.831
-                        a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
                         <!-- place the 60 in the stroke-dasharray with the persentage -->
                         <path class="circle" stroke-dasharray="{{ $delivered_rate }}, 100" d="M18 2.0845
-                        a 15.9155 15.9155 0 0 1 0 31.831
-                        a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
                     </svg>
                 </div>
                 <div class="flex flex-col justify-center px-4 ">
                     <h3 class="text-gray-600 font-bold capitalize">
-                        {{__('site.DeliveredRate')}}
+                        {{ __('site.DeliveredRate') }}
                     </h3>
                     <p class="text-pretty">
-                        {{__('site.DeliveredRateDesc')}}
+                        {{ __('site.DeliveredRateDesc') }}
                     </p>
                 </div>
             </div>
@@ -320,20 +325,20 @@
                         %</span>
                     <svg viewBox="0 0 36 36" class="circular-chart green">
                         <path class="circle-bg" d="M18 2.0845
-                        a 15.9155 15.9155 0 0 1 0 31.831
-                        a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
                         <!-- place the 60 in the stroke-dasharray with the persentage -->
                         <path class="circle" stroke-dasharray="{{ $confirmed_rate }}, 100" d="M18 2.0845
-                        a 15.9155 15.9155 0 0 1 0 31.831
-                        a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
                     </svg>
                 </div>
                 <div class="flex flex-col justify-center px-4 ">
                     <h3 class="text-gray-600 font-bold capitalize">
-                        {{__('site.ConfirmationRate')}}
+                        {{ __('site.ConfirmationRate') }}
                     </h3>
                     <p class="text-pretty">
-                        {{__('site.ConfirmationRateDesc')}}
+                        {{ __('site.ConfirmationRateDesc') }}
                     </p>
                 </div>
             </div>

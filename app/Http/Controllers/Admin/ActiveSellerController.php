@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Mail;
 
 class ActiveSellerController extends Controller
 {
+
     public function index()
     {
         $sellers = Seller::orderBy('id', 'desc')->get();

@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LangController;
 use App\Http\Controllers\Admin\LeadController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ErrorController;
 use App\Http\Controllers\Admin\OfferController;
 use App\Http\Controllers\Admin\OrderController;
@@ -103,6 +105,8 @@ Route::group([
     Route::post('reports/filter', [ReportController::class, 'filter'])->name('admin.reports.filter');
     Route::get('reports/affiliate-filter', [ReportController::class, 'affiliate_filter'])->name('admin.reports.affiliate.filter');
     Route::get('reports/marketplace', [ReportController::class, 'marketplace'])->name('admin.reports.marketplace.filter');
+    Route::resource('roles', RoleController::class);
+    Route::resource('admins', AdminController::class);
 
     //logout
     Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout');

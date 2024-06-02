@@ -3,15 +3,16 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Seller\LeadController;
 use App\Http\Controllers\Seller\ErrorController;
+use App\Http\Controllers\Seller\OrderController;
+use App\Http\Controllers\Seller\ReportController;
 use App\Http\Controllers\Seller\ProfileController;
 use App\Http\Controllers\Seller\Auth\AuthController;
 use App\Http\Controllers\Seller\DashboardController;
+use App\Http\Controllers\Seller\TransactionController;
 use App\Http\Controllers\Seller\ImportProductController;
 use App\Http\Controllers\Seller\SharedProductController;
 use App\Http\Controllers\Seller\AffiliateProductController;
-use App\Http\Controllers\Seller\TransactionController;
-use App\Http\Controllers\Seller\OrderController;
-use App\Http\Controllers\Seller\ReportController;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,12 +96,12 @@ Route::group([
         Route::get('reports', [ReportController::class, 'index'])->name('seller.reports.index');
         Route::get('filter/report/country/{country}', [ReportController::class, 'filter_country'])->name('seller.report.country.filter');
         Route::post('reports/filter', [ReportController::class, 'filter'])->name('seller.reports.filter');
+        Route::get('reports/affiliate-filter', [ReportController::class, 'affiliate_filter'])->name('seller.reports.affiliate.filter');
+        Route::get('reports/marketplace', [ReportController::class, 'marketplace'])->name('seller.reports.marketplace.filter');
 
 
         // error
         Route::fallback([ErrorController::class, 'error'])->name('admin.error');
-
     });
     Route::get('logout', [AuthController::class, 'logout'])->name('seller.logout');
-
 });

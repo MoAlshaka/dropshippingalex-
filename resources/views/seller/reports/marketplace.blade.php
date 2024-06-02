@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.seller.master')
 
 
 @section('title')
@@ -12,7 +12,7 @@
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">{{ __('site.Admin') }} /</span> {{ __('site.Marketplace') }}
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">{{ __('site.Seller') }} /</span> {{ __('site.Marketplace') }}
         </h4>
 
         <div class="table-responsive text-nowrap">

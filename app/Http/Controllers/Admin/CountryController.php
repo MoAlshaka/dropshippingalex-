@@ -78,7 +78,7 @@ class CountryController extends Controller
         $request->validate([
             'name' => 'required|max:100',
             'shipping_cost' => 'required|numeric',
-            'flag' => 'nullable|max:100|mimes:svg'
+            'flag' => 'required|mimes:png,svg,jpg,jpeg'
         ]);
         $country = Country::findorfail($id);
         $oldFlag = $country->flag;

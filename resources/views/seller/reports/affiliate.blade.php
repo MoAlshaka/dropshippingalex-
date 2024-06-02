@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.seller.master')
 
 
 @section('title')
@@ -97,7 +97,7 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="py-3 mb-4 d-flex justify-content-between">
             <div>
-                <span class="text-muted fw-light"> {{ __('site.Admin') }} /</span>
+                <span class="text-muted fw-light"> {{ __('site.Seller') }} /</span>
                 {{ __('site.Affiliate') }}
             </div>
         </h4>
@@ -232,13 +232,13 @@
                     <svg viewBox="0 0 36 36" class="circular-chart green">
                         <path class="circle-bg"
                             d="M18 2.0845
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
                         <!-- place the 60 in the stroke-dasharray with the persentage -->
                         <path class="circle" stroke-dasharray="{{ $confirmed_rate }}, 100"
                             d="M18 2.0845
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
                     </svg>
                 </div>
                 <div class="flex flex-col justify-center px-4 ">

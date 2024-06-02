@@ -10,7 +10,7 @@ use App\Models\Order;
 use App\Models\SharedProduct;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use PhpParser\Node\Stmt\Foreach_;
+
 
 class ReportController extends Controller
 {
@@ -166,7 +166,7 @@ class ReportController extends Controller
         $confirmed = 0;
         $highest_comissions = 0;
         $highest_comission = 0;
-        $average_comission = 0;
+        $average_commission = 0;
         $delivered = 0;
         $confirmed_rate = 0;
 
@@ -183,7 +183,10 @@ class ReportController extends Controller
         $lead_confirmed = Order::whereIn('lead_id', $lead_ids)->where('shipment_status', 'approved')->pluck('lead_id');
 
         $lead_sku = Lead::whereIn('id', $lead_confirmed)->pluck('item_sku');
-        $confirmed_rate = $leads > 0 ? intval(($confirmed / $leads) * 100) : 0;
+        if ($leads > 0) {
+
+            $confirmed_rate = $leads > 0 ? intval(($confirmed / $leads) * 100) : 0;
+        }
 
         $affilates = [];
 
@@ -234,8 +237,10 @@ class ReportController extends Controller
         $highest_commission = AffiliateProduct::whereIn('sku', $lead_skus)->orderByDesc('comission')
             ->limit(1)->first();
 
+        if ($confirmed > 0) {
 
-        $average_commission = $total_commission / $confirmed;
+            $average_commission = $total_commission / $confirmed;
+        }
 
 
         // dd($highestCommissions);
@@ -277,9 +282,10 @@ class ReportController extends Controller
             $shipped = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'shipping')->count();
             $delivered = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'delivered')->count();
             $returned = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'returned')->count();
-            $confirmed_rate = $leadsCount > 0 ? intval(($confirmed / $leadsCount) * 100) : 0;
-            $delivered_rate = $leadsCount > 0 ? intval(($delivered / $leadsCount) * 100) : 0;
-
+            if ($leadsCount > 0) {
+                $confirmed_rate = $leadsCount > 0 ? intval(($confirmed / $leadsCount) * 100) : 0;
+                $delivered_rate = $leadsCount > 0 ? intval(($delivered / $leadsCount) * 100) : 0;
+            }
             $products[] = [
                 'type' => 'affiliate',
                 'product' => $affiliateProduct,
@@ -314,9 +320,12 @@ class ReportController extends Controller
             $shipped = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'shipping')->count();
             $delivered = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'delivered')->count();
             $returned = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'returned')->count();
-            $confirmed_rate = $leadsCount > 0 ? intval(($confirmed / $leadsCount) * 100) : 0;
-            $delivered_rate = $leadsCount > 0 ? intval(($delivered / $leadsCount) * 100) : 0;
+            if ($leadsCount > 0) {
 
+
+                $confirmed_rate = $leadsCount > 0 ? intval(($confirmed / $leadsCount) * 100) : 0;
+                $delivered_rate = $leadsCount > 0 ? intval(($delivered / $leadsCount) * 100) : 0;
+            }
 
             $products[] = [
                 'type' => 'shared',

@@ -71,7 +71,7 @@ let columns = [
     {
         type: "dropdown",
         title: "Currency *",
-        source: ["AED", "BHD", "KWD", "MAD", "OMR", "QAR", "USD", "XOF"],
+        source: ["AED", "BHD", "KWD", "MAD", "OMR", "SAR", "USD", "XOF"],
         width: 180,
     },
     {
@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const countries = document.querySelector(`.excel_container`).getAttribute("data-country");
     const sku = document.querySelector(`.excel_container`).getAttribute("data-sku");
-    
+
     console.log(countries);
 
     columns[2].source = countries.split(",");

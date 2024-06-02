@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Seller;
 
-use App\Http\Controllers\Controller;
-use App\Models\Country;
+use Carbon\Carbon;
 use App\Models\Lead;
 use App\Models\Order;
-use Carbon\Carbon;
+use App\Models\Country;
 use Illuminate\Http\Request;
+use App\Models\SharedProduct;
+use App\Models\AffiliateProduct;
+use App\Http\Controllers\Controller;
 
 class ReportController extends Controller
 {
@@ -155,5 +157,185 @@ class ReportController extends Controller
             'confirmed_rate',
             'delivered_rate'
         ));
+    }
+
+    public function affiliate_filter()
+    {
+        // Initialize variables
+        $leads = 0;
+        $under_process = 0;
+        $confirmed = 0;
+        $delivered = 0;
+        $confirmed_rate = 0;
+        $total_commission = 0;
+        $average_commission = 0;
+        $highestCommissions = [];
+
+        // Get seller ID
+        $sellerId = auth()->guard('seller')->user()->id;
+
+        // Retrieve leads for the seller
+        $leads = Lead::where('seller_id', $sellerId)->where('type', 'commission')->count();
+        $lead_ids = Lead::where('seller_id', $sellerId)->where('type', 'commission')->pluck('id');
+
+        // Retrieve order statuses for the leads
+        $under_process = Order::where('seller_id', $sellerId)->whereIn('lead_id', $lead_ids)->where('shipment_status', 'pending')->count();
+        $confirmed = Order::where('seller_id', $sellerId)->whereIn('lead_id', $lead_ids)->where('shipment_status', 'approved')->count();
+        $delivered = Order::where('seller_id', $sellerId)->whereIn('lead_id', $lead_ids)->where('shipment_status', 'delivered')->count();
+
+        // Calculate confirmed rate
+        if ($leads > 0) {
+            $confirmed_rate = intval(($confirmed / $leads) * 100);
+        }
+
+        // Retrieve confirmed leads and their SKUs
+        $lead_confirmed = Order::where('seller_id', $sellerId)->whereIn('lead_id', $lead_ids)->where('shipment_status', 'approved')->pluck('lead_id');
+        $lead_sku = Lead::whereIn('id', $lead_confirmed)->pluck('item_sku');
+
+        // Retrieve affiliate product commissions
+        $affilates = AffiliateProduct::whereIn('sku', $lead_sku)->pluck('comission');
+
+        // Calculate total commission
+        $total_commission = $affilates->sum();
+
+        // Calculate highest commissions
+        $lead_skus = $lead_sku->unique();
+        $highest_commissions = AffiliateProduct::whereIn('sku', $lead_skus)->orderByDesc('comission')->limit(5)->get();
+
+        foreach ($highest_commissions as $highest_commission) {
+            $leadspros = Lead::where('item_sku', $highest_commission->sku)->pluck('id');
+
+            $total_order_count = Order::whereIn('lead_id', $leadspros)->where('shipment_status', 'approved')->count();
+
+            if ($total_order_count > 0) {
+                $highestCommissions[] = [
+                    'highest_commission' => $highest_commission,
+                    'amount' => $total_order_count * $highest_commission->comission
+                ];
+            }
+        }
+
+        // Retrieve the highest commission product
+        $highest_commission = AffiliateProduct::whereIn('sku', $lead_skus)->orderByDesc('comission')->first();
+
+        // Calculate average commission
+        if ($confirmed > 0) {
+            $average_commission = $total_commission / $confirmed;
+        }
+
+        // Return view with compacted variables
+        return view('seller.reports.affiliate', compact(
+            'leads',
+            'under_process',
+            'confirmed',
+            'delivered',
+            'total_commission',
+            'highestCommissions',
+            'highest_commission',
+            'average_commission',
+            'confirmed_rate'
+        ));
+    }
+
+
+    public function marketplace()
+    {
+        // Get the authenticated seller ID
+        $sellerId = auth()->guard('seller')->user()->id;
+
+        // Retrieve unique affiliate SKUs for the seller
+        $affiliateSkus = Lead::where('seller_id', $sellerId)->where('type', 'commission')->distinct()->pluck('item_sku');
+
+        // Retrieve affiliate products
+        $affiliateProducts = AffiliateProduct::whereIn('sku', $affiliateSkus)->get();
+
+        // Initialize products array
+        $products = [];
+
+        // Process affiliate products
+        foreach ($affiliateProducts as $affiliateProduct) {
+            $sku = $affiliateProduct->sku;
+
+            // Retrieve leads and orders for the current SKU
+            $leadsCount = Lead::where('item_sku', $sku)->count();
+            $leadIds = Lead::where('item_sku', $sku)->pluck('id');
+
+            // Retrieve order counts by status
+            $confirmed = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'approved')->count();
+            $cancelled = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'canceled')->count();
+            $fulfilled = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'fulfilled')->count();
+            $shipped = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'shipping')->count();
+            $delivered = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'delivered')->count();
+            $returned = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'returned')->count();
+
+            // Calculate rates
+            $confirmed_rate = $leadsCount > 0 ? intval(($confirmed / $leadsCount) * 100) : 0;
+            $delivered_rate = $leadsCount > 0 ? intval(($delivered / $leadsCount) * 100) : 0;
+
+            // Add affiliate product data to products array
+            $products[] = [
+                'type' => 'affiliate',
+                'product' => $affiliateProduct,
+                'leads' => $leadsCount,
+                'confirmed' => $confirmed,
+                'cancelled' => $cancelled,
+                'fulfilled' => $fulfilled,
+                'shipped' => $shipped,
+                'delivered' => $delivered,
+                'returned' => $returned,
+                'confirmed_rate' => $confirmed_rate,
+                'delivered_rate' => $delivered_rate
+            ];
+        }
+
+        // Retrieve unique shared SKUs for the seller
+        $sharedSkus = Lead::where('seller_id', $sellerId)->where('type', 'regular')->distinct()->pluck('item_sku');
+
+        // Retrieve shared products
+        $sharedProducts = SharedProduct::whereIn('sku', $sharedSkus)->get();
+
+        // Process shared products
+        foreach ($sharedProducts as $sharedProduct) {
+            $sku = $sharedProduct->sku;
+
+            // Retrieve leads and orders for the current SKU
+            $leadsCount = Lead::where('item_sku', $sku)->count();
+            $leadIds = Lead::where('item_sku', $sku)->pluck('id');
+
+            // Retrieve order counts by status
+            $confirmed = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'approved')->count();
+            $cancelled = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'canceled')->count();
+            $fulfilled = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'fulfilled')->count();
+            $shipped = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'shipping')->count();
+            $delivered = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'delivered')->count();
+            $returned = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'returned')->count();
+
+            // Calculate rates
+            $confirmed_rate = $leadsCount > 0 ? intval(($confirmed / $leadsCount) * 100) : 0;
+            $delivered_rate = $leadsCount > 0 ? intval(($delivered / $leadsCount) * 100) : 0;
+
+            // Add shared product data to products array
+            $products[] = [
+                'type' => 'shared',
+                'product' => $sharedProduct,
+                'leads' => $leadsCount,
+                'confirmed' => $confirmed,
+                'cancelled' => $cancelled,
+                'fulfilled' => $fulfilled,
+                'shipped' => $shipped,
+                'delivered' => $delivered,
+                'returned' => $returned,
+                'confirmed_rate' => $confirmed_rate,
+                'delivered_rate' => $delivered_rate
+            ];
+        }
+
+        // Sort the products array by leads count in descending order
+        usort($products, function ($a, $b) {
+            return $b['leads'] <=> $a['leads'];
+        });
+
+        // Return view with compacted variables
+        return view('seller.reports.marketplace', compact('products'));
     }
 }

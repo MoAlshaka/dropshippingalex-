@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('username');
             $table->string('password');
             $table->string('access_token')->nullable();
+            $table->text('roles_name')->nullable();
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

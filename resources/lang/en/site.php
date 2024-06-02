@@ -249,6 +249,11 @@ return [
     'AverageComission' => 'Average comission',
     'HighestComission' => 'Highest comission',
     'ConfirmedRate' => 'Conf Rate',
+    'Product' => 'Product',
+    'Admins' => 'Admins',
+    'Roles' => 'Roles',
+    'CreateRole' => 'Create Role',
+    'CreateAdmin' => 'Create Admin',
 
 
 ];
