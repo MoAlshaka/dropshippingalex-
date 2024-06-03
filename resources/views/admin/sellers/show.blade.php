@@ -75,23 +75,27 @@
                         class="w-full h-full object-cover" />
                 </div>
                 <div style="display: flex; gap: 6px;">
-                    <form action="{{ route('admin.sellers.active', $seller->id) }}" method="post">
-                        @csrf
-                        @method('PUT')
-                        <button type="submit"
-                            class=" @if ($seller->is_active == 0) btn bg-success text-white @else btn bg-warning text-white @endif">
-                            @if ($seller->is_active == 0)
-                                {{ __('site.Active') }}
-                            @else
-                                {{ __('site.Deactivate') }}
-                            @endif
-                        </button>
-                    </form>
-                    <form action="{{ route('admin.sellers.delete', $seller->id) }}" method="post">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn bg-danger text-white">{{ __('site.Delete') }}</button>
-                    </form>
+                    @can('Manage Seller')
+                        <form action="{{ route('admin.sellers.active', $seller->id) }}" method="post">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit"
+                                class=" @if ($seller->is_active == 0) btn bg-success text-white @else btn bg-warning text-white @endif">
+                                @if ($seller->is_active == 0)
+                                    {{ __('site.Active') }}
+                                @else
+                                    {{ __('site.Deactivate') }}
+                                @endif
+                            </button>
+                        </form>
+                    @endcan
+                    @can('Delete Seller')
+                        <form action="{{ route('admin.sellers.delete', $seller->id) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn bg-danger text-white">{{ __('site.Delete') }}</button>
+                        </form>
+                    @endcan
                 </div>
             </div>
             <div class="product-disc col-span-8 lg:col-span-5 bg-white rounded-md drop-shadow">

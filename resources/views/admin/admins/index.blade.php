@@ -1,4 +1,8 @@
 @extends('layouts.master')
+
+@section('title')
+    {{ __('site.Admins') }}
+@endsection
 @section('content')
     @if ($message = Session::get('success'))
         <div class="bs-toast toast toast-ex animate__animated my-2 fade animate__tada hide" role="alert"

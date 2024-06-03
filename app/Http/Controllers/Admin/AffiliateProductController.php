@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\Validator;
 
 class AffiliateProductController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:Affiliate Per Delivered')->only(['per_delivered', 'country_filter_per_delivered', 'new_product_per_delivered', 'suggested_product_per_delivered', 'search_per_delivereds']);
+        $this->middleware('permission:Affiliate Per Confirmed')->only(['per_confirmed', 'country_filter_per_confirmed', 'new_product_per_confirmed', 'suggested_product_per_confirmed', 'search_per_confirmed']);
+        $this->middleware('permission:Create Affiliate Product')->only(['create', 'store']);
+        $this->middleware('permission:Edit Affiliate Product')->only(['edit', 'update']);
+        $this->middleware('permission:Delete Affiliate Product')->only(['destroy']);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -299,12 +308,11 @@ class AffiliateProductController extends Controller
         }
 
 
-        $products = $query->orderBy('id', 'DESC')->paginate(COUNT);// Replace 10 with your desired number of items per page
+        $products = $query->orderBy('id', 'DESC')->paginate(COUNT); // Replace 10 with your desired number of items per page
         $offer = Offer::where('end_date', '>', now())->orderBy('id', 'DESC')->get();
         $countries = Country::all();
         $categories = Category::all();
         return view('admin.affiliateproduct.perdelivered', compact('products', 'countries', 'categories' . 'offer'));
-
     }
 
     public function country_filter_per_confirmed(Request $request, $country)
@@ -361,11 +369,10 @@ class AffiliateProductController extends Controller
         }
 
 
-        $products = $query->orderBy('id', 'DESC')->paginate(COUNT);// Replace 10 with your desired number of items per page
+        $products = $query->orderBy('id', 'DESC')->paginate(COUNT); // Replace 10 with your desired number of items per page
 
         $countries = Country::all();
         $categories = Category::all();
         return view('admin.affiliateproduct.perconfirmed', compact('products', 'countries', 'categories', 'offer'));
-
     }
 }

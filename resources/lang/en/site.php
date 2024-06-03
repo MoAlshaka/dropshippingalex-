@@ -32,7 +32,7 @@ return [
     'CreateSharedProduct' => 'Create Shared Product',
     'Close' => 'Close',
     'Error' => 'Error',
-    'CreateAffillateProduct' => 'Create Affillate Product',
+    'CreateAffillateProduct' => 'Create Affiliate Product',
     'AddanewProduct' => 'Add a new Product',
     'PublishProduct' => 'Publish Product',
     'ProductInformation' => 'Product Information',
@@ -232,8 +232,8 @@ return [
     'PerConfirmed' => 'Per Confirmed',
     'Date' => 'Date',
     'Filter' => 'Filter',
-    'AfillatePerDelivered' => 'Afillate Per Delivered',
-    'AfillatePerConfirmed' => 'Afillate Per Confirmed',
+    'AfillatePerDelivered' => 'Affiliate Per Delivered',
+    'AfillatePerConfirmed' => 'Affiliate Per Confirmed',
     'EditAffillateProduct' => 'Edit Affillate Product',
     'SelectPaymentMethod' => 'select payment method',
     'DeliveredRate' => 'DeliveredRate',
@@ -254,6 +254,8 @@ return [
     'Roles' => 'Roles',
     'CreateRole' => 'Create Role',
     'CreateAdmin' => 'Create Admin',
+    'EditAdmin' => 'Edit Admin',
+    'LoginHistory' => 'Login History',
 
 
 ];

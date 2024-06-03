@@ -14,6 +14,10 @@ use Carbon\Carbon;
 
 class ReportController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:Analytics')->only(['index', 'filter_country', 'affiliate_filter', 'filter', 'marketplace_filter']);
+    }
     public function index()
     {
 

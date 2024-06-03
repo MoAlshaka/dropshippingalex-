@@ -1,6 +1,10 @@
 <!-- roles/edit.blade.php -->
 @extends('layouts.master')
 
+@section('title')
+    {{ __('site.Edit') }}-{{ $role->name }}
+@endsection
+
 @section('content')
     <div class="row">
         <!-- Your existing code for header goes here -->

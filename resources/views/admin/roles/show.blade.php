@@ -1,4 +1,8 @@
 @extends('layouts.master')
+
+@section('title')
+    {{ __('site.Roles') }}
+@endsection
 @section('content')
     <div class="row">
         <div class="col-lg-12 margin-tb">

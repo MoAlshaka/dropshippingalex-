@@ -28,6 +28,7 @@ class AdminController extends Controller
         $users = Admin::whereDoesntHave('roles', function ($query) {
             $query->where('name', 'Owner');
         })->get();
+
         return view('admin.admins.index', compact('users'));
     }
 
@@ -37,6 +38,7 @@ class AdminController extends Controller
     public function create()
     {
         $roles = Role::pluck('name', 'name')->all();
+
         return view('admin.admins.create', compact('roles'));
     }
 
@@ -54,6 +56,7 @@ class AdminController extends Controller
 
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
+        // dd($input);
 
         $user = Admin::create($input);
 

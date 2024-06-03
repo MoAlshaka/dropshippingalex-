@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\Mail;
 class ActiveSellerController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('permission:Show Seller')->only(['show']);
+        $this->middleware('permission:Delete Seller')->only(['delete']);
+        $this->middleware('permission:Manage Seller')->only(['active']);
+    }
+
     public function index()
     {
         $sellers = Seller::orderBy('id', 'desc')->get();

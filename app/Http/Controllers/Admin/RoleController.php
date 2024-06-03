@@ -22,7 +22,7 @@ class RoleController extends Controller
         $this->middleware('permission:Add Role', ['only' => ['create', 'store']]);
         $this->middleware('permission:Edit Role', ['only' => ['edit', 'update']]);
         $this->middleware('permission:Delete Role', ['only' => ['destroy']]);
-        $this->middleware('permission:Show Role', ['only' => ['destroy']]);
+        $this->middleware('permission:Show Role', ['only' => ['show']]);
     }
 
     /**
@@ -43,11 +43,15 @@ class RoleController extends Controller
     {
         $user = Auth::user();
 
+
         if ($user->hasRole('Owner')) {
             $permission = Permission::all(); // Fetch all permissions
+
         } else {
             $permission = $user->getAllPermissions(); // Fetch user's permissions
+
         }
+
 
         return view('admin.roles.create', compact('permission'));
     }

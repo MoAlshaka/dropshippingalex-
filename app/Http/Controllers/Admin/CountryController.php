@@ -8,6 +8,14 @@ use Illuminate\Http\Request;
 
 class CountryController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:All Countries', ['only' => ['index']]);
+        $this->middleware('permission:Create Country', ['only' => ['create', 'store']]);
+        $this->middleware('permission:Edit Country', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:Delete Country', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      */

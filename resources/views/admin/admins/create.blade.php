@@ -1,4 +1,9 @@
 @extends('layouts.master')
+
+
+@section('title')
+    {{ __('site.CreateAdmin') }}
+@endsection
 @section('css')
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}" />
@@ -51,11 +56,10 @@
 @endsection
 
 @section('content')
-
     <!-- Bootstrap Validation -->
     <div class="col-md">
         <div class="card">
-            <h5 class="card-header">Add Admin</h5>
+            <h5 class="card-header">{{ __('site.CreateAdmin') }}</h5>
             <div class="card-body">
                 <form action="{{ route('admins.store') }}" method="post">
                     @csrf
@@ -101,6 +105,9 @@
                                     class="ti ti-eye-off"></i></span>
                         </div>
                     </div>
+                    @php
+
+                    @endphp
                     <div class="mb-3">
                         <label class="form-label" for="bs-validation-role">Role<span class="text-danger">*</span></label>
                         <select name="roles_name" class="select2 form-select" id="select2_role">
@@ -123,7 +130,8 @@
             </div>
         </div>
     </div>
-    <!-- /Bootstrap Validation -->
+@endsection
+<!-- /Bootstrap Validation -->
 @section('js')
     <script src="{{ asset('assets/vendor/libs/jquery/jquery.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/popper/popper.js') }}"></script>
@@ -155,7 +163,4 @@
     {{--    <script src="{{ asset('assets/productjs/stock.js') }}"></script> --}}
 
     {{--    <script src="{{asset('assets/js/forms-extras.js')}}"></script> --}}
-@endsection
-
-
 @endsection

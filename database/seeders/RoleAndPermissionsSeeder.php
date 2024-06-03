@@ -15,7 +15,7 @@ class RoleAndPermissionsSeeder extends Seeder
     public function run()
     {
         // Create "admin" role
-        $adminRole = Role::create(['name' => 'admin', 'guard_name' => 'admin']);
+        $adminRole = Role::create(['name' => 'Admin', 'guard_name' => 'admin']);
 
         // Assign all permissions to "admin" role
         $permissions = Permission::all();

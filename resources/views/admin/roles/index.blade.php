@@ -1,4 +1,8 @@
 @extends('layouts.master')
+
+@section('title')
+    {{ __('site.Roles') }}
+@endsection
 @section('content')
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -44,16 +48,23 @@
                                     <td>{{ $role->name }}</td>
 
                                     <td class="text-center">
-                                        <a href="{{ route('roles.show', $role->id) }}" class="btn btn-sm btn-info">
-                                            <i class="fa fa-eye"></i> Show
-                                        </a>
-                                        <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-sm btn-info">
-                                            <i class="fa fa-edit"></i> Edit
-                                        </a>
-                                        <a href="javascript:;" class="btn btn-sm btn-danger sa-delete"
-                                            data-from-id="role-delete-{{ $role->id }}">
-                                            <i class="fa fa-trash"></i> Delete
-                                        </a>
+                                        @can('Show Role')
+                                            <a href="{{ route('roles.show', $role->id) }}" class="btn btn-sm btn-info">
+                                                <i class="fa fa-eye"></i> Show
+                                            </a>
+                                        @endcan
+                                        @can('Edit Role')
+                                            <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-sm btn-info">
+                                                <i class="fa fa-edit"></i> Edit
+                                            </a>
+                                        @endcan
+                                        @can('Delete Role')
+                                            <a href="javascript:;" class="btn btn-sm btn-danger sa-delete"
+                                                data-from-id="role-delete-{{ $role->id }}">
+                                                <i class="fa fa-trash"></i> Delete
+                                            </a>
+                                        @endcan
+
 
                                         <form id="role-delete-{{ $role->id }}"
                                             action="{{ route('roles.destroy', $role->id) }}" method="post">

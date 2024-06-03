@@ -199,7 +199,7 @@
                             </div>
 
                             <div class="relative">
-                                <a href="{{ route('affiliate-products.show', $product->id) }}"
+                                <a href="{{ route('seller.affiliateproduct.show', $product->id) }}"
                                     class="absolute opacity-0 top-[-60px] left-[-50%] group-hover:left-0 group-hover:!opacity-100 bg-purple-700 text-white p-2 rounded-tr-xl rounded-br-xl ease-out duration-100"
                                     target="_blank">
                                     <i class="far fa-eye"></i> <b> {{ __('site.ViewDetails') }} </b>
@@ -207,7 +207,7 @@
                             </div>
 
                             <div class="p-2">
-                                <a href="{{ route('affiliate-products.show', $product->id) }}" target="_blank">
+                                <a href="{{ route('seller.affiliateproduct.show', $product->id) }}" target="_blank">
                                     <h6 class="text-purple-900 line-clamp-1">{{ $product->title }}</h6>
                                 </a>
                                 <div class="d-flex gap-2 my-2" style="grid-row-gap: 0.3rem; grid-column-gap: 0.3rem">

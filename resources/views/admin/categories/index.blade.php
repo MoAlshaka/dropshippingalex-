@@ -58,18 +58,21 @@
                                     <td style="display: flex;
                                             gap: 6px;">
 
+                                        @can('Edit Category')
+                                            <a href="{{ route('categories.edit', $category->id) }}"
+                                                class="btn bg-primary text-white ">
+                                                {{ __('site.Edit') }}
+                                            </a>
+                                        @endcan
 
-                                        <a href="{{ route('categories.edit', $category->id) }}"
-                                            class="btn bg-primary text-white ">
-                                            {{ __('site.Edit') }}
-                                        </a>
-
-                                        <form action="{{ route('categories.destroy', $category->id) }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                class="btn bg-danger text-white">{{ __('site.Delete') }}</button>
-                                        </form>
+                                        @can('Delete Category')
+                                            <form action="{{ route('categories.destroy', $category->id) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="btn bg-danger text-white">{{ __('site.Delete') }}</button>
+                                            </form>
+                                        @endcan
 
 
                                     </td>

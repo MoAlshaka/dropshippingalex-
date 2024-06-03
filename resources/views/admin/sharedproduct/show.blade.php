@@ -21,17 +21,21 @@
                         class="w-full h-full object-cover" />
                 </div>
                 <div style="display: flex; gap: 6px;">
-                    <a class="btn btn-primary waves-effect waves-light"
-                        href="{{ route('shared-products.edit', $product->id) }}" method="POST">
+                    @can('Edit Shared Product')
+                        <a class="btn btn-primary waves-effect waves-light"
+                            href="{{ route('shared-products.edit', $product->id) }}" method="POST">
 
-                        {{ __('site.Edit') }}</a>
-                    <form action="{{ route('shared-products.destroy', $product->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger waves-effect waves-light">
-                            {{ __('site.Delete') }}
-                        </button>
-                    </form>
+                            {{ __('site.Edit') }}</a>
+                    @endcan
+                    @can('Delete Shared Product')
+                        <form action="{{ route('shared-products.destroy', $product->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger waves-effect waves-light">
+                                {{ __('site.Delete') }}
+                            </button>
+                        </form>
+                    @endcan
                 </div>
             </div>
             <div class="product-disc col-span-8 lg:col-span-5 bg-white rounded-md drop-shadow">

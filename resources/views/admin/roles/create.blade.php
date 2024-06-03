@@ -1,4 +1,8 @@
 @extends('layouts.master')
+
+@section('title')
+    {{ __('site.CreateRole') }}
+@endsection
 @section('content')
     <div class="row">
         <!-- Bootstrap Validation -->

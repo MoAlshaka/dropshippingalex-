@@ -12,6 +12,14 @@ use Illuminate\Http\Request;
 
 class LeadController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:All Leads')->only(['index']);
+        $this->middleware('permission:Show Lead')->only(['show']);
+        $this->middleware('permission:Edit Lead')->only(['edit', 'update']);
+        $this->middleware('permission:Delete Lead')->only(['destroy']);
+    }
     public function index()
     {
         $countries = Country::all();
@@ -105,12 +113,10 @@ class LeadController extends Controller
             $query->orWhereIn('type', $request->type);
         }
 
-        $leads = $query->orderBy('id', 'DESC')->paginate(COUNT);// Replace 10 with your desired number of items per page
+        $leads = $query->orderBy('id', 'DESC')->paginate(COUNT); // Replace 10 with your desired number of items per page
         $countries = Country::all();
         $status = Lead::distinct()->pluck('status');
         $types = Lead::distinct()->pluck('type');
         return view('admin.leads.index', compact('leads', 'countries', 'status', 'types'));
-
     }
-
 }

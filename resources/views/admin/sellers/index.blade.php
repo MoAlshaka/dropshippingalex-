@@ -66,11 +66,12 @@
                                     </td>
                                     <td style="display: flex;
                                             gap: 6px;">
-
-                                        <a href="{{ route('admin.sellers.show', $seller->id) }}"
-                                            class="btn bg-primary text-white ">
-                                            {{ __('site.Details') }}
-                                        </a>
+                                        @can('Show Seller')
+                                            <a href="{{ route('admin.sellers.show', $seller->id) }}"
+                                                class="btn bg-primary text-white ">
+                                                {{ __('site.Details') }}
+                                            </a>
+                                        @endcan
 
 
 

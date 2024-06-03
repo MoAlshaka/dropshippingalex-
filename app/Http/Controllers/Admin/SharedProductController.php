@@ -13,6 +13,13 @@ use Illuminate\Support\Facades\Validator;
 
 class SharedProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:Shared Product')->only(['index', 'country_filter', 'new_product', 'suggested_product', 'search']);
+        $this->middleware('permission:Create Shared Product')->only(['create', 'store']);
+        $this->middleware('permission:Edit Shared Product')->only(['edit', 'update']);
+        $this->middleware('permission:Delete Shared Product')->only(['destroy']);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -291,7 +298,7 @@ class SharedProductController extends Controller
             $query->orWhere('category_id', $request->category_id);
         }
 
-        $products = $query->orderBy('id', 'DESC')->paginate(COUNT);// Replace 10 with your desired number of items per page
+        $products = $query->orderBy('id', 'DESC')->paginate(COUNT); // Replace 10 with your desired number of items per page
 
         $countries = Country::all();
         $categories = Category::all();

@@ -66,19 +66,21 @@
                                     <td style="display: flex;
                                             gap: 6px;">
 
-
-                                        <a href="{{ route('transactions.edit', $transaction->id) }}"
-                                            class="btn bg-primary text-white ">
-                                            {{ __('site.Edit') }}
-                                        </a>
-
-                                        <form action="{{ route('transactions.destroy', $transaction->id) }}"
-                                            method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                class="btn bg-danger text-white">{{ __('site.Delete') }}</button>
-                                        </form>
+                                        @can('Edit Transaction')
+                                            <a href="{{ route('transactions.edit', $transaction->id) }}"
+                                                class="btn bg-primary text-white ">
+                                                {{ __('site.Edit') }}
+                                            </a>
+                                        @endcan
+                                        @can('Delete Transaction')
+                                            <form action="{{ route('transactions.destroy', $transaction->id) }}"
+                                                method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="btn bg-danger text-white">{{ __('site.Delete') }}</button>
+                                            </form>
+                                        @endcan
 
 
                                     </td>
