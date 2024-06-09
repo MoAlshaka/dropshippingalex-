@@ -14,6 +14,7 @@ class Offer extends Model
         'image',
         'start_date',
         'end_date',
+        'url',
         'admin_id',
     ];
 

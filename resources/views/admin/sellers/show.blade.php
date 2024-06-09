@@ -122,13 +122,7 @@
                             </div>
                             <div class="flex items-center">
                                 <h3 class="text-md text-gray-500 lg:text-xl font-bold mr-6 lg:mr-2">
-                                    {{ __('site.Address') }}:
-                                </h3>
-                                <span class="text-black">{{ $seller->address }}</span>
-                            </div>
-                            <div class="flex items-center">
-                                <h3 class="text-md text-gray-500 lg:text-xl font-bold mr-6 lg:mr-2">
-                                    {{ __('site.Address') }}:
+                                    {{ __('site.AboutUs') }}:
                                 </h3>
                                 <span class="text-black">{{ $seller->about_us }}</span>
                             </div>

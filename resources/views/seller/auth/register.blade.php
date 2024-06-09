@@ -323,7 +323,7 @@
                                     </div>
                                     <!-- Credit Card Details -->
                                     <div class="row g-3">
-                                        <div class="col-md-12 mb-4">
+                                        {{-- <div class="col-md-12 mb-4">
                                             <div class="form-floating form-floating-outline">
                                                 <input type="text" id="multiStepsAddress" name="address"
                                                     class="form-control" placeholder="{{ __('site.Address') }}"
@@ -337,7 +337,7 @@
                                                         {{ $message }} </div>
                                                 </div>
                                             @enderror
-                                        </div>
+                                        </div> --}}
                                         <div class="col-sm-12">
                                             <div class="form-floating form-floating-outline">
                                                 <input type="file" id="national_id" name="national_id"
@@ -355,7 +355,8 @@
                                         <div class="col-sm-12">
                                             <div class="form-floating form-floating-outline">
                                                 <textarea id="basic-default-message" class="form-control" name="about_us" style="height: 60px"></textarea>
-                                                <label for="multiStepsFirstName"> {{ __('site.AboutUs') }}</label>
+                                                <label for="multiStepsFirstName">
+                                                    {{ __('site.WhereDidYouHearAboutUs') }}</label>
                                             </div>
                                             @error('about_us')
                                                 <div

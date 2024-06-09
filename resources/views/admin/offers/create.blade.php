@@ -26,7 +26,7 @@
                     </div>
                     <div class="card-body">
                         <form class="flex flex-col gap-6" action="{{ route('offers.store') }}" method="post"
-                              enctype="multipart/form-data">
+                            enctype="multipart/form-data">
                             @csrf
 
                             <div class="row mb-3">
@@ -34,33 +34,44 @@
                                     {{ __('site.Image') }}</label>
                                 <div class="col-sm-10">
                                     <input type="file" step="0.01" class="form-control" id="basic-default-company"
-                                           name="image" placeholder="{{ __('site.Image') }}"/>
+                                        name="image" placeholder="{{ __('site.Image') }}" />
                                 </div>
                             </div>
                             @error('image')
-                            <div class="text-danger">{{ $message }}</div>
+                                <div class="text-danger">{{ $message }}</div>
                             @enderror
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="basic-default-name">
+                                <label class="col-sm-2 col-form-label" for="start_date">
                                     {{ __('site.StartDate') }}</label>
                                 <div class="col-sm-10">
-                                    <input type="date" class="form-control" id="basic-default-name" name="start_date"
-                                           placeholder="{{ __('site.StartDate') }}"/>
+                                    <input type="date" class="form-control" id="start_date" name="start_date"
+                                        placeholder="{{ __('site.StartDate') }}" />
                                 </div>
                                 @error('start_date')
-                                <div class="text-danger">{{ $message }}</div>
+                                    <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="basic-default-name">
+                                <label class="col-sm-2 col-form-label" for="end_date">
                                     {{ __('site.EndDate') }}</label>
                                 <div class="col-sm-10">
-                                    <input type="date" class="form-control" id="basic-default-name" name="end_date"
-                                           placeholder="{{ __('site.EndDate') }}"/>
+                                    <input type="date" class="form-control" id="end_date" name="end_date"
+                                        placeholder="{{ __('site.EndDate') }}" />
                                 </div>
                                 @error('end_date')
-                                <div class="text-danger">{{ $message }}</div>
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="url">
+                                    {{ __('site.Url') }}</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="url" class="form-control" name="url"
+                                        placeholder="{{ __('site.Url') }}" value="{{ old('url') }}" />
+                                </div>
+                                @error('url')
+                                    <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 

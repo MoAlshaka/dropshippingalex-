@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 class CountryController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('permission:All Countries', ['only' => ['index']]);
@@ -120,7 +119,7 @@ class CountryController extends Controller
     {
         try {
             $country = Country::findorfail($id);
-            unlink(public_path('assets/countries/flags/' . $country->image));
+            unlink(public_path('assets/countries/flags/' . $country->flag));
             $country->delete();
             return redirect()->route('countries.index')->with(['Delete' => 'Delete successfully']);
         } catch (\Exception $e) {

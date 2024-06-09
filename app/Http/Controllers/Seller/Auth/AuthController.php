@@ -22,7 +22,7 @@ class AuthController extends Controller
             'email' => 'required|email|unique:sellers|max:50',
             'password' => 'required|min:8|max:50',
             'confirm_password' => 'required|same:password|max:50|min:8',
-            'address' => 'required|max:250',
+            // 'address' => 'required|max:250',
             'phone' => 'required|max:50',
             'about_us' => 'required|max:800',
             'national_id' => 'required|image|mimes:png,jpg,jpeg|max:2048',
@@ -38,7 +38,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'phone' => str_replace(' ', '', $request->phone),
-            'address' => $request->address,
+            // 'address' => $request->address,
             'national_id' => $national_id_name,
             'about_us' => $request->about_us,
         ]);

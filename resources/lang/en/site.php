@@ -256,6 +256,7 @@ return [
     'CreateAdmin' => 'Create Admin',
     'EditAdmin' => 'Edit Admin',
     'LoginHistory' => 'Login History',
-
+    'WhereDidYouHearAboutUs' => 'Where Did You Hear About Us',
+    'Url' => 'Url',
 
 ];

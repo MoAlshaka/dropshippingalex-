@@ -249,8 +249,12 @@ class AffiliateProductController extends Controller
             }
         }
         $product->delete();
+        if ($product->type == 'delivered') {
+            return redirect()->route('admin.affiliate.per.delivered')->with('Delete', 'Product deleted successfully.');
+        } else {
 
-        return redirect()->route('affiliate-products.index')->with('Delete', 'Product deleted successfully.');
+            return redirect()->route('admin.affiliate.per.confirmed')->with('Delete', 'Product deleted successfully.');
+        }
     }
 
     public function country_filter_per_delivered(Request $request, $country)

@@ -98,7 +98,7 @@
                             <th>{{ __('site.Warehouse') }}</th>
                             <th>{{ __('site.minimumsellingprice') }}</th>
                             <th>{{ __('site.Comission') }}</th>
-                            <th> {{ __('site.ShippingCost') }}</th>
+
                             <th> {{ __('site.Status') }}</th>
                         </tr>
                     </thead>
@@ -110,7 +110,7 @@
                                         height="20"></td>
                                 <td>${{ $product->minimum_selling_price }}</td>
                                 <td>${{ $product->comission }}</td>
-                                <td>${{ $country->shipping_cost }}</td>
+
                                 <td>
 
                                     @if ($country->pivot->stock >= 20)

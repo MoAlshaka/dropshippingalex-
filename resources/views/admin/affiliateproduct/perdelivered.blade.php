@@ -69,8 +69,11 @@
                                 <div class="carousel-inner" style="height:150px;">
                                     @foreach ($offer as $info)
                                         <div class="carousel-item active" style="max-height:150px;">
-                                            <img class="d-block w-100" src="{{ asset('assets/offers/images/' . $info->image) }}"
-                                                style="max-height: 150px;object-fit: cover;" alt="First slide" />
+                                            <a href="{{ $info->url ?? '#' }}" target="_blank">
+                                                <img class="d-block w-100"
+                                                    src="{{ asset('assets/offers/images/' . $info->image) }}"
+                                                    style="max-height: 150px;object-fit: cover;" alt="First slide" />
+                                            </a>
                                         </div>
                                     @endforeach
                                 </div>

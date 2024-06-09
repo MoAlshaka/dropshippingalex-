@@ -28,6 +28,7 @@ class OfferController extends Controller
             'image' => 'required|mimes:png,jpg',
             'start_date' => 'required|date',
             'end_date' => 'required|date',
+            'url' => 'required',
         ]);
 
         $image = $request->file('image');
@@ -39,6 +40,7 @@ class OfferController extends Controller
             'image' => $imageName,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
+            'url' => $request->url,
             'admin_id' => auth()->guard('admin')->user()->id,
         ]);
         return redirect()->back()->with(['Add' => 'Add Offer successfully']);
