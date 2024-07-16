@@ -58,14 +58,7 @@
                     <div class="bg-gray-200">
                         <div class="">
                             <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-                                <div class="carousel-indicators">
-                                    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active"
-                                        aria-current="true" aria-label="Slide 1"></button>
-                                    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1"
-                                        aria-label="Slide 2"></button>
-                                    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2"
-                                        aria-label="Slide 3"></button>
-                                </div>
+
                                 <div class="carousel-inner" style="height:150px;">
                                     @foreach ($offer as $info)
                                         <div class="carousel-item active" style="max-height:150px;">

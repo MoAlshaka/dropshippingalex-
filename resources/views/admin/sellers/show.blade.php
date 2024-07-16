@@ -37,7 +37,7 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}" />
     <link rel="stylesheet"
         href="{{ asset('assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}" />
-
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}" />
     <!-- Page CSS -->
 
 
@@ -67,7 +67,48 @@
             <div class="alert alert-warning" role="alert">{{ session()->get('Warning') }}</div>
         @endif
 
+        <div class="modal fade" id="smallModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="exampleModalLabel2">{{ __('site.AddManger') }}</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{{ route('admin.sellers.add.manager', $seller->id) }}" method="post">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col mb-4 mt-2">
+                                    @csrf
+                                    <div class="form-floating form-floating-outline">
+                                        <select id="Manger" class="select2 form-select Manger" name="admin_id">
+                                            <option value="">{{ __('site.SelectManger') }}
+                                            </option>
 
+                                            @foreach ($admins as $admin)
+                                                <option value="{{ $admin->id }}">
+                                                    {{ $admin->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <label for="Manger">{{ __('site.Manger') }}</label>
+                                    </div>
+                                    @error('admin_id')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                {{ __('site.Close') }}
+                            </button>
+                            <button type="submit" class="btn btn-primary">{{ __('site.Add') }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-8 gap-4 p-4">
             <div class="product-card col-span-8 lg:col-span-3 py-2 px-4 rounded-md drop-shadow bg-white">
                 <div class="product-img flex mb-4">
@@ -88,6 +129,11 @@
                                 @endif
                             </button>
                         </form>
+                    @endcan
+                    @can('Add Seller')
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#smallModal">
+                            {{ __('site.AddManger') }}
+                        </button>
                     @endcan
                     @can('Delete Seller')
                         <form action="{{ route('admin.sellers.delete', $seller->id) }}" method="post">
@@ -122,7 +168,7 @@
                             </div>
                             <div class="flex items-center">
                                 <h3 class="text-md text-gray-500 lg:text-xl font-bold mr-6 lg:mr-2">
-                                    {{ __('site.AboutUs') }}:
+                                    {{ __('site.WhereDidYouHearAboutUs') }}:
                                 </h3>
                                 <span class="text-black">{{ $seller->about_us }}</span>
                             </div>
@@ -141,6 +187,12 @@
                         </div>
                     </div>
                     <hr />
+                    <div class="flex items-center">
+                        <h3 class="text-md text-gray-500 lg:text-xl font-bold mr-6 lg:mr-2">
+                            {{ __('site.Manger') }}:
+                        </h3>
+                        <span class="text-black">{{ $seller->admin->name ?? '' }}</span>
+                    </div>
                 </div>
             </div>
 
@@ -179,4 +231,6 @@
     <script src="{{ asset('assets/js/main.js') }}"></script>
 
     <!-- Page JS -->
+
+    <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
 @endsection

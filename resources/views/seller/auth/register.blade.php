@@ -44,7 +44,39 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/@form-validation/form-validation.css') }}" />
 
     <!-- Page CSS -->
+    <style>
+        .country-list {
+            top: 100% !important;
+            transform: translateY(0%) !important;
+        }
 
+        .iti {
+            position: relative;
+            display: inline-block;
+        }
+
+        input[type="tel"] {
+            padding-right: 6px;
+            padding-left: 52px;
+            margin-left: 0;
+
+            position: relative;
+            z-index: 0;
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+            margin-right: 0;
+            border: 1px solid #ccc;
+            width: 270px;
+            height: 35px;
+            /* padding: 6px 12px; */
+            border-radius: 2px;
+            font-family: inherit;
+            font-size: 100%;
+            color: inherit;
+        }
+    </style>
+    <link rel="stylesheet" href="{{ asset('assets/phone/international-telephone-input.css') }}" />
+    <link rel="stylesheet" href="international-telephone-input.css" />
     <!-- Page -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/page-auth.css') }}" />
 
@@ -282,12 +314,25 @@
                                         <div class="col-sm-6">
                                             <div class="input-group input-group-merge">
                                                 {{-- <span class="input-group-text">US (+1)</span> --}}
-                                                <div class="form-floating form-floating-outline">
-                                                    <input type="text" id="multiStepsMobile" name="phone"
-                                                        class="form-control multi-steps-mobile"
-                                                        placeholder="{{ __('site.Phone') }}"
-                                                        value="{{ old('phone') }}" />
-                                                    <label for="multiStepsMobile"> {{ __('site.Phone') }}</label>
+                                                {{-- <div class="form-floating form-floating-outline"
+                                                    id="Phone_Number_Selector">
+                                                    <div class="iti">
+                                                        <input type="tel" id="Phone_Numberr" name="phone"
+                                                            class="form-control multi-steps-mobile"
+                                                            placeholder="{{ __('site.Phone') }}"
+                                                            value="{{ old('phone') }}" />
+                                                        <label for="Phone_Number">
+                                                            {{ __('site.Phone') }}</label>
+                                                    </div>
+                                                </div> --}}
+
+                                                <div id="Phone_Number_Selector">
+                                                    <label for="Phone_Number">
+                                                        {{ __('site.Phone') }}</label>
+                                                    <div class="iti">
+
+                                                        <input type="tel" name="phone" placeholder="phone" />
+                                                    </div>
                                                 </div>
                                                 @error('phone')
                                                     <div
@@ -422,6 +467,8 @@
 
     <!-- Page JS -->
     <script src="{{ asset('assets/js/pages-auth-multisteps.js') }}"></script>
+    <script src="{{ asset('assets/phone/international-telephone-input.js') }}"></script>
+
 </body>
 
 </html>

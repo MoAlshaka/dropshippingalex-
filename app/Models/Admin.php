@@ -33,7 +33,10 @@ class Admin extends Authenticatable
     {
         return $this->hasMany(AffiliateProduct::class);
     }
-
+    public function sellers()
+    {
+        return $this->hasMany(Seller::class);
+    }
     protected $casts = [
         // 'roles_name' => 'array',
     ];

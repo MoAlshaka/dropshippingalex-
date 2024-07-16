@@ -25,6 +25,7 @@ class Seller extends Authenticatable
         'account',
         'is_active',
         'about_us',
+        'admin_id',
     ];
 
     public function sharedProducts()
@@ -36,6 +37,10 @@ class Seller extends Authenticatable
     {
         return $this->belongsToMany(AffiliateProduct::class, 'affiliate_product_seller');
     }
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class);
+    }
 
     public function leads()
     {
@@ -46,5 +51,4 @@ class Seller extends Authenticatable
     {
         return $this->hasMany(Transaction::class, 'seller_id');
     }
-
 }

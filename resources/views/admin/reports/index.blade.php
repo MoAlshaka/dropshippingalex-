@@ -123,6 +123,32 @@
                                         <label for="bs-rangepicker-range">{{ __('site.Date') }}</label>
                                     </div>
                                 </div>
+                                <div class=" mb-4">
+                                    <div class="form-floating form-floating-outline">
+                                        <select name="admin_id" id="admin_id" class="selectpicker w-100"
+                                            data-style="btn-default" multiple data-actions-box="true">
+                                            @isset($admins)
+                                                @foreach ($admins as $admin)
+                                                    <option value="{{ $admin->id }}">{{ $admin->name }}</option>
+                                                @endforeach
+                                            @endisset
+                                        </select>
+                                        <label for="admin_id">{{ __('site.Manger') }}</label>
+                                    </div>
+                                </div>
+                                <div class=" mb-4">
+                                    <div class="form-floating form-floating-outline">
+                                        <select name="seller_id" id="seller_id" class="selectpicker w-100"
+                                            data-style="btn-default" multiple data-actions-box="true">
+                                            @isset($sellers)
+                                                @foreach ($sellers as $seller)
+                                                    <option value="{{ $seller->id }}">{{ $seller->name }}</option>
+                                                @endforeach
+                                            @endisset
+                                        </select>
+                                        <label for="seller_id">{{ __('site.Seller') }}</label>
+                                    </div>
+                                </div>
 
                             </div>
                             <button type="submit" class="btn btn-primary waves-effect waves-light">filter</button>
@@ -231,7 +257,7 @@
                     class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
                     <div class="flex flex-col gap-10 h-full">
                         <h2 class="text-[15px] lg:text-[20px] lg:text-[18px] text-gray-800 font-bold uppercase">
-                            {{ __('site.Fulfilled') }}
+                            {{ __('site.balance') }}
                         </h2>
                         <div class="flex justify-between items-center">
                             <div class="bg-orange-500 rounded-full text-white px-4 py-2 flex justify-center items-center">
@@ -239,7 +265,7 @@
 
                                 </span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{ $fulfilled }}</span>
+                            <span class="text-gray-600 text-3xl font-bold">{{ $balance }}</span>
                         </div>
                     </div>
                 </div>
@@ -299,13 +325,15 @@
                         class="text-gray-600 text-5xl absolute top-[50%] right-[50%] translate-x-[50%] translate-y-[-50%] font-bold">{{ $delivered_rate }}
                         %</span>
                     <svg viewBox="0 0 36 36" class="circular-chart orange">
-                        <path class="circle-bg" d="M18 2.0845
-                                        a 15.9155 15.9155 0 0 1 0 31.831
-                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <path class="circle-bg"
+                            d="M18 2.0845
+                                                                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
                         <!-- place the 60 in the stroke-dasharray with the persentage -->
-                        <path class="circle" stroke-dasharray="{{ $delivered_rate }}, 100" d="M18 2.0845
-                                        a 15.9155 15.9155 0 0 1 0 31.831
-                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <path class="circle" stroke-dasharray="{{ $delivered_rate }}, 100"
+                            d="M18 2.0845
+                                                                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
                     </svg>
                 </div>
                 <div class="flex flex-col justify-center px-4 ">
@@ -324,13 +352,15 @@
                         class="text-gray-600 text-5xl absolute top-[50%] right-[50%] translate-x-[50%] translate-y-[-50%] font-bold">{{ $confirmed_rate }}
                         %</span>
                     <svg viewBox="0 0 36 36" class="circular-chart green">
-                        <path class="circle-bg" d="M18 2.0845
-                                        a 15.9155 15.9155 0 0 1 0 31.831
-                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <path class="circle-bg"
+                            d="M18 2.0845
+                                                                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
                         <!-- place the 60 in the stroke-dasharray with the persentage -->
-                        <path class="circle" stroke-dasharray="{{ $confirmed_rate }}, 100" d="M18 2.0845
-                                        a 15.9155 15.9155 0 0 1 0 31.831
-                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <path class="circle" stroke-dasharray="{{ $confirmed_rate }}, 100"
+                            d="M18 2.0845
+                                                                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
                     </svg>
                 </div>
                 <div class="flex flex-col justify-center px-4 ">

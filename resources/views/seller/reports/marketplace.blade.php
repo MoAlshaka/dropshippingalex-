@@ -12,9 +12,43 @@
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light">{{ __('site.Seller') }} /</span> {{ __('site.Marketplace') }}
-        </h4>
+        <h4 class="py-3 mb-4 d-flex justify-content-between">
+            <div>
+                <span class="text-muted fw-light">{{ __('site.Seller') }}
+                    /</span> {{ __('site.Marketplace') }}
+            </div>
+            <div>
+                <button class="btn btn-outline-primary waves-effect waves-light" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                    <span class="tf-icons mdi mdi-filter-check-outline me-1"></span>
+                    Filter
+                </button>
+                {{--                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button> --}}
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+                    aria-labelledby="offcanvasRightLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasRightLabel">{{ __('site.FliterOrders') }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <form action="{{ route('seller.reports.marketplace.filter.date') }}" method="post">
+                            @csrf
+                            <div class="mb-3">
+                                <div class="mb-4">
+                                    <div class="form-floating form-floating-outline">
+                                        <input type="text" id="bs-rangepicker-range" class="form-control" name="date">
+                                        <label for="bs-rangepicker-range">{{ __('site.Date') }}</label>
+                                    </div>
+                                </div>
 
+                            </div>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">filter</button>
+                            <button type="reset" class="btn btn-outline-danger waves-effect">reset</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </h4>
         <div class="table-responsive text-nowrap">
             <table class="table" id="em_data">
                 <thead>
@@ -25,7 +59,7 @@
                         <th>{{ __('site.Confirmed') }}</th>
                         <th>{{ __('site.Canceled') }}</th>
                         <th>{{ __('site.ConfirmedRate') }}</th>
-                        <th>{{ __('site.Fulfilled') }}</th>
+                        <th>{{ __('site.balance') }}</th>
                         <th>{{ __('site.Shipped') }}</th>
                         <th>{{ __('site.Delivered') }}</th>
                         <th>{{ __('site.Returned') }}</th>
@@ -55,7 +89,7 @@
                                 <td>{{ $product['confirmed'] }}</td>
                                 <td>{{ $product['cancelled'] }}</td>
                                 <td>{{ $product['confirmed_rate'] }}%</td>
-                                <td>{{ $product['fulfilled'] }}</td>
+                                <td>{{ $product['balance'] }}</td>
                                 <td> {{ $product['shipped'] }}</td>
                                 <td> {{ $product['delivered'] }}</td>
                                 <td> {{ $product['returned'] }}</td>

@@ -60,6 +60,18 @@
     <div class="col-md">
         <div class="card">
             <h5 class="card-header">{{ __('site.CreateAdmin') }}</h5>
+            @if (session()->has('Add'))
+                <div class="alert alert-success" role="alert">{{ session()->get('Add') }}</div>
+            @endif
+            @if (session()->has('Update'))
+                <div class="alert alert-primary" role="alert">{{ session()->get('Update') }}</div>
+            @endif
+            @if (session()->has('Delete'))
+                <div class="alert alert-danger" role="alert">{{ session()->get('Delete') }}</div>
+            @endif
+            @if (session()->has('Warning'))
+                <div class="alert alert-warning" role="alert">{{ session()->get('Warning') }}</div>
+            @endif
             <div class="card-body">
                 <form action="{{ route('admins.store') }}" method="post">
                     @csrf

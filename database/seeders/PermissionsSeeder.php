@@ -47,6 +47,7 @@ class PermissionsSeeder extends Seeder
             'Show Seller',
             'Manage Seller',
             'Delete Seller',
+            'Add Seller',
             'Leads',
             'All Leads',
             'Edit Lead',

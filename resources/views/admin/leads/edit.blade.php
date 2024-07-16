@@ -61,10 +61,18 @@
 
                                                 <option value="{{ $lead->status }}" selected>
                                                     {{ $lead->status }}</option>
-                                                <option value="pending">{{ __('site.Pending') }}</option>
-                                                <option value="approved">{{ __('site.Approved') }}</option>
-                                                <option value="shipping">{{ __('site.Shipping') }}</option>
-                                                <option value="delivered">{{ __('site.Delivered') }}</option>
+                                                <option value="confirmed">{{ __('site.Confirmed') }}</option>
+                                                <option value="in_process">{{ __('site.InProcess') }}</option>
+                                                <option value="no_reply">{{ __('site.NoReply') }}</option>
+                                                <option value="wrong">{{ __('site.Wrong') }}</option>
+                                                <option value="call_later">{{ __('site.CallLater') }}</option>
+                                                <option value="scheduled">{{ __('site.Scheduled') }}</option>
+                                                <option value="canceled">{{ __('site.Canceled') }}</option>
+                                                <option value="expired">{{ __('site.Expired') }}</option>
+                                                <option value="duplicate">{{ __('site.Duplicate') }}</option>
+                                                <option value="taken">{{ __('site.Taken') }}</option>
+                                                <option value="wait_for_stock">{{ __('site.WaitForStock') }}</option>
+                                                <option value="reassigned">{{ __('site.ReAssigned') }}</option>
 
                                             </select>
                                             <label for="select2Basic">{{ __('site.Status') }}</label>

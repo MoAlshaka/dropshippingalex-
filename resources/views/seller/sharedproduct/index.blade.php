@@ -7,8 +7,8 @@
 
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('assets/css/product.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/page-auth.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/product.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/page-auth.css') }}" />
     <link href="https://unpkg.com/tailwindcss@^2.2/dist/tailwind.min.css" rel="stylesheet">
     <style>
         .accordion-button {
@@ -25,13 +25,11 @@
 
         <div class="flex flex-col gap-6">
             @isset($offer)
-                @if($offer->isNotEmpty())
+                @if ($offer->isNotEmpty())
                     <div class="bg-gray-200">
-                        <div
-                            class=""
-                        >
+                        <div class="">
                             <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-                                <div class="carousel-indicators">
+                                {{-- <div class="carousel-indicators">
                                     <button
                                         type="button"
                                         data-bs-target="#carouselExample"
@@ -49,24 +47,20 @@
                                         data-bs-target="#carouselExample"
                                         data-bs-slide-to="2"
                                         aria-label="Slide 3"></button>
-                                </div>
+                                </div> --}}
                                 <div class="carousel-inner" style="height:150px;">
-                                    @foreach($offer as $info)
+                                    {{-- @foreach ($offer as $info)
                                         <div class="carousel-item active" style="max-height:150px;">
-                                            <img class="d-block w-100"
-                                                 src="{{ asset('assets/offers/images/'.$info->image) }}"
-                                                 style="max-height: 150px;object-fit: cover;"
-                                                 alt="First slide"/>
+                                            <img class="d-block w-100" src="{{ asset('assets/offers/images/' . $info->image) }}"
+                                                style="max-height: 150px;object-fit: cover;" alt="First slide" />
                                         </div>
-                                    @endforeach
+                                    @endforeach --}}
                                 </div>
-                                <a class="carousel-control-prev" href="#carouselExample" role="button"
-                                   data-bs-slide="prev">
+                                <a class="carousel-control-prev" href="#carouselExample" role="button" data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Previous</span>
                                 </a>
-                                <a class="carousel-control-next" href="#carouselExample" role="button"
-                                   data-bs-slide="next">
+                                <a class="carousel-control-next" href="#carouselExample" role="button" data-bs-slide="next">
                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Next</span>
                                 </a>
@@ -84,17 +78,17 @@
 
                             <div class=" h-full flex flex-fill gap-6">
                                 <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
-                                   href="{{ route('seller.sharedproducts.index') }}">
+                                    href="{{ route('seller.sharedproducts.index') }}">
                                     <i class="mdi mdi-select-all"></i>
                                     {{ __('site.AllProducts') }}
                                 </a>
                                 <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
-                                   href="{{ route('new.shared.product') }}">
+                                    href="{{ route('new.shared.product') }}">
                                     <i class="mdi mdi-new-box"></i>
                                     {{ __('site.NewProducts') }}
                                 </a>
                                 <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
-                                   href="{{ route('suggested.shared.product') }}">
+                                    href="{{ route('suggested.shared.product') }}">
                                     <i class="mdi mdi-rocket-launch-outline"></i>
                                     {{ __('site.SuggestedProducts') }}
                                 </a>
@@ -102,23 +96,23 @@
 
                             </div>
                             <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse"
-                                    data-bs-target="#accordionWithIcon-1" aria-expanded="false">
+                                data-bs-target="#accordionWithIcon-1" aria-expanded="false">
                             </button>
                         </div>
 
                         <div id="accordionWithIcon-1" class="accordion-collapse collapse" style="">
                             <div class="accordion-body">
                                 <form id="formAuthentication" class="mb-3 row"
-                                      action="{{ route('search.shared.product') }}" method="post">
+                                    action="{{ route('search.shared.product') }}" method="post">
                                     @csrf
                                     <div class="form-floating form-floating-outline mb-3 col ">
                                         <input type="text" class="form-control" id="title" name="title"
-                                               placeholder="Enter your product title" autofocus/>
+                                            placeholder="Enter your product title" autofocus />
                                         <label for="title"> {{ __('site.Title') }}</label>
                                     </div>
                                     <div class="form-floating form-floating-outline mb-3 col">
                                         <input type="text" class="form-control" id="sku" name="sku"
-                                               placeholder="Enter your product sku" autofocus/>
+                                            placeholder="Enter your product sku" autofocus />
                                         <label for="sku"> {{ __('site.SKU') }}</label>
                                     </div>
                                     <div class="form-floating form-floating-outline mb-3 col">
@@ -142,7 +136,7 @@
             </div>
             <div class="bg-white drop-shadow h-full p-4 rounded-md flex gap-6">
                 <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
-                   href="{{ route('seller.sharedproducts.index') }}">
+                    href="{{ route('seller.sharedproducts.index') }}">
                     <i class="menu-icon tf-icons mdi mdi-earth"></i>
                     {{ __('site.AllCountries') }}
                 </a>
@@ -151,10 +145,9 @@
                 @isset($countries)
                     @foreach ($countries as $country)
                         <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
-                           href="{{ route('shared.country.filter', $country->id) }}">
-                            <img src="{{ asset('assets/countries/flags/' . $country->flag) }}"
-                                 alt="{{ $country->name }}"
-                                 width="40" height="40">
+                            href="{{ route('shared.country.filter', $country->id) }}">
+                            <img src="{{ asset('assets/countries/flags/' . $country->flag) }}" alt="{{ $country->name }}"
+                                width="40" height="40">
                             <span>{{ $country->name }}</span></a>
                     @endforeach
                 @endisset
@@ -163,8 +156,7 @@
                 class="bg-white drop-shadow h-full p-4 rounded-md grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 justify-items-center">
 
                 @if ($products->isEmpty())
-                    <div
-                        class="px-4 py-4 text-center text-gray-500 dark:text-gray-400">{{ __('site.NoProducts') }}</div>
+                    <div class="px-4 py-4 text-center text-gray-500 dark:text-gray-400">{{ __('site.NoProducts') }}</div>
                 @endif
                 @isset($products)
                     @foreach ($products as $product)
@@ -176,15 +168,14 @@
                                     class="absolute w-full h-full bg-black opacity-0 ease-in-out duration-300 group-hover:opacity-40">
                                 </div>
                                 <img class="w-full h-full object-cover"
-                                     src="{{ asset('assets/products/sharedproduct/images/' . $product->image) }}"
-                                     alt="..."
-                                     onerror="this.onerror=null;this.src='https://app.codpartner.com/images/no_image_found.jpg';"/>
+                                    src="{{ asset('assets/products/sharedproduct/images/' . $product->image) }}" alt="..."
+                                    onerror="this.onerror=null;this.src='https://app.codpartner.com/images/no_image_found.jpg';" />
                             </div>
 
                             <div class="relative">
-                                <a href="{{route('seller.sharedproduct.show', $product->id) }}"
-                                   class="absolute opacity-0 top-[-60px] left-[-50%] group-hover:left-0 group-hover:!opacity-100 bg-purple-700 text-white p-2 rounded-tr-xl rounded-br-xl ease-out duration-100"
-                                   target="_blank">
+                                <a href="{{ route('seller.sharedproduct.show', $product->id) }}"
+                                    class="absolute opacity-0 top-[-60px] left-[-50%] group-hover:left-0 group-hover:!opacity-100 bg-purple-700 text-white p-2 rounded-tr-xl rounded-br-xl ease-out duration-100"
+                                    target="_blank">
                                     <i class="far fa-eye"></i> <b> {{ __('site.ViewDetails') }} </b>
                                 </a>
                             </div>
@@ -196,8 +187,8 @@
                                 <div class="d-flex gap-2 my-2" style="grid-row-gap: 0.3rem; grid-column-gap: 0.3rem">
                                     @foreach ($product->sharedcountries as $country)
                                         <span class="rounded-md font-bold text-sm">
-                                              <img src="{{ asset('assets/countries/flags/' . $country->flag) }}"
-                                                   width="20" height="20">
+                                            <img src="{{ asset('assets/countries/flags/' . $country->flag) }}" width="20"
+                                                height="20">
                                         </span>
                                     @endforeach
                                 </div>

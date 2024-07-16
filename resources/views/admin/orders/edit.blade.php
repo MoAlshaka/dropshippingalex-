@@ -7,25 +7,25 @@
 
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/materialdesignicons.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/flag-icons.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/materialdesignicons.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/flag-icons.css') }}" />
 
     <!-- Menu waves for no-customizer fix -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/node-waves/node-waves.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/node-waves/node-waves.css') }}" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/core.css') }}" class="template-customizer-core-css"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/core.css') }}" class="template-customizer-core-css" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/theme-default.css') }}"
-          class="template-customizer-theme-css"/>
-    <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}"/>
+        class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/tagify/tagify.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/tagify/tagify.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}" />
 
     <!-- Page CSS -->
 
@@ -51,27 +51,27 @@
                         <div class="card-body">
                             <div class="row">
                                 <form class="flex flex-col gap-6" action="{{ route('orders.update', $order->id) }}"
-                                      method="post">
+                                    method="post">
                                     @method('PUT')
                                     @csrf
                                     <div class="col-md-6 mb-4">
                                         <div class="form-floating form-floating-outline">
                                             <select id="shipment_status" class="select2 form-select form-select-lg"
-                                                    data-allow-clear="true" name="shipment_status">
-                                                <option value="pending"
-                                                        @if($order->shipment_status === 'pending') selected @endif>{{ __('site.Pending') }}</option>
-                                                <option value="approved"
-                                                        @if($order->shipment_status === 'approved') selected @endif>{{ __('site.Approved') }}</option>
-                                                <option value="fulfilled"
-                                                        @if($order->shipment_status === 'fulfilled') selected @endif>{{ __('site.Fulfilled') }}</option>
-                                                <option value="shipping"
-                                                        @if($order->shipment_status === 'shipping') selected @endif>{{ __('site.Shipping') }}</option>
-                                                <option value="delivered"
-                                                        @if($order->shipment_status === 'delivered') selected @endif>{{ __('site.Delivered') }}</option>
-                                                <option value="returned"
-                                                        @if($order->shipment_status === 'returned') selected @endif>{{ __('site.Returned') }}</option>
-                                                <option value="canceled"
-                                                        @if($order->shipment_status === 'canceled') selected @endif>{{ __('site.Canceled') }}</option>
+                                                data-allow-clear="true" name="shipment_status">
+                                                <option value="pending" @if ($order->shipment_status === 'pending') selected @endif>
+                                                    {{ __('site.Pending') }}</option>
+                                                <option value="approved" @if ($order->shipment_status === 'approved') selected @endif>
+                                                    {{ __('site.Approved') }}</option>
+                                                <option value="balance" @if ($order->shipment_status === 'balance') selected @endif>
+                                                    {{ __('site.balance') }}</option>
+                                                <option value="shipping" @if ($order->shipment_status === 'shipping') selected @endif>
+                                                    {{ __('site.Shipping') }}</option>
+                                                <option value="delivered" @if ($order->shipment_status === 'delivered') selected @endif>
+                                                    {{ __('site.Delivered') }}</option>
+                                                <option value="returned" @if ($order->shipment_status === 'returned') selected @endif>
+                                                    {{ __('site.Returned') }}</option>
+                                                <option value="canceled" @if ($order->shipment_status === 'canceled') selected @endif>
+                                                    {{ __('site.Canceled') }}</option>
 
                                             </select>
                                             <label for="shipment_status">{{ __('site.ShipmentStatus') }}</label>
@@ -82,14 +82,21 @@
                                     <div class="col-md-6 mb-4">
                                         <div class="form-floating form-floating-outline">
                                             <select id="payment_type" class="select2 form-select form-select-lg"
-                                                    data-allow-clear="true" name="payment_type">
+                                                data-allow-clear="true" name="payment_type">
 
-                                                <option value="pending"
-                                                        @if($order->payment_type === 'pending') selected @endif>{{ __('site.Pending') }}</option>
-                                                <option value="unpaid"
-                                                        @if($order->payment_type === 'unpaid') selected @endif>{{ __('site.Unpaid') }}</option>
-                                                <option value="Paid"
-                                                        @if($order->payment_type === 'Paid') selected @endif>{{ __('site.Paid') }}</option>
+                                                <option value="pending" @if ($order->payment_type === 'pending') selected @endif>
+                                                    {{ __('site.Pending') }}</option>
+                                                <option value="unpaid" @if ($order->payment_type === 'unpaid') selected @endif>
+                                                    {{ __('site.Unpaid') }}</option>
+                                                <option value="Paid" @if ($order->payment_type === 'Paid') selected @endif>
+                                                    {{ __('site.Paid') }}</option>
+                                                <option value="Refunding"
+                                                    @if ($order->payment_type === 'refunding') selected @endif>
+                                                    {{ __('site.Refunding') }}</option>
+                                                <option value="Refunded"
+                                                    @if ($order->payment_type === 'refunded') selected @endif>
+                                                    {{ __('site.Refunded') }}</option>
+
 
                                             </select>
                                             <label for="payment_type">{{ __('site.PaymentType') }}</label>
@@ -98,11 +105,12 @@
                                     <div class="col-md-6 mb-4">
                                         <div class="form-floating form-floating-outline">
                                             <select id="payment_status" class="select2 form-select form-select-lg"
-                                                    data-allow-clear="true" name="payment_status">
-                                                <option value="pending"
-                                                        @if($order->payment_status === 'pending') selected @endif>{{ __('site.Pending') }}</option>
+                                                data-allow-clear="true" name="payment_status">
+                                                <option value="pending" @if ($order->payment_status === 'pending') selected @endif>
+                                                    {{ __('site.Pending') }}</option>
                                                 <option value="cash_on_delivery"
-                                                        @if($order->payment_status === 'cash_on_delivery') selected @endif>{{ __('site.CashOnDelivery') }}</option>
+                                                    @if ($order->payment_status === 'cash_on_delivery') selected @endif>
+                                                    {{ __('site.CashOnDelivery') }}</option>
 
 
                                             </select>
@@ -114,7 +122,7 @@
                                         <div class="col-md-6 mb-4">
                                             <div class="form-floating form-floating-outline">
                                                 <input class="form-control" type="number" name="calls" id="calls"
-                                                       value="{{$order->calls}}">
+                                                    value="{{ $order->calls }}">
                                                 <label for="calls">{{ __('site.Calls') }}</label>
                                             </div>
                                         </div>

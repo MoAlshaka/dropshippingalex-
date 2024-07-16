@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('payment_method')->nullable();
             $table->string('account')->nullable();
             $table->tinyInteger('is_active')->default(0);
+            $table->foreignId('admin_id')->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Seller\WalletController;
 use App\Http\Controllers\Seller\LeadController;
 use App\Http\Controllers\Seller\ErrorController;
 use App\Http\Controllers\Seller\OrderController;
@@ -93,15 +94,22 @@ Route::group([
         Route::get('orders/show/{id}', [OrderController::class, 'show'])->name('seller.orders.show');
         Route::post('orders/filter', [OrderController::class, 'filter'])->name('seller.orders.filter');
         //
+        Route::resource('wallet', WalletController::class);
+
+
+
+        //
         Route::get('reports', [ReportController::class, 'index'])->name('seller.reports.index');
         Route::get('filter/report/country/{country}', [ReportController::class, 'filter_country'])->name('seller.report.country.filter');
         Route::post('reports/filter', [ReportController::class, 'filter'])->name('seller.reports.filter');
         Route::get('reports/affiliate-filter', [ReportController::class, 'affiliate_filter'])->name('seller.reports.affiliate.filter');
+        Route::get('reports/affiliate/filter', [ReportController::class, 'affiliate_filter_date'])->name('seller.reports.affiliate.filter.date');
         Route::get('reports/marketplace', [ReportController::class, 'marketplace'])->name('seller.reports.marketplace.filter');
+        Route::post('reports/marketplace/filter', [ReportController::class, 'markplace_filter_date'])->name('seller.reports.marketplace.filter.date');
 
 
         // error
-        Route::fallback([ErrorController::class, 'error'])->name('admin.error');
+        Route::fallback([ErrorController::class, 'error'])->name('seller.error');
     });
     Route::get('logout', [AuthController::class, 'logout'])->name('seller.logout');
 });

@@ -85,6 +85,7 @@ Route::group([
     //Seller
     Route::get('sellers', [ActiveSellerController::class, 'index'])->name('admin.sellers.index');
     Route::get('seller/show/{id}', [ActiveSellerController::class, 'show'])->name('admin.sellers.show');
+    Route::post('seller/add-manager/{id}', [ActiveSellerController::class, 'add_manager'])->name('admin.sellers.add.manager');
     Route::match(['post', 'put', 'patch'], 'active-sellers/{id}', [ActiveSellerController::class, 'active'])->name('admin.sellers.active');
     Route::delete('sellers/delete/{id}', [ActiveSellerController::class, 'delete'])->name('admin.sellers.delete');
     //Leads
@@ -104,7 +105,9 @@ Route::group([
     Route::get('filter/report/country/{country}', [ReportController::class, 'filter_country'])->name('admin.report.country.filter');
     Route::post('reports/filter', [ReportController::class, 'filter'])->name('admin.reports.filter');
     Route::get('reports/affiliate-filter', [ReportController::class, 'affiliate_filter'])->name('admin.reports.affiliate.filter');
+    Route::post('reports/affiliate/filter', [ReportController::class, 'affiliate_filter_date'])->name('admin.reports.affiliate.filter.date');
     Route::get('reports/marketplace', [ReportController::class, 'marketplace'])->name('admin.reports.marketplace.filter');
+    Route::post('reports/marketplace/filter', [ReportController::class, 'markplace_filter_date'])->name('admin.reports.marketplace.filter.date');
     Route::resource('roles', RoleController::class);
     Route::resource('admins', AdminController::class);
 

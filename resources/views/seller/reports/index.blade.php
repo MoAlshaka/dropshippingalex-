@@ -231,7 +231,7 @@
                     class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
                     <div class="flex flex-col gap-10 h-full">
                         <h2 class="text-[15px] lg:text-[20px] lg:text-[18px] text-gray-800 font-bold uppercase">
-                            {{ __('site.Fulfilled') }}
+                            {{ __('site.Balance') }}
                         </h2>
                         <div class="flex justify-between items-center">
                             <div class="bg-orange-500 rounded-full text-white px-4 py-2 flex justify-center items-center">
@@ -239,7 +239,7 @@
 
                                 </span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{ $fulfilled }}</span>
+                            <span class="text-gray-600 text-3xl font-bold">{{ $balance }}</span>
                         </div>
                     </div>
                 </div>
@@ -300,12 +300,12 @@
                         %</span>
                     <svg viewBox="0 0 36 36" class="circular-chart orange">
                         <path class="circle-bg" d="M18 2.0845
-                                    a 15.9155 15.9155 0 0 1 0 31.831
-                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
                         <!-- place the 60 in the stroke-dasharray with the persentage -->
                         <path class="circle" stroke-dasharray="{{ $delivered_rate }}, 100" d="M18 2.0845
-                                    a 15.9155 15.9155 0 0 1 0 31.831
-                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
                     </svg>
                 </div>
                 <div class="flex flex-col justify-center px-4 ">
@@ -325,12 +325,12 @@
                         %</span>
                     <svg viewBox="0 0 36 36" class="circular-chart green">
                         <path class="circle-bg" d="M18 2.0845
-                                    a 15.9155 15.9155 0 0 1 0 31.831
-                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
                         <!-- place the 60 in the stroke-dasharray with the persentage -->
                         <path class="circle" stroke-dasharray="{{ $confirmed_rate }}, 100" d="M18 2.0845
-                                    a 15.9155 15.9155 0 0 1 0 31.831
-                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
                     </svg>
                 </div>
                 <div class="flex flex-col justify-center px-4 ">

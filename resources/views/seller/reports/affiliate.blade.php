@@ -100,6 +100,37 @@
                 <span class="text-muted fw-light"> {{ __('site.Seller') }} /</span>
                 {{ __('site.Affiliate') }}
             </div>
+            <div>
+                <button class="btn btn-outline-primary waves-effect waves-light" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                    <span class="tf-icons mdi mdi-filter-check-outline me-1"></span>
+                    Filter
+                </button>
+                {{--                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button> --}}
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+                    aria-labelledby="offcanvasRightLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasRightLabel">{{ __('site.FliterOrders') }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <form action="{{ route('seller.reports.filter') }}" method="post">
+                            @csrf
+                            <div class="mb-3">
+                                <div class="mb-4">
+                                    <div class="form-floating form-floating-outline">
+                                        <input type="text" id="bs-rangepicker-range" class="form-control" name="date">
+                                        <label for="bs-rangepicker-range">{{ __('site.Date') }}</label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">filter</button>
+                            <button type="reset" class="btn btn-outline-danger waves-effect">reset</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </h4>
 
         <div class="card_chart_cont  lg:flex ">
@@ -180,8 +211,8 @@
                             <p class="text-gray-800 text-sm font-bold capitalize">over {{ $leads }} leads</p>
                         </div>
                         <div>
-                            <img class="object-cover w-[120px]" src="{{ asset('assets/img/reportImages/commission.png') }}"
-                                alt="">
+                            <img class="object-cover w-[120px]"
+                                src="{{ asset('assets/img/reportImages/commission.png') }}" alt="">
                         </div>
                     </div>
                 </div>
@@ -232,13 +263,13 @@
                     <svg viewBox="0 0 36 36" class="circular-chart green">
                         <path class="circle-bg"
                             d="M18 2.0845
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            a 15.9155 15.9155 0 0 1 0 -31.831" />
                         <!-- place the 60 in the stroke-dasharray with the persentage -->
                         <path class="circle" stroke-dasharray="{{ $confirmed_rate }}, 100"
                             d="M18 2.0845
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            a 15.9155 15.9155 0 0 1 0 -31.831" />
                     </svg>
                 </div>
                 <div class="flex flex-col justify-center px-4 ">

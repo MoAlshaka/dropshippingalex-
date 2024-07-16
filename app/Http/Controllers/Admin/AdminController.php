@@ -62,13 +62,8 @@ class AdminController extends Controller
 
         // Get the team_manager_id based on team_id
         $user->assignRole($request->input('roles_name'));
-        $message = ' User created successfully.';
-        $notification = array(
-            'message' => $message,
-            'alert-type' => 'success'
-        );
 
-        return redirect()->route('admins.create')->with($notification);
+        return redirect()->route('admins.create')->with(['Add' => 'Admin created successfully']);
     }
     /**
      * Display the specified resource.
