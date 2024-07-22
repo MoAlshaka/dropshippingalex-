@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Seller;
 
-use App\Http\Controllers\Controller;
 use App\Models\Lead;
 use App\Models\Order;
 use App\Models\Seller;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Models\AffiliateProduct;
+use App\Http\Controllers\Controller;
+use App\Models\SharedProduct;
 
 class DashboardController extends Controller
 {
@@ -17,21 +19,9 @@ class DashboardController extends Controller
         $leads = Lead::where('seller_id', auth()->guard('seller')->id())->count();
         $approvedLeadsCount = Lead::where('seller_id', auth()->guard('seller')->id())->where('status', 'approved')->count();
         $deliveredLeadsCount = Lead::where('seller_id', auth()->guard('seller')->id())->where('status', 'delivered')->count();
-        $revenue = Transaction::where('seller_id', auth()->guard('seller')->id())->sum('amount');
-        $amounts = Transaction::groupBy('seller_id')
-            ->selectRaw('seller_id, sum(amount) as totalAmount')
-            ->orderByDesc('totalAmount')
-            ->limit(10)
-            ->get();
+        $revenue = Seller::where('id', auth()->guard('seller')->id())->pluck('revenue')->first();
 
-        $sellerIds = $amounts->pluck('seller_id');
-
-        $sellers = Seller::whereIn('id', $sellerIds)
-            ->with('transactions')
-            ->get()
-            ->sortByDesc(function ($seller) use ($amounts) {
-                return $amounts->where('seller_id', $seller->id)->first()->totalAmount;
-            });
+        $sellers = Seller::orderby('revenue', 'desc')->limit(10)->get();
         // charts
 
         // Get the minimum and maximum dates for the leads associated with the authenticated seller
@@ -42,7 +32,7 @@ class DashboardController extends Controller
         $startDate = $minMaxDates->min_date;
         $endDate = now()->toDateString();
 
-// Generate all dates within the range
+        // Generate all dates within the range
         $allDates = [];
         $currentDate = $startDate;
         while ($currentDate <= $endDate) {
@@ -50,14 +40,14 @@ class DashboardController extends Controller
             $currentDate = date('Y-m-d', strtotime($currentDate . ' + 1 day'));
         }
 
-// Execute the query to get counts for existing dates, filtered by the authenticated seller
+        // Execute the query to get counts for existing dates, filtered by the authenticated seller
         $existingCounts = Lead::selectRaw('order_date, COUNT(*) as count')
             ->where('seller_id', auth()->guard('seller')->id())
             ->groupBy('order_date')
             ->pluck('count', 'order_date')
             ->toArray();
 
-// Fill in missing counts with zero
+        // Fill in missing counts with zero
         $leads_count = [];
         foreach ($allDates as $date) {
             $count = isset($existingCounts[$date]) ? $existingCounts[$date] : 0;
@@ -65,8 +55,8 @@ class DashboardController extends Controller
         }
 
 
-// orders
-// Get the minimum and maximum dates for the orders associated with the authenticated seller
+        // orders
+        // Get the minimum and maximum dates for the orders associated with the authenticated seller
         $minMaxOrderDates = Order::selectRaw('MIN(created_at) as min_date, MAX(created_at) as max_date')
             ->where('seller_id', auth()->guard('seller')->id())
             ->first();
@@ -76,7 +66,7 @@ class DashboardController extends Controller
 
         $endOrderDate = now()->toDateString();
 
-// Generate all dates within the range for orders
+        // Generate all dates within the range for orders
         $allOrderDates = [];
         $currentOrderDate = $startOrderDate;
         while ($currentOrderDate <= $endOrderDate) {
@@ -84,7 +74,7 @@ class DashboardController extends Controller
             $currentOrderDate = date('Y-m-d', strtotime($currentOrderDate . ' + 1 day'));
         }
 
-// Execute the query to get counts for existing dates, filtered by the authenticated seller
+        // Execute the query to get counts for existing dates, filtered by the authenticated seller
         $existingOrderCounts = Order::selectRaw('DATE(created_at) as order_date, COUNT(*) as count')
             ->where('seller_id', auth()->guard('seller')->id())
             ->where('shipment_status', 'approved')
@@ -92,7 +82,7 @@ class DashboardController extends Controller
             ->pluck('count', 'order_date')
             ->toArray();
 
-// Fill in missing counts with zero for orders
+        // Fill in missing counts with zero for orders
         $orders_count = [];
         foreach ($allOrderDates as $date) {
             $count = isset($existingOrderCounts[$date]) ? $existingOrderCounts[$date] : 0;
@@ -106,20 +96,7 @@ class DashboardController extends Controller
     public function filter(Request $request)
     {
         // Get top sellers and their transaction amounts
-        $amounts = Transaction::groupBy('seller_id')
-            ->selectRaw('seller_id, sum(amount) as totalAmount')
-            ->orderByDesc('totalAmount')
-            ->limit(10)
-            ->get();
-
-        $sellerIds = $amounts->pluck('seller_id');
-
-        $sellers = Seller::whereIn('id', $sellerIds)
-            ->with('transactions')
-            ->get()
-            ->sortByDesc(function ($seller) use ($amounts) {
-                return $amounts->where('seller_id', $seller->id)->first()->totalAmount;
-            });
+        $sellers = Seller::orderby('revenue', 'desc')->limit(10)->get();
 
         // Initialize lead-related variables
         $leads = $approvedLeadsCount = $deliveredLeadsCount = $revenue = 0;
@@ -137,7 +114,7 @@ class DashboardController extends Controller
                 $approvedLeadsCount = Lead::where('seller_id', auth()->guard('seller')->id())->where('status', 'approved')->whereBetween('order_date', [$start_date, $end_date])->count();
                 $deliveredLeadsCount = Lead::where('seller_id', auth()->guard('seller')->id())->where('status', 'delivered')->whereBetween('order_date', [$start_date, $end_date])->count();
                 $revenue = Transaction::where('seller_id', auth()->guard('seller')->id())->whereBetween('created_at', [$start_date, $end_date])->sum('amount');
-                
+
                 // Generate all dates within the range for leads
                 $allDates = [];
                 $currentDate = $start_date->copy();

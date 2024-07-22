@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\AffiliateProduct;
-use App\Models\Country;
 use App\Models\Lead;
 use App\Models\Order;
+use App\Models\Seller;
+use App\Models\Country;
+use Illuminate\Http\Request;
 use App\Models\SharedProduct;
 use App\Models\Shippingdetail;
-use Illuminate\Http\Request;
+use App\Models\AffiliateProduct;
+use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {
@@ -82,7 +83,11 @@ class OrderController extends Controller
     public function update(Request $request, string $id)
     {
 
-
+        $request->validate([
+            'shipment_status' => 'required|max:50',
+            'payment_status' => 'required|max:50',
+            'payment_type' => 'required|max:50',
+        ]);
         $order = Order::findorfail($id);
 
         $order->update([
@@ -90,6 +95,37 @@ class OrderController extends Controller
             'payment_status' => $request->payment_status,
             'payment_type' => $request->payment_type,
             'calls' => $request->calls,
+        ]);
+
+        $orders = Order::where('seller_id', auth()->user()->id)->get();
+        $revenue = 0;
+        if ($orders->isNotEmpty()) {
+            foreach ($orders as $order) {
+                if ($order->shipment_status == 'delivered') {
+                    $lead = Lead::find($order->lead_id);  // Use find() for efficiency
+                    if ($lead) {
+                        if ($lead->type == 'commission') {
+                            $product = AffiliateProduct::where('sku', $lead->item_sku)->first();
+                            if ($product) {
+                                $revenue += $product->commission;
+                            }
+                        } else {
+                            $product = SharedProduct::where('sku', $lead->item_sku)->first();
+                            if ($product) {
+                                $money = $lead->total / $lead->quantity;
+                                // if($lead->Currency ==){
+
+                                // }
+                                $revenue += ($money - $product->unit_cost);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        Seller::where('id', auth()->user()->id)->update([
+            'revenue' => $revenue,
         ]);
 
         return redirect()->route('orders.index')->with(['Update' => 'Update Successfully']);

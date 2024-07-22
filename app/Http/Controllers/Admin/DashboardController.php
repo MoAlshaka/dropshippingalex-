@@ -20,20 +20,7 @@ class DashboardController extends Controller
         $deliveredLeadsCount = Lead::where('status', 'delivered')->count();
         $pendingLeadsCount = Lead::where('status', 'pending')->count();
 
-        $amounts = Transaction::groupBy('seller_id')
-            ->selectRaw('seller_id, sum(amount) as totalAmount')
-            ->orderByDesc('totalAmount')
-            ->limit(10)
-            ->get();
-
-        $sellerIds = $amounts->pluck('seller_id');
-
-        $sellers = Seller::whereIn('id', $sellerIds)
-            ->with('transactions')
-            ->get()
-            ->sortByDesc(function ($seller) use ($amounts) {
-                return $amounts->where('seller_id', $seller->id)->first()->totalAmount;
-            });
+        $sellers = Seller::orderby('revenue', 'desc')->limit(10)->get();
 
         // charts
 
@@ -61,13 +48,13 @@ class DashboardController extends Controller
             $count = isset($existingCounts[$date]) ? $existingCounts[$date] : 0;
             $leads_count[] = (object)['date' => $date, 'count' => $count];
         }
-// orders
-// Charts for Orders
+        // orders
+        // Charts for Orders
         $minMaxOrderDates = Order::selectRaw('MIN(created_at) as min_date, MAX(created_at) as max_date')->first();
         $startOrderDate = Carbon::parse($minMaxOrderDates->min_date)->format('Y-m-d');
         $endOrderDate = now()->toDateString();
 
-// Generate all dates within the range for orders
+        // Generate all dates within the range for orders
         $allOrderDates = [];
         $currentOrderDate = $startOrderDate;
         while ($currentOrderDate <= $endOrderDate) {
@@ -75,14 +62,14 @@ class DashboardController extends Controller
             $currentOrderDate = date('Y-m-d', strtotime($currentOrderDate . ' + 1 day'));
         }
 
-// Execute the query to get counts for existing dates
+        // Execute the query to get counts for existing dates
         $existingOrderCounts = Order::selectRaw('DATE(created_at) as order_date, COUNT(*) as count')
             ->where('shipment_status', 'approved')
             ->groupBy('order_date')
             ->pluck('count', 'order_date')
             ->toArray();
 
-// Fill in missing counts with zero for orders
+        // Fill in missing counts with zero for orders
         $orders_count = [];
         foreach ($allOrderDates as $date) {
             $count = isset($existingOrderCounts[$date]) ? $existingOrderCounts[$date] : 0;
@@ -96,20 +83,7 @@ class DashboardController extends Controller
     public function filter(Request $request)
     {
         // Get top sellers and their transaction amounts
-        $amounts = Transaction::groupBy('seller_id')
-            ->selectRaw('seller_id, sum(amount) as totalAmount')
-            ->orderByDesc('totalAmount')
-            ->limit(10)
-            ->get();
-
-        $sellerIds = $amounts->pluck('seller_id');
-
-        $sellers = Seller::whereIn('id', $sellerIds)
-            ->with('transactions')
-            ->get()
-            ->sortByDesc(function ($seller) use ($amounts) {
-                return $amounts->where('seller_id', $seller->id)->first()->totalAmount;
-            });
+        $sellers = Seller::orderby('revenue', 'desc')->limit(10)->get();
 
         // Initialize lead-related variables
         $leads = $approvedLeadsCount = $deliveredLeadsCount = $pendingLeadsCount = 0;
@@ -175,7 +149,4 @@ class DashboardController extends Controller
 
         return view('admin.dashboard', compact('leads', 'approvedLeadsCount', 'deliveredLeadsCount', 'pendingLeadsCount', 'sellers', 'leads_count', 'orders_count'));
     }
-
-
 }
-
