@@ -41,7 +41,7 @@
     <link rel="stylesheet" href="{{ asset('assets/excel/ejexcelMaster.css') }}" />
 
     <!-- Page CSS -->
-
+    <link rel="stylesheet" href="{{ asset('assets/desc/summernote.min.css') }}" />
     <!-- Helpers -->
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
@@ -137,7 +137,8 @@
                             @enderror
 
                             <!-- Comment -->
-                            <div>
+                            <div id="summernote">{{ __('site.Description') }}</div>
+                            {{-- <div>
                                 <label class="form-label">{{ __('site.Description') }}</label>
                                 <div class="form-control p-0 pt-1">
                                     <div class="comment-toolbar border-0 border-bottom">
@@ -158,7 +159,7 @@
                                 @error('description')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
-                            </div>
+                            </div> --}}
                             {{--                            <div id="stock_container" data-country="{{ $countries }}"> --}}
                             {{--                                <div class="row mb-4 mt-4"> --}}
                             {{--                                    <div class="col"> --}}
@@ -376,4 +377,13 @@
     {{--    <script src="{{ asset('assets/productjs/stock.js') }}"></script> --}}
 
     {{--    <script src="{{asset('assets/js/forms-extras.js')}}"></script> --}}
+
+
+    <script src="{{ asset('assets/desc/summernote.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#summernote').summernote();
+        });
+    </script>
 @endsection

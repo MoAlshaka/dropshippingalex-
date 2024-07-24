@@ -39,8 +39,10 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/flatpickr/flatpickr.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/tagify/tagify.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/excel/ejexcelMaster.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/desc/summernote.min.css') }}" />
 
     <!-- Page CSS -->
+
     {{--    <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/super-build/ckeditor.js"></script> --}}
     <!-- Helpers -->
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
@@ -136,7 +138,12 @@
                             @enderror
 
                             <!-- Comment -->
-                            <div>
+
+                            <div id="summernote">{{ __('site.Description') }}</div>
+
+
+
+                            {{-- <div>
                                 <label class="form-label"> {{ __('site.Description') }}</label>
                                 <div class="form-control p-0 pt-1">
                                     <div class="comment-toolbar border-0 border-bottom">
@@ -157,7 +164,7 @@
                                 @error('description')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
-                            </div>
+                            </div> --}}
                             {{-- <div class="mb-3">
                                 <label class="form-label" for="bs-validation-content">Content <span class="text-danger">*</span></label>
                                 {!! Html::textarea('description')->id('description')->class('ckeditor') !!}
@@ -167,7 +174,7 @@
                             </div> --}}
 
                             <!-- Form Repeater -->
-                            <div class="col-12">
+                            <div class="col-12 mt-4">
                                 <div class="card">
                                     <h5 class="card-header">{{ __('site.Country') }}</h5>
                                     <div class="card-body">
@@ -336,4 +343,11 @@
     <!-- Page JS -->
     <script src="{{ asset('assets/js/app-ecommerce-product-add.js') }}"></script>
     <script src="{{ asset('assets/addProduct/sharedProduct.js') }}"></script>
+    <script src="{{ asset('assets/desc/summernote.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#summernote').summernote();
+        });
+    </script>
 @endsection

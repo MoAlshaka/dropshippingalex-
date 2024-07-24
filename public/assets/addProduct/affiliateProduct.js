@@ -14,7 +14,7 @@ document.querySelector('[type="submit"]').addEventListener('click', (event) => {
     formData.append('title', document.querySelector('[name="title"]').value);
     formData.append('sku', document.querySelector('[name="sku"]').value);
     formData.append('brand', document.querySelector('[name="brand"]').value);
-    formData.append('description', document.querySelector('[data-placeholder="Product Description"]').innerText);
+    formData.append('description', document.querySelector('.inner-body').innerHTML);
     formData.append('minimum_selling_price', document.querySelector('[name="minimum_selling_price"]').value);
     formData.append('commission', document.querySelector('[name="commission"]').value);
     formData.append('weight', document.querySelector('[name="weight"]').value);

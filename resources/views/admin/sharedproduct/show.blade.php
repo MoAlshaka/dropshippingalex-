@@ -134,7 +134,8 @@
             <div class="col-span-8 bg-white drop-shadow rounded-md px-4 py-4">
                 <h3 class="text-xl font-bold mb-4"> {{ __('site.Description') }}</h3>
                 <p class="text-gray-500 text-pretty">
-                    {{ $product->description }}
+                    {!! $product->description !!}
+
                 </p>
             </div>
 

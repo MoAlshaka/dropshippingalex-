@@ -42,6 +42,7 @@
 
     <!-- Page CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/desc/summernote.min.css') }}" />
 
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}" />
     <!-- Helpers -->
@@ -135,7 +136,8 @@
                             @enderror
 
                             <!-- Comment -->
-                            <div>
+                            <div id="summernote">{{ __('site.Description') }}</div>
+                            {{-- <div>
                                 <label class="form-label">{{ __('site.Description') }}</label>
                                 <div class="form-control p-0 pt-1" id="data-desc"
                                     data-desc="{{ $product->description }}">
@@ -157,7 +159,7 @@
                                 @error('description')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
-                            </div>
+                            </div> --}}
                             {{--                            @foreach ($product->affiliatecountries as $affiliateProduct) --}}
                             {{--                                <div id="stock_container" data-country="{{ $countries }}"> --}}
                             {{--                                    <div class="row mb-4 mt-4"> --}}
@@ -385,4 +387,12 @@
     <script src="{{ asset('assets/js/app-ecommerce-product-add.js') }}"></script>
     <script src="{{ asset('assets/addProduct/affiliateProductEdit.js') }}"></script>
     {{--    <script src="{{ asset('assets/productjs/stock.js') }}"></script> --}}
+
+    <script src="{{ asset('assets/desc/summernote.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#summernote').summernote();
+        });
+    </script>
 @endsection
