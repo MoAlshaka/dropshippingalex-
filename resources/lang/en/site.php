@@ -275,6 +275,13 @@ return [
     'WaitForStock' => 'Wait for stock',
     'ReAssigned' => 'ReAssigned',
     'Balance' => 'Balance',
+    'Specification' => 'Specification',
+    'YourBalance' => 'Your Total Balance',
+    'WithdrawalBalance' => 'Withdrawal Balance',
+    'Invoices' => 'Invoices',
+    'EditInvoices' => 'Edit Invoices',
+
+
 
 
 ];

@@ -286,7 +286,14 @@
                     </ul>
                 </li>
             @endcan
-
+            @can('Invoices')
+                <li class="menu-item">
+                    <a href="{{ route('invoices.index') }}" class="menu-link ">
+                        <i class="menu-icon tf-icons mdi mdi-view-list-outline"></i>
+                        <div> {{ __('site.Invoices') }}</div>
+                    </a>
+                </li>
+            @endcan
             @can('Admins')
                 <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">

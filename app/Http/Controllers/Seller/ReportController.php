@@ -193,14 +193,14 @@ class ReportController extends Controller
         $lead_sku = Lead::whereIn('id', $lead_confirmed)->pluck('item_sku');
 
         // Retrieve affiliate product commissions
-        $affilates = AffiliateProduct::whereIn('sku', $lead_sku)->pluck('comission');
+        $affilates = AffiliateProduct::whereIn('sku', $lead_sku)->pluck('commission');
 
         // Calculate total commission
         $total_commission = $affilates->sum();
 
         // Calculate highest commissions
         $lead_skus = $lead_sku->unique();
-        $highest_commissions = AffiliateProduct::whereIn('sku', $lead_skus)->orderByDesc('comission')->limit(5)->get();
+        $highest_commissions = AffiliateProduct::whereIn('sku', $lead_skus)->orderByDesc('commission')->limit(5)->get();
 
         foreach ($highest_commissions as $highest_commission) {
             $leadspros = Lead::where('item_sku', $highest_commission->sku)->pluck('id');
@@ -210,13 +210,13 @@ class ReportController extends Controller
             if ($total_order_count > 0) {
                 $highestCommissions[] = [
                     'highest_commission' => $highest_commission,
-                    'amount' => $total_order_count * $highest_commission->comission
+                    'amount' => $total_order_count * $highest_commission->commission
                 ];
             }
         }
 
         // Retrieve the highest commission product
-        $highest_commission = AffiliateProduct::whereIn('sku', $lead_skus)->orderByDesc('comission')->first();
+        $highest_commission = AffiliateProduct::whereIn('sku', $lead_skus)->orderByDesc('commission')->first();
 
         // Calculate average commission
         if ($confirmed > 0) {
@@ -451,8 +451,8 @@ class ReportController extends Controller
         $leads = 0;
         $under_process = 0;
         $confirmed = 0;
-        $highest_comissions = 0;
-        $highest_comission = 0;
+        $highest_commissions = 0;
+        $highest_commission = 0;
         $average_commission = 0;
         $delivered = 0;
         $confirmed_rate = 0;
@@ -494,7 +494,7 @@ class ReportController extends Controller
         $total_commission = 0;
 
         foreach ($affilates as $affilate) {
-            $commission = AffiliateProduct::where('id', $affilate)->pluck('comission');
+            $commission = AffiliateProduct::where('id', $affilate)->pluck('commission');
 
             $total_commission = $total_commission + $commission[0];
         }
@@ -502,7 +502,7 @@ class ReportController extends Controller
 
         $lead_skus = Lead::whereIn('id', $lead_confirmed)->pluck('item_sku')->unique();
 
-        $highest_commissions = AffiliateProduct::whereIn('sku', $lead_skus)->orderByDesc('comission')->limit(5)->get();
+        $highest_commissions = AffiliateProduct::whereIn('sku', $lead_skus)->orderByDesc('commission')->limit(5)->get();
 
         $highestCommissions = [];
         foreach ($highest_commissions as $highest_commission) {
@@ -522,7 +522,7 @@ class ReportController extends Controller
             if ($total_order_count > 0) {
                 $highestCommissions[] = [
                     'highest_commission' => $highest_commission,
-                    'amount' => $total_order_count * $highest_commission->comission
+                    'amount' => $total_order_count * $highest_commission->commission
                 ];
             }
         }
@@ -530,7 +530,7 @@ class ReportController extends Controller
 
 
 
-        $highest_commission = AffiliateProduct::whereIn('sku', $lead_skus)->orderByDesc('comission')
+        $highest_commission = AffiliateProduct::whereIn('sku', $lead_skus)->orderByDesc('commission')
             ->limit(1)->first();
 
         if ($confirmed > 0) {

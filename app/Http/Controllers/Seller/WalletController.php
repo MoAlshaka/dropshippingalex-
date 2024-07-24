@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Seller;
 
-use App\Http\Controllers\Controller;
+use App\Models\Revenue;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\Invoice;
+use App\Models\Seller;
+use Carbon\Carbon;
 
 class WalletController extends Controller
 {
@@ -12,7 +16,10 @@ class WalletController extends Controller
      */
     public function index()
     {
-        return view('seller.wallet.index');
+        $balance = Invoice::where('seller_id', auth()->guard('seller')->id())->sum('revenue');
+        $revenue_confirmed = Invoice::where(['seller_id' => auth()->guard('seller')->id(), 'status' => 'unpaid'])->sum('revenue');
+
+        return view('seller.wallet.index', compact('balance', 'revenue_confirmed'));
     }
 
     /**
@@ -62,4 +69,20 @@ class WalletController extends Controller
     {
         //
     }
+
+    // public function filter(Request $request)
+    // {
+
+    //     if ($request->has('date') && $request->date != '') {
+    //         $dates = explode(' - ', $request->date);
+    //         if (count($dates) === 2) {
+    //             $start_date = Carbon::createFromFormat('m/d/Y', $dates[0])->startOfDay();
+    //             $end_date = Carbon::createFromFormat('m/d/Y', $dates[1])->endOfDay();
+    //         }
+    //     }
+    //     $balance = Revenue::where('seller_id', auth()->guard('seller')->id())->whereBetween('date', [$start_date, $end_date])->sum('revenue');
+    //     $revenue_confirmed = Revenue::where(['seller_id' => auth()->guard('seller')->id(), 'is_confirmed' => 1])->whereBetween('date', [$start_date, $end_date])->sum('revenue');
+
+    //     return redirect()->route('seller.wallet.filter', compact('balance', 'revenue_confirmed'));
+    // }
 }

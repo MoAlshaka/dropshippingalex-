@@ -155,6 +155,12 @@
             </a>
         </li>
         <li class="menu-item">
+            <a href="{{ route('seller.invoices.index') }}" class="menu-link ">
+                <i class="menu-icon tf-icons mdi mdi-wallet-outline"></i>
+                <div> {{ __('site.Wallet') }}</div>
+            </a>
+        </li>
+        <li class="menu-item">
             <a href="{{ route('seller.profile') }}" class="menu-link ">
                 <i class="menu-icon tf-icons mdi mdi-cog-outline"></i>
                 <div> {{ __('site.Setting') }}</div>

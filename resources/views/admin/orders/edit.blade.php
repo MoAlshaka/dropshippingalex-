@@ -60,18 +60,40 @@
                                                 data-allow-clear="true" name="shipment_status">
                                                 <option value="pending" @if ($order->shipment_status === 'pending') selected @endif>
                                                     {{ __('site.Pending') }}</option>
-                                                <option value="approved" @if ($order->shipment_status === 'approved') selected @endif>
-                                                    {{ __('site.Approved') }}</option>
-                                                <option value="balance" @if ($order->shipment_status === 'balance') selected @endif>
-                                                    {{ __('site.balance') }}</option>
-                                                <option value="shipping" @if ($order->shipment_status === 'shipping') selected @endif>
-                                                    {{ __('site.Shipping') }}</option>
-                                                <option value="delivered" @if ($order->shipment_status === 'delivered') selected @endif>
-                                                    {{ __('site.Delivered') }}</option>
-                                                <option value="returned" @if ($order->shipment_status === 'returned') selected @endif>
-                                                    {{ __('site.Returned') }}</option>
+                                                <option value="assigned" @if ($order->shipment_status === 'assigned') selected @endif>
+                                                    {{ __('site.Assigned') }}</option>
+                                                <option value="not available"
+                                                    @if ($order->shipment_status === 'not available') selected @endif>
+                                                    {{ __('site.NotAvailable') }}</option>
                                                 <option value="canceled" @if ($order->shipment_status === 'canceled') selected @endif>
                                                     {{ __('site.Canceled') }}</option>
+                                                <option value="balance" @if ($order->shipment_status === 'balance') selected @endif>
+                                                    {{ __('site.balance') }}</option>
+                                                <option value="in transit"
+                                                    @if ($order->shipment_status === 'in transit') selected @endif>
+                                                    {{ __('site.balance') }}</option>
+                                                <option value="out for delivery"
+                                                    @if ($order->shipment_status === 'out for delivery') selected @endif>
+                                                    {{ __('site.OutforDelivery') }}</option>
+                                                <option value="undelivered"
+                                                    @if ($order->shipment_status === 'undelivered') selected @endif>
+                                                    {{ __('site.Undelivered') }}</option>
+                                                <option value="delivered" @if ($order->shipment_status === 'delivered') selected @endif>
+                                                    {{ __('site.Delivered') }}</option>
+                                                <option value="exception" @if ($order->shipment_status === 'exception') selected @endif>
+                                                    {{ __('site.Exception') }}</option>
+                                                <option value="ready for return"
+                                                    @if ($order->shipment_status === 'ready for return') selected @endif>
+                                                    {{ __('site.ReadyForReturn') }}</option>
+                                                <option value="returned"
+                                                    @if ($order->shipment_status === 'returned') selected @endif>
+                                                    {{ __('site.Returned') }}</option>
+                                                <option value="expired" @if ($order->shipment_status === 'expired') selected @endif>
+                                                    {{ __('site.Expired') }}</option>
+
+
+
+
 
                                             </select>
                                             <label for="shipment_status">{{ __('site.ShipmentStatus') }}</label>

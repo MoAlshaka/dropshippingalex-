@@ -108,6 +108,14 @@ class ReportController extends Controller
         $confirmed_rate = 0;
         $delivered_rate = 0;
 
+        $sellerIds = [];
+        if ($request->has('manger_id')) {
+            $manger = Admin::findOrFail($request->manger_id);
+            foreach ($manger->sellers as $seller) {
+                array_push($sellerIds, $seller->id);
+            }
+        }
+
         if ($request->has('date') && $request->date != '') {
             $dates = explode(' - ', $request->date);
 
@@ -115,36 +123,50 @@ class ReportController extends Controller
             if (count($dates) === 2) {
                 $start_date = Carbon::createFromFormat('m/d/Y', $dates[0])->startOfDay();
                 $end_date = Carbon::createFromFormat('m/d/Y', $dates[1])->endOfDay();
-
-                $under_process = Order::where('shipment_status', 'pending')
-                    ->whereBetween('created_at', [$start_date, $end_date])
-                    ->count();
-
-                $confirmed = Order::where('shipment_status', 'approved')
-                    ->whereBetween('created_at', [$start_date, $end_date])
-                    ->count();
-
-                $canceled = Order::where('shipment_status', 'canceled')
-                    ->whereBetween('created_at', [$start_date, $end_date])
-                    ->count();
-
-                $balance = Order::where('shipment_status', 'balance')
-                    ->whereBetween('created_at', [$start_date, $end_date])
-                    ->count();
-
-                $shipped = Order::where('shipment_status', 'shipping')
-                    ->whereBetween('created_at', [$start_date, $end_date])
-                    ->count();
-
-                $delivered = Order::where('shipment_status', 'delivered')
-                    ->whereBetween('created_at', [$start_date, $end_date])
-                    ->count();
-
-                $returned = Order::where('shipment_status', 'returned')
-                    ->whereBetween('created_at', [$start_date, $end_date])
-                    ->count();
             }
         }
+        $under_process = Order::where('shipment_status', 'pending')
+            ->orWhereBetween('created_at', [$start_date, $end_date])
+            ->orWhereIn('seller_id', $sellerIds)
+            ->orWhere('seller_id', $request->seller_id)
+            ->count();
+
+        $confirmed = Order::where('shipment_status', 'approved')
+            ->orWhereBetween('created_at', [$start_date, $end_date])
+            ->orWhereIn('seller_id', $sellerIds)
+            ->orWhere('seller_id', $request->seller_id)
+            ->count();
+
+        $canceled = Order::where('shipment_status', 'canceled')
+            ->orWhereBetween('created_at', [$start_date, $end_date])
+            ->orWhereIn('seller_id', $sellerIds)
+            ->orWhere('seller_id', $request->seller_id)
+            ->count();
+
+        $balance = Order::where('shipment_status', 'balance')
+            ->orWhereBetween('created_at', [$start_date, $end_date])
+            ->orWhereIn('seller_id', $sellerIds)
+            ->orWhere('seller_id', $request->seller_id)
+            ->count();
+
+        $shipped = Order::where('shipment_status', 'shipping')
+            ->orWhereBetween('created_at', [$start_date, $end_date])
+            ->orWhereIn('seller_id', $sellerIds)
+            ->orWhere('seller_id', $request->seller_id)
+            ->count();
+
+        $delivered = Order::where('shipment_status', 'delivered')
+            ->orWhereBetween('created_at', [$start_date, $end_date])
+            ->orWhereIn('seller_id', $sellerIds)
+            ->orWhere('seller_id', $request->seller_id)
+            ->count();
+
+        $returned = Order::where('shipment_status', 'returned')
+            ->orWhereBetween('created_at', [$start_date, $end_date])
+            ->orWhereIn('seller_id', $sellerIds)
+            ->orWhere('seller_id', $request->seller_id)
+            ->count();
+
 
         // Calculate rates only if there are orders to avoid division by zero
         if ($orders > 0) {
@@ -172,8 +194,8 @@ class ReportController extends Controller
         $leads = 0;
         $under_process = 0;
         $confirmed = 0;
-        $highest_comissions = 0;
-        $highest_comission = 0;
+        $highest_commissions = 0;
+        $highest_commission = 0;
         $average_commission = 0;
         $delivered = 0;
         $confirmed_rate = 0;
@@ -206,7 +228,7 @@ class ReportController extends Controller
         $total_commission = 0;
 
         foreach ($affilates as $affilate) {
-            $commission = AffiliateProduct::where('id', $affilate)->pluck('comission');
+            $commission = AffiliateProduct::where('id', $affilate)->pluck('commission');
 
             $total_commission = $total_commission + $commission[0];
         }
@@ -214,7 +236,7 @@ class ReportController extends Controller
 
         $lead_skus = Lead::whereIn('id', $lead_confirmed)->pluck('item_sku')->unique();
 
-        $highest_commissions = AffiliateProduct::whereIn('sku', $lead_skus)->orderByDesc('comission')->limit(5)->get();
+        $highest_commissions = AffiliateProduct::whereIn('sku', $lead_skus)->orderByDesc('commission')->limit(5)->get();
 
         $highestCommissions = [];
         foreach ($highest_commissions as $highest_commission) {
@@ -234,7 +256,7 @@ class ReportController extends Controller
             if ($total_order_count > 0) {
                 $highestCommissions[] = [
                     'highest_commission' => $highest_commission,
-                    'amount' => $total_order_count * $highest_commission->comission
+                    'amount' => $total_order_count * $highest_commission->commission
                 ];
             }
         }
@@ -242,7 +264,7 @@ class ReportController extends Controller
 
 
 
-        $highest_commission = AffiliateProduct::whereIn('sku', $lead_skus)->orderByDesc('comission')
+        $highest_commission = AffiliateProduct::whereIn('sku', $lead_skus)->orderByDesc('commission')
             ->limit(1)->first();
 
         if ($confirmed > 0) {
@@ -479,8 +501,8 @@ class ReportController extends Controller
         $leads = 0;
         $under_process = 0;
         $confirmed = 0;
-        $highest_comissions = 0;
-        $highest_comission = 0;
+        $highest_commissions = 0;
+        $highest_commission = 0;
         $average_commission = 0;
         $delivered = 0;
         $confirmed_rate = 0;
@@ -522,7 +544,7 @@ class ReportController extends Controller
         $total_commission = 0;
 
         foreach ($affilates as $affilate) {
-            $commission = AffiliateProduct::where('id', $affilate)->pluck('comission');
+            $commission = AffiliateProduct::where('id', $affilate)->pluck('commission');
 
             $total_commission = $total_commission + $commission[0];
         }
@@ -530,7 +552,7 @@ class ReportController extends Controller
 
         $lead_skus = Lead::whereIn('id', $lead_confirmed)->pluck('item_sku')->unique();
 
-        $highest_commissions = AffiliateProduct::whereIn('sku', $lead_skus)->orderByDesc('comission')->limit(5)->get();
+        $highest_commissions = AffiliateProduct::whereIn('sku', $lead_skus)->orderByDesc('commission')->limit(5)->get();
 
         $highestCommissions = [];
         foreach ($highest_commissions as $highest_commission) {
@@ -550,7 +572,7 @@ class ReportController extends Controller
             if ($total_order_count > 0) {
                 $highestCommissions[] = [
                     'highest_commission' => $highest_commission,
-                    'amount' => $total_order_count * $highest_commission->comission
+                    'amount' => $total_order_count * $highest_commission->commission
                 ];
             }
         }
@@ -558,7 +580,7 @@ class ReportController extends Controller
 
 
 
-        $highest_commission = AffiliateProduct::whereIn('sku', $lead_skus)->orderByDesc('comission')
+        $highest_commission = AffiliateProduct::whereIn('sku', $lead_skus)->orderByDesc('commission')
             ->limit(1)->first();
 
         if ($confirmed > 0) {

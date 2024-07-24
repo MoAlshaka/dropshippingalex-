@@ -41,14 +41,17 @@ class LeadController extends Controller
             'status' => 'required'
         ]);
         $lead = Lead::findorfail($id);
-        $lead->update([
+        $flag = $lead->update([
             'status' => $request->status
         ]);
+        if (!empty($flag) && $flag->status == 'confirmed') {
 
-        Order::create([
-            'lead_id' => $lead->id,
-            'seller_id' => $lead->seller_id,
-        ]);
+            Order::create([
+                'lead_id' => $lead->id,
+                'quantity' => $lead->quantity,
+                'seller_id' => $lead->seller_id,
+            ]);
+        }
         return redirect()->route('admin.leads.index')->with(['Update' => 'Lead status updated successfully']);
     }
 

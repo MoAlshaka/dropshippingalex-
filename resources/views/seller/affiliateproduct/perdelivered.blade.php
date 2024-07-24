@@ -223,7 +223,7 @@
                                 </div>
                                 <div>
                                     <div>
-                                        <b>${{ $product->comission }}</b>
+                                        <b>${{ $product->commission }}</b>
                                     </div>
                                 </div>
                             </div>

@@ -95,7 +95,7 @@ Route::group([
         Route::post('orders/filter', [OrderController::class, 'filter'])->name('seller.orders.filter');
         //
         Route::resource('wallet', WalletController::class);
-
+        Route::post('/wallet', [WalletController::class, 'filter'])->name('seller.wallet.filter');
 
 
         //

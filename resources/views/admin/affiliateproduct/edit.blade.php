@@ -277,14 +277,14 @@
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
 
-                            <!-- comission -->
+                            <!-- commission -->
                             <div class="form-floating form-floating-outline mb-4">
-                                <input type="number" step="0.01" class="form-control" id="Comission"
-                                    placeholder="Comission" name="comission" aria-label="Product discounted price"
-                                    value="{{ $product->comission }}" />
-                                <label for="Comission">{{ __('site.Comission') }}</label>
+                                <input type="number" step="0.01" class="form-control" id="commission"
+                                    placeholder="commission" name="commission" aria-label="Product discounted price"
+                                    value="{{ $product->commission }}" />
+                                <label for="commission">{{ __('site.commission') }}</label>
                             </div>
-                            @error('comission')
+                            @error('commission')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
 

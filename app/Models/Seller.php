@@ -26,6 +26,9 @@ class Seller extends Authenticatable
         'is_active',
         'about_us',
         'admin_id',
+        'revenue',
+        'received_money',
+        'remaining_money',
     ];
 
     public function sharedProducts()
@@ -50,5 +53,10 @@ class Seller extends Authenticatable
     public function transactions()
     {
         return $this->hasMany(Transaction::class, 'seller_id');
+    }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
     }
 }

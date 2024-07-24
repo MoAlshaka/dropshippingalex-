@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Seller;
 use App\Models\Lead;
 use App\Models\Order;
 use App\Models\Seller;
-use App\Models\Transaction;
+use App\Models\Invoice;
+use App\Models\Revenue;
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Carbon;
-use App\Models\AffiliateProduct;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\SharedProduct;
+
 
 class DashboardController extends Controller
 {
@@ -19,9 +21,21 @@ class DashboardController extends Controller
         $leads = Lead::where('seller_id', auth()->guard('seller')->id())->count();
         $approvedLeadsCount = Lead::where('seller_id', auth()->guard('seller')->id())->where('status', 'approved')->count();
         $deliveredLeadsCount = Lead::where('seller_id', auth()->guard('seller')->id())->where('status', 'delivered')->count();
-        $revenue = Seller::where('id', auth()->guard('seller')->id())->pluck('revenue')->first();
+        $revenue = Invoice::where('seller_id', auth()->guard('seller')->id())
+            ->sum('revenue');
 
-        $sellers = Seller::orderby('revenue', 'desc')->limit(10)->get();
+        $revenues = Invoice::select('seller_id', DB::raw('SUM(revenue) as revenue'))
+            ->groupBy('seller_id')
+            ->orderBy('revenue', 'desc')
+            ->limit(10)
+            ->get();
+
+        $sellers = [];
+        foreach ($revenues as $revenue) {
+            $seller = Seller::findOrFail($revenue->seller_id);
+            $sellers[] = ['seller' => $seller, 'revenue' => $revenue->revenue];
+        }
+
         // charts
 
         // Get the minimum and maximum dates for the leads associated with the authenticated seller
@@ -96,7 +110,17 @@ class DashboardController extends Controller
     public function filter(Request $request)
     {
         // Get top sellers and their transaction amounts
-        $sellers = Seller::orderby('revenue', 'desc')->limit(10)->get();
+        $revenues = Invoice::select('seller_id', DB::raw('SUM(revenue) as revenue'))
+            ->groupBy('seller_id')
+            ->orderBy('revenue', 'desc')
+            ->limit(10)
+            ->get();
+
+        $sellers = [];
+        foreach ($revenues as $revenue) {
+            $seller = Seller::findOrFail($revenue->seller_id);
+            $sellers[] = ['seller' => $seller, 'revenue' => $revenue->revenue];
+        }
 
         // Initialize lead-related variables
         $leads = $approvedLeadsCount = $deliveredLeadsCount = $revenue = 0;
@@ -113,8 +137,8 @@ class DashboardController extends Controller
                 $leads = Lead::where('seller_id', auth()->guard('seller')->id())->whereBetween('order_date', [$start_date, $end_date])->count();
                 $approvedLeadsCount = Lead::where('seller_id', auth()->guard('seller')->id())->where('status', 'approved')->whereBetween('order_date', [$start_date, $end_date])->count();
                 $deliveredLeadsCount = Lead::where('seller_id', auth()->guard('seller')->id())->where('status', 'delivered')->whereBetween('order_date', [$start_date, $end_date])->count();
-                $revenue = Transaction::where('seller_id', auth()->guard('seller')->id())->whereBetween('created_at', [$start_date, $end_date])->sum('amount');
-
+                $revenue = Revenue::where('seller_id', auth()->guard('seller')->id())->whereBetween('date', [$start_date, $end_date])
+                    ->sum('revenue');
                 // Generate all dates within the range for leads
                 $allDates = [];
                 $currentDate = $start_date->copy();

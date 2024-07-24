@@ -221,7 +221,7 @@
                     class="card_info col-span-12 md:col-span-6 lg:col-span-4 p-6 bg-white flex flex-col rounded-xl lg:flex-row drop-shadow-lg ">
                     <div class="flex items-center justify-between w-full">
                         <div class="flex flex-col gap-2">
-                            <h3 class="text-xl font-bold">{{ __('site.AverageComission') }}</h3>
+                            <h3 class="text-xl font-bold">{{ __('site.Averagecommission') }}</h3>
                             <span class="price text-black text-2xl font-bold">
                                 {{ $average_commission }} $
                             </span>
@@ -237,9 +237,9 @@
                     class="card_info col-span-12 md:col-span-6 lg:col-span-4 p-6 bg-white flex flex-col rounded-xl lg:flex-row drop-shadow-lg ">
                     <div class="flex items-center justify-between w-full">
                         <div class="flex flex-col gap-2">
-                            <h3 class="text-xl font-bold">{{ __('site.HighestComission') }}</h3>
+                            <h3 class="text-xl font-bold">{{ __('site.Highestcommission') }}</h3>
                             <span class="price text-black text-2xl font-bold">
-                                {{ $highest_commission->comission ?? 0 }} $
+                                {{ $highest_commission->commission ?? 0 }} $
                             </span>
                             <p class="text-gray-800 text-sm font-bold capitalize">{{ $highest_commission->title ?? '' }}
                             </p>
@@ -263,13 +263,13 @@
                     <svg viewBox="0 0 36 36" class="circular-chart green">
                         <path class="circle-bg"
                             d="M18 2.0845
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 -31.831" />
                         <!-- place the 60 in the stroke-dasharray with the persentage -->
                         <path class="circle" stroke-dasharray="{{ $confirmed_rate }}, 100"
                             d="M18 2.0845
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 -31.831" />
                     </svg>
                 </div>
                 <div class="flex flex-col justify-center px-4 ">

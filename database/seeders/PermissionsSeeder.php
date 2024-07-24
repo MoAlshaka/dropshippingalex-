@@ -71,6 +71,10 @@ class PermissionsSeeder extends Seeder
             'Add Admin',
             'Edit Admin',
             'Delete Admin',
+            'Invoices',
+            'All Invoices',
+            'Edit Invoices',
+            'Delete Invoices',
 
 
 

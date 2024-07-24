@@ -103,6 +103,33 @@
                                         <label for="bs-rangepicker-range">{{ __('site.Date') }}</label>
                                     </div>
                                 </div>
+                                <div class=" mb-4">
+                                    <div class="form-floating form-floating-outline">
+                                        <select name="admin_id" id="admin_id" class="selectpicker w-100"
+                                            data-style="btn-default" multiple data-actions-box="true">
+                                            @isset($admins)
+                                                @foreach ($admins as $admin)
+                                                    <option value="{{ $admin->id }}">{{ $admin->name }}</option>
+                                                @endforeach
+                                            @endisset
+                                        </select>
+                                        <label for="admin_id">{{ __('site.Manger') }}</label>
+                                    </div>
+                                </div>
+                                <div class=" mb-4">
+                                    <div class="form-floating form-floating-outline">
+                                        <select name="seller_id" id="seller_id" class="selectpicker w-100"
+                                            data-style="btn-default" multiple data-actions-box="true">
+                                            @isset($allSellers)
+                                                @foreach ($allSellers as $seller)
+                                                    <option value="{{ $seller->id }}">
+                                                        {{ $seller->first_name . ' ' . $seller->last_name }}</option>
+                                                @endforeach
+                                            @endisset
+                                        </select>
+                                        <label for="seller_id">{{ __('site.Seller') }}</label>
+                                    </div>
+                                </div>
 
                             </div>
                             <button type="submit" class="btn btn-primary waves-effect waves-light">filter</button>
@@ -184,7 +211,7 @@
 
                                 </span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{ $pendingLeadsCount }}</span>
+                            <span class="text-gray-600 text-3xl font-bold">{{ $revenue }}</span>
                         </div>
                     </div>
                 </div>
@@ -207,7 +234,7 @@
                     @foreach ($sellers as $seller)
                         <div class="rank_memeber flex py-2 border-b-2">
                             <div class="img_wrapper ">
-                                @if ($seller->transactions->sum('amount') > 150000 && $seller->transactions->sum('amount') > 75000)
+                                @if ($seller->revenue > 150000 && $seller->revenue > 75000)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/ranks/Angel-removebg-preview.png') }}" alt="rank_Icon"
@@ -218,7 +245,7 @@
                                                 alt="rank_avatar" class="w-full rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->transactions->sum('amount') <= 75000 && $seller->transactions->sum('amount') > 50000)
+                                @elseif($seller->revenue <= 75000 && $seller->revenue > 50000)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/ranks/Wizard.png') }}Wizard.png" alt="rank_Icon"
@@ -230,7 +257,7 @@
                                                 alt="rank_avatar" class="w-full h-full object-cover rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->transactions->sum('amount') <= 50000 && $seller->transactions->sum('amount') > 25000)
+                                @elseif($seller->revenue <= 50000 && $seller->revenue > 25000)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/ranks/Knight.png') }}" alt="rank_Icon"
@@ -245,7 +272,7 @@
                                                 alt="rank_avatar" class="w-full rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->transactions->sum('amount') <= 25000 && $seller->transactions->sum('amount') > 15000)
+                                @elseif($seller->revenue <= 25000 && $seller->revenue > 15000)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/ranks/Villain.png ') }}" alt="rank_Icon"
@@ -257,7 +284,7 @@
                                                 alt="rank_avatar" class="w-full rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->transactions->sum('amount') <= 15000 && $seller->transactions->sum('amount') > 10000)
+                                @elseif($seller->revenue <= 15000 && $seller->revenue > 10000)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/ranks/Master.png ') }}" alt="rank_Icon"
@@ -269,7 +296,7 @@
                                                 alt="rank_avatar" class="w-full rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->transactions->sum('amount') <= 10000 && $seller->transactions->sum('amount') > 5000)
+                                @elseif($seller->revenue <= 10000 && $seller->revenue > 5000)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src=" {{ asset('assets/ranks/Expert.png ') }}" alt="rank_Icon"
@@ -284,7 +311,7 @@
                                                 alt="rank_avatar" class="w-full rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->transactions->sum('amount') <= 5000 && $seller->transactions->sum('amount') > 2000)
+                                @elseif($seller->revenue <= 5000 && $seller->revenue > 2000)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/rank/Elite.png ') }}" alt="rank_Icon"
@@ -295,7 +322,7 @@
                                                 alt="rank_avatar" class="w-full rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->transactions->sum('amount') <= 2000 && $seller->transactions->sum('amount') > 1000)
+                                @elseif($seller->revenue <= 2000 && $seller->revenue > 1000)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/rank/Advanced.png ') }}" alt="rank_Icon"
@@ -306,7 +333,7 @@
                                                 alt="rank_avatar" class="w-full rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->transactions->sum('amount') <= 1000 && $seller->transactions->sum('amount') > 500)
+                                @elseif($seller->revenue <= 1000 && $seller->revenue > 500)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/rank/Work.png') }}" alt="rank_Icon"
@@ -317,7 +344,7 @@
                                                 alt="rank_avatar" class="w-full rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->transactions->sum('amount') <= 500)
+                                @elseif($seller->revenue <= 500)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/rank/Novice.png') }}" alt="rank_Icon"
@@ -340,27 +367,27 @@
 
                                 <div class="mt-2">
                                     <span class="text-gray-600 text-sm bg-green-400 rounded-md text-white px-2 py-1">
-                                        @if ($seller->transactions->sum('amount') > 150000)
+                                        @if ($seller->revenue > 150000)
                                             ???
-                                        @elseif($seller->transactions->sum('amount') <= 150000 && $seller->transactions->sum('amount') > 75000)
+                                        @elseif($seller->revenue <= 150000 && $seller->revenue > 75000)
                                             Angel
-                                        @elseif($seller->transactions->sum('amount') <= 75000 && $seller->transactions->sum('amount') > 50000)
+                                        @elseif($seller->revenue <= 75000 && $seller->revenue > 50000)
                                             Wizard
-                                        @elseif($seller->transactions->sum('amount') <= 50000 && $seller->transactions->sum('amount') > 25000)
+                                        @elseif($seller->revenue <= 50000 && $seller->revenue > 25000)
                                             Knight
-                                        @elseif($seller->transactions->sum('amount') <= 25000 && $seller->transactions->sum('amount') > 15000)
+                                        @elseif($seller->revenue <= 25000 && $seller->revenue > 15000)
                                             Villain
-                                        @elseif($seller->transactions->sum('amount') <= 15000 && $seller->transactions->sum('amount') > 10000)
+                                        @elseif($seller->revenue <= 15000 && $seller->revenue > 10000)
                                             Master
-                                        @elseif($seller->transactions->sum('amount') <= 10000 && $seller->transactions->sum('amount') > 5000)
+                                        @elseif($seller->revenue <= 10000 && $seller->revenue > 5000)
                                             Expert
-                                        @elseif($seller->transactions->sum('amount') <= 5000 && $seller->transactions->sum('amount') > 2000)
+                                        @elseif($seller->revenue <= 5000 && $seller->revenue > 2000)
                                             Elite
-                                        @elseif($seller->transactions->sum('amount') <= 2000 && $seller->transactions->sum('amount') > 1000)
+                                        @elseif($seller->revenue <= 2000 && $seller->revenue > 1000)
                                             Advanced
-                                        @elseif($seller->transactions->sum('amount') <= 1000 && $seller->transactions->sum('amount') > 500)
+                                        @elseif($seller->revenue <= 1000 && $seller->revenue > 500)
                                             Worker
-                                        @elseif($seller->transactions->sum('amount') <= 500 && $seller->transactions->sum('amount') > 100)
+                                        @elseif($seller->revenue <= 500 && $seller->revenue > 100)
                                             Novice
                                         @endif
 

@@ -19,7 +19,7 @@ document.querySelector('[type="submit"]').addEventListener('click', (event) => {
     formData.append('brand', document.querySelector('[name="brand"]').value);
     formData.append('description', document.querySelector('[data-placeholder="Product Description"]').innerText);
     formData.append('minimum_selling_price', document.querySelector('[name="minimum_selling_price"]').value);
-    formData.append('comission', document.querySelector('[name="comission"]').value);
+    formData.append('commission', document.querySelector('[name="commission"]').value);
     formData.append('weight', document.querySelector('[name="weight"]').value);
     formData.append('type', document.querySelector('#type').selectedOptions[0].value);
     formData.append('category_id', document.querySelector('#category-org').selectedOptions[0].value);

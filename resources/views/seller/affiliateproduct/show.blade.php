@@ -72,9 +72,9 @@
                         </div>
                         <div class="flex items-center">
                             <h3 class="text-md text-gray-500 lg:text-xl font-bold mr-1">
-                                {{ __('site.Comission') }}:
+                                {{ __('site.commission') }}:
                             </h3>
-                            <span class="text-green-600">{{ $product->comission }}$</span>
+                            <span class="text-green-600">{{ $product->commission }}$</span>
                         </div>
                     </div>
                     <hr />
@@ -114,7 +114,7 @@
                         <tr class="text-nowrap">
                             <th> {{ __('site.Warehouse') }}</th>
                             <th> {{ __('site.MinimumSellingPrice') }}</th>
-                            <th> {{ __('site.Comission') }}</th>
+                            <th> {{ __('site.commission') }}</th>
 
                             <th> {{ __('site.Status') }}</th>
                         </tr>
@@ -126,7 +126,7 @@
                                 <td><img src="{{ asset('assets/countries/flags/' . $country->flag) }}" width="20"
                                         height="20"></td>
                                 <td>${{ $product->minimum_selling_price }}</td>
-                                <td>${{ $product->comission }}</td>
+                                <td>${{ $product->commission }}</td>
 
                                 <td>
 

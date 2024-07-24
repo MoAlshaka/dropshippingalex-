@@ -11,7 +11,41 @@
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="py-3 mb-4"><span class="text-muted fw-light"> {{ __('site.Dashboard') }} /</span> {{ __('site.Wallet') }}
+        <h4 class="py-3 mb-4 d-flex justify-content-between">
+            <div>
+                <span class="text-muted fw-light"> {{ __('site.Dashboard') }} /</span>
+                {{ __('site.Wallet') }}
+            </div>
+            {{-- <div>
+                <button class="btn btn-outline-primary waves-effect waves-light" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                    <span class="tf-icons mdi mdi-filter-check-outline me-1"></span>
+                    Filter
+                </button>
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+                    aria-labelledby="offcanvasRightLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasRightLabel">{{ __('site.Filter') }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <form action="{{ route('seller.wallet.filter') }}" method="post">
+                            @csrf
+                            <div class="mb-3">
+                                <div class="mb-4">
+                                    <div class="form-floating form-floating-outline">
+                                        <input type="text" id="bs-rangepicker-range" class="form-control" name="date">
+                                        <label for="bs-rangepicker-range">{{ __('site.Date') }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit"
+                                class="btn btn-primary waves-effect waves-light">{{ __('site.Filter') }}</button>
+                            <button type="reset" class="btn btn-outline-danger waves-effect">reset</button>
+                        </form>
+                    </div>
+                </div>
+            </div> --}}
         </h4>
 
 
@@ -29,10 +63,10 @@
                         <div class="card-info">
                             <h4 class="card-title mb-3">{{ __('site.Balance') }}</h4>
                             <div class="d-flex align-items-end mb-1 gap-1">
-                                <h4 class="text-primary mb-0">${{ auth()->user()->revenue }}</h4>
-                                <p class="mb-0">Credit Left</p>
+                                <h4 class="text-primary mb-0">${{ $balance ?? 0 }}</h4>
+
                             </div>
-                            <p class="mb-0 text-truncate">Account balance for next purchase</p>
+                            <p class="mb-0 text-truncate">{{ __site_('site.YourBalance') }}</p>
                         </div>
                     </div>
                 </div>
@@ -48,9 +82,12 @@
                             </div>
                         </div>
                         <div class="card-info">
-                            <h4 class="card-title mb-3">Loyalty Program</h4>
-                            <span class="badge bg-label-success mb-1 rounded-pill">Platinum member</span>
-                            <p class="mb-0">3000 points to next tier</p>
+                            <h4 class="card-title mb-3">{{}}</h4>
+                            <div class="d-flex align-items-end mb-1 gap-1">
+                                <h4 class="text-success mb-0">${{ $revenue_confirmed ?? 0 }}</h4>
+
+                            </div>
+                            <p class="mb-0"> {{ __site_('site.WithdrawalBalance') }}</p>
                         </div>
                     </div>
                 </div>

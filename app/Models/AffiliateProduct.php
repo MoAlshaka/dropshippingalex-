@@ -17,7 +17,7 @@ class AffiliateProduct extends Model
         'image',
         'weight',
         'minimum_selling_price',
-        'comission',
+        'commission',
         'category_id',
         'admin_id',
         'type',

@@ -103,7 +103,8 @@
                                 </div>
                                 <div>
                                     <div>
-                                        <b>${{ $sharedProduct->minimum_selling_price }} - ${{ $sharedProduct->comission }}</b>
+                                        <b>${{ $sharedProduct->minimum_selling_price }} -
+                                            ${{ $sharedProduct->commission }}</b>
                                     </div>
                                 </div>
                             </div>

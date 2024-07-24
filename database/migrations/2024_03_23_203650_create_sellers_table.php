@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('payment_method')->nullable();
             $table->string('account')->nullable();
-            $table->decimal('revenue', 10, 2)->default(0)->nullable();
+            // $table->decimal('revenue', 10, 2)->default(0)->nullable();
             $table->decimal('received_money', 10, 2)->default(0)->nullable();
             $table->decimal('remaining_money', 10, 2)->default(0)->nullable();
             $table->tinyInteger('is_active')->default(0);

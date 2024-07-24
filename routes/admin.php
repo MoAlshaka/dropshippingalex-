@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\ActiveSellerController;
 use App\Http\Controllers\Admin\SharedProductController;
 use App\Http\Controllers\Admin\AffiliateProductController;
+use App\Http\Controllers\Admin\InvoiceController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
@@ -110,6 +111,9 @@ Route::group([
     Route::post('reports/marketplace/filter', [ReportController::class, 'markplace_filter_date'])->name('admin.reports.marketplace.filter.date');
     Route::resource('roles', RoleController::class);
     Route::resource('admins', AdminController::class);
+
+
+    Route::resource('invoices', InvoiceController::class);
 
     //logout
     Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout');
