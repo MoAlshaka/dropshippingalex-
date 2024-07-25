@@ -63,7 +63,7 @@
                 <button class="btn btn-outline-primary waves-effect waves-light" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                     <span class="tf-icons mdi mdi-filter-check-outline me-1"></span>
-                    Filter
+                    {{ __('site.Filter') }}
                 </button>
                 {{--                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button> --}}
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
@@ -164,8 +164,10 @@
 
 
                             </div>
-                            <button type="submit" class="btn btn-primary waves-effect waves-light">filter</button>
-                            <button type="reset" class="btn btn-outline-danger waves-effect">reset</button>
+                            <button type="submit"
+                                class="btn btn-primary waves-effect waves-light">{{ __('site.Filter') }}</button>
+                            <button type="reset"
+                                class="btn btn-outline-danger waves-effect">{{ __('site.Reset') }}</button>
                         </form>
                     </div>
                 </div>

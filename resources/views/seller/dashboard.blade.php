@@ -208,18 +208,18 @@
                     @foreach ($sellers as $seller)
                         <div class="rank_memeber flex py-2 border-b-2">
                             <div class="img_wrapper ">
-                                @if ($seller->revenue > 150000 && $seller->revenue > 75000)
+                                @if ($seller['revenue'] > 150000 && $seller['revenue'] > 75000)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/ranks/Angel-removebg-preview.png') }}" alt="rank_Icon"
                                             class="rank_icon w-20" />
                                         <div class="overflow-hidden rounded-full w-20 h-20 absolute top-0 left-0">
                                             <!-- avatar image -->
-                                            <img src="{{ asset('assets/sellers/images/' . $seller->image) }}"
+                                            <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->revenue <= 75000 && $seller->revenue > 50000)
+                                @elseif($seller['revenue'] <= 75000 && $seller['revenue'] > 50000)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/ranks/Wizard.png') }}Wizard.png" alt="rank_Icon"
@@ -227,11 +227,11 @@
                                         <div
                                             class="overflow-hidden rounded-full w-20 h-20 absolute top-0 left-0 img_avtr_size">
                                             <!-- avatar image -->
-                                            <img src="{{ asset('assets/sellers/images/' . $seller->image) }}"
+                                            <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full h-full object-cover rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->revenue <= 50000 && $seller->revenue > 25000)
+                                @elseif($seller['revenue'] <= 50000 && $seller['revenue'] > 25000)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/ranks/Knight.png') }}" alt="rank_Icon"
@@ -242,11 +242,11 @@
                                         left: 10px;
                                         top: 10px;">
                                             <!-- avatar image -->
-                                            <img src="{{ asset('assets/sellers/images/' . $seller->image) }}"
+                                            <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->revenue <= 25000 && $seller->revenue > 15000)
+                                @elseif($seller['revenue'] <= 25000 && $seller['revenue'] > 15000)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/ranks/Villain.png ') }}" alt="rank_Icon"
@@ -254,11 +254,11 @@
                                         <div class="overflow-hidden rounded-full w-20 h-20 absolute top-0 left-0"
                                             style="    width: 60px; height: 60px; left: 10px;  top: 10px;">
                                             <!-- avatar image -->
-                                            <img src="{{ asset('assets/sellers/images/' . $seller->image) }}"
+                                            <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->revenue <= 15000 && $seller->revenue > 10000)
+                                @elseif($seller['revenue'] <= 15000 && $seller['revenue'] > 10000)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/ranks/Master.png ') }}" alt="rank_Icon"
@@ -266,11 +266,11 @@
                                         <div
                                             class="overflow-hidden rounded-full w-20 h-20 absolute top-0 left-0 img_avtr_size">
                                             <!-- avatar image -->
-                                            <img src="{{ asset('assets/sellers/images/' . $seller->image) }}"
+                                            <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->revenue <= 10000 && $seller->revenue > 5000)
+                                @elseif($seller['revenue'] <= 10000 && $seller['revenue'] > 5000)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src=" {{ asset('assets/ranks/Expert.png ') }}" alt="rank_Icon"
@@ -281,51 +281,51 @@
                                                 left: 8px;
                                                 top: 3px;">
                                             <!-- avatar image -->
-                                            <img src="{{ asset('assets/sellers/images/' . $seller->image) }}"
+                                            <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->revenue <= 5000 && $seller->revenue > 2000)
+                                @elseif($seller['revenue'] <= 5000 && $seller['revenue'] > 2000)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/rank/Elite.png ') }}" alt="rank_Icon"
                                             class="rank_icon w-20" />
                                         <div class="overflow-hidden rounded-full w-20 h-20 absolute top-0 left-0">
                                             <!-- avatar image -->
-                                            <img src="{{ asset('assets/sellers/images/' . $seller->image) }}"
+                                            <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->revenue <= 2000 && $seller->revenue > 1000)
+                                @elseif($seller['revenue'] <= 2000 && $seller['revenue'] > 1000)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/rank/Advanced.png ') }}" alt="rank_Icon"
                                             class="rank_icon w-20" />
                                         <div class="overflow-hidden rounded-full w-20 h-20 absolute top-0 left-0">
                                             <!-- avatar image -->
-                                            <img src="{{ asset('assets/sellers/images/' . $seller->image) }}"
+                                            <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->revenue <= 1000 && $seller->revenue > 500)
+                                @elseif($seller['revenue'] <= 1000 && $seller['revenue'] > 500)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/rank/Work.png') }}" alt="rank_Icon"
                                             class="rank_icon w-20" />
                                         <div class="overflow-hidden rounded-full w-20 h-20 absolute top-0 left-0">
                                             <!-- avatar image -->
-                                            <img src="{{ asset('assets/sellers/images/' . $seller->image) }}"
+                                            <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->revenue <= 500)
+                                @elseif($seller['revenue'] <= 500)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/rank/Novice.png') }}" alt="rank_Icon"
                                             class="rank_icon w-20" />
                                         <div class="overflow-hidden rounded-full w-20  h-full absolute top-0 left-0">
                                             <!-- avatar image -->
-                                            <img src="{{ asset('assets/sellers/images/' . $seller->image) }}"
+                                            <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full h-full object-cover rounded" />
                                         </div>
                                     </div>
@@ -336,32 +336,32 @@
 
 
                                 <h4 class="text-sm font-bold text-gray-600 capitalize inline-block">
-                                    {{ $seller->first_name }} {{ $seller->last_name }}
+                                    {{ $seller['seller']->first_name . ' ' . $seller['seller']->last_name }}
                                 </h4>
 
                                 <div class="mt-2">
                                     <span class="text-gray-600 text-sm bg-green-400 rounded-md text-white px-2 py-1">
-                                        @if ($seller->revenue > 150000)
+                                        @if ($seller['revenue'] > 150000)
                                             ???
-                                        @elseif($seller->revenue <= 150000 && $seller->revenue > 75000)
+                                        @elseif($seller['revenue'] <= 150000 && $seller['revenue'] > 75000)
                                             Angel
-                                        @elseif($seller->revenue <= 75000 && $seller->revenue > 50000)
+                                        @elseif($seller['revenue'] <= 75000 && $seller['revenue'] > 50000)
                                             Wizard
-                                        @elseif($seller->revenue <= 50000 && $seller->revenue > 25000)
+                                        @elseif($seller['revenue'] <= 50000 && $seller['revenue'] > 25000)
                                             Knight
-                                        @elseif($seller->revenue <= 25000 && $seller->revenue > 15000)
+                                        @elseif($seller['revenue'] <= 25000 && $seller['revenue'] > 15000)
                                             Villain
-                                        @elseif($seller->revenue <= 15000 && $seller->revenue > 10000)
+                                        @elseif($seller['revenue'] <= 15000 && $seller['revenue'] > 10000)
                                             Master
-                                        @elseif($seller->revenue <= 10000 && $seller->revenue > 5000)
+                                        @elseif($seller['revenue'] <= 10000 && $seller['revenue'] > 5000)
                                             Expert
-                                        @elseif($seller->revenue <= 5000 && $seller->revenue > 2000)
+                                        @elseif($seller['revenue'] <= 5000 && $seller['revenue'] > 2000)
                                             Elite
-                                        @elseif($seller->revenue <= 2000 && $seller->revenue > 1000)
+                                        @elseif($seller['revenue'] <= 2000 && $seller['revenue'] > 1000)
                                             Advanced
-                                        @elseif($seller->revenue <= 1000 && $seller->revenue > 500)
+                                        @elseif($seller['revenue'] <= 1000 && $seller['revenue'] > 500)
                                             Worker
-                                        @elseif($seller->revenue <= 500 && $seller->revenue > 100)
+                                        @elseif($seller['revenue'] <= 500 && $seller['revenue'] > 100)
                                             Novice
                                         @endif
 
@@ -371,6 +371,84 @@
                         </div>
                     @endforeach
 
+                </div>
+            </div>
+        </div>
+
+        <div class="row row-sm">
+            <!--[if BLOCK]><![endif]-->
+            @if (auth()->user()->manger)
+                <div class="col-xxl-3 col-xl-3 col-md-12 col-lg-12">
+                    <div class="card custom-card our-team">
+                        <div class="card-body">
+                            <div class="picture avatar-lg online text-center p-2">
+                                <img alt="avatar" class="rounded-circle"
+                                    src="https://app.codpartner.com/assets/img/pngs/manager-women.png">
+                            </div>
+                            <!--[if ENDBLOCK]><![endif]-->
+                            <div class="text-center mt-3">
+                                <h5 class="pro-user-username text-dark mt-2 mb-0"> {{ auth()->user()->manger->name }}
+                                </h5>
+                                <span class="mt-1 mb-3 badge badge-advanced">
+                                    GCC Market
+                                </span>
+                                <div class="text-center tx-14 mb-3">Hello, I am your professional account manager, Contact
+                                    me now if you have any questions <span
+                                        class="text-primary">{{ auth()->user()->manger->email }}</span>
+
+                                </div>
+                            </div>
+                            <!--[if ENDBLOCK]><![endif]-->
+                        </div>
+                    </div>
+                </div>
+            @else
+                <div class="col-xxl-3 col-xl-3 col-md-12 col-lg-12">
+                    <div class="card custom-card our-team">
+                        <div class="card-body">
+                            <div class="picture avatar-lg online text-center p-2">
+                                <img alt="avatar" class="rounded-circle"
+                                    src="https://app.codpartner.com/assets/img/pngs/manager-women.png">
+                            </div>
+                            <!--[if ENDBLOCK]><![endif]-->
+                            <div class="text-center mt-3">
+                                <h5 class="pro-user-username text-dark mt-2 mb-0"> No Agent yet
+                                </h5>
+                                <span class="mt-1 mb-3 badge badge-advanced">
+                                    GCC Market
+                                </span>
+                                <div class="text-center tx-14 mb-3">Hello, If you need a professional account manager,
+                                    Contact us now <span class="text-primary">{{ $admin->email ?? '' }}</span>
+
+                                </div>
+                            </div>
+                            <!--[if ENDBLOCK]><![endif]-->
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            <!--[if ENDBLOCK]><![endif]-->
+
+
+            <div wire:id="b0xEBzV3oSrOnAgmNtOZ" class="col-xxl-9 col-xl-9 col-md-12 col-lg-12">
+                <div class="card custom-card">
+                    <div class="card-header border-bottom-0 pb-1">
+                        <label class="main-content-label mb-2 pt-1">Top products</label>
+                        <p class="tx-12 mb-0 text-muted">Your best-selling products</p>
+                    </div>
+                    <div class="card-body pt-0">
+                        <ul class="top-selling-products pb-0 mb-0 pl-0">
+                            <!--[if BLOCK]><![endif]-->
+                            <div class="empty-box bg-white p-5">
+                                <div class="empty-icon text-center" style="padding: 15px;color: #dfdfdf !important;">
+                                    <i style="font-size: 70px;" class="fas fa-folder-open"></i>
+                                </div>
+                                <h3 class="empty-text text-center" style="color: #bbb !important;">No data to display</h3>
+                            </div>
+                            <!--[if ENDBLOCK]><![endif]-->
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

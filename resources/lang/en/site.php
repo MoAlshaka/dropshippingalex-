@@ -47,7 +47,7 @@ return [
     'Add' => 'Add',
     'Pricing' => 'Pricing',
     'MinimumSellingPrice' => 'Minimum Selling Price',
-    'Comission' => 'Comission',
+    'Commission' => 'Commission',
     'Weight' => 'Weight',
     'Organize' => 'Organize',
     'Category' => 'Category',
@@ -246,8 +246,8 @@ return [
     'Marketplace' => 'Marketplace',
     'Affiliate' => 'Affiliate',
     'Totalcommisoins' => 'Total commisions',
-    'AverageComission' => 'Average comission',
-    'HighestComission' => 'Highest comission',
+    'AverageCommission' => 'Average Commission',
+    'HighestCommission' => 'Highest Commission',
     'ConfirmedRate' => 'Conf Rate',
     'Product' => 'Product',
     'Admins' => 'Admins',
@@ -280,6 +280,7 @@ return [
     'WithdrawalBalance' => 'Withdrawal Balance',
     'Invoices' => 'Invoices',
     'EditInvoices' => 'Edit Invoices',
+
 
 
 

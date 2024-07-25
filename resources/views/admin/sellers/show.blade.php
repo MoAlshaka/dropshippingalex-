@@ -115,7 +115,7 @@
                     <img src="{{ asset('assets/sellers/images/national_id/' . $seller->national_id) }}" alt="id image"
                         class="w-full h-full object-cover" />
                 </div>
-                <div style="display: flex; gap: 6px;">
+                <div style="display: flex; gap: 6px; flex-wrap: wrap;">
                     @can('Manage Seller')
                         <form action="{{ route('admin.sellers.active', $seller->id) }}" method="post">
                             @csrf
@@ -132,7 +132,7 @@
                     @endcan
                     @can('Add Seller')
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#smallModal">
-                            {{ __('site.AddManger') }}
+                            + {{ __('site.Manger') }}
                         </button>
                     @endcan
                     @can('Delete Seller')
@@ -154,32 +154,32 @@
                         <h3 class="text-md font-bold mb-4">{{ __('site.SellerInformations') }}:</h3>
                         <div class="flex flex-col gap-2 lg:items-start">
                             <div class="flex items-center">
-                                <h3 class="text-md text-gray-500 lg:text-xl font-bold mr-6 lg:mr-2">
+                                <h3 class="text-md text-gray-500  font-bold mr-6 lg:mr-2">
                                     {{ __('site.Email') }}:
                                 </h3>
                                 <span class="text-black">{{ $seller->email }}
                                 </span>
                             </div>
                             <div class="flex items-center">
-                                <h3 class="text-md text-gray-500 lg:text-xl font-bold mr-6 lg:mr-2">
+                                <h3 class="text-md text-gray-500  font-bold mr-6 lg:mr-2">
                                     {{ __('site.Phone') }}:
                                 </h3>
                                 <span class="text-black">{{ $seller->phone }}</span>
                             </div>
                             <div class="flex items-center">
-                                <h3 class="text-md text-gray-500 lg:text-xl font-bold mr-6 lg:mr-2">
+                                <h3 class="text-md text-gray-500  font-bold mr-6 lg:mr-2">
                                     {{ __('site.WhereDidYouHearAboutUs') }}:
                                 </h3>
                                 <span class="text-black">{{ $seller->about_us }}</span>
                             </div>
                             {{--                            <div class="flex items-center"> --}}
-                            {{--                                <h3 class="text-md text-gray-500 lg:text-xl font-bold mr-6 lg:mr-2"> --}}
+                            {{--                                <h3 class="text-md text-gray-500  font-bold mr-6 lg:mr-2"> --}}
                             {{--                                    {{ __('site.PaymentMethod') }}: --}}
                             {{--                                </h3> --}}
                             {{--                                <span class="text-black">{{ $seller->payment_method }}</span> --}}
                             {{--                            </div> --}}
                             {{--                            <div class="flex items-center"> --}}
-                            {{--                                <h3 class="text-md text-gray-500 lg:text-xl font-bold mr-6 lg:mr-2"> --}}
+                            {{--                                <h3 class="text-md text-gray-500  font-bold mr-6 lg:mr-2"> --}}
                             {{--                                    {{ __('site.AccountNumber') }}: --}}
                             {{--                                </h3> --}}
                             {{--                                <span class="text-black">{{ $seller->account }}</span> --}}
@@ -188,7 +188,7 @@
                     </div>
                     <hr />
                     <div class="flex items-center">
-                        <h3 class="text-md text-gray-500 lg:text-xl font-bold mr-6 lg:mr-2">
+                        <h3 class="text-md text-gray-500  font-bold mr-6 lg:mr-2">
                             {{ __('site.Manger') }}:
                         </h3>
                         <span class="text-black">{{ $seller->admin->name ?? '' }}</span>

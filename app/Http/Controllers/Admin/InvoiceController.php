@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Models\Invoice;
+use App\Models\Seller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,7 +16,9 @@ class InvoiceController extends Controller
     public function index()
     {
         $invoices = Invoice::orderBy('id', 'DESC')->paginate(COUNT);
-        return view('admin.invoices.index', compact('invoices'));
+        $status = Invoice::pluck('status')->unique();
+        $sellers = Seller::all();
+        return view('admin.invoices.index', compact('invoices', 'status', 'sellers'));
     }
 
     /**
@@ -74,5 +78,28 @@ class InvoiceController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+
+    public function filter(Request $request)
+    {
+        if ($request->has('date') && $request->date != '') {
+            $dates = explode(' - ', $request->date);
+
+            // Ensure both start and end dates are available
+            if (count($dates) === 2) {
+                $start_date = Carbon::createFromFormat('m/d/Y', $dates[0])->startOfDay();
+                $end_date = Carbon::createFromFormat('m/d/Y', $dates[1])->endOfDay();
+            }
+        }
+
+        $invoices = Invoice::where('seller_id', auth()->guard('seller')->id())
+            ->orWhereBetween('created_at', [$start_date, $end_date])
+            ->orWhere('status', $request->status)
+            ->orWhere('seller_id', $request->seller_id)
+            ->orderBy('id', 'DESC')->paginate(COUNT);
+        $status = Invoice::pluck('status')->unique();
+        $sellers = Seller::all();
+        return redirect()->route('seller.invoices.index', compact('invoices', 'status', 'sellers'));
     }
 }

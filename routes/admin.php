@@ -114,6 +114,7 @@ Route::group([
 
 
     Route::resource('invoices', InvoiceController::class);
+    Route::post('invoices/filter', [InvoiceController::class, 'filter'])->name('admin.invoices.filter');
 
     //logout
     Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout');

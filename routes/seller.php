@@ -13,6 +13,7 @@ use App\Http\Controllers\Seller\TransactionController;
 use App\Http\Controllers\Seller\ImportProductController;
 use App\Http\Controllers\Seller\SharedProductController;
 use App\Http\Controllers\Seller\AffiliateProductController;
+use App\Http\Controllers\Seller\InvoiceController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
@@ -96,6 +97,9 @@ Route::group([
         //
         Route::resource('wallet', WalletController::class);
         Route::post('/wallet', [WalletController::class, 'filter'])->name('seller.wallet.filter');
+        Route::get('invoices', [InvoiceController::class, 'index'])->name('seller.invoices.index');
+        Route::post('invoices/filter', [InvoiceController::class, 'filter'])->name('seller.invoices.filter');
+
 
 
         //

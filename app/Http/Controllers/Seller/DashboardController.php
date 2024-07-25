@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Models\Lead;
+use App\Models\Admin;
 use App\Models\Order;
 use App\Models\Seller;
 use App\Models\Invoice;
 use App\Models\Revenue;
-use Illuminate\Http\Request;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -18,6 +19,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        $admin = Admin::where('roles_name', 'admin')->count();
         $leads = Lead::where('seller_id', auth()->guard('seller')->id())->count();
         $approvedLeadsCount = Lead::where('seller_id', auth()->guard('seller')->id())->where('status', 'approved')->count();
         $deliveredLeadsCount = Lead::where('seller_id', auth()->guard('seller')->id())->where('status', 'delivered')->count();
@@ -104,12 +106,13 @@ class DashboardController extends Controller
         }
 
 
-        return view('seller.dashboard', compact('leads', 'approvedLeadsCount', 'deliveredLeadsCount', 'revenue', 'sellers', 'leads_count', 'orders_count'));
+        return view('seller.dashboard', compact('leads', 'approvedLeadsCount', 'deliveredLeadsCount', 'revenue', 'sellers', 'leads_count', 'orders_count', 'admin'));
     }
 
     public function filter(Request $request)
     {
         // Get top sellers and their transaction amounts
+        $admin = Admin::where('roles_name', 'admin')->count();
         $revenues = Invoice::select('seller_id', DB::raw('SUM(revenue) as revenue'))
             ->groupBy('seller_id')
             ->orderBy('revenue', 'desc')
@@ -184,6 +187,6 @@ class DashboardController extends Controller
             }
         }
 
-        return view('seller.dashboard', compact('leads', 'approvedLeadsCount', 'deliveredLeadsCount', 'revenue', 'sellers', 'leads_count', 'orders_count'));
+        return view('seller.dashboard', compact('leads', 'approvedLeadsCount', 'deliveredLeadsCount', 'revenue', 'sellers', 'leads_count', 'orders_count', 'admin'));
     }
 }

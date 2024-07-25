@@ -66,7 +66,7 @@
                                 <h4 class="text-primary mb-0">${{ $balance ?? 0 }}</h4>
 
                             </div>
-                            <p class="mb-0 text-truncate">{{ __site_('site.YourBalance') }}</p>
+                            <p class="mb-0 text-truncate">{{ __('site.YourBalance') }}</p>
                         </div>
                     </div>
                 </div>
@@ -82,12 +82,12 @@
                             </div>
                         </div>
                         <div class="card-info">
-                            <h4 class="card-title mb-3">{{}}</h4>
+                            <h4 class="card-title mb-3">{{ __('site.WithdrawalBalance') }}</h4>
                             <div class="d-flex align-items-end mb-1 gap-1">
                                 <h4 class="text-success mb-0">${{ $revenue_confirmed ?? 0 }}</h4>
 
                             </div>
-                            <p class="mb-0"> {{ __site_('site.WithdrawalBalance') }}</p>
+                            <p class="mb-0"> {{ __('site.WithdrawalBalance') }}</p>
                         </div>
                     </div>
                 </div>

@@ -234,18 +234,18 @@
                     @foreach ($sellers as $seller)
                         <div class="rank_memeber flex py-2 border-b-2">
                             <div class="img_wrapper ">
-                                @if ($seller->revenue > 150000 && $seller->revenue > 75000)
+                                @if ($seller['revenue'] > 150000 && $seller['revenue'] > 75000)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/ranks/Angel-removebg-preview.png') }}" alt="rank_Icon"
                                             class="rank_icon w-20" />
                                         <div class="overflow-hidden rounded-full w-20 h-20 absolute top-0 left-0">
                                             <!-- avatar image -->
-                                            <img src="{{ asset('assets/sellers/images/' . $seller->image) }}"
+                                            <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->revenue <= 75000 && $seller->revenue > 50000)
+                                @elseif($seller['revenue'] <= 75000 && $seller['revenue'] > 50000)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/ranks/Wizard.png') }}Wizard.png" alt="rank_Icon"
@@ -253,11 +253,11 @@
                                         <div
                                             class="overflow-hidden rounded-full w-20 h-20 absolute top-0 left-0 img_avtr_size">
                                             <!-- avatar image -->
-                                            <img src="{{ asset('assets/sellers/images/' . $seller->image) }}"
+                                            <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full h-full object-cover rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->revenue <= 50000 && $seller->revenue > 25000)
+                                @elseif($seller['revenue'] <= 50000 && $seller['revenue'] > 25000)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/ranks/Knight.png') }}" alt="rank_Icon"
@@ -268,11 +268,11 @@
                                         left: 10px;
                                         top: 10px;">
                                             <!-- avatar image -->
-                                            <img src="{{ asset('assets/sellers/images/' . $seller->image) }}"
+                                            <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->revenue <= 25000 && $seller->revenue > 15000)
+                                @elseif($seller['revenue'] <= 25000 && $seller['revenue'] > 15000)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/ranks/Villain.png ') }}" alt="rank_Icon"
@@ -280,11 +280,11 @@
                                         <div class="overflow-hidden rounded-full w-20 h-20 absolute top-0 left-0"
                                             style="    width: 60px; height: 60px; left: 10px;  top: 10px;">
                                             <!-- avatar image -->
-                                            <img src="{{ asset('assets/sellers/images/' . $seller->image) }}"
+                                            <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->revenue <= 15000 && $seller->revenue > 10000)
+                                @elseif($seller['revenue'] <= 15000 && $seller['revenue'] > 10000)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/ranks/Master.png ') }}" alt="rank_Icon"
@@ -292,11 +292,11 @@
                                         <div
                                             class="overflow-hidden rounded-full w-20 h-20 absolute top-0 left-0 img_avtr_size">
                                             <!-- avatar image -->
-                                            <img src="{{ asset('assets/sellers/images/' . $seller->image) }}"
+                                            <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->revenue <= 10000 && $seller->revenue > 5000)
+                                @elseif($seller['revenue'] <= 10000 && $seller['revenue'] > 5000)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src=" {{ asset('assets/ranks/Expert.png ') }}" alt="rank_Icon"
@@ -307,51 +307,51 @@
                                                 left: 8px;
                                                 top: 3px;">
                                             <!-- avatar image -->
-                                            <img src="{{ asset('assets/sellers/images/' . $seller->image) }}"
+                                            <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->revenue <= 5000 && $seller->revenue > 2000)
+                                @elseif($seller['revenue'] <= 5000 && $seller['revenue'] > 2000)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/rank/Elite.png ') }}" alt="rank_Icon"
                                             class="rank_icon w-20" />
                                         <div class="overflow-hidden rounded-full w-20 h-20 absolute top-0 left-0">
                                             <!-- avatar image -->
-                                            <img src="{{ asset('assets/sellers/images/' . $seller->image) }}"
+                                            <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->revenue <= 2000 && $seller->revenue > 1000)
+                                @elseif($seller['revenue'] <= 2000 && $seller['revenue'] > 1000)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/rank/Advanced.png ') }}" alt="rank_Icon"
                                             class="rank_icon w-20" />
                                         <div class="overflow-hidden rounded-full w-20 h-20 absolute top-0 left-0">
                                             <!-- avatar image -->
-                                            <img src="{{ asset('assets/sellers/images/' . $seller->image) }}"
+                                            <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->revenue <= 1000 && $seller->revenue > 500)
+                                @elseif($seller['revenue'] <= 1000 && $seller['revenue'] > 500)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/rank/Work.png') }}" alt="rank_Icon"
                                             class="rank_icon w-20" />
                                         <div class="overflow-hidden rounded-full w-20 h-20 absolute top-0 left-0">
                                             <!-- avatar image -->
-                                            <img src="{{ asset('assets/sellers/images/' . $seller->image) }}"
+                                            <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full rounded" />
                                         </div>
                                     </div>
-                                @elseif($seller->revenue <= 500)
+                                @elseif($seller['revenue'] <= 500)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/rank/Novice.png') }}" alt="rank_Icon"
                                             class="rank_icon w-20" />
                                         <div class="overflow-hidden rounded-full w-20  h-full absolute top-0 left-0">
                                             <!-- avatar image -->
-                                            <img src="{{ asset('assets/sellers/images/' . $seller->image) }}"
+                                            <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full h-full object-cover rounded" />
                                         </div>
                                     </div>
@@ -362,32 +362,32 @@
 
 
                                 <h4 class="text-sm font-bold text-gray-600 capitalize inline-block">
-                                    {{ $seller->first_name }} {{ $seller->last_name }}
+                                    {{ $seller['seller']->first_name . ' ' . $seller['seller']->last_name }}
                                 </h4>
 
                                 <div class="mt-2">
                                     <span class="text-gray-600 text-sm bg-green-400 rounded-md text-white px-2 py-1">
-                                        @if ($seller->revenue > 150000)
+                                        @if ($seller['revenue'] > 150000)
                                             ???
-                                        @elseif($seller->revenue <= 150000 && $seller->revenue > 75000)
+                                        @elseif($seller['revenue'] <= 150000 && $seller['revenue'] > 75000)
                                             Angel
-                                        @elseif($seller->revenue <= 75000 && $seller->revenue > 50000)
+                                        @elseif($seller['revenue'] <= 75000 && $seller['revenue'] > 50000)
                                             Wizard
-                                        @elseif($seller->revenue <= 50000 && $seller->revenue > 25000)
+                                        @elseif($seller['revenue'] <= 50000 && $seller['revenue'] > 25000)
                                             Knight
-                                        @elseif($seller->revenue <= 25000 && $seller->revenue > 15000)
+                                        @elseif($seller['revenue'] <= 25000 && $seller['revenue'] > 15000)
                                             Villain
-                                        @elseif($seller->revenue <= 15000 && $seller->revenue > 10000)
+                                        @elseif($seller['revenue'] <= 15000 && $seller['revenue'] > 10000)
                                             Master
-                                        @elseif($seller->revenue <= 10000 && $seller->revenue > 5000)
+                                        @elseif($seller['revenue'] <= 10000 && $seller['revenue'] > 5000)
                                             Expert
-                                        @elseif($seller->revenue <= 5000 && $seller->revenue > 2000)
+                                        @elseif($seller['revenue'] <= 5000 && $seller['revenue'] > 2000)
                                             Elite
-                                        @elseif($seller->revenue <= 2000 && $seller->revenue > 1000)
+                                        @elseif($seller['revenue'] <= 2000 && $seller['revenue'] > 1000)
                                             Advanced
-                                        @elseif($seller->revenue <= 1000 && $seller->revenue > 500)
+                                        @elseif($seller['revenue'] <= 1000 && $seller['revenue'] > 500)
                                             Worker
-                                        @elseif($seller->revenue <= 500 && $seller->revenue > 100)
+                                        @elseif($seller['revenue'] <= 500 && $seller['revenue'] > 100)
                                             Novice
                                         @endif
 
