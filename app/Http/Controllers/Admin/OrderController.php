@@ -21,7 +21,7 @@ class OrderController extends Controller
     public function __construct()
     {
         $this->middleware('permission:All Orders')->only('index');
-        $this->middleware('permission:Edit Orders')->only(['edit', 'update']);
+        $this->middleware('permission:Edit Order')->only(['edit', 'update']);
         $this->middleware('permission:Delete Orders')->only('destroy');
     }
     /**
@@ -102,27 +102,29 @@ class OrderController extends Controller
 
 
         if ($flag) {
-            if ($order->shipment_status == 'delivered' && $order->shipment_status != $old_status) {
+            if ($order->shipment_status == 'delivered' && $order->shipment_status !== $old_status) {
                 $lead = Lead::findorfail($order->lead_id);  // Use find() for efficiency
-
                 $revenue = Revenue::where('seller_id', $order->seller_id)->first();
-                if ($revenue->revenue >= 50 && Carbon::now()->isSunday()) {
-                    $flag = Invoice::create([
-                        'seller_id' => $order->seller_id,
-                        'revenue' => $revenue->revenue,
-                        'date' => date('Y-m-d'),
-                        'crated_at' => date('Y-m-d'),
-                        'status' => 'unpaid',
-                    ]);
-                    if ($flag) {
-                        $revenue->update(['revenue' => 0]);
+
+                if ($revenue) {
+                    if ($revenue->revenue >= 50 && Carbon::now()->isSunday()) {
+                        $flag = Invoice::create([
+                            'seller_id' => $order->seller_id,
+                            'revenue' => $revenue->revenue,
+                            'date' => date('Y-m-d'),
+                            'crated_at' => date('Y-m-d'),
+                            'status' => 'unpaid',
+                        ]);
+                        if ($flag) {
+                            $revenue->update(['revenue' => 0]);
+                        }
                     }
                 }
                 if ($lead->type == 'commission') {
                     $product = AffiliateProduct::where('sku', $lead->item_sku)->first();
 
                     if ($product) {
-                        if ($revenue->isNotEmpty()) {
+                        if (!empty($revenue)) {
                             $revenue->update([
                                 'revenue' => $revenue->revenue + ($product->commission * $lead->quantity),
                             ]);

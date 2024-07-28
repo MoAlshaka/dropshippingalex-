@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('sku');
             $table->string('title');
-            $table->text('description');
+            $table->longText('description');
             $table->string('image');
             $table->string('brand');
             $table->double('weight')->default(0);

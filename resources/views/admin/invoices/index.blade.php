@@ -84,7 +84,7 @@
                                 </div>
                                 <div class=" mb-4">
                                     <div class="form-floating form-floating-outline">
-                                        <select name="status" id="status" class="selectpicker w-100"
+                                        <select name="status[]" id="status" class="selectpicker w-100"
                                             data-style="btn-default" multiple data-actions-box="true">
                                             @isset($status)
                                                 @foreach ($status as $info)
@@ -97,7 +97,7 @@
                                 </div>
                                 <div class=" mb-4">
                                     <div class="form-floating form-floating-outline">
-                                        <select name="seller_id" id="seller_id" class="selectpicker w-100"
+                                        <select name="seller_id[]" id="seller_id" class="selectpicker w-100"
                                             data-style="btn-default" multiple data-actions-box="true">
                                             @isset($sellers)
                                                 @foreach ($sellers as $seller)
@@ -146,7 +146,7 @@
                             <th>{{ __('site.Seller') }}</th>
                             <th>{{ __('site.Revenue') }}</th>
                             <th>{{ __('site.Status') }}</th>
-                            <th>{{ __('site.Updated') }}</th>
+                            <th>{{ __('site.UpdatedBy') }}</th>
                             <th>{{ __('site.Actions') }}</th>
                         </tr>
                     </thead>
@@ -161,12 +161,18 @@
                             @foreach ($invoices as $invoice)
                                 <tr>
                                     <th scope="row">{{ $i++ }}</th>
-                                    <td>{{ $invoice->seller->first_name . ' ' . $invoice->seller->last_name }}</td>
+                                    <td>{{ $invoice->seller->first_name . '  ' . $invoice->seller->last_name }}</td>
                                     <td>{{ $invoice->revenue }}</td>
                                     <td>{{ $invoice->status }}</td>
-                                    {{-- <td>{{ $invoice->updatedBy->first_name . ' ' . $invoice->updatedBy->last_name }} ??
-                                        {{ '' }}
-                                    </td> --}}
+
+                                    <td>
+                                        @if ($invoice->updatedBy)
+                                            {{ $invoice->updated_at . ' ' . __('site.By') . ' ' . $invoice->updatedBy->name }}
+                                        @endif
+                                    </td>
+
+
+                                    </td>
                                     <td style="display: flex;
                                             gap: 6px;">
 
@@ -242,8 +248,10 @@
     <script src="{{ asset('assets/vendor/libs/pickr/pickr.js') }}"></script>
     <!-- endbuild -->
 
-    <!-- Vendors JS -->
 
-    <!-- Main JS -->
-    <script src="{{ asset('assets/js/forms-selects.js') }}"></script>
+
+
+    <script src="{{ asset('assets/vendor/libs/bootstrap-select/bootstrap-select.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
+    <script src="{{ asset('assets/js/forms-pickers.js') }}"></script>
 @endsection

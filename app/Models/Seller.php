@@ -40,9 +40,9 @@ class Seller extends Authenticatable
     {
         return $this->belongsToMany(AffiliateProduct::class, 'affiliate_product_seller');
     }
-    public function admin()
+    public function manger()
     {
-        return $this->belongsTo(Admin::class);
+        return $this->belongsTo(Admin::class, 'admin_id');
     }
 
     public function leads()

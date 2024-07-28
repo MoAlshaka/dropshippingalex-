@@ -31,9 +31,9 @@
                                 <div class="form-floating form-floating-outline">
                                     <select id="status" class="select2 form-select form-select-lg"
                                         data-allow-clear="true" name="status">
-                                        <option value="paid" @if ($order->status == 'paid') selected @endif>
+                                        <option value="paid" @if ($invoice->status == 'paid') selected @endif>
                                             {{ __('site.Paid') }}</option>
-                                        <option value="unpaid" @if ($order->status == 'unpaid') selected @endif>
+                                        <option value="unpaid" @if ($invoice->status == 'unpaid') selected @endif>
                                             {{ __('site.Unpaid') }}</option>
                                     </select>
                                     <label for="status">{{ __('site.Status') }}</label>

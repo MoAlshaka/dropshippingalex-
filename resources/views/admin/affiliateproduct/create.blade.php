@@ -276,7 +276,7 @@
                             <div class="form-floating form-floating-outline mb-4">
                                 <input type="number" step="0.01" class="form-control" id="commission"
                                     placeholder="commission" name="commission" aria-label="Product discounted price" />
-                                <label for="commission">{{ __('site.commission') }}</label>
+                                <label for="commission">{{ __('site.Commission') }}</label>
                             </div>
                             @error('commission')
                                 <div class="text-danger">{{ $message }}</div>

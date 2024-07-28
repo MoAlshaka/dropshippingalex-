@@ -10,7 +10,9 @@ use App\Http\Controllers\Admin\OfferController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\CountryController;
+use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\PaymentController;
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\Auth\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -18,7 +20,6 @@ use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\ActiveSellerController;
 use App\Http\Controllers\Admin\SharedProductController;
 use App\Http\Controllers\Admin\AffiliateProductController;
-use App\Http\Controllers\Admin\InvoiceController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
@@ -115,6 +116,13 @@ Route::group([
 
     Route::resource('invoices', InvoiceController::class);
     Route::post('invoices/filter', [InvoiceController::class, 'filter'])->name('admin.invoices.filter');
+
+    //profile
+    Route::get('profile', [ProfileController::class, 'index'])->name('admin.profile');
+    Route::match(['post', 'put', 'patch'], 'profile/update/{id}', [ProfileController::class, 'update_profile'])->name('admin.update.profile');
+    Route::get('edit-password', [ProfileController::class, 'edit_password'])->name('admin.edit.password');
+    Route::match(['post', 'put', 'patch'], 'update-password/{id}', [ProfileController::class, 'change_password'])->name('admin.change.password');
+
 
     //logout
     Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout');

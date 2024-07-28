@@ -8,30 +8,29 @@
 
 @section('css')
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}"/>
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}" />
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&ampdisplay=swap"
-          rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&ampdisplay=swap" rel="stylesheet" />
 
     <!-- Icons -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/materialdesignicons.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/flag-icons.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/materialdesignicons.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/flag-icons.css') }}" />
 
     <!-- Menu waves for no-customizer fix -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/node-waves/node-waves.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/node-waves/node-waves.css') }}" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/core.css') }}" class="template-customizer-core-css"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/core.css') }}" class="template-customizer-core-css" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/theme-default.css') }}"
-          class="template-customizer-theme-css"/>
-    <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}"/>
+        class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}" />
 
     <!-- Page CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -45,67 +44,61 @@
 
         <!-- <div class="card">
 
-        </div> -->
-        <div
-            class="leed_container mx-4 grid md:grid-cols-12 gap-4 lg:mx-10 lg:gap-6 my-6"
-        >
+            </div> -->
+        <div class="leed_container mx-4 grid md:grid-cols-12 gap-4 lg:mx-10 lg:gap-6 my-6">
             <!-- leed info  -->
             <div class="leed_info bg-white rounded-2xl p-6 shadow-md md:col-span-5">
                 <div>
                     <h4 class="text-xl font-bold text-gray-600 capitalize mb-5">
-                        {{$order->lead->customer_name}}
+                        {{ $order->lead->customer_name }}
                     </h4>
                 </div>
-                <hr/>
+                <hr />
                 <div>
                     <h2 class="text-2xl font-bold text-gray-800 capitalize my-5">
                         lead information
                     </h2>
                     <div class="mobile flex items-center gap-1 text-gray-600">
                         <span class="mdi mdi-phone-outline"></span>
-                        <span class="text-sm"> {{$order->lead->customer_phone}} </span>
+                        <span class="text-sm"> {{ $order->lead->customer_phone }} </span>
                     </div>
                     <div class="adrdress">
-                        <div
-                            class="adrdress_title flex items-center gap-1 text-gray-600 text-md mt-4 mb-2"
-                        >
+                        <div class="adrdress_title flex items-center gap-1 text-gray-600 text-md mt-4 mb-2">
                             <span class="mdi mdi-map-outline"></span>
                             <span class="font-bold text-black text-sm">Address</span>
                         </div>
                         <p class="text-gray-600 text-sm text-pretty">
-                            {{$order->lead->customer_addrress}}{{$order->lead->customer_city}}
+                            {{ $order->lead->customer_addrress }}{{ $order->lead->customer_city }}
                         </p>
                     </div>
                     <div class="country">
-                        <div
-                            class="country_title flex items-center gap-1 text-gray-600 text-md mt-4 mb-2"
-                        >
+                        <div class="country_title flex items-center gap-1 text-gray-600 text-md mt-4 mb-2">
                             <span class="mdi mdi-map-marker-outline"></span>
-                            <span class="font-bold text-black text-sm">  Country </span>
+                            <span class="font-bold text-black text-sm"> Country </span>
                         </div>
                         <div class="text-gray-600 text-md mt-2 mb-2 flex gap-2 items-center">
-               <span class="material-symbols-outlined relative top-[0px]">
-                 <img src="{{ asset('assets/countries/flags/' . $country->flag) }}" alt="{{ $country->name }}"
-                      width="30" height="30">
-               </span>
+                            <span class="material-symbols-outlined relative top-[0px]">
+                                <img src="{{ asset('assets/countries/flags/' . $country->flag) }}"
+                                    alt="{{ $country->name }}" width="30" height="30">
+                            </span>
                             <span class="text-gray-600 text-sm text-pretty">
-                 @if($order->lead->customer_country)
-                                    {{$order->lead->customer_country}}
+                                @if ($order->lead->customer_country)
+                                    {{ $order->lead->customer_country }}
                                 @else
-                                    {{$order->lead->warehouse}}
+                                    {{ $order->lead->warehouse }}
                                 @endif
-               </span>
+                            </span>
                         </div>
                     </div>
                 </div>
-                <hr/>
+                <hr />
                 <div>
                     <h2 class="text-xl font-bold text-gray-800 capitalize my-2">
                         Store refrence
                     </h2>
                     <div>
                         <span class="text-gray-800 capitalize">store refrence:</span>
-                        <span class="text-gray-600 text-sm"> {{$order->lead->store_reference}} </span>
+                        <span class="text-gray-600 text-sm"> {{ $order->lead->store_reference }} </span>
                     </div>
                 </div>
             </div>
@@ -117,39 +110,37 @@
                             details
                         </h4>
                     </div>
-                    <div
-                        class="details_table_container bg-white rounded-2xl shadow-md p-6"
-                    >
+                    <div class="details_table_container bg-white rounded-2xl shadow-md p-6">
                         <div class="details_table_header">
                             <h4 class="text-sm uppercase text-gray-600 font-bold mb-4">
-                                {{__('site.OrderDetails')}}
+                                {{ __('site.OrderDetails') }}
                             </h4>
-                            <hr/>
+                            <hr />
                             <div class="overflow-auto">
                                 <!-- but table here -->
                                 <div class="col-span-8 bg-white drop-shadow rounded-md px-4 py-4">
                                     <table class="table">
                                         <thead>
-                                        <tr class="text-nowrap">
-                                            <th>{{ __('site.REF') }}</th>
-                                            <th>{{ __('site.Warehouse') }}</th>
-                                            <th>{{ __('site.Weight') }}</th>
-                                            <th>{{ __('site.ShipmentStatus') }}</th>
-                                            <th> {{ __('site.PaymentStatus') }}</th>
-                                            <th> {{ __('site.Total') }}</th>
-                                        </tr>
+                                            <tr class="text-nowrap">
+                                                <th>{{ __('site.REF') }}</th>
+                                                <th>{{ __('site.Warehouse') }}</th>
+                                                <th>{{ __('site.Weight') }}</th>
+                                                <th>{{ __('site.ShipmentStatus') }}</th>
+                                                <th> {{ __('site.PaymentStatus') }}</th>
+                                                <th> {{ __('site.Total') }}</th>
+                                            </tr>
                                         </thead>
                                         <tbody class="table-border-bottom-0">
 
-                                        <tr>
-                                            <td>{{ $order->lead->store_reference }}</td>
-                                            <td>{{ $order->lead->warehouse }}</td>
-                                            <td>{{ $product->weight }}</td>
-                                            <td>{{ $order->shipment_status }}</td>
-                                            <td>{{ $order->payment_status }}</td>
-                                            <td>{{ $order->lead->total }}</td>
+                                            <tr>
+                                                <td>{{ $order->lead->store_reference }}</td>
+                                                <td>{{ $order->lead->warehouse }}</td>
+                                                <td>{{ $product->weight }}</td>
+                                                <td>{{ $order->shipment_status }}</td>
+                                                <td>{{ $order->payment_status }}</td>
+                                                <td>{{ $order->lead->total }}</td>
 
-                                        </tr>
+                                            </tr>
 
 
                                         </tbody>
@@ -160,47 +151,41 @@
                     </div>
                 </div>
                 <div class="details flex flex-col gap-6">
-                    <div
-                        class="details_table_container bg-white rounded-2xl shadow-md p-6"
-                    >
+                    <div class="details_table_container bg-white rounded-2xl shadow-md p-6">
                         <div class="details_table_header">
                             <h4 class="text-sm uppercase text-gray-600 font-bold mb-4">
                                 Products
                             </h4>
-                            <hr/>
+                            <hr />
                             <div class="overflow-auto">
                                 <div class="col-span-8 bg-white drop-shadow rounded-md px-4 py-4">
                                     <table class="table">
                                         <thead>
-                                        <tr class="text-nowrap">
-                                            <th>{{ __('site.Item') }}</th>
-                                            <th>{{ __('site.Quantity') }}</th>
-                                            <th>{{ __('site.Total') }}</th>
+                                            <tr class="text-nowrap">
+                                                <th>{{ __('site.Item') }}</th>
+                                                <th>{{ __('site.Quantity') }}</th>
+                                                <th>{{ __('site.Total') }}</th>
 
-                                        </tr>
+                                            </tr>
                                         </thead>
                                         <tbody class="table-border-bottom-0">
 
-                                        <tr>
-                                            <td>
-                                                @if($product->comission)
-                                                    <img
-                                                        src="{{ asset('assets/products/affiliateProduct/images/' . $product->image) }}"
-                                                        alt="{{ $product->title }}"
-                                                        width="50" height="50">
-                                                @else
-                                                    <img
-                                                        src="{{ asset('assets/products/sharedproduct/images/' . $product->image) }}"
-                                                        alt="{{ $product->title }}"
-                                                        width="50" height="50">
-                                                @endif
+                                            <tr>
+                                                <td>
+                                                    @if ($product->commission)
+                                                        <img src="{{ asset('assets/products/affiliateProduct/images/' . $product->image) }}"
+                                                            alt="{{ $product->title }}" width="50" height="50">
+                                                    @else
+                                                        <img src="{{ asset('assets/products/sharedproduct/images/' . $product->image) }}"
+                                                            alt="{{ $product->title }}" width="50" height="50">
+                                                    @endif
 
-                                            </td>
-                                            <td>{{ $order->lead->quantity }}</td>
-                                            <td>{{ $order->lead->total }}</td>
+                                                </td>
+                                                <td>{{ $order->lead->quantity }}</td>
+                                                <td>{{ $order->lead->total }}</td>
 
 
-                                        </tr>
+                                            </tr>
 
 
                                         </tbody>

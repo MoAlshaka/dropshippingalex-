@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
-use App\Models\Payment;
+
 use App\Models\Seller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -13,9 +13,9 @@ class ProfileController extends Controller
     public function index()
     {
         $seller = auth()->guard('seller')->user();
-        $payments = Payment::all();
 
-        return view('seller.auth.profile', compact('seller', 'payments'));
+
+        return view('seller.auth.profile', compact('seller'));
     }
 
     public function update_profile(Request $request, $id)
@@ -31,6 +31,10 @@ class ProfileController extends Controller
 
         ]);
         $seller = Seller::findorfail($id);
+        $exists = Seller::where('id', '!=', $id)->first();
+        if ($exists) {
+            return redirect()->back()->with(['Delete' => 'Email already exists']);
+        }
         $old_image = $seller->image;
 
         if ($request->hasFile('image')) {
@@ -78,7 +82,7 @@ class ProfileController extends Controller
         $seller->update([
             'password' => bcrypt($request->new_password),
         ]);
-        return redirect()->route('seller.profile')->with('Update', 'Password changed successfully');
+        return redirect()->route('seller.edit.password')->with('Add', 'Password changed successfully');
     }
 
     public function payment_details(Request $request, $id)
@@ -110,6 +114,5 @@ class ProfileController extends Controller
             ]);
         }
         return redirect()->route('seller.profile')->with(['Update' => 'update Profile successfully']);
-
     }
 }

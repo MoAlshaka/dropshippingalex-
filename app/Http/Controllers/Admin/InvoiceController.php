@@ -69,7 +69,7 @@ class InvoiceController extends Controller
             'updated_by' => auth()->user()->id,
         ]);
 
-        return redirect()->route('admin.invoices.index')->with(['Update' => 'invoice status updated successfully']);
+        return redirect()->route('invoices.index')->with(['Update' => 'invoice status updated successfully']);
     }
 
     /**
@@ -77,7 +77,9 @@ class InvoiceController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $invoice = Invoice::findorfail($id);
+        $invoice->delete();
+        return redirect()->route('invoices.index')->with(['Delete' => 'invoice deleted successfully']);
     }
 
 
@@ -95,8 +97,8 @@ class InvoiceController extends Controller
 
         $invoices = Invoice::where('seller_id', auth()->guard('seller')->id())
             ->orWhereBetween('created_at', [$start_date, $end_date])
-            ->orWhere('status', $request->status)
-            ->orWhere('seller_id', $request->seller_id)
+            ->orWhereIn('status', $request->status)
+            ->orWhereIn('seller_id', $request->seller_id)
             ->orderBy('id', 'DESC')->paginate(COUNT);
         $status = Invoice::pluck('status')->unique();
         $sellers = Seller::all();

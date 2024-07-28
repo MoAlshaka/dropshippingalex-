@@ -185,7 +185,7 @@
 
                                 </span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{ auth()->user()->revenue }}</span>
+                            <span class="text-gray-600 text-3xl font-bold">{{ $revenue->revenue }}</span>
                         </div>
                     </div>
                 </div>
@@ -377,7 +377,7 @@
 
         <div class="row row-sm">
             <!--[if BLOCK]><![endif]-->
-            @if (auth()->user()->manger)
+            @if (auth()->guard('seller')->user()->admin_id)
                 <div class="col-xxl-3 col-xl-3 col-md-12 col-lg-12">
                     <div class="card custom-card our-team">
                         <div class="card-body">
@@ -444,7 +444,30 @@
                                 <div class="empty-icon text-center" style="padding: 15px;color: #dfdfdf !important;">
                                     <i style="font-size: 70px;" class="fas fa-folder-open"></i>
                                 </div>
-                                <h3 class="empty-text text-center" style="color: #bbb !important;">No data to display</h3>
+                                @isset($products)
+                                    @foreach ($products as $product)
+                                        <div
+                                            class="top_product flex items-center border border-gray-200 rounded-xl p-2 flex gap-2 justify-between">
+                                            <div class=" rounded-full text-white px-2 py-2 flex justify-center items-center">
+                                                @if ($product->commission)
+                                                    <img src="{{ asset('assets/products/affiliateProduct/images/' . $product->image) }}"
+                                                        alt="{{ $product->title }}" width="50" height="50">
+                                                @else
+                                                    <img src="{{ asset('assets/products/sharedproduct/images/' . $product->image) }}"
+                                                        alt="{{ $product->title }}" width="50" height="50">
+                                                @endif
+                                            </div>
+                                            <h3 class="text-md font-bold text-black capitalize ">
+                                                {{ $product->title }}</h3>
+                                            {{-- <span class="text-black text-md font-bold">{{ $highestCommission['amount'] }}
+                                                $</span> --}}
+                                        </div>
+                                    @endforeach
+                                @endisset
+                                @if (!isset($products))
+                                    <h3 class="empty-text text-center" style="color: #bbb !important;">No data to display
+                                    </h3>
+                                @endif
                             </div>
                             <!--[if ENDBLOCK]><![endif]-->
                         </ul>

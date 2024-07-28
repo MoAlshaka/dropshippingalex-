@@ -27,7 +27,10 @@ class AuthController extends Controller
             'about_us' => 'required|max:800',
             'national_id' => 'required|image|mimes:png,jpg,jpeg|max:2048',
         ]);
-
+        $exists = Seller::where('email', $request->email)->first();
+        if ($exists) {
+            return redirect()->back()->with(['Delete' => 'Email already exists']);
+        }
         $national_id = $request->file('national_id');
         $national_id_name = time() . '.' . $national_id->getClientOriginalExtension();
         $national_id->move(public_path('assets/sellers/images/national_id'), $national_id_name);

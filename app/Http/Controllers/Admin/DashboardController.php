@@ -53,7 +53,9 @@ class DashboardController extends Controller
             $seller = Seller::findOrFail($revenue->seller_id);
             $sellers[] = ['seller' => $seller, 'revenue' => $revenue->revenue];
         }
-        $admins = Admin::orderby('id', 'desc')->get();
+        $admins =  Admin::whereDoesntHave('roles', function ($query) {
+            $query->where('name', 'Owner');
+        })->get();
         $allSellers = Seller::orderby('id', 'desc')->get();
         // charts
 
@@ -125,9 +127,12 @@ class DashboardController extends Controller
 
         $sellerIds = [];
         if ($request->has('manger_id')) {
-            $manger = Admin::findOrFail($request->manger_id);
-            foreach ($manger->sellers as $seller) {
-                array_push($sellerIds, $seller->id);
+            foreach ($request->manger_id as $manger_id) {
+
+                $manger = Admin::findOrFail($manger_id);
+                foreach ($manger->sellers as $seller) {
+                    array_push($sellerIds, $seller->id);
+                }
             }
         }
 
@@ -146,7 +151,7 @@ class DashboardController extends Controller
         $deliveredLeadsCount = Lead::where('status', 'delivered')->orWhereBetween('order_date', [$start_date, $end_date])->orWhereIn('seller_id', $sellerIds)
             ->orWhere('seller_id', $request->seller_id)->count();
         $revenue = Revenue::orWhereIn('seller_id', $sellerIds)
-            ->orWhere('seller_id', $request->seller_id)
+            ->orWhereIn('seller_id', $request->seller_id)
             ->sum('revenue');
 
         // Generate all dates within the range for leads
@@ -191,8 +196,11 @@ class DashboardController extends Controller
             $count = isset($existingOrderCounts[$date]) ? $existingOrderCounts[$date] : 0;
             $orders_count[] = (object)['date' => $date, 'count' => $count];
         }
+        $admins = Admin::whereDoesntHave('roles', function ($query) {
+            $query->where('name', 'Owner');
+        })->get();
 
 
-        return view('admin.dashboard', compact('leads', 'approvedLeadsCount', 'deliveredLeadsCount', 'revenue', 'sellers', 'leads_count', 'orders_count'));
+        return view('admin.dashboard', compact('leads', 'approvedLeadsCount', 'deliveredLeadsCount', 'revenue', 'sellers', 'leads_count', 'orders_count', 'admins'));
     }
 }

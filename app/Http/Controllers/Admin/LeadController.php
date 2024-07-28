@@ -44,7 +44,7 @@ class LeadController extends Controller
         $flag = $lead->update([
             'status' => $request->status
         ]);
-        if (!empty($flag) && $flag->status == 'confirmed') {
+        if ($flag && $lead->status == 'confirmed') {
 
             Order::create([
                 'lead_id' => $lead->id,

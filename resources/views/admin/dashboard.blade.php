@@ -84,7 +84,7 @@
                 <button class="btn btn-outline-primary waves-effect waves-light" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                     <span class="tf-icons mdi mdi-filter-check-outline me-1"></span>
-                    Filter
+                    {{ __('site.Filter') }}
                 </button>
                 {{--                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button> --}}
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
@@ -105,7 +105,7 @@
                                 </div>
                                 <div class=" mb-4">
                                     <div class="form-floating form-floating-outline">
-                                        <select name="admin_id" id="admin_id" class="selectpicker w-100"
+                                        <select name="admin_id[]" id="admin_id" class="selectpicker w-100"
                                             data-style="btn-default" multiple data-actions-box="true">
                                             @isset($admins)
                                                 @foreach ($admins as $admin)
@@ -118,7 +118,7 @@
                                 </div>
                                 <div class=" mb-4">
                                     <div class="form-floating form-floating-outline">
-                                        <select name="seller_id" id="seller_id" class="selectpicker w-100"
+                                        <select name="seller_id[]" id="seller_id" class="selectpicker w-100"
                                             data-style="btn-default" multiple data-actions-box="true">
                                             @isset($allSellers)
                                                 @foreach ($allSellers as $seller)
@@ -132,8 +132,10 @@
                                 </div>
 
                             </div>
-                            <button type="submit" class="btn btn-primary waves-effect waves-light">filter</button>
-                            <button type="reset" class="btn btn-outline-danger waves-effect">reset</button>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                {{ __('site.Filter') }}</button>
+                            <button type="reset" class="btn btn-outline-danger waves-effect">
+                                {{ __('site.Reset') }}</button>
                         </form>
                     </div>
                 </div>

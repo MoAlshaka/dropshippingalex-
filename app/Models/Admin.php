@@ -18,6 +18,8 @@ class Admin extends Authenticatable
         'password',
         'access_token',
         'status',
+        'image',
+        'email',
         'roles_name',
     ];
 

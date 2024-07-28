@@ -17,10 +17,7 @@ class Invoice extends Model
 
     ];
 
-    public function addedBy()
-    {
-        return $this->belongsTo(Admin::class, 'added_by');
-    }
+
 
     // The admin who updated the record
     public function updatedBy()

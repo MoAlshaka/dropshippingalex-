@@ -54,6 +54,7 @@ class AdminController extends Controller
             'roles_name' => 'required',
         ]);
 
+
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
         // dd($input);

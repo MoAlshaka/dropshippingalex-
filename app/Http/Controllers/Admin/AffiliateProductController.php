@@ -48,12 +48,13 @@ class AffiliateProductController extends Controller
      */
     public function store(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:100',
             'sku' => 'required|max:100',
             'brand' => 'required|max:100',
             'image' => 'required|mimes:png,jpg',
-            'description' => 'required',
+            'description' => 'required|max:830938',
             'minimum_selling_price' => 'required|numeric',
             'commission' => 'required|numeric',
             'weight' => 'required|numeric',
@@ -99,6 +100,8 @@ class AffiliateProductController extends Controller
         $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
         // Move the uploaded image to the storage directory
         $image->move(public_path('assets/products/affiliateproduct/images'), $imageName);
+
+
         $product = AffiliateProduct::create([
             'sku' => $request->sku,
             'title' => $request->title,
@@ -112,6 +115,7 @@ class AffiliateProductController extends Controller
             'type' => $request->type,
             'admin_id' => auth()->guard('admin')->user()->id,
         ]);
+
         foreach ($request->country as $index => $countryId) {
             $product->affiliatecountries()->attach($countryId, ['stock' => $request->stock[$index]]);
         }
@@ -159,7 +163,7 @@ class AffiliateProductController extends Controller
             'sku' => 'required|max:100',
             'brand' => 'required|max:100',
             'image' => 'nullable|mimes:png,jpg',
-            'description' => 'required',
+            'description' => 'required|max:830938',
             'minimum_selling_price' => 'required|numeric',
             'commission' => 'required|numeric',
             'weight' => 'required|numeric',

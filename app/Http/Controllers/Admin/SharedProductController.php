@@ -37,12 +37,13 @@ class SharedProductController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->description);
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:100',
             'sku' => 'required|max:100',
             'brand' => 'required|max:100',
             'image' => 'required|mimes:png,jpg',
-            'description' => 'required',
+            'description' => 'required|max:830938',
             'unit_cost' => 'required|numeric',
             'recommended_price' => 'required|numeric',
             'weight' => 'required|numeric',
@@ -151,7 +152,7 @@ class SharedProductController extends Controller
             'sku' => 'required|max:100',
             'brand' => 'required|max:100',
             'image' => 'nullable|mimes:png,jpg',
-            'description' => 'required',
+            'description' => 'required|max:830938',
             'unit_cost' => 'required|numeric',
             'recommended_price' => 'required|numeric',
             'weight' => 'required|numeric',
@@ -241,7 +242,7 @@ class SharedProductController extends Controller
         }
         $product->delete();
 
-        return view('admin.sharedproduct.index', compact('products', 'countries', 'categories', 'offer'));
+        return redirect()->route('shared-products.index')->with('Delete', 'Product deleted successfully.');
     }
 
     public function country_filter(Request $request, $country)

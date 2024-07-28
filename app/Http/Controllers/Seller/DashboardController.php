@@ -13,7 +13,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-
+use App\Models\AffiliateProduct;
+use App\Models\SharedProduct;
 
 class DashboardController extends Controller
 {
@@ -21,11 +22,10 @@ class DashboardController extends Controller
     {
         $admin = Admin::where('roles_name', 'admin')->count();
         $leads = Lead::where('seller_id', auth()->guard('seller')->id())->count();
-        $approvedLeadsCount = Lead::where('seller_id', auth()->guard('seller')->id())->where('status', 'approved')->count();
-        $deliveredLeadsCount = Lead::where('seller_id', auth()->guard('seller')->id())->where('status', 'delivered')->count();
+        $approvedLeadsCount = Lead::where('seller_id', auth()->guard('seller')->id())->where('status', 'confirmed')->count();
+        $deliveredLeadsCount = Order::where('seller_id', auth()->guard('seller')->id())->where('shipment_status', 'delivered')->count();
         $revenue = Invoice::where('seller_id', auth()->guard('seller')->id())
             ->sum('revenue');
-
         $revenues = Invoice::select('seller_id', DB::raw('SUM(revenue) as revenue'))
             ->groupBy('seller_id')
             ->orderBy('revenue', 'desc')
@@ -106,7 +106,21 @@ class DashboardController extends Controller
         }
 
 
-        return view('seller.dashboard', compact('leads', 'approvedLeadsCount', 'deliveredLeadsCount', 'revenue', 'sellers', 'leads_count', 'orders_count', 'admin'));
+        $orders = Order::where('seller_id', auth()->user()->id)->with('lead')->get();
+
+        $products = $orders->map(function ($order) {
+            $sku = $order->lead->item_sku;
+            // Find the product in SharedProduct or AffiliateProduct
+            $product = SharedProduct::where('sku', $sku)->first() ?: AffiliateProduct::where('sku', $sku)->first();
+            return $product;
+        })->unique(function ($product) {
+            return $product->sku; // Assuming 'sku' is the attribute that should be unique
+        });
+
+        // If you need an array instead of a collection, you can convert it
+        $products = $products->filter()->values()->all();
+
+        return view('seller.dashboard', compact('leads', 'approvedLeadsCount', 'deliveredLeadsCount', 'revenue', 'sellers', 'leads_count', 'orders_count', 'admin', 'products'));
     }
 
     public function filter(Request $request)

@@ -68,10 +68,10 @@
                                                 <option value="canceled" @if ($order->shipment_status === 'canceled') selected @endif>
                                                     {{ __('site.Canceled') }}</option>
                                                 <option value="balance" @if ($order->shipment_status === 'balance') selected @endif>
-                                                    {{ __('site.balance') }}</option>
+                                                    {{ __('site.Balance') }}</option>
                                                 <option value="in transit"
                                                     @if ($order->shipment_status === 'in transit') selected @endif>
-                                                    {{ __('site.balance') }}</option>
+                                                    {{ __('site.InTransit') }}</option>
                                                 <option value="out for delivery"
                                                     @if ($order->shipment_status === 'out for delivery') selected @endif>
                                                     {{ __('site.OutforDelivery') }}</option>

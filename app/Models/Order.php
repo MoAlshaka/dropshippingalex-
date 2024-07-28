@@ -15,9 +15,11 @@ class Order extends Model
         'calls',
         'lead_id',
         'seller_id',
+        'quantity',
     ];
 
-    public function lead(){
+    public function lead()
+    {
         return $this->belongsTo(Lead::class);
     }
     public function seller()
@@ -25,7 +27,8 @@ class Order extends Model
         return $this->belongsTo(Seller::class);
     }
 
-    public function shippingdetails(){
+    public function shippingdetails()
+    {
         return $this->hasMany(Shippingdetail::class);
     }
 }

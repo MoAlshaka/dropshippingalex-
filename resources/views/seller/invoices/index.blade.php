@@ -98,8 +98,10 @@
 
 
                             </div>
-                            <button type="submit" class="btn btn-primary waves-effect waves-light">filter</button>
-                            <button type="reset" class="btn btn-outline-danger waves-effect">reset</button>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                {{ __('site.Filter') }}</button>
+                            <button type="reset" class="btn btn-outline-danger waves-effect">
+                                {{ __('site.Reset') }}</button>
                         </form>
                     </div>
                 </div>
@@ -183,7 +185,7 @@
     <!-- Vendors JS -->
     <script src="{{ asset('assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
+
     <script src="{{ asset('assets/vendor/libs/pickr/pickr.js') }}"></script>
     <!-- Main JS -->
     <script src="{{ asset('assets/js/main.js') }}"></script>

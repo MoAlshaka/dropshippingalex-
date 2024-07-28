@@ -8,43 +8,42 @@
 
 @section('css')
     <style>
-        #account_number, label[for='account_number'] {
+        #account_number,
+        label[for='account_number'] {
             display: none;
         }
-
     </style>
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}"/>
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}" />
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&ampdisplay=swap"
-          rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&ampdisplay=swap" rel="stylesheet" />
 
     <!-- Icons -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/materialdesignicons.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/flag-icons.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/materialdesignicons.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/flag-icons.css') }}" />
 
     <!-- Menu waves for no-customizer fix -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/node-waves/node-waves.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/node-waves/node-waves.css') }}" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/core.css') }}" class="template-customizer-core-css"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/core.css') }}" class="template-customizer-core-css" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/theme-default.css') }}"
-          class="template-customizer-theme-css"/>
-    <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}"/>
+        class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/@form-validation/form-validation.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/@form-validation/form-validation.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/animate-css/animate.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
 
     <!-- Page CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/page-auth.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/page-auth.css') }}" />
     <!-- Helpers -->
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
@@ -71,22 +70,20 @@
 
                     <div class="card-body pt-2 mt-1">
                         <form id="formAccountSettings" method="POST"
-                              action="{{ route('seller.update.profile', Auth::guard('seller')->user()->id) }}"
-                              enctype="multipart/form-data">
+                            action="{{ route('seller.update.profile', Auth::guard('seller')->user()->id) }}"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
                                 <div class="d-flex align-items-start align-items-sm-center gap-4">
-                                    <img
-                                        src="{{ asset('assets/sellers/images/' . Auth::guard('seller')->user()->image) }}"
-                                        alt="user-avatar" class="d-block w-px-120 h-px-120 rounded"
-                                        id="uploadedAvatar"/>
+                                    <img src="{{ asset('assets/sellers/images/' . Auth::guard('seller')->user()->image) }}"
+                                        alt="user-avatar" class="d-block w-px-120 h-px-120 rounded" id="uploadedAvatar" />
                                     <div class="button-wrapper">
                                         <label for="upload" class="btn btn-primary me-2 mb-3" tabindex="0">
                                             <span class="d-none d-sm-block"> {{ __('site.UploadImage') }}</span>
                                             <i class="mdi mdi-tray-arrow-up d-block d-sm-none"></i>
                                             <input type="file" name="image" id="upload" class="account-file-input"
-                                                   hidden accept="image/png, image/jpeg"/>
+                                                hidden accept="image/png, image/jpeg" />
                                         </label>
                                         <button type="button" class="btn btn-outline-danger account-image-reset mb-3">
                                             <i class="mdi mdi-reload d-block d-sm-none"></i>
@@ -101,57 +98,67 @@
                                 <div class="col-md-6">
                                     <div class="form-floating form-floating-outline">
                                         <input class="form-control" type="text" id="firstName" name="first_name"
-                                               value="{{ Auth::guard('seller')->user()->first_name }}" autofocus/>
+                                            value="{{ Auth::guard('seller')->user()->first_name }}" autofocus />
                                         <label for="firstName"> {{ __('site.FirstName') }}</label>
                                     </div>
                                 </div>
                                 @error('first_name')
-                                <div class="text-danger mb-3">{{ $message }}</div>
+                                    <div class="text-danger mb-3">{{ $message }}</div>
                                 @enderror
                                 <div class="col-md-6">
                                     <div class="form-floating form-floating-outline">
                                         <input class="form-control" type="text" id="lastName" name="last_name"
-                                               value="{{ Auth::guard('seller')->user()->last_name }}" autofocus/>
+                                            value="{{ Auth::guard('seller')->user()->last_name }}" autofocus />
                                         <label for="lastName"> {{ __('site.LastName') }}</label>
                                     </div>
                                 </div>
                                 @error('last_name')
-                                <div class="text-danger mb-3">{{ $message }}</div>
+                                    <div class="text-danger mb-3">{{ $message }}</div>
                                 @enderror
                                 <div class="col-md-6">
                                     <div class="form-floating form-floating-outline">
                                         <input class="form-control" type="text" id="email" name="email"
-                                               value="{{ Auth::guard('seller')->user()->email }}" placeholder="E-mail"/>
+                                            value="{{ Auth::guard('seller')->user()->email }}" placeholder="E-mail" />
                                         <label for="email"> {{ __('site.Email') }}</label>
                                     </div>
                                 </div>
                                 @error('email')
-                                <div class="text-danger mb-3">{{ $message }}</div>
+                                    <div class="text-danger mb-3">{{ $message }}</div>
                                 @enderror
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="input-group input-group-merge">
                                         <div class="form-floating form-floating-outline">
                                             <input type="text" id="phoneNumber" name="phone" class="form-control"
-                                                   value="{{ Auth::guard('seller')->user()->phone }}"
-                                                   placeholder="phoneNumber"/>
+                                                value="{{ Auth::guard('seller')->user()->phone }}"
+                                                placeholder="phoneNumber" />
                                             <label for="phoneNumber"> {{ __('site.Phone') }} </label>
                                         </div>
 
                                     </div>
                                 </div>
                                 @error('phone')
-                                <div class="text-danger mb-3">{{ $message }}</div>
+                                    <div class="text-danger mb-3">{{ $message }}</div>
+                                @enderror --}}
+                                <div class="col-md-6">
+                                    <div class="form-floating form-floating-outline">
+                                        <input type="text" class="form-control" id="phone" name="phone"
+                                            placeholder="{{ __('site.Phone') }}"
+                                            value="{{ Auth::guard('seller')->user()->phone }}" />
+                                        <label for="phone"> {{ __('site.Phone') }}</label>
+                                    </div>
+                                </div>
+                                @error('phone')
+                                    <div class="text-danger mb-3">{{ $message }}</div>
                                 @enderror
                                 <div class="col-md-6">
                                     <div class="form-floating form-floating-outline">
                                         <input type="text" class="form-control" id="address" name="address"
-                                               placeholder="Address"
-                                               value="{{ Auth::guard('seller')->user()->address }}"/>
+                                            placeholder="Address" value="{{ Auth::guard('seller')->user()->address }}" />
                                         <label for="address"> {{ __('site.Address') }}</label>
                                     </div>
                                 </div>
                                 @error('address')
-                                <div class="text-danger mb-3">{{ $message }}</div>
+                                    <div class="text-danger mb-3">{{ $message }}</div>
                                 @enderror
 
 
@@ -172,8 +179,7 @@
 
                     <div class="card-body pt-2 mt-1">
                         <form id="PaymentSettings" method="POST"
-                              action="{{ route('seller.update.payment', Auth::guard('seller')->user()->id) }}"
-                        >
+                            action="{{ route('seller.update.payment', Auth::guard('seller')->user()->id) }}">
                             @csrf
                             @method('PUT')
 
@@ -182,17 +188,14 @@
                                 <div class="col-md-12">
                                     <div class="form-floating form-floating-outline">
                                         <select id="multiStepsState" class="form-select form-select-lg"
-                                                data-allow-clear="true"
-                                                name="payment_method">
+                                            data-allow-clear="true" name="payment_method">
 
                                             <option value="">{{ __('site.SelectPaymentMethod') }}
                                             </option>
-                                            <option value="vodafone"
-                                                    @if (Auth::guard('seller')->user()->payment_method ==="vodafone") selected @endif>
+                                            <option value="vodafone" @if (Auth::guard('seller')->user()->payment_method === 'vodafone') selected @endif>
                                                 vodafone Cash
                                             </option>
-                                            <option value="payoneer"
-                                                    @if (Auth::guard('seller')->user()->payment_method ==="payoneer") selected @endif>
+                                            <option value="payoneer" @if (Auth::guard('seller')->user()->payment_method === 'payoneer') selected @endif>
                                                 payoneer
                                             </option>
 
@@ -201,20 +204,20 @@
                                     </div>
                                 </div>
                                 @error('payment_method')
-                                <div class="text-danger mb-3">{{ $message }}</div>
+                                    <div class="text-danger mb-3">{{ $message }}</div>
                                 @enderror
 
                                 <div class="col-md-12">
                                     <div class="form-floating form-floating-outline">
                                         <input type="text" class="form-control" id="account_number"
-                                               data-account="{{Auth::guard('seller')->user()->account}}"
-                                               name="account" placeholder="{{ __('site.Account') }}"
-                                               value="{{ Auth::guard('seller')->user()->account }}"/>
+                                            data-account="{{ Auth::guard('seller')->user()->account }}" name="account"
+                                            placeholder="{{ __('site.Account') }}"
+                                            value="{{ Auth::guard('seller')->user()->account }}" />
                                         <label for="account_number"> {{ __('site.Account') }}</label>
                                     </div>
                                 </div>
                                 @error('account')
-                                <div class="text-danger mb-3">{{ $message }}</div>
+                                    <div class="text-danger mb-3">{{ $message }}</div>
                                 @enderror
 
 
@@ -229,74 +232,71 @@
                 </div>
             </div>
         </div>
-
-
-        @endsection
+    @endsection
 
 
 
 
-        @section('js')
-            <script src="{{ asset('assets/vendor/libs/jquery/jquery.js') }}"></script>
-            <script src="{{ asset('assets/vendor/libs/popper/popper.js') }}"></script>
-            <script src="{{ asset('assets/vendor/js/bootstrap.js') }}"></script>
-            <script src="{{ asset('assets/vendor/libs/node-waves/node-waves.js') }}"></script>
-            <script src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
-            <script src="{{ asset('assets/vendor/libs/hammer/hammer.js') }}"></script>
-            <script src="{{ asset('assets/vendor/libs/i18n/i18n.js') }}"></script>
-            <script src="{{ asset('assets/vendor/libs/typeahead-js/typeahead.js') }}"></script>
-            <script src="{{ asset('assets/vendor/js/menu.js') }}"></script>
+    @section('js')
+        <script src="{{ asset('assets/vendor/libs/jquery/jquery.js') }}"></script>
+        <script src="{{ asset('assets/vendor/libs/popper/popper.js') }}"></script>
+        <script src="{{ asset('assets/vendor/js/bootstrap.js') }}"></script>
+        <script src="{{ asset('assets/vendor/libs/node-waves/node-waves.js') }}"></script>
+        <script src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+        <script src="{{ asset('assets/vendor/libs/hammer/hammer.js') }}"></script>
+        <script src="{{ asset('assets/vendor/libs/i18n/i18n.js') }}"></script>
+        <script src="{{ asset('assets/vendor/libs/typeahead-js/typeahead.js') }}"></script>
+        <script src="{{ asset('assets/vendor/js/menu.js') }}"></script>
 
-            <!-- endbuild -->
+        <!-- endbuild -->
 
-            <!-- Vendors JS -->
-            <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
-            {{-- <script src="{{ asset('assets/vendor/libs/@form-validation/popular.js') }}"></script>
+        <!-- Vendors JS -->
+        <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
+        {{-- <script src="{{ asset('assets/vendor/libs/@form-validation/popular.js') }}"></script>
             <script src="{{ asset('assets/vendor/libs/@form-validation/bootstrap5.js') }}"></script>
             <script src="{{ asset('assets/vendor/libs/@form-validation/auto-focus.js') }}"></script> --}}
-            <script src="{{ asset('assets/vendor/libs/cleavejs/cleave.js') }}"></script>
-            <script src="{{ asset('assets/vendor/libs/cleavejs/cleave-phone.js') }}"></script>
-            <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
+        <script src="{{ asset('assets/vendor/libs/cleavejs/cleave.js') }}"></script>
+        <script src="{{ asset('assets/vendor/libs/cleavejs/cleave-phone.js') }}"></script>
+        <script src="{{ asset('assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 
-            <!-- Main JS -->
-            <script src="{{ asset('assets/js/main.js') }}"></script>
+        <!-- Main JS -->
+        <script src="{{ asset('assets/js/main.js') }}"></script>
 
-            <!-- Page JS -->
-            <script src="{{ asset('assets/js/pages-account-settings-account.js') }}"></script>
-            <script src="{{ asset('assets/js/pages-auth-multisteps.js') }}"></script>
-            <script>
-                const selectionPaymentMethod = document.getElementById("multiStepsState")
-                const accountNumber = document.getElementById("account_number")
-                const accountNumberLabel = document.querySelector("label[for='account_number']")
-                const account = document.getElementById("account_number").getAttribute("data-account");
+        <!-- Page JS -->
+        <script src="{{ asset('assets/js/pages-account-settings-account.js') }}"></script>
+        <script src="{{ asset('assets/js/pages-auth-multisteps.js') }}"></script>
+        <script>
+            const selectionPaymentMethod = document.getElementById("multiStepsState")
+            const accountNumber = document.getElementById("account_number")
+            const accountNumberLabel = document.querySelector("label[for='account_number']")
+            const account = document.getElementById("account_number").getAttribute("data-account");
 
-                if (account) {
+            if (account) {
+                accountNumber.style.display = "block";
+                accountNumberLabel.style.display = "block";
+                // accountNumberLabel.innerText = "Phone Number";
+                accountNumber.value = account;
+
+            }
+
+            selectionPaymentMethod.addEventListener("change", (event) => {
+                if (event.target.selectedOptions[0].value === "vodafone") {
                     accountNumber.style.display = "block";
                     accountNumberLabel.style.display = "block";
-                    // accountNumberLabel.innerText = "Phone Number";
-                    accountNumber.value = account;
+                    accountNumberLabel.innerText = "Phone Number";
+                    accountNumber.value = "";
+                } else if (event.target.selectedOptions[0].value === "payoneer") {
+                    accountNumber.style.display = "block";
+                    accountNumberLabel.style.display = "block";
+                    accountNumberLabel.innerText = "Email";
+                    accountNumber.value = "";
+                } else {
+                    accountNumber.style.display = "none";
+                    accountNumberLabel.style.display = "none";
+                    accountNumber.value = "";
+
 
                 }
-
-                selectionPaymentMethod.addEventListener("change", (event) => {
-                    if (event.target.selectedOptions[0].value === "vodafone") {
-                        accountNumber.style.display = "block";
-                        accountNumberLabel.style.display = "block";
-                        accountNumberLabel.innerText = "Phone Number";
-                        accountNumber.value = "";
-                    } else if (event.target.selectedOptions[0].value === "payoneer") {
-                        accountNumber.style.display = "block";
-                        accountNumberLabel.style.display = "block";
-                        accountNumberLabel.innerText = "Email";
-                        accountNumber.value = "";
-                    } else {
-                        accountNumber.style.display = "none";
-                        accountNumberLabel.style.display = "none";
-                        accountNumber.value = "";
-
-
-                    }
-                })
-
-            </script>
-@endsection
+            })
+        </script>
+    @endsection

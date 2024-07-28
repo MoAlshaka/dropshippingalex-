@@ -1,11 +1,7 @@
 <!doctype html>
-<html
-    lang="en"
-    class="light-style layout-navbar-fixed layout-menu-fixed layout-compact"
-    dir="{{ LaravelLocalization::getCurrentLocaleDirection() }}"
-    data-theme="theme-default"
-    data-assets-path="{{asset('assets').'/'}}"
-    data-template="vertical-menu-template">
+<html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact"
+    dir="{{ LaravelLocalization::getCurrentLocaleDirection() }}" data-theme="theme-default"
+    data-assets-path="{{ asset('assets') . '/' }}" data-template="vertical-menu-template">
 
 <head>
     <meta charset="utf-8" />
@@ -110,6 +106,9 @@
                     <!-- /Logo -->
                     <!-- Reset Password -->
                     <div class="card-body">
+                        @if (session()->has('Add'))
+                            <div class="alert alert-success" role="alert">{{ session()->get('Add') }}</div>
+                        @endif
                         <h4 class="mb-2"> {{ __('site.ResetPassword') }} 🔒</h4>
                         <p class="mb-4"> {{ __('site.ResetPasswordText') }}</p>
                         <form id="formAuthentication" class="mb-3"
