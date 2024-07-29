@@ -125,7 +125,7 @@
                                 </div>
                                 <div class=" mb-4">
                                     <div class="form-floating form-floating-outline">
-                                        <select name="admin_id" id="admin_id" class="selectpicker w-100"
+                                        <select name="manger_id[]" id="manger_id" class="selectpicker w-100"
                                             data-style="btn-default" multiple data-actions-box="true">
                                             @isset($admins)
                                                 @foreach ($admins as $admin)
@@ -133,12 +133,12 @@
                                                 @endforeach
                                             @endisset
                                         </select>
-                                        <label for="admin_id">{{ __('site.Manger') }}</label>
+                                        <label for="manger_id">{{ __('site.Manger') }}</label>
                                     </div>
                                 </div>
                                 <div class=" mb-4">
                                     <div class="form-floating form-floating-outline">
-                                        <select name="seller_id" id="seller_id" class="selectpicker w-100"
+                                        <select name="seller_id[]" id="seller_id" class="selectpicker w-100"
                                             data-style="btn-default" multiple data-actions-box="true">
                                             @isset($sellers)
                                                 @foreach ($sellers as $seller)
@@ -328,13 +328,13 @@
                     <svg viewBox="0 0 36 36" class="circular-chart orange">
                         <path class="circle-bg"
                             d="M18 2.0845
-                                                                                                    a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                                                                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
                         <!-- place the 60 in the stroke-dasharray with the persentage -->
                         <path class="circle" stroke-dasharray="{{ $delivered_rate }}, 100"
                             d="M18 2.0845
-                                                                                                    a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                                                                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
                     </svg>
                 </div>
                 <div class="flex flex-col justify-center px-4 ">
@@ -355,13 +355,13 @@
                     <svg viewBox="0 0 36 36" class="circular-chart green">
                         <path class="circle-bg"
                             d="M18 2.0845
-                                                                                                    a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                                                                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
                         <!-- place the 60 in the stroke-dasharray with the persentage -->
                         <path class="circle" stroke-dasharray="{{ $confirmed_rate }}, 100"
                             d="M18 2.0845
-                                                                                                    a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                                                                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
                     </svg>
                 </div>
                 <div class="flex flex-col justify-center px-4 ">

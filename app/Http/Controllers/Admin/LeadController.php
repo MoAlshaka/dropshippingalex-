@@ -79,14 +79,18 @@ class LeadController extends Controller
         $request->validate([
             'ref' => 'required|max:50'
         ]);
+        $countries = Country::all();
+        $status = Lead::distinct()->pluck('status');
+        $types = Lead::distinct()->pluck('type');
         $leads = Lead::where('store_reference', $request->ref)->orderBy('id', 'DESC')->paginate(COUNT);
-        return view('admin.leads.index', compact('leads'));
+        return view('admin.leads.index', compact('leads', 'countries', 'status', 'types'));
+        // return redirect()->route('admin.leads.index', compact('leads', 'countries', 'status', 'types'));
     }
 
     public function filter(Request $request)
     {
 
-        $query = Lead::query();
+        // $query = Lead::query();
 
         if ($request->has('created_at') && $request->created_at != '') {
             $dates = explode(' - ', $request->created_at);
@@ -97,29 +101,37 @@ class LeadController extends Controller
                 $end_date = \Carbon\Carbon::createFromFormat('m/d/Y', trim($dates[1]))->format('Y-m-d');
 
                 // Apply the whereBetween condition on the 'order_date' column
-                $query->whereBetween('order_date', [$start_date, $end_date]);
+                // $query->orWhereBetween('order_date', [$start_date, $end_date]);
             }
         }
 
+        $leads = Lead::orWhereIn('warehouse', $request->warehouse ?? [])
+            ->orWhereIn('country', $request->country ?? [])
+            ->orWhereIn('status', $request->status ?? [])
+            ->orWhereIn('type', $request->type ?? [])
+            ->orWhereBetween('order_date', [$start_date, $end_date])
+            ->orderBy('id', 'DESC')->paginate(COUNT);
 
-        if ($request->has('warehouse') && $request->warehouse != '') {
-            $query->orWhereIn('warehouse', $request->warehouse);
-        }
 
-        if ($request->has('country') && $request->country != '') {
-            $query->orWhereIn('customer_country', $request->country);
-        }
-        if ($request->has('status') && $request->status != '') {
-            $query->orWhereIn('status', $request->status);
-        }
-        if ($request->has('type') && $request->type != '') {
-            $query->orWhereIn('type', $request->type);
-        }
+        // if ($request->has('warehouse') && $request->warehouse != '') {
+        //     $query->orWhereIn('warehouse', $request->warehouse);
+        // }
 
-        $leads = $query->orderBy('id', 'DESC')->paginate(COUNT); // Replace 10 with your desired number of items per page
+        // if ($request->has('country') && $request->country != '') {
+        //     $query->orWhereIn('country', $request->country);
+        // }
+        // if ($request->has('status') && $request->status != '') {
+        //     $query->orWhereIn('status', $request->status);
+        // }
+        // if ($request->has('type') && $request->type != '') {
+        //     $query->orWhereIn('type', $request->type);
+        // }
+
+        // $leads = $query->orderBy('id', 'DESC')->paginate(COUNT); // Replace 10 with your desired number of items per page
         $countries = Country::all();
         $status = Lead::distinct()->pluck('status');
         $types = Lead::distinct()->pluck('type');
+        // return redirect()->route('admin.leads.index', compact('leads', 'countries', 'status', 'types'));
         return view('admin.leads.index', compact('leads', 'countries', 'status', 'types'));
     }
 }

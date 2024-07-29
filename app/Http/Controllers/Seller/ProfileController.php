@@ -27,11 +27,12 @@ class ProfileController extends Controller
             'email' => 'required|email|max:50',
             'address' => 'required|max:250',
             'phone' => 'required|max:50',
-            'image' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
+            'image' => 'nullable|mimes:png,jpg,jpeg|max:2048',
 
         ]);
+
         $seller = Seller::findorfail($id);
-        $exists = Seller::where('id', '!=', $id)->first();
+        $exists = Seller::where('email', $request->email)->where('id', '!=', $id)->first();
         if ($exists) {
             return redirect()->back()->with(['Delete' => 'Email already exists']);
         }

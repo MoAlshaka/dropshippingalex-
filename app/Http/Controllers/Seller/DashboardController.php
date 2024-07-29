@@ -24,8 +24,8 @@ class DashboardController extends Controller
         $leads = Lead::where('seller_id', auth()->guard('seller')->id())->count();
         $approvedLeadsCount = Lead::where('seller_id', auth()->guard('seller')->id())->where('status', 'confirmed')->count();
         $deliveredLeadsCount = Order::where('seller_id', auth()->guard('seller')->id())->where('shipment_status', 'delivered')->count();
-        $revenue = Invoice::where('seller_id', auth()->guard('seller')->id())
-            ->sum('revenue');
+
+
         $revenues = Invoice::select('seller_id', DB::raw('SUM(revenue) as revenue'))
             ->groupBy('seller_id')
             ->orderBy('revenue', 'desc')
@@ -119,7 +119,7 @@ class DashboardController extends Controller
 
         // If you need an array instead of a collection, you can convert it
         $products = $products->filter()->values()->all();
-
+        $revenue = Invoice::where('seller_id', auth()->guard('seller')->id())->sum('revenue');
         return view('seller.dashboard', compact('leads', 'approvedLeadsCount', 'deliveredLeadsCount', 'revenue', 'sellers', 'leads_count', 'orders_count', 'admin', 'products'));
     }
 

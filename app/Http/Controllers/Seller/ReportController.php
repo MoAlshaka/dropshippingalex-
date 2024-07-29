@@ -196,10 +196,12 @@ class ReportController extends Controller
         // Calculate total commission
         $orders = Order::whereIn('lead_id', $lead_confirmed)->where('shipment_status', 'delivered')->get();
         $total_commission = 0;
+        $total_quantity = 0;
         if ($orders) {
             foreach ($orders as $order) {
                 $quantity = Lead::where('id', $order->lead_id)->pluck('quantity')->first();
                 $total_commission += AffiliateProduct::where('sku', $order->lead->item_sku)->pluck('commission')->first()  * $quantity;
+                $total_quantity += $quantity;
             }
         }
 
@@ -228,7 +230,7 @@ class ReportController extends Controller
 
         // Calculate average commission
         if ($confirmed > 0) {
-            $average_commission = $total_commission / $confirmed;
+            $average_commission = $total_commission / $total_quantity;
         }
 
         // Return view with compacted variables
@@ -308,10 +310,10 @@ class ReportController extends Controller
 
             // Retrieve leads and orders for the current SKU
             $leadsCount = Lead::where('item_sku', $sku)->count();
-            $leadIds = Lead::where('item_sku', $sku)->pluck('id');
+            $leadIds = Lead::where('seller_id', $sellerId)->where('item_sku', $sku)->pluck('id');
 
             // Retrieve order counts by status
-            $confirmed = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'approved')->count();
+            $confirmed = Lead::whereIn('id', $leadIds)->where('status', 'confirmed')->count();
             $cancelled = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'canceled')->count();
             $balance = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'balance')->count();
             $shipped = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'shipping')->count();
@@ -408,7 +410,7 @@ class ReportController extends Controller
         }
 
         // Retrieve unique shared SKUs for the seller
-        $sharedSkus = Lead::where('seller_id', $sellerId)->where('type', 'regular')->distinct()->pluck('item_sku');
+        $sharedSkus = Lead::where('seller_id', $sellerId)->where('type', 'regular')->whereBetween('created_at', [$start_date, $end_date])->distinct()->pluck('item_sku');
 
         // Retrieve shared products
         $sharedProducts = SharedProduct::whereIn('sku', $sharedSkus)->get();
@@ -475,7 +477,7 @@ class ReportController extends Controller
         $sellerId = auth()->guard('seller')->user()->id;
 
         // Retrieve leads for the seller
-        $leads = Lead::where('seller_id', $sellerId)->where('type', 'commission')->count();
+
         $lead_ids = Lead::where('seller_id', $sellerId)->where('type', 'commission')->pluck('id');
         // Retrieve order statuses for the leads
 
@@ -489,6 +491,7 @@ class ReportController extends Controller
             }
         }
 
+        $leads = Lead::where('seller_id', $sellerId)->where('type', 'commission')->whereBetween('created_at', [$start_date, $end_date])->count();
 
 
         $under_process = Order::where('seller_id', $sellerId)->whereIn('lead_id', $lead_ids)->where('shipment_status', 'pending')->whereBetween('created_at', [$start_date, $end_date])->count();

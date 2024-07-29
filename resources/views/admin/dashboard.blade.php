@@ -213,7 +213,7 @@
 
                                 </span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{ $revenue }}</span>
+                            <span class="text-gray-600 text-3xl font-bold">{{ $pendingLeadsCount }}</span>
                         </div>
                     </div>
                 </div>

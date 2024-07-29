@@ -289,6 +289,7 @@ return [
     'Invoices' => 'Invoices',
     'EditInvoices' => 'Edit Invoices',
     'By' => 'By',
+    'Wieght' => 'Wieght',
 
 
 

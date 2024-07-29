@@ -111,8 +111,8 @@
                                 </div>
                                 <div class=" mb-4">
                                     <div class="form-floating form-floating-outline">
-                                        <select id="status[]" class="selectpicker w-100" data-style="btn-default" multiple
-                                            data-actions-box="true">
+                                        <select name="status[]" id="status" class="selectpicker w-100"
+                                            data-style="btn-default" multiple data-actions-box="true">
                                             @isset($status)
                                                 @foreach ($status as $info)
                                                     <option value="{{ $info }}">{{ $info }}</option>
@@ -170,7 +170,9 @@
                             <button type="submit" class="btn btn-primary btn-next btn-submit ms-2">
                                 {{ __('site.Search') }}</button>
                         </div>
-
+                        @error('ref')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </form>
                 </div>
 

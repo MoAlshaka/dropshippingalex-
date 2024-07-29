@@ -109,19 +109,7 @@
                                         <label for="country">{{ __('site.Country') }}</label>
                                     </div>
                                 </div>
-                                <div class=" mb-4">
-                                    <div class="form-floating form-floating-outline">
-                                        <select id="status[]" class="selectpicker w-100" data-style="btn-default" multiple
-                                            data-actions-box="true">
-                                            @isset($status)
-                                                @foreach ($status as $info)
-                                                    <option value="{{ $info }}">{{ $info }}</option>
-                                                @endforeach
-                                            @endisset
-                                        </select>
-                                        <label for="status">{{ __('site.Status') }}</label>
-                                    </div>
-                                </div>
+
                                 <div class=" mb-4">
                                     <div class="form-floating form-floating-outline">
                                         <select name="type[]" id="type" class="selectpicker w-100"
@@ -137,7 +125,7 @@
                                 </div>
                                 <div class=" mb-4">
                                     <div class="form-floating form-floating-outline">
-                                        <select name="shipment_status[]" id="type" class="selectpicker w-100"
+                                        <select name="shipment_status[]" id="shipment_status" class="selectpicker w-100"
                                             data-style="btn-default" multiple data-actions-box="true">
                                             @isset($shipment_status)
                                                 @foreach ($shipment_status as $info)
@@ -150,7 +138,7 @@
                                 </div>
                                 <div class=" mb-4">
                                     <div class="form-floating form-floating-outline">
-                                        <select name="payment_status[]" id="type" class="selectpicker w-100"
+                                        <select name="payment_status[]" id="payment_status" class="selectpicker w-100"
                                             data-style="btn-default" multiple data-actions-box="true">
                                             @isset($payment_status)
                                                 @foreach ($payment_status as $info)
@@ -198,6 +186,9 @@
                             <button type="submit" class="btn btn-primary btn-next btn-submit ms-2">
                                 {{ __('site.Search') }}</button>
                         </div>
+                        @error('ref')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
 
                     </form>
                 </div>

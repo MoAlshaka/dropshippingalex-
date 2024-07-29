@@ -31,11 +31,10 @@ class OrderController extends Controller
     {
         $orders = Order::orderBy('id', 'DESC')->paginate(COUNT);
         $countries = Country::all();
-        $status = Lead::distinct()->pluck('status');
         $types = Lead::distinct()->pluck('type');
         $shipment_status = Order::distinct()->pluck('shipment_status');
         $payment_status = Order::distinct()->pluck('payment_status');
-        return view('admin.orders.index', compact('orders', 'countries', 'status', 'types', 'shipment_status', 'payment_status'));
+        return view('admin.orders.index', compact('orders', 'countries', 'types', 'shipment_status', 'payment_status'));
     }
 
     /**
@@ -213,7 +212,11 @@ class OrderController extends Controller
         ]);
         $leads = Lead::where('store_reference', $request->ref)->pluck('id');
         $orders = Order::whereIn('lead_id', $leads)->orderBy('id', 'DESC')->paginate(COUNT);
-        return view('admin.orders.index', compact('orders'));
+        $countries = Country::all();
+        $types = Lead::distinct()->pluck('type');
+        $shipment_status = Order::distinct()->pluck('shipment_status');
+        $payment_status = Order::distinct()->pluck('payment_status');
+        return view('admin.orders.index', compact('orders', 'countries',  'types', 'shipment_status', 'payment_status'));
     }
     public function filter(Request $request)
     {
@@ -253,7 +256,7 @@ class OrderController extends Controller
             $query->orWhereIn('lead_id', $leads);
         }
         if ($request->has('shipment_status') && $request->shipment_status != '') {
-            $query->orWhereIn('shipment_status', $request->type);
+            $query->orWhereIn('shipment_status', $request->shipment_status);
         }
         if ($request->has('payment_status') && $request->payment_status != '') {
             $query->orWhereIn('payment_status', $request->payment_status);
@@ -261,10 +264,10 @@ class OrderController extends Controller
 
         $orders = $query->orderBy('id', 'DESC')->paginate(COUNT); // Replace 10 with your desired number of items per page
         $countries = Country::all();
-        $status = Lead::distinct()->pluck('status');
+
         $types = Lead::distinct()->pluck('type');
         $shipment_status = Order::distinct()->pluck('shipment_status');
         $payment_status = Order::distinct()->pluck('payment_status');
-        return view('admin.orders.index', compact('orders', 'countries', 'status', 'types', 'shipment_status', 'payment_status'));
+        return view('admin.orders.index', compact('orders', 'countries', 'types', 'shipment_status', 'payment_status'));
     }
 }

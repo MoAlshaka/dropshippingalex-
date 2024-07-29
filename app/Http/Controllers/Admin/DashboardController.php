@@ -39,8 +39,9 @@ class DashboardController extends Controller
 
 
         $leads = Lead::count();
-        $approvedLeadsCount = Lead::where('status', 'approved')->count();
-        $deliveredLeadsCount = Lead::where('status', 'delivered')->count();
+        $approvedLeadsCount = Lead::where('status', 'confirmed')->count();
+        $deliveredLeadsCount = Order::where('shipment_status', 'delivered')->count();
+        $pendingLeadsCount = Lead::where('status', 'pending')->count();
         $revenue = 0;
         $revenues = Invoice::select('seller_id', DB::raw('SUM(revenue) as revenue'))
             ->groupBy('seller_id')
@@ -57,6 +58,9 @@ class DashboardController extends Controller
             $query->where('name', 'Owner');
         })->get();
         $allSellers = Seller::orderby('id', 'desc')->get();
+
+
+
         // charts
 
         $minMaxDates = Lead::selectRaw('MIN(order_date) as min_date, MAX(order_date) as max_date')->first();
@@ -111,7 +115,7 @@ class DashboardController extends Controller
             $orders_count[] = (object)['date' => $date, 'count' => $count];
         }
 
-        return view('admin.dashboard', compact('leads', 'approvedLeadsCount', 'deliveredLeadsCount', 'revenue', 'sellers', 'leads_count', 'orders_count', 'allSellers', 'admins'));
+        return view('admin.dashboard', compact('leads', 'pendingLeadsCount', 'approvedLeadsCount', 'deliveredLeadsCount', 'revenue', 'sellers', 'leads_count', 'orders_count', 'allSellers', 'admins'));
     }
 
 

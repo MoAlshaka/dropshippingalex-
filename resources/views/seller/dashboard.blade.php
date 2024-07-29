@@ -185,7 +185,7 @@
 
                                 </span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{ $revenue->revenue }}</span>
+                            <span class="text-gray-600 text-3xl font-bold">{{ $revenue }}</span>
                         </div>
                     </div>
                 </div>

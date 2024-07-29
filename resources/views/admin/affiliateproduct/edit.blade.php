@@ -136,7 +136,7 @@
                             @enderror
 
                             <!-- Comment -->
-                            <div id="summernote">{{ __('site.Description') }}</div>
+                            <div id="summernote">{!! $product->description !!}</div>
                             {{-- <div>
                                 <label class="form-label">{{ __('site.Description') }}</label>
                                 <div class="form-control p-0 pt-1" id="data-desc"

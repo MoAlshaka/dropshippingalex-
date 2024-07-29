@@ -191,7 +191,7 @@
                         <h3 class="text-md text-gray-500  font-bold mr-6 lg:mr-2">
                             {{ __('site.Manger') }}:
                         </h3>
-                        <span class="text-black">{{ $seller->admin->name ?? '' }}</span>
+                        <span class="text-black">{{ $seller->manger->name ?? '' }}</span>
                     </div>
                 </div>
             </div>
