@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Models\Seller;
+use App\Models\Invoice;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +19,9 @@ class TransactionController extends Controller
     public function index()
     {
         $transactions = Transaction::orderBy('id', 'DESC')->paginate(COUNT);
-        return view('admin.transactions.index', compact('transactions'));
+        $sellers = Seller::where('is_active', 1)->get();
+
+        return view('admin.transactions.index', compact('transactions', 'sellers'));
     }
 
     /**
@@ -40,9 +44,19 @@ class TransactionController extends Controller
             'account' => $request->account,
             'amount' => $request->amount,
             'status' => $request->status,
+            'created_at' => date('Y-m-d H:i:s'),
             'admin_id' => auth()->guard('admin')->user()->id,
         ]);
-        $user->notify(new CreateTransaction($transaction->amount, $transaction->status, $transaction->payment_method, $transaction->account_number));
+        if ($transaction) {
+            $user->notify(new CreateTransaction($transaction->amount, $transaction->status, $transaction->payment_method, $transaction->account_number));
+            Invoice::create([
+                'seller_id' => $request->seller_id,
+                'revenue' => $request->amount,
+                'date' => date('Y-m-d'),
+                'created_at' => date('Y-m-d H:i:s'),
+                'status' => $request->status,
+            ]);
+        }
         return redirect()->route('transactions.index')->with(['Add' => 'Add Transaction Successfully']);
     }
 
@@ -119,5 +133,28 @@ class TransactionController extends Controller
 
 
         return response()->json($data);
+    }
+
+
+    public function filter(Request $request)
+    {
+        $start_date = '';
+        $end_date = '';
+        if ($request->has('date') && $request->date != '') {
+            $dates = explode(' - ', $request->date);
+
+            // Ensure both start and end dates are available
+            if (count($dates) === 2) {
+                $start_date = Carbon::createFromFormat('m/d/Y', $dates[0])->startOfDay();
+                $end_date = Carbon::createFromFormat('m/d/Y', $dates[1])->endOfDay();
+            }
+        }
+        $transactions = Transaction::WhereIn('seller_id', $request->seller_id ?? [])
+            ->WhereIn('status', $request->status ?? [])
+            ->orWhereBetween('created_at', [$start_date, $end_date] ?? [])
+            ->orderBy('id', 'DESC')->paginate(COUNT);
+        $sellers = Seller::where('is_active', 1)->get();
+
+        return view('admin.transactions.index', compact('transactions', 'sellers'));
     }
 }

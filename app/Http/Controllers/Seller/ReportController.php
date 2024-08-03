@@ -76,15 +76,16 @@ class ReportController extends Controller
             $confirmed_rate = intval(($confirmed / $orders) * 100);
             $delivered_rate = intval(($delivered / $orders) * 100);
         }
+        $country = Country::where('id', $countryId)->pluck('id')->first();
 
-        return view('seller.reports.index', compact('leads', 'under_process', 'confirmed', 'canceled', 'balance', 'shipped', 'delivered', 'returned', 'countries', 'confirmed_rate', 'delivered_rate'));
+        return view('seller.reports.index', compact('leads', 'under_process', 'confirmed', 'canceled', 'balance', 'shipped', 'delivered', 'returned', 'countries', 'confirmed_rate', 'delivered_rate', 'country'));
     }
 
-    public function filter(Request $request)
+    public function filter(Request $request, $id)
     {
         $orders = Order::where('seller_id', auth()->guard('seller')->user()->id)->count();
         $countries = Country::all();
-
+        $country = 0;
 
         // Initialize variables to default values
         $under_process = 0;
@@ -96,7 +97,8 @@ class ReportController extends Controller
         $returned = 0;
         $confirmed_rate = 0;
         $delivered_rate = 0;
-
+        $start_date = '';
+        $end_date = '';
         if ($request->has('date') && $request->date != '') {
             $dates = explode(' - ', $request->date);
 
@@ -104,36 +106,71 @@ class ReportController extends Controller
             if (count($dates) === 2) {
                 $start_date = Carbon::createFromFormat('m/d/Y', $dates[0])->startOfDay();
                 $end_date = Carbon::createFromFormat('m/d/Y', $dates[1])->endOfDay();
+                if ($id == 0) {
 
-                $leads = Lead::where('seller_id', auth()->guard('seller')->user()->id)->whereBetween('order_date', [$start_date, $end_date])->count();
+                    $leads = Lead::where('seller_id', auth()->guard('seller')->user()->id)->whereBetween('order_date', [$start_date, $end_date])->count();
 
-                $under_process = Order::where('seller_id', auth()->guard('seller')->user()->id)->where('shipment_status', 'pending')
-                    ->whereBetween('created_at', [$start_date, $end_date])
-                    ->count();
+                    $under_process = Order::where('seller_id', auth()->guard('seller')->user()->id)->where('shipment_status', 'pending')
+                        ->whereBetween('created_at', [$start_date, $end_date])
+                        ->count();
 
-                $confirmed = Lead::where('seller_id', auth()->guard('seller')->user()->id)->where('status', 'confirmed')
-                    ->whereBetween('created_at', [$start_date, $end_date])
-                    ->count();
+                    $confirmed = Lead::where('seller_id', auth()->guard('seller')->user()->id)->where('status', 'confirmed')
+                        ->whereBetween('created_at', [$start_date, $end_date])
+                        ->count();
 
-                $canceled = Order::where('seller_id', auth()->guard('seller')->user()->id)->where('shipment_status', 'canceled')
-                    ->whereBetween('created_at', [$start_date, $end_date])
-                    ->count();
+                    $canceled = Order::where('seller_id', auth()->guard('seller')->user()->id)->where('shipment_status', 'canceled')
+                        ->whereBetween('created_at', [$start_date, $end_date])
+                        ->count();
 
-                $balance = Order::where('seller_id', auth()->guard('seller')->user()->id)->where('shipment_status', 'balance')
-                    ->whereBetween('created_at', [$start_date, $end_date])
-                    ->count();
+                    $balance = Order::where('seller_id', auth()->guard('seller')->user()->id)->where('shipment_status', 'balance')
+                        ->whereBetween('created_at', [$start_date, $end_date])
+                        ->count();
 
-                $shipped = Order::where('seller_id', auth()->guard('seller')->user()->id)->where('shipment_status', 'shipping')
-                    ->whereBetween('created_at', [$start_date, $end_date])
-                    ->count();
+                    $shipped = Order::where('seller_id', auth()->guard('seller')->user()->id)->where('shipment_status', 'shipping')
+                        ->whereBetween('created_at', [$start_date, $end_date])
+                        ->count();
 
-                $delivered = Order::where('shipment_status', 'delivered')
-                    ->whereBetween('created_at', [$start_date, $end_date])
-                    ->count();
+                    $delivered = Order::where('shipment_status', 'delivered')
+                        ->whereBetween('created_at', [$start_date, $end_date])
+                        ->count();
 
-                $returned = Order::where('seller_id', auth()->guard('seller')->user()->id)->where('shipment_status', 'returned')
-                    ->whereBetween('created_at', [$start_date, $end_date])
-                    ->count();
+                    $returned = Order::where('seller_id', auth()->guard('seller')->user()->id)->where('shipment_status', 'returned')
+                        ->whereBetween('created_at', [$start_date, $end_date])
+                        ->count();
+                } else {
+
+                    $country = Country::findOrFail($id);
+                    $leads = Lead::where('seller_id', auth()->guard('seller')->user()->id)->whereBetween('created_at', [$start_date, $end_date])
+                        ->where('warehouse', $country->name)->count();
+                    $under_process = Order::where('seller_id', auth()->guard('seller')->user()->id)->whereBetween('created_at', [$start_date, $end_date])->whereHas('lead', function ($query) use ($country) {
+                        $query->where('warehouse', $country->name);
+                    })->where('shipment_status', 'pending')->count();
+                    $confirmed = Lead::where('seller_id', auth()->guard('seller')->user()->id)->whereBetween('created_at', [$start_date, $end_date])
+                        ->where('warehouse', $country->name)->where('status', 'confirmed')->count();
+
+                    $canceled = Order::where('seller_id', auth()->guard('seller')->user()->id)->whereBetween('created_at', [$start_date, $end_date])
+                        ->whereHas('lead', function ($query) use ($country) {
+                            $query->where('warehouse', $country->name);
+                        })->where('shipment_status', 'canceled')->count();
+                    $balance = Order::where('seller_id', auth()->guard('seller')->user()->id)->whereBetween('created_at', [$start_date, $end_date])
+                        ->whereHas('lead', function ($query) use ($country) {
+                            $query->where('warehouse', $country->name);
+                        })->where('shipment_status', 'balance')->count();
+                    $shipped = Order::where('seller_id', auth()->guard('seller')->user()->id)->whereBetween('created_at', [$start_date, $end_date])
+                        ->whereHas('lead', function ($query) use ($country) {
+                            $query->where('warehouse', $country->name);
+                        })->where('shipment_status', 'shipping')->count();
+                    $delivered = Order::where('seller_id', auth()->guard('seller')->user()->id)->whereBetween('created_at', [$start_date, $end_date])
+                        ->whereHas('lead', function ($query) use ($country) {
+                            $query->where('warehouse', $country->name);
+                        })->where('shipment_status', 'delivered')->count();
+                    $returned = Order::where('seller_id', auth()->guard('seller')->user()->id)->whereBetween('created_at', [$start_date, $end_date])
+                        ->whereHas('lead', function ($query) use ($country) {
+                            $query->where('warehouse', $country->name);
+                        })->where('shipment_status', 'returned')->count();
+
+                    $country = Country::where('id', $id)->pluck('id')->first();
+                }
             }
         }
 
@@ -154,7 +191,8 @@ class ReportController extends Controller
             'returned',
             'countries',
             'confirmed_rate',
-            'delivered_rate'
+            'delivered_rate',
+            'country'
         ));
     }
 
@@ -188,13 +226,16 @@ class ReportController extends Controller
 
         // Retrieve confirmed leads and their SKUs
         $lead_confirmed = Lead::where('seller_id', $sellerId)->whereIn('id', $lead_ids)->where('status', 'confirmed')->pluck('id');
-        $lead_sku = Lead::whereIn('id', $lead_confirmed)->pluck('item_sku')->unique();
 
+
+        $lead_sku = Lead::whereIn('id', $lead_confirmed)->pluck('item_sku')->unique();
         // Retrieve affiliate product commissions
 
 
         // Calculate total commission
         $orders = Order::whereIn('lead_id', $lead_confirmed)->where('shipment_status', 'delivered')->get();
+
+
         $total_commission = 0;
         $total_quantity = 0;
         if ($orders) {
@@ -229,7 +270,7 @@ class ReportController extends Controller
         $highest_commission = AffiliateProduct::whereIn('sku', $lead_skus)->orderByDesc('commission')->first();
 
         // Calculate average commission
-        if ($confirmed > 0) {
+        if ($confirmed > 0 && $total_quantity > 0) {
             $average_commission = $total_commission / $total_quantity;
         }
 
@@ -353,7 +394,8 @@ class ReportController extends Controller
 
         // Get the authenticated seller ID
         $sellerId = auth()->guard('seller')->user()->id;
-
+        $start_date = '';
+        $end_date = '';
         if ($request->has('date') && $request->date != '') {
             $dates = explode(' - ', $request->date);
 
@@ -480,7 +522,8 @@ class ReportController extends Controller
 
         $lead_ids = Lead::where('seller_id', $sellerId)->where('type', 'commission')->pluck('id');
         // Retrieve order statuses for the leads
-
+        $start_date = '';
+        $end_date = '';
         if ($request->has('date') && $request->date != '') {
             $dates = explode(' - ', $request->date);
 

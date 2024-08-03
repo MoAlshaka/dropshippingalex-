@@ -110,7 +110,7 @@
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
                     aria-labelledby="offcanvasRightLabel">
                     <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasRightLabel">{{ __('site.FliterOrders') }}</h5>
+                        <h5 class="offcanvas-title" id="offcanvasRightLabel">{{ __('site.Filter') }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
@@ -139,9 +139,9 @@
 
             <div class="card_container mt-4 mx-auto md:mx-6 grid grid-cols-12  gap-6  w-full">
                 <div
-                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
+                    class="card card_bg px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
                     <div class="flex flex-col gap-10 h-full">
-                        <h2 class="text-[15px] lg:text-[20px] lg:text-[18px] text-gray-800 font-bold uppercase">
+                        <h2 class="text-[15px] lg:text-[20px] lg:text-[18px]  font-bold uppercase">
                             {{ __('site.TotalLeads') }}
                         </h2>
                         <div class="flex justify-between items-center">
@@ -150,14 +150,14 @@
 
                                 </span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{ $leads }}</span>
+                            <span class=" text-3xl font-bold">{{ $leads }}</span>
                         </div>
                     </div>
                 </div>
                 <div
-                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
+                    class="card card_bg px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
                     <div class="flex flex-col gap-10 h-full">
-                        <h2 class="text-[15px] lg:text-[20px] lg:text-[18px] text-gray-800 font-bold uppercase">
+                        <h2 class="text-[15px] lg:text-[20px] lg:text-[18px]  font-bold uppercase">
                             {{ __('site.UnderProcesses') }}
                         </h2>
                         <div class="flex justify-between items-center">
@@ -166,35 +166,35 @@
 
                                 </span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{ $under_process }}</span>
+                            <span class=" text-3xl font-bold">{{ $under_process }}</span>
                         </div>
                     </div>
                 </div>
                 <div
-                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
+                    class="card card_bg px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
                     <div class="flex flex-col gap-10 h-full">
-                        <h2 class="text-[15px] lg:text-[20px] lg:text-[18px] text-gray-800 font-bold uppercase">
+                        <h2 class="text-[15px] lg:text-[20px] lg:text-[18px]  font-bold uppercase">
                             {{ __('site.Confirmed') }}
                         </h2>
                         <div class="flex justify-between items-center">
                             <div class="bg-green-500 rounded-full text-white px-4 py-2 flex justify-center items-center">
                                 <span class="mdi mdi-check-circle-outline"></span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{ $confirmed }}</span>
+                            <span class=" text-3xl font-bold">{{ $confirmed }}</span>
                         </div>
                     </div>
                 </div>
                 <div
-                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
+                    class="card card_bg px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
                     <div class="flex flex-col gap-10 h-full">
-                        <h2 class="text-[15px] lg:text-[25px] text-gray-800 font-bold uppercase">
+                        <h2 class="text-[15px] lg:text-[25px]  font-bold uppercase">
                             {{ __('site.Delivered') }}
                         </h2>
                         <div class="flex justify-between items-center">
                             <div class="bg-green-500 rounded-full text-white px-4 py-2 flex justify-center items-center">
                                 <span class="mdi mdi-package-check"></span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{ $delivered }}</span>
+                            <span class=" text-3xl font-bold">{{ $delivered }}</span>
                         </div>
                     </div>
                 </div>
@@ -203,14 +203,14 @@
         <div class="persentage_cont  min-h-[300px] grid lg:grid-cols-6 mt-4 rounded-md  gap-6">
             <div class="general_Info grid grid-cols-12 gap-6 lg:col-span-6">
                 <div
-                    class="card_info col-span-12 md:col-span-6 lg:col-span-4  p-6 bg-white flex flex-col rounded-xl lg:flex-row drop-shadow-lg ">
+                    class="card_info col-span-12 md:col-span-6 lg:col-span-4  p-6 card_bg flex flex-col rounded-xl lg:flex-row drop-shadow-lg ">
                     <div class="flex items-center justify-between w-full">
                         <div class="flex flex-col gap-2">
                             <h3 class="text-xl font-bold">{{ __('site.Totalcommisoins') }}</h3>
                             <span class="price text-black text-2xl font-bold">
                                 {{ $total_commission }} $
                             </span>
-                            <p class="text-gray-800 text-sm font-bold capitalize">over {{ $leads }} leads</p>
+                            <p class=" text-sm font-bold capitalize">over {{ $leads }} leads</p>
                         </div>
                         <div>
                             <img class="object-cover w-[120px]"
@@ -220,14 +220,14 @@
                 </div>
 
                 <div
-                    class="card_info col-span-12 md:col-span-6 lg:col-span-4 p-6 bg-white flex flex-col rounded-xl lg:flex-row drop-shadow-lg ">
+                    class="card_info col-span-12 md:col-span-6 lg:col-span-4 p-6 card_bg flex flex-col rounded-xl lg:flex-row drop-shadow-lg ">
                     <div class="flex items-center justify-between w-full">
                         <div class="flex flex-col gap-2">
                             <h3 class="text-xl font-bold">{{ __('site.Averagecommission') }}</h3>
                             <span class="price text-black text-2xl font-bold">
                                 {{ $average_commission }} $
                             </span>
-                            <p class="text-gray-800 text-sm font-bold capitalize">over {{ $leads }} leads</p>
+                            <p class=" text-sm font-bold capitalize">over {{ $leads }} leads</p>
                         </div>
                         <div>
                             <img class="object-cover w-[120px]" src="{{ asset('assets/img/reportImages/discount.png') }}"
@@ -236,14 +236,14 @@
                     </div>
                 </div>
                 <div
-                    class="card_info col-span-12 md:col-span-6 lg:col-span-4 p-6 bg-white flex flex-col rounded-xl lg:flex-row drop-shadow-lg ">
+                    class="card_info col-span-12 md:col-span-6 lg:col-span-4 p-6 card_bg flex flex-col rounded-xl lg:flex-row drop-shadow-lg ">
                     <div class="flex items-center justify-between w-full">
                         <div class="flex flex-col gap-2">
                             <h3 class="text-xl font-bold">{{ __('site.Highestcommission') }}</h3>
                             <span class="price text-black text-2xl font-bold">
                                 {{ $highest_commission->commission ?? 0 }} $
                             </span>
-                            <p class="text-gray-800 text-sm font-bold capitalize">{{ $highest_commission->title ?? '' }}
+                            <p class=" text-sm font-bold capitalize">{{ $highest_commission->title ?? '' }}
                             </p>
                         </div>
                         <div>
@@ -257,25 +257,25 @@
 
 
             <div
-                class="value_container pt-[15px] bg-white flex flex-col rounded-xl lg:flex-row drop-shadow-lg lg:col-span-3">
+                class="value_container pt-[15px] card_bg flex flex-col rounded-xl lg:flex-row drop-shadow-lg lg:col-span-3">
                 <div class="relative min-w-[250px]">
                     <span
-                        class="text-gray-600 text-5xl absolute top-[50%] right-[50%] translate-x-[50%] translate-y-[-50%] font-bold">{{ $confirmed_rate ?? 0 }}
+                        class=" text-5xl absolute top-[50%] right-[50%] translate-x-[50%] translate-y-[-50%] font-bold">{{ $confirmed_rate ?? 0 }}
                         %</span>
                     <svg viewBox="0 0 36 36" class="circular-chart green">
                         <path class="circle-bg"
                             d="M18 2.0845
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            a 15.9155 15.9155 0 0 1 0 -31.831" />
                         <!-- place the 60 in the stroke-dasharray with the persentage -->
                         <path class="circle" stroke-dasharray="{{ $confirmed_rate }}, 100"
                             d="M18 2.0845
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            a 15.9155 15.9155 0 0 1 0 -31.831" />
                     </svg>
                 </div>
                 <div class="flex flex-col justify-center px-4 ">
-                    <h3 class="text-gray-600 font-bold capitalize">
+                    <h3 class=" font-bold capitalize">
                         {{ __('site.ConfirmationRate') }}
                     </h3>
                     <p class="text-pretty">
@@ -284,10 +284,10 @@
                 </div>
             </div>
 
-            <div class="hightest_prod p-6 bg-white flex flex-col rounded-xl  drop-shadow-lg lg:col-span-3">
+            <div class="hightest_prod p-6 card_bg flex flex-col rounded-xl  drop-shadow-lg lg:col-span-3">
                 <div class="mb-4">
                     <h3 class="text-md font-bold text-black capitalize">5 Hiest Selling Products</h3>
-                    <p class="text-gray-400 text-sm capitalize">Hiest Ranking Products</p>
+                    <p class=" text-sm capitalize">Hiest Ranking Products</p>
                 </div>
                 <div class="flex flex-col gap-2 overflow-x-auto h-[120px] ">
 

@@ -63,13 +63,13 @@
                 <button class="btn btn-outline-primary waves-effect waves-light" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                     <span class="tf-icons mdi mdi-filter-check-outline me-1"></span>
-                    Filter
+                    {{ __('site.Filter') }}
                 </button>
                 {{--                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button> --}}
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
                     aria-labelledby="offcanvasRightLabel">
                     <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasRightLabel">{{ __('site.FliterLeads') }}</h5>
+                        <h5 class="offcanvas-title" id="offcanvasRightLabel">{{ __('site.FilterLeads') }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
@@ -136,8 +136,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary waves-effect waves-light">filter</button>
-                            <button type="reset" class="btn btn-outline-danger waves-effect">reset</button>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                {{ __('site.Filter') }}</button>
+                            <button type="reset" class="btn btn-outline-danger waves-effect">
+                                {{ __('site.Reset') }}</button>
                         </form>
                     </div>
                 </div>
@@ -178,7 +180,7 @@
 
             </div>
             <div class="table-responsive text-nowrap">
-                <table class="table">
+                <table class="table" id="em_data">
                     <thead>
                         <tr class="text-nowrap">
                             <th>#</th>
@@ -250,7 +252,7 @@
                             @endforeach
                         @else
                             <tr>
-                                <td colspan="11" class="px-4 py-4 text-center text-gray-500 dark:text-gray-400">No data
+                                <td colspan="11" class="px-4 py-4 text-center ">No data
                                 </td>
                             </tr>
                         @endif
@@ -258,6 +260,7 @@
                 </table>
                 {{ $leads->links() }}
             </div>
+
         </div>
     </div>
     <!-- / Content -->
@@ -296,4 +299,26 @@
     <script src="{{ asset('assets/js/main.js') }}"></script>
     <script src="{{ asset('assets/js/forms-selects.js') }}"></script>
     <script src="{{ asset('assets/js/forms-pickers.js') }}"></script>
+
+    <!-- Vendors JS -->
+    <script src="{{ asset('assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
+
+    <script src="{{ asset('assets/vendor/libs/tagify/tagify.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/bootstrap-select/bootstrap-select.js') }}"></script>
+
+    <script src="{{ asset('assets/vendor/libs/bloodhound/bloodhound.js') }}"></script>
+
+    <script src="{{ asset('assets/vendor/libs/moment/moment.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/pickr/pickr.js') }}"></script>
+    <!-- endbuild -->
+
+    <script src="{{ asset('assets/js/forms-pickers.js') }}"></script>
+
+    <!-- Main JS -->
+    <script src="{{ asset('assets/js/forms-selects.js') }}"></script>
 @endsection

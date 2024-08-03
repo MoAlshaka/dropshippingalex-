@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Lead;
+use App\Models\Offer;
 use App\Models\Country;
 use App\Models\Category;
-use App\Models\Offer;
 use Illuminate\Http\Request;
 use App\Models\SharedProduct;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +26,7 @@ class SharedProductController extends Controller
      */
     public function index()
     {
-        $offer = Offer::where('end_date', '>', now())->orderBy('id', 'DESC')->get();
+        $offer = Offer::where('end_date', '>', now())->where('start_date', '<=', now())->orderBy('id', 'DESC')->get();
         $countries = Country::all();
         $categories = Category::all();
         $products = SharedProduct::orderBy('id', 'DESC')->paginate(COUNT);
@@ -192,6 +193,7 @@ class SharedProductController extends Controller
             return response()->json(['errors' => $errors]);
         }
         $product = SharedProduct::findOrFail($id);
+        $item_sku = $product->sku;
         $oldImage = $product->image;
 
         if ($request->hasFile('image')) {
@@ -207,7 +209,7 @@ class SharedProductController extends Controller
             $imageName = $oldImage;
         }
 
-        $product->update([
+        $flag = $product->update([
             'sku' => $request->sku,
             'title' => $request->title,
             'brand' => $request->brand,
@@ -224,6 +226,13 @@ class SharedProductController extends Controller
         foreach ($request->country as $index => $countryId) {
             $product->sharedcountries()->attach($countryId, ['stock' => $request->stock[$index]]);
         }
+        $leads = Lead::where('item_sku', $item_sku)->get();
+        if (!empty($leads)) {
+            foreach ($leads as $lead) {
+                $lead->update(['item_sku' => $request->sku]);
+            }
+        }
+
         return response()->json(['message' => 'Product Updated successfully'], 200);
     }
 

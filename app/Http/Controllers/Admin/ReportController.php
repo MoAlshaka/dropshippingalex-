@@ -86,15 +86,16 @@ class ReportController extends Controller
         }
         $admins = Admin::where('roles_name', '!=', 'Owner')->get();
         $sellers = Seller::where('is_active', 1)->get();
-        return view('admin.reports.index', compact('leads', 'under_process', 'confirmed', 'canceled', 'balance', 'shipped', 'delivered', 'returned', 'countries', 'confirmed_rate', 'delivered_rate', 'admins', 'sellers'));
+        $country = Country::where('id', $countryId)->pluck('id')->first();
+        return view('admin.reports.index', compact('leads', 'under_process', 'confirmed', 'canceled', 'balance', 'shipped', 'delivered', 'returned', 'countries', 'confirmed_rate', 'delivered_rate', 'admins', 'sellers', 'country'));
     }
 
 
-    public function filter(Request $request)
+    public function filter(Request $request, $id)
     {
         $orders = Order::count();
         $countries = Country::all();
-        $leads = Lead::count();
+        $country = 0;
 
         // Initialize variables to default values
         $under_process = 0;
@@ -107,21 +108,26 @@ class ReportController extends Controller
         $confirmed_rate = 0;
         $delivered_rate = 0;
 
-        $sellerIds = [];
-        if ($request->has('manger_id')) {
-            foreach ($request->manger_id as $manger_id) {
 
-                $manger = Admin::findOrFail($manger_id);
+        $seller_ids = [];
+        if ($request->has('admin_id')) {
+            foreach ($request->admin_id as $admin_id) {
+
+                $manger = Admin::findOrFail($admin_id);
                 foreach ($manger->sellers as $seller) {
-                    array_push($sellerIds, $seller->id);
+                    array_push($seller_ids, $seller->id);
                 }
             }
         }
-        $sellers = [];
         if ($request->has('seller_id')) {
-            $sellers = $request->seller_id;
+            foreach ($request->seller_id as $seller_id) {
+                array_push($seller_ids, $seller_id);
+            }
         }
+        $sellerIds = array_unique($seller_ids);
 
+        $start_date = '';
+        $end_date = '';
         if ($request->has('date') && $request->date != '') {
             $dates = explode(' - ', $request->date);
 
@@ -131,68 +137,139 @@ class ReportController extends Controller
                 $end_date = Carbon::createFromFormat('m/d/Y', $dates[1])->endOfDay();
             }
         }
+        if ($id == 0) {
+            $leads = Lead::WhereBetween('created_at', [$start_date, $end_date] ?? [])
+                ->WhereIn('seller_id', $sellerIds ?? [])
+
+                ->count();
 
 
+            $under_process = Order::where(function ($query) use ($start_date, $end_date, $sellerIds) {
+                $query->where('shipment_status', 'pending')
+                    ->where(function ($query) use ($start_date, $end_date, $sellerIds) {
+                        $query->WhereBetween('created_at', [$start_date, $end_date] ?? [])
+                            ->WhereIn('seller_id', $sellerIds ?? []);
+                    });
+            })->count();
 
-        $under_process = Order::where(function ($query) use ($start_date, $end_date, $sellerIds, $sellers) {
-            $query->where('shipment_status', 'pending')
-                ->where(function ($query) use ($start_date, $end_date, $sellerIds, $sellers) {
-                    $query->orWhereBetween('created_at', [$start_date, $end_date])
-                        ->orWhereIn('seller_id', $sellerIds)
-                        ->orWhere('seller_id', $sellers);
-                });
-        })->count();
+            $confirmed = Lead::where(function ($query) use ($start_date, $end_date, $sellerIds) {
+                $query->where('status', 'confirmed')
+                    ->where(function ($query) use ($start_date, $end_date, $sellerIds) {
+                        $query->WhereBetween('created_at', [$start_date, $end_date] ?? [])
+                            ->WhereIn('seller_id', $sellerIds ?? []);
+                    });
+            })->count();
 
-        $confirmed = Lead::where(function ($query) use ($start_date, $end_date, $sellerIds, $sellers) {
-            $query->where('status', 'confirmed')
-                ->where(function ($query) use ($start_date, $end_date, $sellerIds, $sellers) {
-                    $query->orWhereBetween('created_at', [$start_date, $end_date])
-                        ->orWhereIn('seller_id', $sellerIds)
-                        ->orWhere('seller_id', $sellers);
-                });
-        })->count();
+            $canceled = Order::where('shipment_status', 'canceled')
+                ->WhereBetween('created_at', [$start_date, $end_date] ?? [])
+                ->WhereIn('seller_id', $sellerIds ?? [])
 
-        $canceled = Order::where('shipment_status', 'canceled')
-            ->orWhereBetween('created_at', [$start_date, $end_date])
-            ->whereIn('seller_id', $sellerIds)
-            ->whereIn('seller_id', $sellers)
-            ->count();
+                ->count();
 
-        $canceled = Order::where(function ($query) use ($start_date, $end_date, $sellerIds, $sellers) {
-            $query->where('shipment_status', 'canceled')
-                ->where(function ($query) use ($start_date, $end_date, $sellerIds, $sellers) {
-                    $query->orWhereBetween('created_at', [$start_date, $end_date])
-                        ->orWhereIn('seller_id', $sellerIds)
-                        ->orWhere('seller_id', $sellers);
-                });
-        })->count();
+            $canceled = Order::where(function ($query) use ($start_date, $end_date, $sellerIds) {
+                $query->where('shipment_status', 'canceled')
+                    ->where(function ($query) use ($start_date, $end_date, $sellerIds) {
+                        $query->WhereBetween('created_at', [$start_date, $end_date] ?? [])
+                            ->WhereIn('seller_id', $sellerIds ?? []);
+                    });
+            })->count();
 
-        $balance = Order::where(function ($query) use ($start_date, $end_date, $sellerIds, $sellers) {
-            $query->where('shipment_status', 'balance')
-                ->where(function ($query) use ($start_date, $end_date, $sellerIds, $sellers) {
-                    $query->orWhereBetween('created_at', [$start_date, $end_date])
-                        ->orWhereIn('seller_id', $sellerIds)
-                        ->orWhere('seller_id', $sellers);
-                });
-        })->count();
-        $delivered = Order::where(function ($query) use ($start_date, $end_date, $sellerIds, $sellers) {
-            $query->where('shipment_status', 'delivered')
-                ->where(function ($query) use ($start_date, $end_date, $sellerIds, $sellers) {
-                    $query->orWhereBetween('created_at', [$start_date, $end_date])
-                        ->orWhereIn('seller_id', $sellerIds)
-                        ->orWhere('seller_id', $sellers);
-                });
-        })->count();
+            $balance = Order::where(function ($query) use ($start_date, $end_date, $sellerIds) {
+                $query->where('shipment_status', 'balance')
+                    ->where(function ($query) use ($start_date, $end_date, $sellerIds) {
+                        $query->WhereBetween('created_at', [$start_date, $end_date] ?? [])
+                            ->WhereIn('seller_id', $sellerIds ?? []);
+                    });
+            })->count();
+            $delivered = Order::where(function ($query) use ($start_date, $end_date, $sellerIds) {
+                $query->where('shipment_status', 'delivered')
+                    ->where(function ($query) use ($start_date, $end_date, $sellerIds) {
+                        $query->WhereBetween('created_at', [$start_date, $end_date] ?? [])
+                            ->WhereIn('seller_id', $sellerIds ?? []);
+                    });
+            })->count();
 
-        $returned = Order::where(function ($query) use ($start_date, $end_date, $sellerIds, $sellers) {
-            $query->where('shipment_status', 'returned')
-                ->where(function ($query) use ($start_date, $end_date, $sellerIds, $sellers) {
-                    $query->orWhereBetween('created_at', [$start_date, $end_date])
-                        ->orWhereIn('seller_id', $sellerIds)
-                        ->orWhere('seller_id', $sellers);
-                });
-        })->count();
+            $returned = Order::where(function ($query) use ($start_date, $end_date, $sellerIds) {
+                $query->where('shipment_status', 'returned')
+                    ->where(function ($query) use ($start_date, $end_date, $sellerIds) {
+                        $query->WhereBetween('created_at', [$start_date, $end_date] ?? [])
+                            ->WhereIn('seller_id', $sellerIds ?? []);
+                    });
+            })->count();
+        } else {
+            $country = Country::findOrFail($id);
+            $leads = Lead::WhereBetween('created_at', [$start_date, $end_date] ?? [])
+                ->WhereIn('seller_id', $sellerIds ?? [])
+                ->where('warehouse', $country->name)
+                ->count();
+            $leadsId = Lead::WhereBetween('created_at', [$start_date, $end_date] ?? [])
+                ->WhereIn('seller_id', $sellerIds ?? [])
+                ->where('warehouse', $country->name)
+                ->pluck('id')
+                ->unique();
 
+
+            $under_process = Order::where(function ($query) use ($start_date, $end_date, $sellerIds, $leadsId) {
+                $query->where('shipment_status', 'pending')
+                    ->where(function ($query) use ($start_date, $end_date, $sellerIds, $leadsId) {
+                        $query->WhereBetween('created_at', [$start_date, $end_date] ?? [])
+                            ->WhereIn('seller_id', $sellerIds ?? [])
+                            ->whereIn('lead_id', $leadsId ?? []);
+                    });
+            })->count();
+
+            $confirmed = Lead::where(function ($query) use ($start_date, $end_date, $sellerIds, $leadsId) {
+                $query->where('status', 'confirmed')
+                    ->where(function ($query) use ($start_date, $end_date, $sellerIds, $leadsId) {
+                        $query->WhereBetween('created_at', [$start_date, $end_date] ?? [])
+                            ->WhereIn('seller_id', $sellerIds ?? [])
+                            ->whereIn('id', $leadsId ?? []);
+                    });
+            })->count();
+
+            $canceled = Order::where('shipment_status', 'canceled')
+                ->WhereBetween('created_at', [$start_date, $end_date] ?? [])
+                ->WhereIn('seller_id', $sellerIds ?? [])
+
+                ->count();
+
+            $canceled = Order::where(function ($query) use ($start_date, $end_date, $sellerIds, $leadsId) {
+                $query->where('shipment_status', 'canceled')
+                    ->where(function ($query) use ($start_date, $end_date, $sellerIds, $leadsId) {
+                        $query->WhereBetween('created_at', [$start_date, $end_date] ?? [])
+                            ->WhereIn('seller_id', $sellerIds ?? [])
+                            ->whereIn('lead_id', $leadsId ?? []);
+                    });
+            })->count();
+
+            $balance = Order::where(function ($query) use ($start_date, $end_date,  $sellerIds, $leadsId) {
+                $query->where('shipment_status', 'balance')
+                    ->where(function ($query) use ($start_date, $end_date, $sellerIds, $leadsId) {
+                        $query->WhereBetween('created_at', [$start_date, $end_date] ?? [])
+                            ->WhereIn('seller_id', $sellerIds ?? [])
+                            ->whereIn('lead_id', $leadsId ?? []);
+                    });
+            })->count();
+            $delivered = Order::where(function ($query) use ($start_date, $end_date, $sellerIds, $leadsId) {
+                $query->where('shipment_status', 'delivered')
+                    ->where(function ($query) use ($start_date, $end_date, $sellerIds, $leadsId) {
+                        $query->WhereBetween('created_at', [$start_date, $end_date] ?? [])
+                            ->WhereIn('seller_id', $sellerIds ?? [])
+                            ->whereIn('lead_id', $leadsId ?? []);
+                    });
+            })->count();
+
+            $returned = Order::where(function ($query) use ($start_date, $end_date, $sellerIds, $leadsId) {
+                $query->where('shipment_status', 'returned')
+                    ->where(function ($query) use ($start_date, $end_date, $sellerIds, $leadsId) {
+                        $query->WhereBetween('created_at', [$start_date, $end_date] ?? [])
+                            ->WhereIn('seller_id', $sellerIds ?? [])
+                            ->whereIn('lead_id', $leadsId ?? []);
+                    });
+            })->count();
+
+            $country = Country::where('id', $id)->pluck('id')->first();
+        }
         // Calculate rates only if there are orders to avoid division by zero
         if ($orders > 0) {
             $confirmed_rate = intval(($confirmed / $orders) * 100);
@@ -213,7 +290,8 @@ class ReportController extends Controller
             'confirmed_rate',
             'delivered_rate',
             'admins',
-            'sellers'
+            'sellers',
+            'country',
         ));
     }
 
@@ -227,7 +305,7 @@ class ReportController extends Controller
         $average_commission = 0;
         $delivered = 0;
         $confirmed_rate = 0;
-
+        $highestCommissions = [];
 
 
         $leads = Lead::where('type', 'commission')->count();
@@ -243,7 +321,6 @@ class ReportController extends Controller
 
         $lead_sku = Lead::whereIn('id', $lead_confirmed)->pluck('item_sku');
         if ($leads > 0) {
-
             $confirmed_rate = $leads > 0 ? intval(($confirmed / $leads) * 100) : 0;
         }
 
@@ -292,15 +369,11 @@ class ReportController extends Controller
         $highest_commission = AffiliateProduct::whereIn('sku', $lead_skus)->orderByDesc('commission')->first();
 
         // Calculate average commission
-        if ($confirmed > 0) {
+        if ($confirmed > 0 && $total_quantity > 0) {
             $average_commission = $total_commission / $total_quantity;
         }
 
 
-
-
-
-        // dd($highestCommissions);
 
         return view('admin.reports.affiliate', compact(
             'leads',
@@ -417,6 +490,8 @@ class ReportController extends Controller
         $request->validate([
             'date' => 'required'
         ]);
+        $start_date = '';
+        $end_date = '';
         if ($request->has('date') && $request->date != '') {
             $dates = explode(' - ', $request->date);
 
@@ -427,7 +502,7 @@ class ReportController extends Controller
             }
         }
 
-        $affiliateSkus = Lead::where('type', 'commission')->whereBetween('created_at', [$start_date, $end_date])->distinct()->pluck('item_sku');
+        $affiliateSkus = Lead::where('type', 'commission')->WhereBetween('created_at', [$start_date, $end_date] ?? [])->distinct()->pluck('item_sku');
 
         $affiliateProducts = AffiliateProduct::whereIn('sku', $affiliateSkus)->get();
 
@@ -468,7 +543,7 @@ class ReportController extends Controller
         }
 
 
-        $sharedSkus = Lead::where('type', 'regular')->whereBetween('created_at', [$start_date, $end_date])->distinct()->pluck('item_sku');
+        $sharedSkus = Lead::where('type', 'regular')->whereBetween('created_at', [$start_date, $end_date] ?? [])->distinct()->pluck('item_sku');
 
 
         $sharedProducts = SharedProduct::whereIn('sku', $sharedSkus)->get();
@@ -534,11 +609,12 @@ class ReportController extends Controller
         $average_commission = 0;
         $delivered = 0;
         $confirmed_rate = 0;
-
+        $highestCommissions = [];
 
 
         $lead_ids = Lead::where('type', 'commission')->pluck('id');
-
+        $start_date = '';
+        $end_date = '';
         if ($request->has('date') && $request->date != '') {
             $dates = explode(' - ', $request->date);
 
@@ -548,13 +624,13 @@ class ReportController extends Controller
                 $end_date = Carbon::createFromFormat('m/d/Y', $dates[1])->endOfDay();
             }
         }
-        $leads = Lead::where('type', 'commission')->whereBetween('order_date', [$start_date, $end_date])->count();
+        $leads = Lead::where('type', 'commission')->whereBetween('order_date', [$start_date, $end_date] ?? [])->count();
 
-        $under_process = Order::whereIn('lead_id', $lead_ids)->where('shipment_status', 'pending')->whereBetween('created_at', [$start_date, $end_date])->count();
-        $confirmed = Lead::whereIn('id', $lead_ids)->where('status', 'confirmed')->whereBetween('created_at', [$start_date, $end_date])->count();
-        $delivered = Order::whereIn('lead_id', $lead_ids)->where('shipment_status', 'delivered')->whereBetween('created_at', [$start_date, $end_date])->count();
+        $under_process = Order::whereIn('lead_id', $lead_ids)->where('shipment_status', 'pending')->whereBetween('created_at', [$start_date, $end_date] ?? [])->count();
+        $confirmed = Lead::whereIn('id', $lead_ids)->where('status', 'confirmed')->whereBetween('created_at', [$start_date, $end_date] ?? [])->count();
+        $delivered = Order::whereIn('lead_id', $lead_ids)->where('shipment_status', 'delivered')->whereBetween('created_at', [$start_date, $end_date] ?? [])->count();
 
-        $lead_confirmed = Order::whereIn('lead_id', $lead_ids)->where('shipment_status', 'delivered')->whereBetween('created_at', [$start_date, $end_date])->pluck('lead_id');
+        $lead_confirmed = Order::whereIn('lead_id', $lead_ids)->where('shipment_status', 'delivered')->whereBetween('created_at', [$start_date, $end_date] ?? [])->pluck('lead_id');
 
 
         $lead_sku = Lead::whereIn('id', $lead_confirmed)->pluck('item_sku');

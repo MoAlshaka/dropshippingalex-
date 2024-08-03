@@ -110,7 +110,7 @@
             </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-8 gap-4 p-4">
-            <div class="product-card col-span-8 lg:col-span-3 py-2 px-4 rounded-md drop-shadow bg-white">
+            <div class="product-card col-span-8 lg:col-span-3 py-2 px-4 rounded-md drop-shadow card_bg">
                 <div class="product-img flex mb-4">
                     <img src="{{ asset('assets/sellers/images/national_id/' . $seller->national_id) }}" alt="id image"
                         class="w-full h-full object-cover" />
@@ -144,7 +144,7 @@
                     @endcan
                 </div>
             </div>
-            <div class="product-disc col-span-8 lg:col-span-5 bg-white rounded-md drop-shadow">
+            <div class="product-disc col-span-8 lg:col-span-5 card_bg rounded-md drop-shadow">
                 <div class="py-8 px-4">
                     <h3 class="text-2xl font-bold">{{ $seller->first_name . ' ' . $seller->last_name }}</h3>
                 </div>
@@ -154,32 +154,32 @@
                         <h3 class="text-md font-bold mb-4">{{ __('site.SellerInformations') }}:</h3>
                         <div class="flex flex-col gap-2 lg:items-start">
                             <div class="flex items-center">
-                                <h3 class="text-md text-gray-500  font-bold mr-6 lg:mr-2">
+                                <h3 class="text-md   font-bold mr-6 lg:mr-2">
                                     {{ __('site.Email') }}:
                                 </h3>
                                 <span class="text-black">{{ $seller->email }}
                                 </span>
                             </div>
                             <div class="flex items-center">
-                                <h3 class="text-md text-gray-500  font-bold mr-6 lg:mr-2">
+                                <h3 class="text-md   font-bold mr-6 lg:mr-2">
                                     {{ __('site.Phone') }}:
                                 </h3>
                                 <span class="text-black">{{ $seller->phone }}</span>
                             </div>
                             <div class="flex items-center">
-                                <h3 class="text-md text-gray-500  font-bold mr-6 lg:mr-2">
+                                <h3 class="text-md   font-bold mr-6 lg:mr-2">
                                     {{ __('site.WhereDidYouHearAboutUs') }}:
                                 </h3>
                                 <span class="text-black">{{ $seller->about_us }}</span>
                             </div>
                             {{--                            <div class="flex items-center"> --}}
-                            {{--                                <h3 class="text-md text-gray-500  font-bold mr-6 lg:mr-2"> --}}
+                            {{--                                <h3 class="text-md   font-bold mr-6 lg:mr-2"> --}}
                             {{--                                    {{ __('site.PaymentMethod') }}: --}}
                             {{--                                </h3> --}}
                             {{--                                <span class="text-black">{{ $seller->payment_method }}</span> --}}
                             {{--                            </div> --}}
                             {{--                            <div class="flex items-center"> --}}
-                            {{--                                <h3 class="text-md text-gray-500  font-bold mr-6 lg:mr-2"> --}}
+                            {{--                                <h3 class="text-md   font-bold mr-6 lg:mr-2"> --}}
                             {{--                                    {{ __('site.AccountNumber') }}: --}}
                             {{--                                </h3> --}}
                             {{--                                <span class="text-black">{{ $seller->account }}</span> --}}
@@ -188,17 +188,17 @@
                     </div>
                     <hr />
                     <div class="flex items-center">
-                        <h3 class="text-md text-gray-500  font-bold mr-6 lg:mr-2">
+                        <h3 class="text-md   font-bold mr-6 lg:mr-2">
                             {{ __('site.Manger') }}:
                         </h3>
-                        <span class="text-black">{{ $seller->manger->name ?? '' }}</span>
+                        <span class="text-black">{{ $seller->manger->name ?? __('site.NoMangerYet') }}</span>
                     </div>
                 </div>
             </div>
 
-            {{-- <div class="col-span-8 bg-white drop-shadow rounded-md px-4 py-4">
+            {{-- <div class="col-span-8 card_bg drop-shadow rounded-md px-4 py-4">
                 <h3 class="text-xl font-bold mb-4"> {{ __('site.AboutUs') }}</h3>
-                <p class="text-gray-500 text-pretty">
+                <p class=" text-pretty">
                     {{ $seller->about_us }}
                 </p>
             </div> --}}

@@ -28,7 +28,17 @@
                         <form class="flex flex-col gap-6" action="{{ route('offers.store') }}" method="post"
                             enctype="multipart/form-data">
                             @csrf
-
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="title">
+                                    {{ __('site.Title') }}</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="title" class="form-control" name="title"
+                                        placeholder="{{ __('site.Title') }}" value="{{ old('title') }}" />
+                                </div>
+                                @error('title')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="basic-default-company">
                                     {{ __('site.Image') }}</label>

@@ -12,6 +12,7 @@ class Offer extends Model
     protected $fillable = [
 
         'image',
+        'title',
         'start_date',
         'end_date',
         'url',

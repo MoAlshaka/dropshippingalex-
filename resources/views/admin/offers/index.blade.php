@@ -37,20 +37,15 @@
                 <table class="table">
                     <thead>
                         <tr class="text-nowrap">
-                            <th scope="col"
-                                class="px-4 py-4 text-start text-sm font-medium text-gray-500 dark:text-gray-100">
+                            <th scope="col" class="px-4 py-4 text-start text-sm font-medium ">
                                 #</th>
-                            <th scope="col"
-                                class="px-4 py-4 text-start text-sm font-medium text-gray-500 dark:text-gray-100">
+                            <th scope="col" class="px-4 py-4 text-start text-sm font-medium ">
                                 {{ __('site.Title') }}</th>
-                            <th scope="col"
-                                class="px-4 py-4 text-start text-sm font-medium text-gray-500 dark:text-gray-100">
+                            <th scope="col" class="px-4 py-4 text-start text-sm font-medium ">
                                 {{ __('site.StartDate') }}</th>
-                            <th scope="col"
-                                class="px-4 py-4 text-start text-sm font-medium text-gray-500 dark:text-gray-100">
+                            <th scope="col" class="px-4 py-4 text-start text-sm font-medium ">
                                 {{ __('site.EndDate') }}</th>
-                            <th scope="col"
-                                class="px-4 py-4 text-start text-sm font-medium text-gray-500 dark:text-gray-100">
+                            <th scope="col" class="px-4 py-4 text-start text-sm font-medium ">
                                 {{ __('site.Actions') }}</th>
                         </tr>
                     </thead>
@@ -59,7 +54,7 @@
                         @if ($offers->isEmpty())
                             <!-- No Data Row -->
                             <tr>
-                                <td colspan="3" class="px-4 py-4 text-center text-gray-500 dark:text-gray-400">
+                                <td colspan="3" class="px-4 py-4 text-center ">
                                     {{ __('site.NoData') }}
 
                                 </td>
@@ -69,48 +64,41 @@
                             @php $i = 1; @endphp
                             @foreach ($offers as $offer)
                                 <tr>
-                                    <td
-                                        class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-500 dark:text-gray-400">
+                                    <td class="px-4 py-4 whitespace-nowrap text-sm font-medium ">
                                         {{ $i++ }}</td>
-                                    <td
-                                        class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-500 dark:text-gray-400">
-                                        <a href="{{ route('offers.show', $offer->id) }}"> {{ $offer->title }} </a>
+                                    <td class="px-4 py-4 whitespace-nowrap text-sm font-medium ">
+                                        {{ $offer->title }}
                                     </td>
 
-                                    <td
-                                        class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-500 dark:text-gray-400">
+                                    <td class="px-4 py-4 whitespace-nowrap text-sm font-medium ">
                                         {{ $offer->start_date }}
                                     </td>
-                                    <td
-                                        class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-500 dark:text-gray-400">
+                                    <td class="px-4 py-4 whitespace-nowrap text-sm font-medium ">
                                         {{ $offer->end_date }}</td>
 
-                                    <td class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-500 dark:text-gray-400"
+                                    <td class="px-4 py-4 whitespace-nowrap text-sm font-medium "
                                         style="display: flex; gap: 6px;">
-                                        <a class="  text-primary hover:bg-success hover:text-white"
-                                            href="{{ route('offers.show', $offer->id) }}">
-                                            <button type="button" class="btn btn-icon btn-info waves-effect waves-light">
-                                                <span class="tf-icons mdi mdi-information-outline"></span>
+                                        @can('Edit Offer')
+                                            <a class="  text-primary hover:bg-success hover:text-white"
+                                                href="{{ route('offers.edit', $offer->id) }}">
+                                                <button type="button"
+                                                    class="btn btn-icon btn-primary waves-effect waves-light">
+                                                    <span class="tf-icons mdi mdi-tag-edit-outline"></span>
 
-                                            </button>
-                                        </a>
-                                        <a class="  text-primary hover:bg-success hover:text-white"
-                                            href="{{ route('offers.edit', $offer->id) }}">
-                                            <button type="button"
-                                                class="btn btn-icon btn-primary waves-effect waves-light">
-                                                <span class="tf-icons mdi mdi-tag-edit-outline"></span>
+                                                </button>
+                                            </a>
+                                        @endcan
+                                        @can('Delete Offer')
+                                            <form action="{{ route('offers.destroy', $offer->id) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
 
-                                            </button>
-                                        </a>
-                                        <form action="{{ route('offers.destroy', $offer->id) }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
+                                                <button type="submit" class="btn btn-icon btn-danger waves-effect waves-light">
+                                                    <span class="tf-icons mdi mdi-trash-can-outline"></span>
 
-                                            <button type="submit" class="btn btn-icon btn-danger waves-effect waves-light">
-                                                <span class="tf-icons mdi mdi-trash-can-outline"></span>
-
-                                            </button>
-                                        </form>
+                                                </button>
+                                            </form>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach

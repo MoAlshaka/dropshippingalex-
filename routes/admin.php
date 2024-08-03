@@ -61,6 +61,8 @@ Route::group([
     //transactions
     Route::resource('transactions', TransactionController::class);
     Route::get('transaction/seller/{id}', [TransactionController::class, 'get_seller_info'])->name('admin.seller.info');
+    Route::post('transaction/filter', [TransactionController::class, 'filter'])->name('admin.transaction.filter');
+
     // products
     Route::resource('shared-products', SharedProductController::class);
     Route::match(['post', 'put', 'patch'], 'shared-products/{id}', [SharedProductController::class, 'update'])->name('admin.sharedproducts.update');
@@ -105,7 +107,7 @@ Route::group([
     //Reports
     Route::get('reports', [ReportController::class, 'index'])->name('admin.reports.index');
     Route::get('filter/report/country/{country}', [ReportController::class, 'filter_country'])->name('admin.report.country.filter');
-    Route::post('reports/filter', [ReportController::class, 'filter'])->name('admin.reports.filter');
+    Route::post('reports/filter/{id}', [ReportController::class, 'filter'])->name('admin.reports.filter');
     Route::get('reports/affiliate-filter', [ReportController::class, 'affiliate_filter'])->name('admin.reports.affiliate.filter');
     Route::post('reports/affiliate/filter', [ReportController::class, 'affiliate_filter_date'])->name('admin.reports.affiliate.filter.date');
     Route::get('reports/marketplace', [ReportController::class, 'marketplace'])->name('admin.reports.marketplace.filter');

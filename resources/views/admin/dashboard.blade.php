@@ -103,6 +103,9 @@
                                         <label for="bs-rangepicker-range">{{ __('site.Date') }}</label>
                                     </div>
                                 </div>
+                                @error('date')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                                 <div class=" mb-4">
                                     <div class="form-floating form-floating-outline">
                                         <select name="admin_id[]" id="admin_id" class="selectpicker w-100"
@@ -141,6 +144,9 @@
                 </div>
             </div>
         </h4>
+        @if (session()->has('Warning'))
+            <div class="alert alert-warning" role="alert">{{ session()->get('Warning') }}</div>
+        @endif
         <div class="card_chart_cont  lg:flex ">
             <div class="chart_container mt-4 mx-4 md:mx-6 ">
                 <div class="card">
@@ -159,9 +165,9 @@
                 </div>
             </div>
             <div class="card_container mt-4 mx-auto md:mx-6 grid grid-cols-7 md:grid-cols-8 gap-6  w-full">
-                <div class="card bg-white px-6 py-8 rounded-xl col-span-5 md:col-span-4 col-start-2 shadow-md">
+                <div class="card card_bg px-6 py-8 rounded-xl col-span-5 md:col-span-4 col-start-2 shadow-md">
                     <div class="flex flex-col gap-10 h-full">
-                        <h2 class="text-md text-gray-800 font-bold uppercase">
+                        <h2 class="text-md  font-bold uppercase">
                             {{ __('site.TotalLeads') }}
                         </h2>
                         <div class="flex justify-between items-center">
@@ -170,13 +176,13 @@
 
                                 </span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{ $leads }}</span>
+                            <span class=" text-3xl font-bold">{{ $leads }}</span>
                         </div>
                     </div>
                 </div>
-                <div class="card bg-white px-6 py-8 rounded-xl col-span-5 md:col-span-4 col-start-2 shadow-md">
+                <div class="card card_bg px-6 py-8 rounded-xl col-span-5 md:col-span-4 col-start-2 shadow-md">
                     <div class="flex flex-col gap-10 h-full">
-                        <h2 class="text-md text-gray-800 font-bold uppercase">
+                        <h2 class="text-md  font-bold uppercase">
                             {{ __('site.ConfirmedLeads') }}
                         </h2>
                         <div class="flex justify-between items-center">
@@ -185,26 +191,26 @@
 
                                 </span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{ $approvedLeadsCount }}</span>
+                            <span class=" text-3xl font-bold">{{ $approvedLeadsCount }}</span>
                         </div>
                     </div>
                 </div>
-                <div class="card bg-white px-6 py-8 rounded-xl col-span-5 md:col-span-4 col-start-2 shadow-md">
+                <div class="card card_bg px-6 py-8 rounded-xl col-span-5 md:col-span-4 col-start-2 shadow-md">
                     <div class="flex flex-col gap-10 h-full">
-                        <h2 class="text-md text-gray-800 font-bold uppercase">
+                        <h2 class="text-md  font-bold uppercase">
                             {{ __('site.DeliveredLeads') }}
                         </h2>
                         <div class="flex justify-between items-center">
                             <div class="bg-red-500 rounded-full text-white px-4 py-2 flex justify-center items-center">
                                 <span class="mdi mdi-phone-outline"></span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{ $deliveredLeadsCount }}</span>
+                            <span class=" text-3xl font-bold">{{ $deliveredLeadsCount }}</span>
                         </div>
                     </div>
                 </div>
-                <div class="card bg-white px-6 py-8 rounded-xl col-span-5 md:col-span-4 col-start-2 shadow-md">
+                <div class="card card_bg px-6 py-8 rounded-xl col-span-5 md:col-span-4 col-start-2 shadow-md">
                     <div class="flex flex-col gap-10 h-full">
-                        <h2 class="text-md text-gray-800 font-bold uppercase">
+                        <h2 class="text-md  font-bold uppercase">
                             {{ __('site.PendingLeads') }}
                         </h2>
                         <div class="flex justify-between items-center">
@@ -213,7 +219,7 @@
 
                                 </span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{ $pendingLeadsCount }}</span>
+                            <span class=" text-3xl font-bold">{{ $pendingLeadsCount }}</span>
                         </div>
                     </div>
                 </div>
@@ -222,17 +228,17 @@
         <div class="rank_chat_cont lg:grid xl:grid-cols-4 mt-12 mb-6">
             <div class="chat_container mt-4 mx-4 md:mx-6 xl:col-span-3 mx-4">
                 <div
-                    class="chat max-h-[600px] min-h-[600px] bg-white rounded-xl shadow-md flex justify-center items-center">
-                    <span class="text-gray-600 text-3xl"> {{ __('site.Chat') }} </span>
+                    class="chat max-h-[600px] min-h-[600px] card_bg rounded-xl shadow-md flex justify-center items-center">
+                    <span class=" text-3xl"> {{ __('site.Chat') }} </span>
                 </div>
             </div>
             <div class="ranks_container mt-4 mx-4 md:mx-6 xl:col-span-1 mx-4">
-                <div class="sticky top-0 bg-white rounded-t-xl px-4 py-2">
-                    <h4 class="text-xl font-bold text-gray-600 capitalize">{{ __('site.Ranking') }}</h4>
+                <div class="sticky top-0 card_bg rounded-t-xl px-4 py-2">
+                    <h4 class="text-xl font-bold  capitalize">{{ __('site.Ranking') }}</h4>
                     <hr class="mt-2" />
                 </div>
 
-                <div class="rank bg-white rounded-b-xl px-4 pb-4 overflow-y-scroll min-h-[550px]">
+                <div class="rank card_bg rounded-b-xl px-4 pb-4 overflow-y-scroll min-h-[550px]">
                     @foreach ($sellers as $seller)
                         <div class="rank_memeber flex py-2 border-b-2">
                             <div class="img_wrapper ">
@@ -240,8 +246,8 @@
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/ranks/Angel-removebg-preview.png') }}" alt="rank_Icon"
-                                            class="rank_icon w-20" />
-                                        <div class="overflow-hidden rounded-full w-20 h-20 absolute top-0 left-0">
+                                            class="rank_icon !w-20" />
+                                        <div class="overflow-hidden rounded-full h-20 absolute top-0 left-0">
                                             <!-- avatar image -->
                                             <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full rounded" />
@@ -251,9 +257,8 @@
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/ranks/Wizard.png') }}Wizard.png" alt="rank_Icon"
-                                            class="rank_icon w-20" />
-                                        <div
-                                            class="overflow-hidden rounded-full w-20 h-20 absolute top-0 left-0 img_avtr_size">
+                                            class="rank_icon !w-20" />
+                                        <div class="overflow-hidden rounded-full h-20 absolute top-0 left-0 img_avtr_size">
                                             <!-- avatar image -->
                                             <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full h-full object-cover rounded" />
@@ -263,8 +268,8 @@
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/ranks/Knight.png') }}" alt="rank_Icon"
-                                            class="rank_icon w-20" />
-                                        <div class="overflow-hidden rounded-full w-20 h-20 absolute top-0 left-0"
+                                            class="rank_icon !w-20" />
+                                        <div class="overflow-hidden rounded-full h-20 absolute top-0 left-0"
                                             style="    width: 60px;
                                         height: 60px;
                                         left: 10px;
@@ -278,8 +283,8 @@
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/ranks/Villain.png ') }}" alt="rank_Icon"
-                                            class="rank_icon w-20" />
-                                        <div class="overflow-hidden rounded-full w-20 h-20 absolute top-0 left-0"
+                                            class="rank_icon !w-20" />
+                                        <div class="overflow-hidden rounded-full h-20 absolute top-0 left-0"
                                             style="    width: 60px; height: 60px; left: 10px;  top: 10px;">
                                             <!-- avatar image -->
                                             <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
@@ -290,9 +295,8 @@
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/ranks/Master.png ') }}" alt="rank_Icon"
-                                            class="rank_icon w-20" />
-                                        <div
-                                            class="overflow-hidden rounded-full w-20 h-20 absolute top-0 left-0 img_avtr_size">
+                                            class="rank_icon !w-20" />
+                                        <div class="overflow-hidden rounded-full h-20 absolute top-0 left-0 img_avtr_size">
                                             <!-- avatar image -->
                                             <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full rounded" />
@@ -302,8 +306,8 @@
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src=" {{ asset('assets/ranks/Expert.png ') }}" alt="rank_Icon"
-                                            class="rank_icon w-20" />
-                                        <div class="overflow-hidden rounded-full w-20 h-20 absolute top-0 left-0"
+                                            class="rank_icon !w-20" />
+                                        <div class="overflow-hidden rounded-full h-20 absolute top-0 left-0"
                                             style="width: 70px;
                                                 height: 70px;
                                                 left: 8px;
@@ -317,8 +321,8 @@
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/rank/Elite.png ') }}" alt="rank_Icon"
-                                            class="rank_icon w-20" />
-                                        <div class="overflow-hidden rounded-full w-20 h-20 absolute top-0 left-0">
+                                            class="rank_icon !w-20" />
+                                        <div class="overflow-hidden rounded-full h-20 absolute top-0 left-0">
                                             <!-- avatar image -->
                                             <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full rounded" />
@@ -328,8 +332,8 @@
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/rank/Advanced.png ') }}" alt="rank_Icon"
-                                            class="rank_icon w-20" />
-                                        <div class="overflow-hidden rounded-full w-20 h-20 absolute top-0 left-0">
+                                            class="rank_icon !w-20" />
+                                        <div class="overflow-hidden rounded-full h-20 absolute top-0 left-0">
                                             <!-- avatar image -->
                                             <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full rounded" />
@@ -339,8 +343,8 @@
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/rank/Work.png') }}" alt="rank_Icon"
-                                            class="rank_icon w-20" />
-                                        <div class="overflow-hidden rounded-full w-20 h-20 absolute top-0 left-0">
+                                            class="rank_icon !w-20" />
+                                        <div class="overflow-hidden rounded-full h-20 absolute top-0 left-0">
                                             <!-- avatar image -->
                                             <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full rounded" />
@@ -350,8 +354,8 @@
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
                                         <img src="{{ asset('assets/rank/Novice.png') }}" alt="rank_Icon"
-                                            class="rank_icon w-20" />
-                                        <div class="overflow-hidden rounded-full w-20  h-full absolute top-0 left-0">
+                                            class="rank_icon !w-20" />
+                                        <div class="overflow-hidden rounded-full  h-full absolute top-0 left-0">
                                             <!-- avatar image -->
                                             <img src="{{ asset('assets/sellers/images/' . $seller['seller']->image) }}"
                                                 alt="rank_avatar" class="w-full h-full object-cover rounded" />
@@ -363,12 +367,12 @@
                             <div class="member_info">
 
 
-                                <h4 class="text-sm font-bold text-gray-600 capitalize inline-block">
+                                <h4 class="text-sm font-bold  capitalize inline-block">
                                     {{ $seller['seller']->first_name . ' ' . $seller['seller']->last_name }}
                                 </h4>
 
                                 <div class="mt-2">
-                                    <span class="text-gray-600 text-sm bg-green-400 rounded-md text-white px-2 py-1">
+                                    <span class=" text-sm bg-green-400 rounded-md text-white px-2 py-1">
                                         @if ($seller['revenue'] > 150000)
                                             ???
                                         @elseif($seller['revenue'] <= 150000 && $seller['revenue'] > 75000)

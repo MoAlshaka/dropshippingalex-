@@ -69,7 +69,7 @@
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
                     aria-labelledby="offcanvasRightLabel">
                     <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasRightLabel">{{ __('site.FliterOrders') }}</h5>
+                        <h5 class="offcanvas-title" id="offcanvasRightLabel">{{ __('site.FilterOrders') }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
@@ -153,7 +153,7 @@
                     <tbody class="table-border-bottom-0">
                         @if ($invoices->isEmpty())
                             <tr>
-                                <td colspan="3" class="px-4 py-4 text-center text-gray-500 dark:text-gray-400">
+                                <td colspan="3" class="px-4 py-4 text-center ">
                                     {{ __('site.NoData') }}</td>
                             </tr>
                         @else
@@ -246,12 +246,8 @@
     <script src="{{ asset('assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
 
     <script src="{{ asset('assets/vendor/libs/pickr/pickr.js') }}"></script>
-    <!-- endbuild -->
-
-
-
-
-    <script src="{{ asset('assets/vendor/libs/bootstrap-select/bootstrap-select.js') }}"></script>
     <script src="{{ asset('assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
     <script src="{{ asset('assets/js/forms-pickers.js') }}"></script>
+
+    <script src="{{ asset('assets/js/forms-selects.js') }}"></script>
 @endsection

@@ -46,7 +46,7 @@
                     <tbody class="table-border-bottom-0">
                         @if ($categories->isEmpty())
                             <tr>
-                                <td colspan="3" class="px-4 py-4 text-center text-gray-500 dark:text-gray-400">
+                                <td colspan="3" class="px-4 py-4 text-center ">
                                     {{ __('site.NoData') }}</td>
                             </tr>
                         @else

@@ -67,6 +67,7 @@ class OrderController extends Controller
         } else {
             $product = $affiliateproduct;
         }
+
         return view('admin.orders.show', compact('order', 'product', 'country'));
     }
 
@@ -111,7 +112,7 @@ class OrderController extends Controller
                             'seller_id' => $order->seller_id,
                             'revenue' => $revenue->revenue,
                             'date' => date('Y-m-d'),
-                            'crated_at' => date('Y-m-d'),
+                            'created_at' => date('Y-m-d H:i:s'),
                             'status' => 'unpaid',
                         ]);
                         if ($flag) {
@@ -141,9 +142,9 @@ class OrderController extends Controller
                     $product = SharedProduct::where('sku', $lead->item_sku)->first();
                     if ($product) {
                         $money = $lead->total / $lead->quantity;
-                        if ($revenue->isNotEmpty()) {
+                        if (!empty($revenue)) {
                             $revenue->update([
-                                'revenue' => $revenue->revenue + (($money - $product->unit_cost) * $lead->quantity) - $product->country->shipping_cost,
+                                'revenue' => $revenue->revenue + (($money - $product->unit_cost) * $lead->quantity) - $product->sharedcountries->shipping_cost,
                             ]);
                         } else {
                             Revenue::create([
@@ -222,7 +223,8 @@ class OrderController extends Controller
     {
 
         $query = Order::query();
-
+        $start_date = '';
+        $end_date = '';
         if ($request->has('created_at') && $request->created_at != '') {
             $dates = explode(' - ', $request->created_at);
 
@@ -230,36 +232,36 @@ class OrderController extends Controller
             if (count($dates) === 2) {
                 $start_date = \Carbon\Carbon::createFromFormat('m/d/Y', trim($dates[0]))->format('Y-m-d');
                 $end_date = \Carbon\Carbon::createFromFormat('m/d/Y', trim($dates[1]))->format('Y-m-d');
-                $leads = Lead::whereBetween('order_date', [$start_date, $end_date])->pluck('id');
+                $leads = Lead::whereBetween('order_date', [$start_date, $end_date] ?? [])->pluck('id');
                 // Apply the whereBetween condition on the 'order_date' column
-                $query->orWhereIn('lead_id',  $leads);
+                $query->WhereIn('lead_id',  $leads);
             }
         }
 
 
 
         if ($request->has('warehouse') && $request->warehouse != '') {
-            $leads = Lead::whereIn('warehouse', $request->warehouse)->pluck('id');
-            $query->orWhereIn('lead_id',  $leads);
+            $leads = Lead::WhereIn('warehouse', $request->warehouse ?? [])->pluck('id');
+            $query->WhereIn('lead_id',  $leads);
         }
 
         if ($request->has('country') && $request->country != '') {
-            $leads = Lead::whereIn('customer_country', $request->country)->pluck('id');
-            $query->orWhereIn('lead_id', $leads);
+            $leads = Lead::WhereIn('customer_country', $request->country ?? [])->pluck('id');
+            $query->WhereIn('lead_id', $leads);
         }
         if ($request->has('status') && $request->status != '') {
-            $leads = Lead::whereIn('status', $request->status)->pluck('id');
-            $query->orWhereIn('lead_id', $leads);
+            $leads = Lead::WhereIn('status', $request->status ?? [])->pluck('id');
+            $query->WhereIn('lead_id', $leads);
         }
         if ($request->has('type') && $request->type != '') {
-            $leads = Lead::whereIn('type', $request->type)->pluck('id');
-            $query->orWhereIn('lead_id', $leads);
+            $leads = Lead::WhereIn('type', $request->type ?? [])->pluck('id');
+            $query->WhereIn('lead_id', $leads);
         }
         if ($request->has('shipment_status') && $request->shipment_status != '') {
-            $query->orWhereIn('shipment_status', $request->shipment_status);
+            $query->WhereIn('shipment_status', $request->shipment_status ?? []);
         }
         if ($request->has('payment_status') && $request->payment_status != '') {
-            $query->orWhereIn('payment_status', $request->payment_status);
+            $query->WhereIn('payment_status', $request->payment_status ?? []);
         }
 
         $orders = $query->orderBy('id', 'DESC')->paginate(COUNT); // Replace 10 with your desired number of items per page

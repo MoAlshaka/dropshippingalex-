@@ -31,22 +31,13 @@
                                     for="basic-default-name">{{ __('site.Title') }}</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="basic-default-name" name="title"
-                                        placeholder="{{ __('site.Title') }}" value="{{ $offer->title }}" />
+                                        placeholder="{{ __('site.Title') }}" value="{{ old('title', $offer->title) }}" />
                                 </div>
                             </div>
                             @error('title')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
-                            <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="basic-default-company">
-                                    {{ __('site.Description') }}</label>
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" rows="5" name="description">{{ $offer->description }}</textarea>
-                                </div>
-                            </div>
-                            @error('description')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
+
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="basic-default-company">
                                     {{ __('site.Image') }}</label>
@@ -64,7 +55,8 @@
                                     {{ __('site.StartDate') }}</label>
                                 <div class="col-sm-10">
                                     <input type="date" class="form-control" id="basic-default-name" name="start_date"
-                                        placeholder="{{ __('site.StartDate') }}" value="{{ $offer->start_date }}" />
+                                        placeholder="{{ __('site.StartDate') }}"
+                                        value="{{ old('start_date', $offer->start_date) }}" />
                                 </div>
                                 @error('start_date')
                                     <div class="text-danger">{{ $message }}</div>
@@ -75,13 +67,24 @@
                                     {{ __('site.EndDate') }}</label>
                                 <div class="col-sm-10">
                                     <input type="date" class="form-control" id="basic-default-name" name="end_date"
-                                        placeholder="{{ __('site.EndDate') }}" value="{{ $offer->end_date }}" />
+                                        placeholder="{{ __('site.EndDate') }}"
+                                        value="{{ old('end_date', $offer->end_date) }}" />
                                 </div>
                                 @error('end_date')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="url">
+                                    {{ __('site.Url') }}</label>
+                                <div class="col-sm-10">
+                                    <input type="text" id="url" class="form-control" name="url"
+                                        placeholder="{{ __('site.Url') }}" value="{{ old('url', $offer->url) }}" />
+                                </div>
+                                @error('url')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                             <div class="row justify-content-end">
                                 <div class="col-sm-10">
                                     <button type="submit" class="btn btn-primary"> {{ __('site.Update') }}</button>

@@ -198,27 +198,13 @@
             @endcan
             @can('Offers')
                 <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <a href="{{ route('offers.index') }}" class="menu-link ">
                         <i class="menu-icon tf-icons mdi mdi-sale-outline"></i>
                         <div> {{ __('site.Offers') }}</div>
                     </a>
-                    <ul class="menu-sub">
-                        {{--                <li class="menu-item"> --}}
-                        {{--                    <a href="{{ route('offers.index') }}" class="menu-link"> --}}
-                        {{--                        <div> {{ __('site.AllOffers') }}</div> --}}
-                        {{--                    </a> --}}
-                        {{--                </li> --}}
-                        @can('Create Offer')
-                            <li class="menu-item">
-                                <a href="{{ route('offers.create') }}" class="menu-link">
-                                    <div> {{ __('site.CreateOffer') }}</div>
-                                </a>
-                            </li>
-                        @endcan
-
-                    </ul>
                 </li>
             @endcan
+
             @can('Transaction')
                 <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">

@@ -21,7 +21,7 @@
             <div class="alert alert-danger" role="alert">{{ session()->get('Exclude') }}</div>
         @endif
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-8 gap-4 p-4">
-            <div class="product-card col-span-8 lg:col-span-3 py-2 px-4 rounded-md drop-shadow bg-white">
+            <div class="product-card col-span-8 lg:col-span-3 py-2 px-4 rounded-md drop-shadow card_bg">
                 <div class="product-img flex mb-4">
                     <img src="{{ asset('assets/products/affiliateproduct/images/' . $product->image) }}" alt=""
                         class="w-full h-full object-cover" />
@@ -57,7 +57,7 @@
 
                 </div>
             </div>
-            <div class="product-disc col-span-8 lg:col-span-5 bg-white rounded-md drop-shadow">
+            <div class="product-disc col-span-8 lg:col-span-5 card_bg rounded-md drop-shadow">
                 <div class="py-8 px-4">
                     <h3 class="text-2xl font-bold">{{ $product->title }}</h3>
                 </div>
@@ -65,13 +65,13 @@
                 <div class="px-2">
                     <div class="py-6 px-2 flex flex-col lg:flex-row gap-2 lg:gap-12 lg:items-center">
                         <div class="flex items-center">
-                            <h3 class="text-md text-gray-500 lg:text-xl font-bold mr-1">
+                            <h3 class="text-md  lg:text-xl font-bold mr-1">
                                 {{ __('site.MinimumSellingPrice') }}:
                             </h3>
                             <span class="text-green-600">{{ $product->minimum_selling_price }}$</span>
                         </div>
                         <div class="flex items-center">
-                            <h3 class="text-md text-gray-500 lg:text-xl font-bold mr-1">
+                            <h3 class="text-md  lg:text-xl font-bold mr-1">
                                 {{ __('site.Commission') }}:
                             </h3>
                             <span class="text-green-600">{{ $product->commission }}$</span>
@@ -81,7 +81,7 @@
                     <div class="py-6 px-2">
                         <h3 class="text-md font-bold mb-4"> {{ __('site.Specifications') }}:</h3>
                         <div class="flex items-center">
-                            <h3 class="text-md text-gray-500 lg:text-xl font-bold mr-6 lg:mr-2">
+                            <h3 class="text-md  lg:text-xl font-bold mr-6 lg:mr-2">
                                 {{ __('site.SKU') }}:
                             </h3>
                             <span class="text-white bg-violet-500 px-3 py-1 rounded hover:bg-violet-600"
@@ -91,13 +91,13 @@
                         </div>
                         <div class="flex flex-col gap-2 lg:items-start">
                             <div class="flex items-center">
-                                <h3 class="text-md text-gray-500 lg:text-xl font-bold mr-6 lg:mr-2">
+                                <h3 class="text-md  lg:text-xl font-bold mr-6 lg:mr-2">
                                     {{ __('site.Brand') }}:
                                 </h3>
                                 <span class="text-black">{{ $product->brand }}</span>
                             </div>
                             <div class="flex items-center">
-                                <h3 class="text-md text-gray-500 lg:text-xl font-bold mr-6 lg:mr-2">
+                                <h3 class="text-md  lg:text-xl font-bold mr-6 lg:mr-2">
                                     {{ __('site.Wieght') }}:
                                 </h3>
                                 <span class="text-black">{{ $product->weight }} KG</span>
@@ -108,7 +108,7 @@
                 </div>
             </div>
             <!-- But Table hre -->
-            <div class="col-span-8 bg-white drop-shadow rounded-md px-4 py-4">
+            <div class="col-span-8 card_bg drop-shadow rounded-md px-4 py-4">
                 <table class="table">
                     <thead>
                         <tr class="text-nowrap">
@@ -148,9 +148,9 @@
             </div>
             <!-- But Table hre -->
 
-            <div class="col-span-8 bg-white drop-shadow rounded-md px-4 py-4">
+            <div class="col-span-8 card_bg drop-shadow rounded-md px-4 py-4">
                 <h3 class="text-xl font-bold mb-4">Description</h3>
-                <p class="text-gray-500 text-pretty">
+                <p class=" text-pretty">
                     {!! $product->description !!}
                 </p>
             </div>

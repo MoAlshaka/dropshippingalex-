@@ -36,7 +36,7 @@
                             <th>{{ __('site.Name') }}</th>
                             <th> {{ __('site.Email') }}</th>
                             <th> {{ __('site.Phone') }}</th>
-                            <th> {{ __('site.Address') }}</th>
+
                             <th> {{ __('site.Status') }}</th>
                             <th> {{ __('site.Actions') }}</th>
                         </tr>
@@ -44,7 +44,7 @@
                     <tbody class="table-border-bottom-0">
                         @if ($sellers->isEmpty())
                             <tr>
-                                <td colspan="3" class="px-4 py-4 text-center text-gray-500 dark:text-gray-400">
+                                <td colspan="3" class="px-4 py-4 text-center ">
                                     {{ __('site.NoData') }}
                                 </td>
                             </tr>
@@ -56,7 +56,7 @@
                                     <td>{{ $seller->first_name . ' ' . $seller->last_name }}</td>
                                     <td>{{ $seller->email }}</td>
                                     <td>{{ $seller->phone }}</td>
-                                    <td>{{ $seller->address }}</td>
+
                                     <td>
                                         @if ($seller->is_active == 1)
                                             {{ __('site.Active') }}

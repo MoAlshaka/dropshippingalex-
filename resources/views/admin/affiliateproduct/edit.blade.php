@@ -284,7 +284,7 @@
                                 <input type="number" step="0.01" class="form-control" id="commission"
                                     placeholder="commission" name="commission" aria-label="Product discounted price"
                                     value="{{ $product->commission }}" />
-                                <label for="commission">{{ __('site.commission') }}</label>
+                                <label for="commission">{{ __('site.Commission') }}</label>
                             </div>
                             @error('commission')
                                 <div class="text-danger">{{ $message }}</div>

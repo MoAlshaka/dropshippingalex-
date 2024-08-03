@@ -118,11 +118,12 @@
                                 <div class="col-sm-10">
                                     <select id="select2Basic" class="select2 form-select form-select-lg"
                                         data-allow-clear="true" name="status">
-                                        <option value="{{ $transaction->status }}">{{ $transaction->status }}</option>
-                                        <option value="1">{{ __('site.Status') }}</option>
-                                        <option value="2">{{ __('site.Status') }}</option>
-                                        <option value="3">{{ __('site.Status') }}</option>
-                                        <option value="4">{{ __('site.Status') }}</option>
+
+                                        <option value="paid" @if ($transaction->status == 'paid') selected @endif>
+                                            {{ __('site.Paid') }}</option>
+                                        <option value="unpaid" @if ($transaction->status == 'unpaid') selected @endif>
+                                            {{ __('site.Unpaid') }}</option>
+
 
                                     </select>
 

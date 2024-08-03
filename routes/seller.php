@@ -105,7 +105,7 @@ Route::group([
         //
         Route::get('reports', [ReportController::class, 'index'])->name('seller.reports.index');
         Route::get('filter/report/country/{country}', [ReportController::class, 'filter_country'])->name('seller.report.country.filter');
-        Route::post('reports/filter', [ReportController::class, 'filter'])->name('seller.reports.filter');
+        Route::post('reports/filter/{id}', [ReportController::class, 'filter'])->name('seller.reports.filter');
         Route::get('reports/affiliate-filter', [ReportController::class, 'affiliate_filter'])->name('seller.reports.affiliate.filter');
         Route::post('reports/affiliate/filter', [ReportController::class, 'affiliate_filter_date'])->name('seller.reports.affiliate.filter.date');
         Route::get('reports/marketplace', [ReportController::class, 'marketplace'])->name('seller.reports.marketplace.filter');

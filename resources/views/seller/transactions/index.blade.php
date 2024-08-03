@@ -20,38 +20,38 @@
             <div class="table-responsive text-nowrap">
                 <table class="table">
                     <thead>
-                    <tr class="text-nowrap">
-                        <th>#</th>
-                        <th>{{ __('site.Seller') }}</th>
-                        <th>{{ __('site.PaymentMethod') }}</th>
-                        <th>{{ __('site.Account') }}</th>
-                        <th>{{ __('site.Amount') }}</th>
-                        <th>{{ __('site.Status') }}</th>
-                        <th>{{ __('site.DateTransaction') }}</th>
+                        <tr class="text-nowrap">
+                            <th>#</th>
+                            <th>{{ __('site.Seller') }}</th>
+                            <th>{{ __('site.PaymentMethod') }}</th>
+                            <th>{{ __('site.Account') }}</th>
+                            <th>{{ __('site.Amount') }}</th>
+                            <th>{{ __('site.Status') }}</th>
+                            <th>{{ __('site.DateTransaction') }}</th>
 
-                    </tr>
+                        </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                    @if ($transactions->isEmpty())
-                        <tr>
-                            <td colspan="3" class="px-4 py-4 text-center text-gray-500 dark:text-gray-400">
-                                {{ __('site.NoData') }}</td>
-                        </tr>
-                    @else
-                        @php $i = 1; @endphp
-                        @foreach ($transactions as $transaction)
+                        @if ($transactions->isEmpty())
                             <tr>
-                                <th scope="row">{{ $i++ }}</th>
-                                <td>{{ $transaction->seller->first_name . ' ' . $transaction->seller->last_name }}</td>
-                                <td>{{ $transaction->seller->payment_method }}</td>
-                                <td>{{ $transaction->seller->account }}</td>
-                                <td>{{ $transaction->amount }}</td>
-                                <td>{{ $transaction->status }}</td>
-                                <td>{{ $transaction->created_at }}</td>
-
+                                <td colspan="3" class="px-4 py-4 text-center ">
+                                    {{ __('site.NoData') }}</td>
                             </tr>
-                        @endforeach
-                    @endif
+                        @else
+                            @php $i = 1; @endphp
+                            @foreach ($transactions as $transaction)
+                                <tr>
+                                    <th scope="row">{{ $i++ }}</th>
+                                    <td>{{ $transaction->seller->first_name . ' ' . $transaction->seller->last_name }}</td>
+                                    <td>{{ $transaction->seller->payment_method }}</td>
+                                    <td>{{ $transaction->seller->account }}</td>
+                                    <td>{{ $transaction->amount }}</td>
+                                    <td>{{ $transaction->status }}</td>
+                                    <td>{{ $transaction->created_at }}</td>
+
+                                </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>

@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\AffiliateProduct;
-use App\Models\Country;
+use Carbon\Carbon;
 use App\Models\Lead;
 use App\Models\Order;
-use App\Models\SharedProduct;
+use App\Models\Country;
 use Illuminate\Http\Request;
+use App\Models\SharedProduct;
+use App\Models\AffiliateProduct;
+use App\Http\Controllers\Controller;
 
 class LeadController extends Controller
 {
@@ -23,8 +24,8 @@ class LeadController extends Controller
     public function index()
     {
         $countries = Country::all();
-        $status = Lead::distinct()->pluck('status');
-        $types = Lead::distinct()->pluck('type');
+        $status = Lead::distinct()->pluck('status')->unique();
+        $types = Lead::distinct()->pluck('type')->unique();
         $leads = Lead::orderBy('id', 'DESC')->paginate(COUNT);
         return view('admin.leads.index', compact('leads', 'countries', 'status', 'types'));
     }
@@ -80,8 +81,8 @@ class LeadController extends Controller
             'ref' => 'required|max:50'
         ]);
         $countries = Country::all();
-        $status = Lead::distinct()->pluck('status');
-        $types = Lead::distinct()->pluck('type');
+        $status = Lead::distinct()->pluck('status')->unique();
+        $types = Lead::distinct()->pluck('type')->unique();
         $leads = Lead::where('store_reference', $request->ref)->orderBy('id', 'DESC')->paginate(COUNT);
         return view('admin.leads.index', compact('leads', 'countries', 'status', 'types'));
         // return redirect()->route('admin.leads.index', compact('leads', 'countries', 'status', 'types'));
@@ -90,47 +91,48 @@ class LeadController extends Controller
     public function filter(Request $request)
     {
 
-        // $query = Lead::query();
-
+        $query = Lead::query();
+        $start_date = '';
+        $end_date = '';
         if ($request->has('created_at') && $request->created_at != '') {
             $dates = explode(' - ', $request->created_at);
 
             // Ensure both start and end dates are available
             if (count($dates) === 2) {
-                $start_date = \Carbon\Carbon::createFromFormat('m/d/Y', trim($dates[0]))->format('Y-m-d');
-                $end_date = \Carbon\Carbon::createFromFormat('m/d/Y', trim($dates[1]))->format('Y-m-d');
-
-                // Apply the whereBetween condition on the 'order_date' column
-                // $query->orWhereBetween('order_date', [$start_date, $end_date]);
+                $start_date = Carbon::createFromFormat('m/d/Y', $dates[0])->startOfDay();
+                $end_date = Carbon::createFromFormat('m/d/Y', $dates[1])->endOfDay();
             }
         }
 
-        $leads = Lead::orWhereIn('warehouse', $request->warehouse ?? [])
-            ->orWhereIn('country', $request->country ?? [])
-            ->orWhereIn('status', $request->status ?? [])
-            ->orWhereIn('type', $request->type ?? [])
-            ->orWhereBetween('order_date', [$start_date, $end_date])
-            ->orderBy('id', 'DESC')->paginate(COUNT);
+        // $leads = Lead::WhereIn('warehouse', $request->warehouse ?? [])
+        //     ->WhereIn('customer_country', $request->country ?? [])
+        //     ->WhereIn('status', $request->status ?? [])
+        //     ->WhereIn('type', $request->type ?? [])
+        //     ->orWhereBetween('order_date', [$start_date, $end_date] ?? [])
+        //     ->orderBy('id', 'DESC')->paginate(COUNT);
 
 
-        // if ($request->has('warehouse') && $request->warehouse != '') {
-        //     $query->orWhereIn('warehouse', $request->warehouse);
-        // }
+        if ($request->has('created_at') && $request->created_at != '') {
+            $query->whereBetween('order_date', [$start_date, $end_date] ?? []);
+        }
+        if ($request->has('warehouse') && $request->warehouse != '') {
+            $query->WhereIn('warehouse', $request->warehouse ?? []);
+        }
 
-        // if ($request->has('country') && $request->country != '') {
-        //     $query->orWhereIn('country', $request->country);
-        // }
-        // if ($request->has('status') && $request->status != '') {
-        //     $query->orWhereIn('status', $request->status);
-        // }
-        // if ($request->has('type') && $request->type != '') {
-        //     $query->orWhereIn('type', $request->type);
-        // }
+        if ($request->has('country') && $request->country != '') {
+            $query->WhereIn('customer_country', $request->country ?? []);
+        }
+        if ($request->has('status') && $request->status != '') {
+            $query->WhereIn('status', $request->status ?? []);
+        }
+        if ($request->has('type') && $request->type != '') {
+            $query->WhereIn('type', $request->type ?? []);
+        }
 
-        // $leads = $query->orderBy('id', 'DESC')->paginate(COUNT); // Replace 10 with your desired number of items per page
+        $leads = $query->orderBy('id', 'DESC')->paginate(COUNT); // Replace 10 with your desired number of items per page
         $countries = Country::all();
-        $status = Lead::distinct()->pluck('status');
-        $types = Lead::distinct()->pluck('type');
+        $status = Lead::distinct()->pluck('status')->unique();
+        $types = Lead::distinct()->pluck('type')->unique();
         // return redirect()->route('admin.leads.index', compact('leads', 'countries', 'status', 'types'));
         return view('admin.leads.index', compact('leads', 'countries', 'status', 'types'));
     }

@@ -290,6 +290,8 @@ return [
     'EditInvoices' => 'Edit Invoices',
     'By' => 'By',
     'Wieght' => 'Wieght',
+    'NoMangerYet' => 'No Manger Yet',
+    'SelectStatus' => 'Select status',
 
 
 

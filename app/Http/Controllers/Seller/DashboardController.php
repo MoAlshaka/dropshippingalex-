@@ -20,7 +20,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $admin = Admin::where('roles_name', 'admin')->count();
+        $admin = Admin::where('roles_name', 'admin')->first();
         $leads = Lead::where('seller_id', auth()->guard('seller')->id())->count();
         $approvedLeadsCount = Lead::where('seller_id', auth()->guard('seller')->id())->where('status', 'confirmed')->count();
         $deliveredLeadsCount = Order::where('seller_id', auth()->guard('seller')->id())->where('shipment_status', 'delivered')->count();
@@ -93,7 +93,7 @@ class DashboardController extends Controller
         // Execute the query to get counts for existing dates, filtered by the authenticated seller
         $existingOrderCounts = Order::selectRaw('DATE(created_at) as order_date, COUNT(*) as count')
             ->where('seller_id', auth()->guard('seller')->id())
-            ->where('shipment_status', 'approved')
+            ->where('shipment_status', 'delivered')
             ->groupBy('order_date')
             ->pluck('count', 'order_date')
             ->toArray();
@@ -106,6 +106,20 @@ class DashboardController extends Controller
         }
 
 
+        // $orders = Order::where('seller_id', auth()->user()->id)->with('lead')->get();
+
+        // $products = $orders->map(function ($order) {
+        //     $sku = $order->lead->item_sku;
+        //     // Find the product in SharedProduct or AffiliateProduct
+        //     $product = SharedProduct::where('sku', $sku)->first() ?: AffiliateProduct::where('sku', $sku)->first();
+        //     return $product;
+        // })->unique(function ($product) {
+        //     return $product->sku; // Assuming 'sku' is the attribute that should be unique
+        // });
+
+        // // If you need an array instead of a collection, you can convert it
+        // $products = $products->filter()->values()->all();
+
         $orders = Order::where('seller_id', auth()->user()->id)->with('lead')->get();
 
         $products = $orders->map(function ($order) {
@@ -113,14 +127,23 @@ class DashboardController extends Controller
             // Find the product in SharedProduct or AffiliateProduct
             $product = SharedProduct::where('sku', $sku)->first() ?: AffiliateProduct::where('sku', $sku)->first();
             return $product;
-        })->unique(function ($product) {
-            return $product->sku; // Assuming 'sku' is the attribute that should be unique
+        })->filter(); // Remove null values
+
+        // Group products by SKU
+        $groupedProducts = $products->groupBy(function ($product) {
+            return $product->sku;
         });
 
-        // If you need an array instead of a collection, you can convert it
-        $products = $products->filter()->values()->all();
+        // Filter groups with more than one product and limit to 6 products
+        $productsWithMultipleSKUs = $groupedProducts->filter(function ($group) {
+            return $group->count() >= 1;
+        })->flatten()->take(6);
+
+        // Convert the result to an array if needed
+        $limitedProductsArray = $productsWithMultipleSKUs->values()->all();
+
         $revenue = Invoice::where('seller_id', auth()->guard('seller')->id())->sum('revenue');
-        return view('seller.dashboard', compact('leads', 'approvedLeadsCount', 'deliveredLeadsCount', 'revenue', 'sellers', 'leads_count', 'orders_count', 'admin', 'products'));
+        return view('seller.dashboard', compact('leads', 'approvedLeadsCount', 'deliveredLeadsCount', 'revenue', 'sellers', 'leads_count', 'orders_count', 'admin', 'limitedProductsArray'));
     }
 
     public function filter(Request $request)
@@ -143,7 +166,8 @@ class DashboardController extends Controller
         $leads = $approvedLeadsCount = $deliveredLeadsCount = $revenue = 0;
         $leads_count = [];
         $orders_count = [];
-
+        $start_date = '';
+        $end_date = '';
         if ($request->has('date') && $request->date != '') {
             $dates = explode(' - ', $request->date);
 
@@ -152,7 +176,7 @@ class DashboardController extends Controller
                 $end_date = Carbon::createFromFormat('m/d/Y', $dates[1])->endOfDay();
 
                 $leads = Lead::where('seller_id', auth()->guard('seller')->id())->whereBetween('order_date', [$start_date, $end_date])->count();
-                $approvedLeadsCount = Lead::where('seller_id', auth()->guard('seller')->id())->where('status', 'approved')->whereBetween('order_date', [$start_date, $end_date])->count();
+                $approvedLeadsCount = Lead::where('seller_id', auth()->guard('seller')->id())->where('status', 'confirmed')->whereBetween('order_date', [$start_date, $end_date])->count();
                 $deliveredLeadsCount = Lead::where('seller_id', auth()->guard('seller')->id())->where('status', 'delivered')->whereBetween('order_date', [$start_date, $end_date])->count();
                 $revenue = Revenue::where('seller_id', auth()->guard('seller')->id())->whereBetween('date', [$start_date, $end_date])
                     ->sum('revenue');
@@ -200,7 +224,19 @@ class DashboardController extends Controller
                 }
             }
         }
+        $orders = Order::where('seller_id', auth()->user()->id)->with('lead')->get();
 
-        return view('seller.dashboard', compact('leads', 'approvedLeadsCount', 'deliveredLeadsCount', 'revenue', 'sellers', 'leads_count', 'orders_count', 'admin'));
+        $products = $orders->map(function ($order) {
+            $sku = $order->lead->item_sku;
+            // Find the product in SharedProduct or AffiliateProduct
+            $product = SharedProduct::where('sku', $sku)->first() ?: AffiliateProduct::where('sku', $sku)->first();
+            return $product;
+        })->unique(function ($product) {
+            return $product->sku; // Assuming 'sku' is the attribute that should be unique
+        });
+
+        // If you need an array instead of a collection, you can convert it
+        $products = $products->filter()->values()->all();
+        return view('seller.dashboard', compact('leads', 'approvedLeadsCount', 'deliveredLeadsCount', 'revenue', 'sellers', 'leads_count', 'orders_count', 'admin', 'products'));
     }
 }

@@ -26,7 +26,7 @@ class DashboardController extends Controller
                     'seller_id' => $revenue->seller_id,
                     'revenue' => $revenue->revenue,
                     'date' => date('Y-m-d'),
-                    'crated_at' => date('Y-m-d'),
+                    'created_at' => date('Y-m-d H:i:s'),
                     'status' => 'unpaid',
                 ]);
                 if ($flag) {
@@ -103,7 +103,7 @@ class DashboardController extends Controller
 
         // Execute the query to get counts for existing dates
         $existingOrderCounts = Order::selectRaw('DATE(created_at) as order_date, COUNT(*) as count')
-            ->where('shipment_status', 'approved')
+            ->where('shipment_status', 'delivered')
             ->groupBy('order_date')
             ->pluck('count', 'order_date')
             ->toArray();
@@ -121,41 +121,78 @@ class DashboardController extends Controller
 
     public function filter(Request $request)
     {
-        // Get top sellers and their transaction amounts
-        $sellers = Seller::orderby('revenue', 'desc')->limit(10)->get();
+
 
         // Initialize lead-related variables
         $leads = $approvedLeadsCount = $deliveredLeadsCount = $revenue = 0;
+        $revenues = Invoice::select('seller_id', DB::raw('SUM(revenue) as revenue'))
+            ->groupBy('seller_id')
+            ->orderBy('revenue', 'desc')
+            ->limit(10)
+            ->get();
+
+        $sellers = [];
+        foreach ($revenues as $revenue) {
+            $seller = Seller::findOrFail($revenue->seller_id);
+            $sellers[] = ['seller' => $seller, 'revenue' => $revenue->revenue];
+        }
+
+        $allSellers = Seller::orderby('id', 'desc')->get();
+
+
+
         $leads_count = [];
         $orders_count = [];
 
-        $sellerIds = [];
-        if ($request->has('manger_id')) {
-            foreach ($request->manger_id as $manger_id) {
+        $seller_ids = [];
+        if ($request->has('admin_id')) {
+            foreach ($request->admin_id as $admin_id) {
 
-                $manger = Admin::findOrFail($manger_id);
+                $manger = Admin::findOrFail($admin_id);
                 foreach ($manger->sellers as $seller) {
-                    array_push($sellerIds, $seller->id);
+                    array_push($seller_ids, $seller->id);
                 }
             }
         }
+        if ($request->has('seller_id')) {
+            foreach ($request->seller_id as $seller_id) {
+                array_push($seller_ids, $seller_id);
+            }
+        }
+        $sellerIds = array_unique($seller_ids);
 
+        $start_date = '';
+        $end_date = '';
         if ($request->has('date') && $request->date != '') {
             $dates = explode(' - ', $request->date);
 
+            // Ensure both start and end dates are available
             if (count($dates) === 2) {
                 $start_date = Carbon::createFromFormat('m/d/Y', $dates[0])->startOfDay();
                 $end_date = Carbon::createFromFormat('m/d/Y', $dates[1])->endOfDay();
             }
         }
-        $leads = Lead::whereBetween('order_date', [$start_date, $end_date])->orWhereIn('seller_id', $sellerIds)
-            ->orWhere('seller_id', $request->seller_id)->count();
-        $approvedLeadsCount = Lead::where('status', 'approved')->orWhereBetween('order_date', [$start_date, $end_date])->orWhereIn('seller_id', $sellerIds)
-            ->orWhere('seller_id', $request->seller_id)->count();
-        $deliveredLeadsCount = Lead::where('status', 'delivered')->orWhereBetween('order_date', [$start_date, $end_date])->orWhereIn('seller_id', $sellerIds)
-            ->orWhere('seller_id', $request->seller_id)->count();
-        $revenue = Revenue::orWhereIn('seller_id', $sellerIds)
-            ->orWhereIn('seller_id', $request->seller_id)
+
+        $leads = Lead::WhereBetween('order_date', [$start_date, $end_date])
+            ->whereIn('seller_id', $sellerIds ?? [])
+            ->count();
+
+        $approvedLeadsCount = Lead::where('status', 'confirmed')
+            ->WhereBetween('order_date', [$start_date, $end_date] ?? [])
+            ->whereIn('seller_id', $sellerIds ?? [])
+            ->count();
+
+        $deliveredLeadsCount = Order::where('shipment_status', 'delivered')
+            ->WhereBetween('created_at', [$start_date, $end_date] ?? [])
+            ->whereIn('seller_id', $sellerIds ?? [])
+            ->count();
+        $pendingLeadsCount = Lead::where('status', 'pending')
+            ->WhereBetween('order_date', [$start_date, $end_date] ?? [])
+            ->whereIn('seller_id', $sellerIds ?? [])
+            ->count();
+
+        $revenue = Revenue::whereIn('seller_id', $sellerIds ?? [])
+            ->WhereBetween('created_at', [$start_date, $end_date] ?? [])
             ->sum('revenue');
 
         // Generate all dates within the range for leads
@@ -167,7 +204,8 @@ class DashboardController extends Controller
         }
 
         // Get counts for existing dates for leads
-        $existingCounts = Lead::whereBetween('order_date', [$start_date, $end_date])
+        $existingCounts = Lead::WhereBetween('order_date', [$start_date, $end_date])
+            ->whereIn('seller_id', $sellerIds ?? [])
             ->selectRaw('order_date, COUNT(*) as count')
             ->groupBy('order_date')
             ->pluck('count', 'order_date')
@@ -189,8 +227,9 @@ class DashboardController extends Controller
 
         // Get counts for existing dates for orders
         $existingOrderCounts = Order::selectRaw('DATE(created_at) as order_date, COUNT(*) as count')
-            ->where('shipment_status', 'approved')
-            ->whereBetween('created_at', [$start_date, $end_date])
+            ->where('shipment_status', 'delivered')
+            ->whereIn('seller_id', $sellerIds ?? [])
+            ->WhereBetween('created_at', [$start_date, $end_date] ?? [])
             ->groupBy('order_date')
             ->pluck('count', 'order_date')
             ->toArray();
@@ -205,6 +244,6 @@ class DashboardController extends Controller
         })->get();
 
 
-        return view('admin.dashboard', compact('leads', 'approvedLeadsCount', 'deliveredLeadsCount', 'revenue', 'sellers', 'leads_count', 'orders_count', 'admins'));
+        return view('admin.dashboard', compact('leads', 'pendingLeadsCount', 'approvedLeadsCount', 'deliveredLeadsCount', 'revenue', 'sellers', 'leads_count', 'orders_count', 'allSellers', 'admins'));
     }
 }

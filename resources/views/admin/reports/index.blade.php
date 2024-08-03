@@ -104,17 +104,17 @@
                 <button class="btn btn-outline-primary waves-effect waves-light" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                     <span class="tf-icons mdi mdi-filter-check-outline me-1"></span>
-                    Filter
+                    {{ __('site.Filter') }}
                 </button>
                 {{--                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button> --}}
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
                     aria-labelledby="offcanvasRightLabel">
                     <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasRightLabel">{{ __('site.FliterOrders') }}</h5>
+                        <h5 class="offcanvas-title" id="offcanvasRightLabel">{{ __('site.Filter') }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
-                        <form action="{{ route('admin.reports.filter') }}" method="post">
+                        <form action="{{ route('admin.reports.filter', $country ?? 0) }}" method="post">
                             @csrf
                             <div class="mb-3">
                                 <div class="mb-4">
@@ -125,7 +125,7 @@
                                 </div>
                                 <div class=" mb-4">
                                     <div class="form-floating form-floating-outline">
-                                        <select name="manger_id[]" id="manger_id" class="selectpicker w-100"
+                                        <select name="admin_id[]" id="admin_id" class="selectpicker w-100"
                                             data-style="btn-default" multiple data-actions-box="true">
                                             @isset($admins)
                                                 @foreach ($admins as $admin)
@@ -133,7 +133,7 @@
                                                 @endforeach
                                             @endisset
                                         </select>
-                                        <label for="manger_id">{{ __('site.Manger') }}</label>
+                                        <label for="admin_id">{{ __('site.Manger') }}</label>
                                     </div>
                                 </div>
                                 <div class=" mb-4">
@@ -152,14 +152,16 @@
                                 </div>
 
                             </div>
-                            <button type="submit" class="btn btn-primary waves-effect waves-light">filter</button>
-                            <button type="reset" class="btn btn-outline-danger waves-effect">reset</button>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                {{ __('site.Filter') }}</button>
+                            <button type="reset" class="btn btn-outline-danger waves-effect">
+                                {{ __('site.Reset') }}</button>
                         </form>
                     </div>
                 </div>
             </div>
         </h4>
-        <div class="bg-white drop-shadow p-4 rounded-md flex flex-col md:flex-row gap-6 mb-6">
+        <div class="card_bg drop-shadow p-4 rounded-md flex flex-col md:flex-row gap-6 mb-6">
             <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
                 href="{{ route('admin.reports.affiliate.filter') }}">
 
@@ -171,7 +173,7 @@
                 {{ __('site.Marketplace') }}
             </a>
         </div>
-        <div class="bg-white drop-shadow p-4 rounded-md flex flex-col md:flex-row gap-6">
+        <div class="card_bg drop-shadow p-4 rounded-md flex flex-col md:flex-row gap-6">
             <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
                 href="{{ route('admin.reports.index') }}">
                 <i class="menu-icon tf-icons mdi mdi-earth"></i>
@@ -193,9 +195,9 @@
 
             <div class="card_container mt-4 mx-auto md:mx-6 grid grid-cols-12  gap-6  w-full">
                 <div
-                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
+                    class="card card_bg px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
                     <div class="flex flex-col gap-10 h-full">
-                        <h2 class="text-[15px] lg:text-[20px] lg:text-[18px] text-gray-800 font-bold uppercase">
+                        <h2 class="text-[15px] lg:text-[20px] lg:text-[18px]  font-bold uppercase">
                             {{ __('site.TotalLeads') }}
                         </h2>
                         <div class="flex justify-between items-center">
@@ -204,14 +206,14 @@
 
                                 </span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{ $leads }}</span>
+                            <span class=" text-3xl font-bold">{{ $leads }}</span>
                         </div>
                     </div>
                 </div>
                 <div
-                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
+                    class="card card_bg px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
                     <div class="flex flex-col gap-10 h-full">
-                        <h2 class="text-[15px] lg:text-[20px] lg:text-[18px] text-gray-800 font-bold uppercase">
+                        <h2 class="text-[15px] lg:text-[20px] lg:text-[18px]  font-bold uppercase">
                             {{ __('site.UnderProcesses') }}
                         </h2>
                         <div class="flex justify-between items-center">
@@ -220,28 +222,28 @@
 
                                 </span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{ $under_process }}</span>
+                            <span class=" text-3xl font-bold">{{ $under_process }}</span>
                         </div>
                     </div>
                 </div>
                 <div
-                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
+                    class="card card_bg px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
                     <div class="flex flex-col gap-10 h-full">
-                        <h2 class="text-[15px] lg:text-[20px] lg:text-[18px] text-gray-800 font-bold uppercase">
+                        <h2 class="text-[15px] lg:text-[20px] lg:text-[18px]  font-bold uppercase">
                             {{ __('site.Confirmed') }}
                         </h2>
                         <div class="flex justify-between items-center">
                             <div class="bg-green-500 rounded-full text-white px-4 py-2 flex justify-center items-center">
                                 <span class="mdi mdi-check-circle-outline"></span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{ $confirmed }}</span>
+                            <span class=" text-3xl font-bold">{{ $confirmed }}</span>
                         </div>
                     </div>
                 </div>
                 <div
-                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
+                    class="card card_bg px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
                     <div class="flex flex-col gap-10 h-full">
-                        <h2 class="text-[15px] lg:text-[20px] lg:text-[18px] text-gray-800 font-bold uppercase">
+                        <h2 class="text-[15px] lg:text-[20px] lg:text-[18px]  font-bold uppercase">
                             {{ __('site.Canceled') }}
                         </h2>
                         <div class="flex justify-between items-center">
@@ -250,14 +252,14 @@
 
                                 </span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{ $canceled }}</span>
+                            <span class=" text-3xl font-bold">{{ $canceled }}</span>
                         </div>
                     </div>
                 </div>
                 <div
-                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
+                    class="card card_bg px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
                     <div class="flex flex-col gap-10 h-full">
-                        <h2 class="text-[15px] lg:text-[20px] lg:text-[18px] text-gray-800 font-bold uppercase">
+                        <h2 class="text-[15px] lg:text-[20px] lg:text-[18px]  font-bold uppercase">
                             {{ __('site.Balance') }}
                         </h2>
                         <div class="flex justify-between items-center">
@@ -266,14 +268,14 @@
 
                                 </span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{ $balance }}</span>
+                            <span class=" text-3xl font-bold">{{ $balance }}</span>
                         </div>
                     </div>
                 </div>
                 <div
-                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
+                    class="card card_bg px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
                     <div class="flex flex-col gap-10 h-full">
-                        <h2 class="text-[15px] lg:text-[20px] lg:text-[18px] text-gray-800 font-bold uppercase">
+                        <h2 class="text-[15px] lg:text-[20px] lg:text-[18px]  font-bold uppercase">
                             {{ __('site.Shipped') }}
                         </h2>
                         <div class="flex justify-between items-center">
@@ -282,28 +284,28 @@
 
                                 </span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{ $shipped }}</span>
+                            <span class=" text-3xl font-bold">{{ $shipped }}</span>
                         </div>
                     </div>
                 </div>
                 <div
-                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
+                    class="card card_bg px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
                     <div class="flex flex-col gap-10 h-full">
-                        <h2 class="text-[15px] lg:text-[20px] lg:text-[18px] text-gray-800 font-bold uppercase">
+                        <h2 class="text-[15px] lg:text-[20px] lg:text-[18px]  font-bold uppercase">
                             {{ __('site.Delivered') }}
                         </h2>
                         <div class="flex justify-between items-center">
                             <div class="bg-green-500 rounded-full text-white px-4 py-2 flex justify-center items-center">
                                 <span class="mdi mdi-package-check"></span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{ $delivered }}</span>
+                            <span class=" text-3xl font-bold">{{ $delivered }}</span>
                         </div>
                     </div>
                 </div>
                 <div
-                    class="card bg-white px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
+                    class="card card_bg px-6 py-8 rounded-xl col-span-12 md:col-span-6 lg:col-span-3 col-start-2 shadow-md">
                     <div class="flex flex-col gap-10 h-full">
-                        <h2 class="text-[15px] lg:text-[25px] text-gray-800 font-bold uppercase">
+                        <h2 class="text-[15px] lg:text-[25px]  font-bold uppercase">
                             {{ __('site.Returned') }}
                         </h2>
                         <div class="flex justify-between items-center">
@@ -312,7 +314,7 @@
 
                                 </span>
                             </div>
-                            <span class="text-gray-600 text-3xl font-bold">{{ $returned }}</span>
+                            <span class=" text-3xl font-bold">{{ $returned }}</span>
                         </div>
                     </div>
                 </div>
@@ -320,25 +322,25 @@
         </div>
         <div class="persentage_cont  min-h-[300px] grid lg:grid-cols-6 p-4 rounded-md  gap-6">
             <div
-                class="value_container pt-[15px] bg-white flex flex-col rounded-xl lg:flex-row drop-shadow-lg lg:col-span-3">
+                class="value_container pt-[15px] card_bg flex flex-col rounded-xl lg:flex-row drop-shadow-lg lg:col-span-3">
                 <div class="relative min-w-[250px]">
                     <span
-                        class="text-gray-600 text-5xl absolute top-[50%] right-[50%] translate-x-[50%] translate-y-[-50%] font-bold">{{ $delivered_rate }}
+                        class=" text-5xl absolute top-[50%] right-[50%] translate-x-[50%] translate-y-[-50%] font-bold">{{ $delivered_rate }}
                         %</span>
                     <svg viewBox="0 0 36 36" class="circular-chart orange">
                         <path class="circle-bg"
                             d="M18 2.0845
-                                                                                                                    a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
                         <!-- place the 60 in the stroke-dasharray with the persentage -->
                         <path class="circle" stroke-dasharray="{{ $delivered_rate }}, 100"
                             d="M18 2.0845
-                                                                                                                    a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
                     </svg>
                 </div>
                 <div class="flex flex-col justify-center px-4 ">
-                    <h3 class="text-gray-600 font-bold capitalize">
+                    <h3 class=" font-bold capitalize">
                         {{ __('site.DeliveredRate') }}
                     </h3>
                     <p class="text-pretty">
@@ -347,25 +349,25 @@
                 </div>
             </div>
             <div
-                class="value_container pt-[15px] bg-white flex flex-col rounded-xl lg:flex-row drop-shadow-lg lg:col-span-3">
+                class="value_container pt-[15px] card_bg flex flex-col rounded-xl lg:flex-row drop-shadow-lg lg:col-span-3">
                 <div class="relative min-w-[250px]">
                     <span
-                        class="text-gray-600 text-5xl absolute top-[50%] right-[50%] translate-x-[50%] translate-y-[-50%] font-bold">{{ $confirmed_rate }}
+                        class=" text-5xl absolute top-[50%] right-[50%] translate-x-[50%] translate-y-[-50%] font-bold">{{ $confirmed_rate }}
                         %</span>
                     <svg viewBox="0 0 36 36" class="circular-chart green">
                         <path class="circle-bg"
                             d="M18 2.0845
-                                                                                                                    a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
                         <!-- place the 60 in the stroke-dasharray with the persentage -->
                         <path class="circle" stroke-dasharray="{{ $confirmed_rate }}, 100"
                             d="M18 2.0845
-                                                                                                                    a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                                    a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
                     </svg>
                 </div>
                 <div class="flex flex-col justify-center px-4 ">
-                    <h3 class="text-gray-600 font-bold capitalize">
+                    <h3 class=" font-bold capitalize">
                         {{ __('site.ConfirmationRate') }}
                     </h3>
                     <p class="text-pretty">

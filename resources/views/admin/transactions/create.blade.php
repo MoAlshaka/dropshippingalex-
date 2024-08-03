@@ -8,34 +8,33 @@
 
 @section('css')
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}"/>
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}" />
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&ampdisplay=swap"
-          rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&ampdisplay=swap" rel="stylesheet" />
 
     <!-- Icons -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/materialdesignicons.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/flag-icons.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/materialdesignicons.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/fonts/flag-icons.css') }}" />
 
     <!-- Menu waves for no-customizer fix -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/node-waves/node-waves.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/node-waves/node-waves.css') }}" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/core.css') }}" class="template-customizer-core-css"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/core.css') }}" class="template-customizer-core-css" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/rtl/theme-default.css') }}"
-          class="template-customizer-theme-css"/>
-    <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}"/>
+        class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/tagify/tagify.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/tagify/tagify.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/libs/typeahead-js/typeahead.css') }}" />
 @endsection
 
 @section('content')
@@ -58,7 +57,7 @@
                                 <label class="col-sm-2 col-form-label" for="sellerId">{{ __('site.Sellers') }}</label>
                                 <div class="col-sm-10">
                                     <select id="sellerId" class="form-select form-select-lg" data-allow-clear="true"
-                                            name="seller_id">
+                                        name="seller_id">
                                         <option value="">{{ __('site.SelectSeller') }}</option>
                                         @foreach ($sellers as $seller)
                                             <option value="{{ $seller->id }}">
@@ -68,7 +67,7 @@
 
                                 </div>
                                 @error('seller_id')
-                                <div class="text-danger">{{ $message }}</div>
+                                    <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -78,10 +77,10 @@
                                     {{ __('site.PaymentMethod') }}</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="paymentMethod" name="payment_method"
-                                           placeholder="{{ __('site.PaymentMethod') }}"/>
+                                        placeholder="{{ __('site.PaymentMethod') }}" />
                                 </div>
                                 @error('payment_method')
-                                <div class="text-danger">{{ $message }}</div>
+                                    <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -90,10 +89,10 @@
                                     {{ __('site.Account') }}</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="accountNumber" name="account"
-                                           placeholder="{{ __('site.Account') }}"/>
+                                        placeholder="{{ __('site.Account') }}" />
                                 </div>
                                 @error('account')
-                                <div class="text-danger">{{ $message }}</div>
+                                    <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -102,10 +101,10 @@
                                     {{ __('site.Amount') }}</label>
                                 <div class="col-sm-10">
                                     <input type="number" step="0.01" class="form-control" id="basic-default-name"
-                                           name="amount" placeholder="{{ __('site.Amount') }}"/>
+                                        name="amount" placeholder="{{ __('site.Amount') }}" />
                                 </div>
                                 @error('amount')
-                                <div class="text-danger">{{ $message }}</div>
+                                    <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -113,15 +112,16 @@
                                 <label class="col-sm-2 col-form-label" for="status">{{ __('site.Status') }}</label>
                                 <div class="col-sm-10">
                                     <select id="status" class="select2 form-select form-select-lg"
-                                            data-allow-clear="true" name="status">
-                                        <option value="">{{ __('site.Status') }}</option>
-                                        <option value="pending">{{ __('site.Pending') }}</option>
-                                        <option value="transferred">{{ __('site.Transferred') }}</option>
+                                        data-allow-clear="true" name="status">
+                                        <option value="">{{ __('site.SelectStatus') }}</option>
+                                        <option value="paid">{{ __('site.Paid') }}</option>
+                                        <option value="unpaid">{{ __('site.Unpaid') }}</option>
+
                                     </select>
 
                                 </div>
                                 @error('status')
-                                <div class="text-danger">{{ $message }}</div>
+                                    <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -171,12 +171,12 @@
     <script src="{{ asset('assets/js/app-logistics-dashboard.js') }}"></script>
     <script src="{{ asset('assets/js/forms-selects.js') }}"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             const sellerOptionId = document.getElementById('sellerId');
             const accountNumber = document.getElementById('accountNumber');
             const paymentMethod = document.getElementById('paymentMethod');
 
-            sellerOptionId.addEventListener('change', function () {
+            sellerOptionId.addEventListener('change', function() {
                 const sellerId = this.value;
                 console.log(sellerId);
                 // document.getElementById('price').value = sellerId;

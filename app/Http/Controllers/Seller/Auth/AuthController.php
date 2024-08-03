@@ -24,7 +24,7 @@ class AuthController extends Controller
             'confirm_password' => 'required|same:password|max:50|min:8',
             // 'address' => 'required|max:250',
             'phone' => 'required|max:50',
-            'about_us' => 'required|max:800',
+            // 'about_us' => 'required|max:800',
             'national_id' => 'required|image|mimes:png,jpg,jpeg|max:2048',
         ]);
         $exists = Seller::where('email', $request->email)->first();
@@ -43,7 +43,7 @@ class AuthController extends Controller
             'phone' => str_replace(' ', '', $request->phone),
             // 'address' => $request->address,
             'national_id' => $national_id_name,
-            'about_us' => $request->about_us,
+            'about_us' => $request->about_us ?? null,
         ]);
 
         auth()->guard('seller')->login($seller);

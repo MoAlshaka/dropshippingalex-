@@ -85,6 +85,8 @@ class InvoiceController extends Controller
 
     public function filter(Request $request)
     {
+        $start_date = '';
+        $end_date = '';
         if ($request->has('date') && $request->date != '') {
             $dates = explode(' - ', $request->date);
 
@@ -96,9 +98,9 @@ class InvoiceController extends Controller
         }
 
         $invoices = Invoice::where('seller_id', auth()->guard('seller')->id())
-            ->orWhereBetween('created_at', [$start_date, $end_date])
-            ->orWhereIn('status', $request->status)
-            ->orWhereIn('seller_id', $request->seller_id)
+            ->orWhereBetween('created_at', [$start_date, $end_date] ?? [])
+            ->WhereIn('status', $request->status ?? [])
+            ->WhereIn('seller_id', $request->seller_id ?? [])
             ->orderBy('id', 'DESC')->paginate(COUNT);
         $status = Invoice::pluck('status')->unique();
         $sellers = Seller::all();

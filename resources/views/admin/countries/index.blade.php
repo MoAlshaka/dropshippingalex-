@@ -37,21 +37,16 @@
                 <table class="table">
                     <thead>
                         <tr class="text-nowrap">
-                            <th scope="col"
-                                class="px-4 py-4 text-start text-sm font-medium text-gray-500 dark:text-gray-100">
+                            <th scope="col" class="px-4 py-4 text-start text-sm font-medium ">
                                 #
                             </th>
-                            <th scope="col"
-                                class="px-4 py-4 text-start text-sm font-medium text-gray-500 dark:text-gray-100">
+                            <th scope="col" class="px-4 py-4 text-start text-sm font-medium ">
                                 {{ __('site.Country') }}</th>
-                            <th scope="col"
-                                class="px-4 py-4 text-start text-sm font-medium text-gray-500 dark:text-gray-100">
+                            <th scope="col" class="px-4 py-4 text-start text-sm font-medium ">
                                 {{ __('site.Flag') }}</th>
-                            <th scope="col"
-                                class="px-4 py-4 text-start text-sm font-medium text-gray-500 dark:text-gray-100">
+                            <th scope="col" class="px-4 py-4 text-start text-sm font-medium ">
                                 {{ __('site.ShippingCost') }}</th>
-                            <th scope="col"
-                                class="px-4 py-4 text-start text-sm font-medium text-gray-500 dark:text-gray-100">
+                            <th scope="col" class="px-4 py-4 text-start text-sm font-medium ">
                                 {{ __('site.Actions') }}</th>
                         </tr>
                     </thead>
@@ -60,7 +55,7 @@
                         @if ($countries->isEmpty())
                             <!-- No Data Row -->
                             <tr>
-                                <td colspan="3" class="px-4 py-4 text-center text-gray-500 dark:text-gray-400">
+                                <td colspan="3" class="px-4 py-4 text-center ">
                                     {{ __('site.NoData') }}
 
                                 </td>
@@ -70,23 +65,19 @@
                             @php $i = 1; @endphp
                             @foreach ($countries as $country)
                                 <tr>
-                                    <td
-                                        class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-500 dark:text-gray-400">
+                                    <td class="px-4 py-4 whitespace-nowrap text-sm font-medium ">
                                         {{ $i++ }}</td>
-                                    <td
-                                        class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-500 dark:text-gray-400">
+                                    <td class="px-4 py-4 whitespace-nowrap text-sm font-medium ">
                                         {{ $country->name }} </td>
 
-                                    <td
-                                        class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-500 dark:text-gray-400">
+                                    <td class="px-4 py-4 whitespace-nowrap text-sm font-medium ">
                                         <img src="{{ asset('assets/countries/flags/' . $country->flag) }}" width="40"
                                             height="40">
                                     </td>
-                                    <td
-                                        class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-500 dark:text-gray-400">
+                                    <td class="px-4 py-4 whitespace-nowrap text-sm font-medium ">
                                         {{ $country->shipping_cost }}</td>
 
-                                    <td class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-500 dark:text-gray-400"
+                                    <td class="px-4 py-4 whitespace-nowrap text-sm font-medium "
                                         style="display: flex; gap: 6px;">
                                         @can('Edit Country')
                                             <a class="  text-primary hover:bg-success hover:text-white"

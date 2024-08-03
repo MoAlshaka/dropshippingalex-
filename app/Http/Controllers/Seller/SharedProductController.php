@@ -14,7 +14,7 @@ class SharedProductController extends Controller
 {
     public function index()
     {
-        $offer = Offer::where('end_date', '>', now())->orderBy('id', 'DESC')->get();
+        $offer = Offer::where('end_date', '>', now())->where('start_date', '<=', now())->orderBy('id', 'DESC')->get();
         $countries = Country::all();
         $categories = Category::all();
         $products = SharedProduct::orderBy('id', 'DESC')->paginate(PAGINATION_COUNT);
@@ -79,7 +79,7 @@ class SharedProductController extends Controller
 
     public function country_filter(Request $request, $country)
     {
-        $offer = Offer::where('end_date', '>', now())->orderBy('id', 'DESC')->get();
+        $offer = Offer::where('end_date', '>', now())->where('start_date', '<=', now())->orderBy('id', 'DESC')->get();
         // Now you can use the $country variable to filter your products
         $products = SharedProduct::whereHas('sharedcountries', function ($query) use ($country) {
             $query->where('countries.id', $country);
@@ -92,7 +92,7 @@ class SharedProductController extends Controller
 
     public function new_product()
     {
-        $offer = Offer::where('end_date', '>', now())->orderBy('id', 'DESC')->get();
+        $offer = Offer::where('end_date', '>', now())->where('start_date', '<=', now())->orderBy('id', 'DESC')->get();
         $products = SharedProduct::orderBy('id', 'DESC')->paginate(PAGINATION_COUNT);
         $countries = Country::all();
         $categories = Category::all();
@@ -101,7 +101,7 @@ class SharedProductController extends Controller
 
     public function suggested_product()
     {
-        $offer = Offer::where('end_date', '>', now())->orderBy('id', 'DESC')->get();
+        $offer = Offer::where('end_date', '>', now())->where('start_date', '<=', now())->orderBy('id', 'DESC')->get();
         $shared_products = DB::table('shared_product_seller')->pluck('shared_product_id')->toArray();
         $products = SharedProduct::whereIn('id', $shared_products)->orderBy('id', 'DESC')->paginate(PAGINATION_COUNT);
         $countries = Country::all();
@@ -112,7 +112,7 @@ class SharedProductController extends Controller
 
     public function search(Request $request)
     {
-        $offer = Offer::where('end_date', '>', now())->orderBy('id', 'DESC')->get();
+        $offer = Offer::where('end_date', '>', now())->where('start_date', '<=', now())->orderBy('id', 'DESC')->get();
         $query = SharedProduct::query();
 
         if ($request->has('title') && $request->title != '') {
@@ -127,7 +127,7 @@ class SharedProductController extends Controller
             $query->orWhere('category_id', $request->category_id);
         }
 
-        $products = $query->orderBy('id', 'DESC')->paginate(COUNT);// Replace 10 with your desired number of items per page
+        $products = $query->orderBy('id', 'DESC')->paginate(COUNT); // Replace 10 with your desired number of items per page
 
         $countries = Country::all();
         $categories = Category::all();

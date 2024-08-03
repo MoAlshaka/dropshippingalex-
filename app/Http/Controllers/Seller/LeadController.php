@@ -21,8 +21,8 @@ class LeadController extends Controller
     public function index()
     {
         $countries = Country::all();
-        $status = Lead::distinct()->pluck('status');
-        $types = Lead::distinct()->pluck('type');
+        $status = Lead::distinct()->pluck('status')->unique();
+        $types = Lead::distinct()->pluck('type')->unique();
         $leads = Lead::where('seller_id', auth()->guard('seller')->id())->orderBy('id', 'DESC')->paginate(PAGINATION_COUNT);
         return view('seller.leads.index', compact('leads', 'countries', 'status', 'types'));
     }
@@ -47,57 +47,89 @@ class LeadController extends Controller
         $errors = [];
         foreach ($filteredData as $index => $row) {
 
-            if (empty($row[3])) {
-                $errors['warehouse'] = "Warehouse is required";
+            if (empty($row[2])) {
+                $errors['message'] = "Warehouse is required at row " . $index + 1 . " cell 2 ";
             }
             if (empty($row[3])) {
-                $errors['customer_name'] = "Customer name is required";
+                $errors['message'] = "Customer name is required at row " . $index + 1 . " cell 3";
             }
             if (empty($row[4])) {
-                $errors['customer_phone'] = "Customer phone is required";
+                $errors['message'] = "Customer phone is required at row " . $index + 1 . " cell 4";
             }
             if (!empty($row[6])) {
                 if (!filter_var($row[6], FILTER_VALIDATE_EMAIL)) {
 
-                    $errors['customer_email'] = "Customer email mmust be valid";
+                    $errors['message'] = "Customer email mmust be valid at row " . $index + 1 . " cell 6";
                 }
             }
             if (empty($row[7])) {
-                $errors['customer_country'] = "Customer country is required";
+                $errors['message'] = "Customer country is required at row " . $index + 1 . " cell 7";
             }
             if (empty($row[10])) {
-                $errors['item_sku'] = "Item SKU is required";
+                $errors['message'] = "Item SKU is required at row " . $index + 1 . " cell 10";
             }
             if (!empty($row[11])) {
                 if (!is_numeric($row[11])) {
-                    $errors['quantity'] = "Quantity must be a number.";
+                    $errors['message'] = "Quantity must be a number at row " . $index + 1 . " cell 11 ";
                 } else {
                     $maxInt = PHP_INT_MAX;
                     if ($row[11] > $maxInt) {
-                        $errors['quantity'] = "Quantity exceeds the maximum value of integer type.";
+                        $errors['message'] = "Quantity exceeds the maximum value of integer type at row " . $index + 1 . " cell 11";
+                    }
+                    if ($row[11] <= 0) {
+                        $errors['message'] = "Quantity  value must be gretter than 0  at row " . $index + 1 . " cell 11";
                     }
                 }
             } else {
-                $errors['quantity'] = "Quantity is required.";
+                $errors['message'] = "Quantity is required at row " . $index + 1 . " cell 11";
             }
             if (!empty($row[12])) {
                 if (!is_numeric($row[12])) {
-                    $errors['total'] = "Total must be a number.";
+                    $errors['message'] = "Total must be a number at row " . $index + 1 . " cell 12";
                 }
             } else {
-                $errors['total'] = "Total is required.";
+                $errors['message'] = "Total is required at row " . $index + 1 . " cell 12";
             }
             if (empty($row[13])) {
-                $errors['currency'] = "Currency is required";
+                $errors['message'] = "Currency is required at row " . $index + 1 . " cell 13";
+            }
+            foreach ($filteredData as $index  => $row) {
+
+                if ($row[7] !== $row[2]) {
+                    $errors['country'] = "Customer country must be = product warehouse at row " . $index + 1 . " cell 7";
+                }
+
+
+                $SharedProduct = SharedProduct::where('sku', $row[10])->first();
+                $AffiliateProduct = AffiliateProduct::where('sku', $row[10])->first();
+                if ($SharedProduct) {
+                    $price = $row[12] / $row[11];
+                    if ($price < $SharedProduct->unit_cost) {
+                        $errors['message'] = "Unit price must be = product unit price bigger at row" .  " . $index + 1 . "  + 1 . "cell 12";
+                    }
+                } else {
+                    $price = $row[12] / $row[11];
+                    if ($price < $AffiliateProduct->minimum_selling_price) {
+                        $errors['message'] = "Unit price must be = product minimum_selling_price at row " . $index + 1 . " cell 12";
+                    }
+                }
             }
 
             // If there are errors for this row, add them to the allErrors array
+            // if (!empty($errors)) {
+            //     $allErrors["data"] = $errors;
+            // }
             if (!empty($errors)) {
-                $allErrors["data.$index"] = $errors;
+                $allErrors['data'] = [
+                    'errors' => $errors,
+                    'lock' => ['row' => $index + 1, 'cell' => $errors[0] ?? '']
+                ];
             }
         }
+
         if (empty($errors)) {
             foreach ($filteredData as $index => $row) {
+
                 $regular = SharedProduct::where('sku', $row[10])->exists();
                 $commission = AffiliateProduct::where('sku', $row[10])->exists();
                 $lead = Lead::create([
@@ -120,8 +152,6 @@ class LeadController extends Controller
                     'type' => $commission ? 'commission' : ($regular ? 'regular' : null),
                     'seller_id' => auth()->guard('seller')->id(),
                 ]);
-
-
             }
         }
 
@@ -242,20 +272,12 @@ class LeadController extends Controller
         return redirect()->route('leads.index')->with(['Warning' => 'Lead cannot be deleted.']);
     }
 
-    public function search(Request $request)
-    {
-        $request->validate([
-            'ref' => 'required|max:50'
-        ]);
-        $leads = Lead::where('store_reference', $request->ref)->orderBy('id', 'DESC')->paginate(COUNT);
-        return view('admin.leads.index', compact('leads'));
-    }
-
     public function filter(Request $request)
     {
 
         $query = Lead::where('seller_id', auth()->guard('seller')->id());
-
+        $start_date = '';
+        $end_date = '';
         if ($request->has('created_at') && $request->created_at != '') {
             $dates = explode(' - ', $request->created_at);
 
@@ -269,25 +291,25 @@ class LeadController extends Controller
             }
         }
 
+
         if ($request->has('warehouse') && $request->warehouse != '') {
-            $query->orWhereIn('warehouse', $request->warehouse);
+            $query->whereIn('warehouse', $request->warehouse);
         }
 
         if ($request->has('country') && $request->country != '') {
-            $query->orWhereIn('customer_country', $request->country);
+            $query->whereIn('customer_country', $request->country);
         }
         if ($request->has('status') && $request->status != '') {
-            $query->orWhereIn('status', $request->status);
+            $query->whereIn('status', $request->status);
         }
         if ($request->has('type') && $request->type != '') {
-            $query->orWhereIn('type', $request->type);
+            $query->whereIn('type', $request->type);
         }
 
-        $leads = $query->orderBy('id', 'DESC')->paginate(PAGINATION_COUNT);// Replace 10 with your desired number of items per page
+        $leads = $query->orderBy('id', 'DESC')->paginate(PAGINATION_COUNT); // Replace 10 with your desired number of items per page
         $countries = Country::all();
-        $status = Lead::distinct()->pluck('status');
-        $types = Lead::distinct()->pluck('type');
+        $status = Lead::distinct()->pluck('status')->unique();
+        $types = Lead::distinct()->pluck('type')->unique();
         return view('seller.leads.index', compact('leads', 'countries', 'status', 'types'));
-
     }
 }

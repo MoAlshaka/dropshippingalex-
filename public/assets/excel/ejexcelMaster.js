@@ -1,5 +1,5 @@
 const data = [];
-const minDimensions = [15, 10];
+const minDimensions = [15, 20];
 let columns = [
     {
         type: "calendar",

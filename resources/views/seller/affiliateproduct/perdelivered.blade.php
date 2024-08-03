@@ -156,7 +156,7 @@
 
                 </div>
             </div>
-            <div class="bg-white drop-shadow h-full p-4 rounded-md flex gap-6">
+            <div class="card_bg drop-shadow h-full p-4 rounded-md flex gap-6">
                 <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
                     href="{{ route('seller.affiliate.per.delivered') }}">
                     <i class="menu-icon tf-icons mdi mdi-earth"></i>
@@ -175,10 +175,10 @@
                 @endisset
             </div>
             <div
-                class="bg-white drop-shadow h-full p-4 rounded-md grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 justify-items-center">
+                class="card_bg drop-shadow h-full p-4 rounded-md grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 justify-items-center">
 
                 @if ($products->isEmpty())
-                    <div class="px-4 py-4 text-center text-gray-500 dark:text-gray-400">{{ __('site.NoProducts') }}</div>
+                    <div class="px-4 py-4 text-center ">{{ __('site.NoProducts') }}</div>
                 @endif
                 @isset($products)
                     @foreach ($products as $product)
@@ -222,7 +222,7 @@
                                     @endforeach
                                 </div>
                                 <div>
-                                    <div>
+                                    <div class="text-primary">
                                         <b>${{ $product->commission }}</b>
                                     </div>
                                 </div>

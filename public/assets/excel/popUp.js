@@ -178,8 +178,9 @@ document.getElementById("addRow").addEventListener("click", () => {
             .then(data => {
 
                 if (data.errors) {
-                    openPopup("error");
-                    console.log('Validation errors:', data.errors);
+                    console.log(data);
+                    const errMsg = data.errors['data'].errors.message
+                    openPopup(errMsg)
                 } else if (data.Add) {
 
                     console.log('Data stored successfully');

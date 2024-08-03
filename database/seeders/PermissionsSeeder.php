@@ -38,6 +38,8 @@ class PermissionsSeeder extends Seeder
             'Delete Country',
             'Offers',
             'Create Offer',
+            'Edit Offer',
+            'Delete Offer',
             'Transaction',
             'All Transaction',
             'Create Transaction',

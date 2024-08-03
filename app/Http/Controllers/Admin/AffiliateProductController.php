@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Lead;
+use App\Models\Offer;
 use App\Models\Country;
 use App\Models\Category;
-use App\Models\Offer;
 use Illuminate\Http\Request;
 use App\Models\AffiliateProduct;
 use Illuminate\Support\Facades\DB;
@@ -27,7 +28,8 @@ class AffiliateProductController extends Controller
      */
     public function per_delivered()
     {
-        $offer = Offer::where('end_date', '>', now())->orderBy('id', 'DESC')->get();
+        $offer = Offer::where('end_date', '>', now())->where('start_date', '<=', now())->orderBy('id', 'DESC')->get();
+
         $countries = Country::all();
         $categories = Category::all();
         $products = AffiliateProduct::where('type', 'delivered')->orderBy('id', 'DESC')->paginate(COUNT);
@@ -36,7 +38,8 @@ class AffiliateProductController extends Controller
 
     public function per_confirmed()
     {
-        $offer = Offer::where('end_date', '>', now())->orderBy('id', 'DESC')->get();
+        $offer = Offer::where('end_date', '>', now())->where('start_date', '<=', now())->orderBy('id', 'DESC')->get();
+
         $countries = Country::all();
         $categories = Category::all();
         $products = AffiliateProduct::where('type', 'confirmed')->orderBy('id', 'DESC')->paginate(COUNT);
@@ -203,6 +206,7 @@ class AffiliateProductController extends Controller
             return response()->json(['errors' => $errors]);
         }
         $product = AffiliateProduct::findOrFail($id);
+        $item_sku = $product->sku;
         $oldImage = $product->image;
 
         if ($request->hasFile('image')) {
@@ -218,7 +222,7 @@ class AffiliateProductController extends Controller
             $imageName = $oldImage;
         }
 
-        $product->update([
+        $flag = $product->update([
             'sku' => $request->sku,
             'title' => $request->title,
             'brand' => $request->brand,
@@ -231,10 +235,21 @@ class AffiliateProductController extends Controller
             'admin_id' => auth()->guard('admin')->user()->id,
         ]);
 
+
         $product->affiliatecountries()->detach();
         foreach ($request->country as $index => $countryId) {
             $product->affiliatecountries()->attach($countryId, ['stock' => $request->stock[$index]]);
         }
+
+        $leads = Lead::where('item_sku', $item_sku)->get();
+        if (!empty($leads)) {
+            foreach ($leads as $lead) {
+                $lead->update(['item_sku' => $request->sku]);
+            }
+        }
+
+
+
 
         return response()->json(['message' => 'Product Updated successfully'], 200);
     }
@@ -265,7 +280,8 @@ class AffiliateProductController extends Controller
     {
 
         // Now you can use the $selectedCountry variable to filter your products
-        $offer = Offer::where('end_date', '>', now())->orderBy('id', 'DESC')->get();
+        $offer = Offer::where('end_date', '>', now())->where('start_date', '<=', now())->orderBy('id', 'DESC')->get();
+
         $products = AffiliateProduct::where('type', 'delivered')->whereHas('affiliatecountries', function ($query) use ($country) {
             $query->where('country_id', $country);
         })->orderBy('id', 'DESC')->paginate(COUNT);
@@ -276,7 +292,8 @@ class AffiliateProductController extends Controller
 
     public function new_product_per_delivered()
     {
-        $offer = Offer::where('end_date', '>', now())->orderBy('id', 'DESC')->get();
+        $offer = Offer::where('end_date', '>', now())->where('start_date', '<=', now())->orderBy('id', 'DESC')->get();
+
         $products = AffiliateProduct::where('type', 'delivered')->orderBy('id', 'DESC')->paginate(COUNT);
         $countries = Country::all();
         $categories = Category::all();
@@ -285,7 +302,8 @@ class AffiliateProductController extends Controller
 
     public function suggested_product_per_delivered()
     {
-        $offer = Offer::where('end_date', '>', now())->orderBy('id', 'DESC')->get();
+        $offer = Offer::where('end_date', '>', now())->where('start_date', '<=', now())->orderBy('id', 'DESC')->get();
+
         $affiliate_products = DB::table('affiliate_product_seller')->pluck('affiliate_product_id')->toArray();
 
         $products = AffiliateProduct::where('type', 'delivered')->whereIn('id', $affiliate_products)->orderBy('id', 'DESC')->paginate(COUNT);
@@ -317,7 +335,8 @@ class AffiliateProductController extends Controller
 
 
         $products = $query->orderBy('id', 'DESC')->paginate(COUNT); // Replace 10 with your desired number of items per page
-        $offer = Offer::where('end_date', '>', now())->orderBy('id', 'DESC')->get();
+        $offer = Offer::where('end_date', '>', now())->where('start_date', '<=', now())->orderBy('id', 'DESC')->get();
+
         $countries = Country::all();
         $categories = Category::all();
         return view('admin.affiliateproduct.perdelivered', compact('products', 'countries', 'categories' . 'offer'));
@@ -326,7 +345,8 @@ class AffiliateProductController extends Controller
     public function country_filter_per_confirmed(Request $request, $country)
     {
 
-        $offer = Offer::where('end_date', '>', now())->orderBy('id', 'DESC')->get();
+        $offer = Offer::where('end_date', '>', now())->where('start_date', '<=', now())->orderBy('id', 'DESC')->get();
+
         // Now you can use the $selectedCountry variable to filter your products
         $products = AffiliateProduct::where('type', 'confirmed')->whereHas('affiliatecountries', function ($query) use ($country) {
             $query->where('country_id', $country);
@@ -338,7 +358,8 @@ class AffiliateProductController extends Controller
 
     public function new_product_per_confirmed()
     {
-        $offer = Offer::where('end_date', '>', now())->orderBy('id', 'DESC')->get();
+        $offer = Offer::where('end_date', '>', now())->where('start_date', '<=', now())->orderBy('id', 'DESC')->get();
+
         $products = AffiliateProduct::where('type', 'confirmed')->orderBy('id', 'DESC')->paginate(COUNT);
         $countries = Country::all();
         $categories = Category::all();
@@ -348,7 +369,8 @@ class AffiliateProductController extends Controller
     public function suggested_product_per_confirmed()
     {
         $affiliate_products = DB::table('affiliate_product_seller')->pluck('affiliate_product_id')->toArray();
-        $offer = Offer::where('end_date', '>', now())->orderBy('id', 'DESC')->get();
+        $offer = Offer::where('end_date', '>', now())->where('start_date', '<=', now())->orderBy('id', 'DESC')->get();
+
         $products = AffiliateProduct::where('type', 'confirmed')->whereIn('id', $affiliate_products)->orderBy('id', 'DESC')->paginate(COUNT);
         $countries = Country::all();
         $categories = Category::all();
@@ -357,7 +379,8 @@ class AffiliateProductController extends Controller
 
     public function search_per_confirmed(Request $request)
     {
-        $offer = Offer::where('end_date', '>', now())->orderBy('id', 'DESC')->get();
+        $offer = Offer::where('end_date', '>', now())->where('start_date', '<=', now())->orderBy('id', 'DESC')->get();
+
         $query = AffiliateProduct::where('type', 'confirmed')->query();
 
         if ($request->has('title') && $request->title != '') {

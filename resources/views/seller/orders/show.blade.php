@@ -44,44 +44,44 @@
 
         <!-- <div class="card">
 
-            </div> -->
+                        </div> -->
         <div class="leed_container mx-4 grid md:grid-cols-12 gap-4 lg:mx-10 lg:gap-6 my-6">
             <!-- leed info  -->
-            <div class="leed_info bg-white rounded-2xl p-6 shadow-md md:col-span-5">
+            <div class="leed_info card_bg rounded-2xl p-6 shadow-md md:col-span-5">
                 <div>
-                    <h4 class="text-xl font-bold text-gray-600 capitalize mb-5">
+                    <h4 class="text-xl font-bold  capitalize mb-5">
                         {{ $order->lead->customer_name }}
                     </h4>
                 </div>
                 <hr />
                 <div>
-                    <h2 class="text-2xl font-bold text-gray-800 capitalize my-5">
+                    <h2 class="text-2xl font-bold  capitalize my-5">
                         lead information
                     </h2>
-                    <div class="mobile flex items-center gap-1 text-gray-600">
+                    <div class="mobile flex items-center gap-1 ">
                         <span class="mdi mdi-phone-outline"></span>
                         <span class="text-sm"> {{ $order->lead->customer_phone }} </span>
                     </div>
                     <div class="adrdress">
-                        <div class="adrdress_title flex items-center gap-1 text-gray-600 text-md mt-4 mb-2">
+                        <div class="adrdress_title flex items-center gap-1  text-md mt-4 mb-2">
                             <span class="mdi mdi-map-outline"></span>
                             <span class="font-bold text-black text-sm">Address</span>
                         </div>
-                        <p class="text-gray-600 text-sm text-pretty">
+                        <p class=" text-sm text-pretty">
                             {{ $order->lead->customer_addrress }}{{ $order->lead->customer_city }}
                         </p>
                     </div>
                     <div class="country">
-                        <div class="country_title flex items-center gap-1 text-gray-600 text-md mt-4 mb-2">
+                        <div class="country_title flex items-center gap-1  text-md mt-4 mb-2">
                             <span class="mdi mdi-map-marker-outline"></span>
                             <span class="font-bold text-black text-sm"> Country </span>
                         </div>
-                        <div class="text-gray-600 text-md mt-2 mb-2 flex gap-2 items-center">
+                        <div class=" text-md mt-2 mb-2 flex gap-2 items-center">
                             <span class="material-symbols-outlined relative top-[0px]">
                                 <img src="{{ asset('assets/countries/flags/' . $country->flag) }}"
                                     alt="{{ $country->name }}" width="30" height="30">
                             </span>
-                            <span class="text-gray-600 text-sm text-pretty">
+                            <span class=" text-sm text-pretty">
                                 @if ($order->lead->customer_country)
                                     {{ $order->lead->customer_country }}
                                 @else
@@ -93,32 +93,32 @@
                 </div>
                 <hr />
                 <div>
-                    <h2 class="text-xl font-bold text-gray-800 capitalize my-2">
+                    <h2 class="text-xl font-bold  capitalize my-2">
                         Store refrence
                     </h2>
                     <div>
-                        <span class="text-gray-800 capitalize">store refrence:</span>
-                        <span class="text-gray-600 text-sm"> {{ $order->lead->store_reference }} </span>
+                        <span class=" capitalize">store refrence:</span>
+                        <span class=" text-sm"> {{ $order->lead->store_reference }} </span>
                     </div>
                 </div>
             </div>
             <!-- product details -->
             <div class="product_details md:col-span-7 flex flex-col gap-6">
                 <div class="details flex flex-col gap-6 lg:gap-4">
-                    <div class="detail_nav bg-white rounded-t-lg px-6 py-4 shadow-sm">
+                    <div class="detail_nav card_bg rounded-t-lg px-6 py-4 shadow-sm">
                         <h4 class="uppercase text-sm md:text-md text-purple-600 font-bold">
                             details
                         </h4>
                     </div>
-                    <div class="details_table_container bg-white rounded-2xl shadow-md p-6">
+                    <div class="details_table_container card_bg rounded-2xl shadow-md p-6">
                         <div class="details_table_header">
-                            <h4 class="text-sm uppercase text-gray-600 font-bold mb-4">
+                            <h4 class="text-sm uppercase  font-bold mb-4">
                                 {{ __('site.OrderDetails') }}
                             </h4>
                             <hr />
                             <div class="overflow-auto">
                                 <!-- but table here -->
-                                <div class="col-span-8 bg-white drop-shadow rounded-md px-4 py-4">
+                                <div class="col-span-8 card_bg drop-shadow rounded-md px-4 py-4">
                                     <table class="table">
                                         <thead>
                                             <tr class="text-nowrap">
@@ -151,14 +151,14 @@
                     </div>
                 </div>
                 <div class="details flex flex-col gap-6">
-                    <div class="details_table_container bg-white rounded-2xl shadow-md p-6">
+                    <div class="details_table_container card_bg rounded-2xl shadow-md p-6">
                         <div class="details_table_header">
-                            <h4 class="text-sm uppercase text-gray-600 font-bold mb-4">
+                            <h4 class="text-sm uppercase  font-bold mb-4">
                                 Products
                             </h4>
                             <hr />
                             <div class="overflow-auto">
-                                <div class="col-span-8 bg-white drop-shadow rounded-md px-4 py-4">
+                                <div class="col-span-8 card_bg drop-shadow rounded-md px-4 py-4">
                                     <table class="table">
                                         <thead>
                                             <tr class="text-nowrap">
