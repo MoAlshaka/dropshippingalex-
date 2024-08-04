@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
-            $table->double('shipping_cost')->default(0);
+            $table->decimal('shipping_cost', 10, 2)->default(0);
             $table->string('flag');
             $table->timestamps();
         });

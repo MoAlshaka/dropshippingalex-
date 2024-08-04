@@ -95,8 +95,8 @@
             </div>
         </h4>
 
-        <div class="table-responsive text-nowrap">
-            <table class="table" id="em_data">
+        <div class="card-datatable table-responsive pt-0">
+            <table class="datatables-basic table table-bordered">
                 <thead>
                     <tr class="text-nowrap">
                         <th>#</th>

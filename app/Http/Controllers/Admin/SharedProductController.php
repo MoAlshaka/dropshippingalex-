@@ -26,7 +26,8 @@ class SharedProductController extends Controller
      */
     public function index()
     {
-        $offer = Offer::where('end_date', '>', now())->where('start_date', '<=', now())->orderBy('id', 'DESC')->get();
+        $offer = Offer::where('end_date', '>', now())->where('start_date', '=<', now())->orderBy('id', 'DESC')->get();
+
         $countries = Country::all();
         $categories = Category::all();
         $products = SharedProduct::orderBy('id', 'DESC')->paginate(COUNT);

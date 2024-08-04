@@ -26,13 +26,12 @@
                         <table id="em_data" class="display table table-bordered" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>#ID</th>
-                                    <th>Name</th>
-                                    <th>Username</th>
-                                    <th>Role</th>
-                                    <th>Start At</th>
-                                    <th>Status</th>
-                                    <th class="text-center">Action</th>
+                                    <th>#{{ __('site.ID') }}</th>
+                                    <th>{{ __('site.Name') }}</th>
+                                    <th>{{ __('site.Username') }}</th>
+                                    <th>{{ __('site.Role') }}</th>
+                                    <th>{{ __('site.CreatedAt') }}</th>
+                                    <th class="text-center">{{ __('site.Actions') }}</th>
 
                                 </tr>
                             </thead>
@@ -54,26 +53,19 @@
                                             </td>
 
                                             <td>{{ $user->created_at->format('Y-m-d') ?? '' }}</td>
-                                            <td>
-                                                @if ($user->status == 1)
-                                                    <button type="button"
-                                                        class="btn rounded-pill btn-success waves-effect waves-light">Enabled</button>
-                                                @else
-                                                    <button type="button"
-                                                        class="btn rounded-pill btn-danger waves-effect waves-light">Disabled</button>
-                                                @endif
-                                            </td>
+
                                             <td class="text-center">
                                                 @can('Edit Admin')
-                                                    <a href="{{ route('admins.edit', $user->id) }}" class="btn btn-sm btn-info">
-                                                        <i class="fa fa-edit"></i> Edit
+                                                    <a href="{{ route('admins.edit', $user->id) }}"
+                                                        class="btn btn-sm btn-info">
+                                                        <i class="fa fa-edit"></i> {{ __('site.Edit') }}
                                                     </a>
                                                 @endcan
                                                 @can('Delete Admin')
                                                     @if (auth()->id() != $user->id)
                                                         <a href="javascript:;" class="btn btn-sm btn-danger sa-delete"
                                                             data-from-id="user-delete-{{ $user->id }}">
-                                                            <i class="fa fa-trash"></i> Delete
+                                                            <i class="fa fa-trash"></i> {{ __('site.Delete') }}
                                                         </a>
                                                         <form id="user-delete-{{ $user->id }}"
                                                             action="{{ route('admins.destroy', $user->id) }}" method="post">

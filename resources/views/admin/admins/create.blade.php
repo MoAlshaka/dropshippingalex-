@@ -76,27 +76,28 @@
                 <form action="{{ route('admins.store') }}" method="post">
                     @csrf
                     <div class="mb-3">
-                        <label class="form-label" for="bs-validation-name">Name <span class="text-danger">*</span></label>
-                        <input name="name" type="text" class="form-control" placeholder="Name">
+                        <label class="form-label" for="bs-validation-name">{{ __('site.Name') }} <span
+                                class="text-danger">*</span></label>
+                        <input name="name" type="text" class="form-control" placeholder="{{ __('site.Name') }}">
                         @if ($errors->has('name'))
                             <span class="text-danger">{{ $errors->first('name') }}</span>
                         @endif
                     </div>
                     <div class="mb-3">
 
-                        <label class="form-label" for="bs-validation-email">username <span
+                        <label class="form-label" for="bs-validation-email">{{ __('site.UserName') }} <span
                                 class="text-danger">*</span></label>
-                        <input name="username" type="text" class="form-control" placeholder="Enter username">
+                        <input name="username" type="text" class="form-control" placeholder="{{ __('site.UserName') }}">
                         @if ($errors->has('username'))
                             <span class="text-danger">{{ $errors->first('username') }}</span>
                         @endif
                     </div>
                     <div class="mb-3 form-password-toggle">
-                        <label class="form-label" for="bs-validation-password">Password <span
+                        <label class="form-label" for="bs-validation-password">{{ __('site.Password') }} <span
                                 class="text-danger">*</span></label>
                         <div class="input-group input-group-merge">
                             <input name="password" id="bs-validation-password" type="password" class="form-control"
-                                placeholder="Enter password">
+                                placeholder="{{ __('site.Password') }}">
                             <span class="input-group-text cursor-pointer" id="basic-default-password4"><i
                                     class="ti ti-eye-off"></i></span>
 
@@ -108,11 +109,11 @@
                     </div>
 
                     <div class="mb-3 form-password-toggle">
-                        <label class="form-label" for="bs-validation-password">Confirm Password <span
+                        <label class="form-label" for="bs-validation-password">{{ __('site.ConfirmPassword') }} <span
                                 class="text-danger">*</span></label>
                         <div class="input-group input-group-merge">
                             <input name="password_confirmation" id="bs-validation-password" type="password"
-                                class="form-control" placeholder="Confirm password">
+                                class="form-control" placeholder="{{ __('site.ConfirmPassword') }}">
                             <span class="input-group-text cursor-pointer" id="basic-default-password4"><i
                                     class="ti ti-eye-off"></i></span>
                         </div>
@@ -121,7 +122,8 @@
 
                     @endphp
                     <div class="mb-3">
-                        <label class="form-label" for="bs-validation-role">Role<span class="text-danger">*</span></label>
+                        <label class="form-label" for="bs-validation-role">{{ __('site.Roles') }} <span
+                                class="text-danger">*</span></label>
                         <select name="roles_name" class="select2 form-select" id="select2_role">
                             <option value="" selected disabled></option>
                             @foreach ($roles as $role)
@@ -134,7 +136,7 @@
 
                     <div class="row">
                         <div class="col-12">
-                            <button type="submit" class="btn btn-primary">Add Admin</button>
+                            <button type="submit" class="btn btn-primary">{{ __('site.Add') }}</button>
 
                         </div>
                     </div>

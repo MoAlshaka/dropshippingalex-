@@ -164,7 +164,7 @@ class AffiliateProductController extends Controller
     public function search_per_delivered(Request $request)
     {
         $offer = Offer::where('end_date', '>', now())->where('start_date', '<=', now())->orderBy('id', 'DESC')->get();
-        $query = AffiliateProduct::where('type', 'delivered')->query();
+        $query = AffiliateProduct::where('type', 'delivered');
 
         if ($request->has('title') && $request->title != '') {
             $query->where('title', 'like', '%' . $request->title . '%');
@@ -177,12 +177,6 @@ class AffiliateProductController extends Controller
         if ($request->has('category_id') && $request->category_id != '') {
             $query->orWhere('category_id', $request->category_id);
         }
-
-        if ($request->has('type') && $request->type != '') {
-            $query->orWhere('type', $request->type);
-        }
-
-
         $products = $query->orderBy('id', 'DESC')->paginate(COUNT); // Replace 10 with your desired number of items per page
 
         $countries = Country::all();
@@ -226,7 +220,7 @@ class AffiliateProductController extends Controller
     {
         $offer = Offer::where('end_date', '>', now())->where('start_date', '<=', now())->orderBy('id', 'DESC')->get();
 
-        $query = AffiliateProduct::where('type', 'confirmed')->query();
+        $query = AffiliateProduct::where('type', 'confirmed');
 
         if ($request->has('title') && $request->title != '') {
             $query->where('title', 'like', '%' . $request->title . '%');
@@ -238,10 +232,6 @@ class AffiliateProductController extends Controller
 
         if ($request->has('category_id') && $request->category_id != '') {
             $query->orWhere('category_id', $request->category_id);
-        }
-
-        if ($request->has('type') && $request->type != '') {
-            $query->orWhere('type', $request->type);
         }
 
 

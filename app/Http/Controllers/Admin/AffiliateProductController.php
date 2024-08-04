@@ -297,7 +297,7 @@ class AffiliateProductController extends Controller
         $products = AffiliateProduct::where('type', 'delivered')->orderBy('id', 'DESC')->paginate(COUNT);
         $countries = Country::all();
         $categories = Category::all();
-        return view('admin.affiliateproduct.perdelivered', compact('products', 'countries', 'categories' . 'offer'));
+        return view('admin.affiliateproduct.perdelivered', compact('products', 'countries', 'categories', 'offer'));
     }
 
     public function suggested_product_per_delivered()
@@ -315,7 +315,7 @@ class AffiliateProductController extends Controller
     public function search_per_delivered(Request $request)
     {
 
-        $query = AffiliateProduct::where('type', 'delivered')->query();
+        $query = AffiliateProduct::where('type', 'delivered');
 
         if ($request->has('title') && $request->title != '') {
             $query->where('title', 'like', '%' . $request->title . '%');
@@ -329,9 +329,9 @@ class AffiliateProductController extends Controller
             $query->orWhere('category_id', $request->category_id);
         }
 
-        if ($request->has('type') && $request->type != '') {
-            $query->orWhere('type', $request->type);
-        }
+
+
+        $products = $query->orderBy('id', 'DESC')->paginate(COUNT);
 
 
         $products = $query->orderBy('id', 'DESC')->paginate(COUNT); // Replace 10 with your desired number of items per page
@@ -339,7 +339,7 @@ class AffiliateProductController extends Controller
 
         $countries = Country::all();
         $categories = Category::all();
-        return view('admin.affiliateproduct.perdelivered', compact('products', 'countries', 'categories' . 'offer'));
+        return view('admin.affiliateproduct.perdelivered', compact('products', 'countries', 'categories', 'offer'));
     }
 
     public function country_filter_per_confirmed(Request $request, $country)
@@ -363,7 +363,7 @@ class AffiliateProductController extends Controller
         $products = AffiliateProduct::where('type', 'confirmed')->orderBy('id', 'DESC')->paginate(COUNT);
         $countries = Country::all();
         $categories = Category::all();
-        return view('admin.affiliateproduct.perconfirmed', compact('products', 'countries', 'categories' . 'offer'));
+        return view('admin.affiliateproduct.perconfirmed', compact('products', 'countries', 'categories', 'offer'));
     }
 
     public function suggested_product_per_confirmed()
@@ -381,7 +381,7 @@ class AffiliateProductController extends Controller
     {
         $offer = Offer::where('end_date', '>', now())->where('start_date', '<=', now())->orderBy('id', 'DESC')->get();
 
-        $query = AffiliateProduct::where('type', 'confirmed')->query();
+        $query = AffiliateProduct::where('type', 'confirmed');
 
         if ($request->has('title') && $request->title != '') {
             $query->where('title', 'like', '%' . $request->title . '%');
@@ -395,12 +395,9 @@ class AffiliateProductController extends Controller
             $query->orWhere('category_id', $request->category_id);
         }
 
-        if ($request->has('type') && $request->type != '') {
-            $query->orWhere('type', $request->type);
-        }
 
 
-        $products = $query->orderBy('id', 'DESC')->paginate(COUNT); // Replace 10 with your desired number of items per page
+        $products = $query->orderBy('id', 'DESC')->paginate(COUNT);
 
         $countries = Country::all();
         $categories = Category::all();

@@ -86,11 +86,11 @@
             @endisset
             <div class="col-md mb-4 mb-md-2">
                 <div class="accordion mt-3" id="accordionWithIcon">
-                    <div class="accordion-item">
+                    <div class="accordion-item p-3">
 
-                        <div class=" d-flex align-items-center">
+                        <div>
 
-                            <div class=" h-full flex flex-fill gap-6">
+                            <div class="flex flex-col lg:flex-row gap-3">
                                 <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
                                     href="{{ route('admin.affiliate.per.confirmed') }}">
                                     <i class="mdi mdi-select-all"></i>
@@ -108,16 +108,16 @@
                                 </a>
 
 
+                                <button type="button" class="accordion-button collapsed m-auto" data-bs-toggle="collapse"
+                                    data-bs-target="#accordionWithIcon-1" aria-expanded="false">
+                                </button>
                             </div>
 
-                            <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse"
-                                data-bs-target="#accordionWithIcon-1" aria-expanded="false">
-                            </button>
                         </div>
 
                         <div id="accordionWithIcon-1" class="accordion-collapse collapse" style="">
                             <div class="accordion-body">
-                                <form id="formAuthentication" class="mb-3 row"
+                                <form id="formAuthentication" class=" flex flex-col lg:flex-row gap-3"
                                     action="{{ route('admin.search.affiliate.per.confirmed') }}" method="post">
                                     @csrf
                                     <div class="form-floating form-floating-outline mb-3 col ">
@@ -139,15 +139,7 @@
                                         </select>
                                         <label for="country"> {{ __('site.Category') }}</label>
                                     </div>
-                                    <div class="form-floating form-floating-outline mb-3 col">
-                                        <select id="type" class="select2 form-select" name="type"
-                                            data-placeholder="{{ __('site.SelectCommissionType') }}">
-                                            <option value="">{{ __('site.SelectCommissionType') }}</option>
-                                            <option value="on_delivered">{{ __('site.OnDelivered') }}</option>
-                                            <option value="on_confirmed">{{ __('site.OnConfirmed') }}</option>
-                                        </select>
-                                        <label for="type"> {{ __('site.CommissionType') }}</label>
-                                    </div>
+
                                     <button class="btn btn-primary mb-3 col" type="submit">
                                         {{ __('site.Search') }}</button>
                                 </form>

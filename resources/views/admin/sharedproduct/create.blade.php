@@ -109,7 +109,7 @@
                                 <div class="col">
                                     <div class="form-floating form-floating-outline">
                                         <input type="text" class="form-control" id="ecommerce-product-sku"
-                                            placeholder="00000" name="sku" aria-label="Product SKU" />
+                                            placeholder="{{ __('site.SKU') }}" name="sku" aria-label="Product SKU" />
                                         <label for="ecommerce-product-sku"> {{ __('site.SKU') }}</label>
                                     </div>
                                 </div>
@@ -119,8 +119,9 @@
 
                                 <div class="col">
                                     <div class="form-floating form-floating-outline">
-                                        <input type="text" class="form-control" id="brand" placeholder="0123-4567"
-                                            name="brand" aria-label="Product brand" />
+                                        <input type="text" class="form-control" id="brand"
+                                            placeholder="{{ __('site.Brand') }}" name="brand"
+                                            aria-label="Product brand" />
                                         <label for="brand"> {{ __('site.Brand') }}</label>
                                     </div>
                                 </div>
@@ -211,7 +212,7 @@
                                                             class="mb-3 col-lg-12 col-xl-2 col-12 d-flex align-items-center mb-0">
                                                             <button class="btn btn-outline-danger" data-repeater-delete>
                                                                 <i class="mdi mdi-close me-1"></i>
-                                                                <span class="align-middle">Delete</span>
+                                                                <span class="align-middle">{{ __('site.Delete') }}</span>
                                                             </button>
                                                         </div>
                                                     </div>
@@ -221,7 +222,7 @@
                                             <div class="mb-0">
                                                 <button class="btn btn-primary" data-repeater-create>
                                                     <i class="mdi mdi-plus me-1"></i>
-                                                    <span class="align-middle">Add</span>
+                                                    <span class="align-middle">{{ __('site.Add') }}</span>
                                                 </button>
                                             </div>
                                         </form>
@@ -248,7 +249,8 @@
                             <!-- Unit Cost -->
                             <div class="form-floating form-floating-outline mb-4">
                                 <input type="number" step="0.01" class="form-control" id="Unit Cost"
-                                    placeholder="Unit Cost" name="unit_cost" aria-label="Product Unit Cost" />
+                                    placeholder="{{ __('site.UnitCost') }}" name="unit_cost"
+                                    aria-label="Product Unit Cost" />
                                 <label for="Unit Cost">{{ __('site.UnitCost') }}</label>
                             </div>
                             @error('unit_cost')
@@ -258,7 +260,7 @@
                             <!-- Recommended Pricee -->
                             <div class="form-floating form-floating-outline mb-4">
                                 <input type="number" step="0.01" class="form-control" id="Recommended Price"
-                                    placeholder="Recommended Price" name="recommended_price"
+                                    placeholder="{{ __('site.RecommendedPrice') }}" name="recommended_price"
                                     aria-label="Product discounted price" />
                                 <label for="Recommended Price">{{ __('site.RecommendedPrice') }}</label>
                             </div>
@@ -269,7 +271,7 @@
                             <!-- Weight -->
                             <div class="form-floating form-floating-outline mb-4">
                                 <input type="number" step="0.001" class="form-control" id="weight"
-                                    placeholder="weight" name="weight" aria-label="Product weight" />
+                                    placeholder="{{ __('site.Weight') }}" name="weight" aria-label="Product weight" />
                                 <label for="weight"> {{ __('site.Weight') }}</label>
                             </div>
                             @error('weight')

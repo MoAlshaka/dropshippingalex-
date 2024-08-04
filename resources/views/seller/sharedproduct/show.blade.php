@@ -95,13 +95,13 @@
                                 <h3 class="text-md  lg:text-xl font-bold mr-6 lg:mr-2">
                                     {{ __('site.Brand') }}:
                                 </h3>
-                                <span class="text-black">{{ $product->brand }}</span>
+                                <span class="">{{ $product->brand }}</span>
                             </div>
                             <div class="flex items-center">
                                 <h3 class="text-md  lg:text-xl font-bold mr-6 lg:mr-2">
                                     {{ __('site.Wieght') }}:
                                 </h3>
-                                <span class="text-black">{{ $product->weight }} KG</span>
+                                <span class="">{{ $product->weight }} KG</span>
                             </div>
                         </div>
                     </div>

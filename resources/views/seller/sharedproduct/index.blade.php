@@ -29,32 +29,17 @@
                     <div class="bg-gray-200">
                         <div class="">
                             <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-                                {{-- <div class="carousel-indicators">
-                                    <button
-                                        type="button"
-                                        data-bs-target="#carouselExample"
-                                        data-bs-slide-to="0"
-                                        class="active"
-                                        aria-current="true"
-                                        aria-label="Slide 1"></button>
-                                    <button
-                                        type="button"
-                                        data-bs-target="#carouselExample"
-                                        data-bs-slide-to="1"
-                                        aria-label="Slide 2"></button>
-                                    <button
-                                        type="button"
-                                        data-bs-target="#carouselExample"
-                                        data-bs-slide-to="2"
-                                        aria-label="Slide 3"></button>
-                                </div> --}}
+
                                 <div class="carousel-inner" style="height:150px;">
-                                    {{-- @foreach ($offer as $info)
+                                    @foreach ($offer as $info)
                                         <div class="carousel-item active" style="max-height:150px;">
-                                            <img class="d-block w-100" src="{{ asset('assets/offers/images/' . $info->image) }}"
-                                                style="max-height: 150px;object-fit: cover;" alt="First slide" />
+                                            <a href="{{ $info->url ?? '#' }}" target="_blank">
+                                                <img class="d-block w-100"
+                                                    src="{{ asset('assets/offers/images/' . $info->image) }}"
+                                                    style="max-height: 150px;object-fit: cover;" alt="First slide" />
+                                            </a>
                                         </div>
-                                    @endforeach --}}
+                                    @endforeach
                                 </div>
                                 <a class="carousel-control-prev" href="#carouselExample" role="button" data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -72,11 +57,11 @@
             <div class="col-md mb-4 mb-md-2">
 
                 <div class="accordion mt-3" id="accordionWithIcon">
-                    <div class="accordion-item">
+                    <div class="accordion-item p-3">
 
-                        <div class=" d-flex align-items-center">
+                        <div>
 
-                            <div class=" h-full flex flex-fill gap-6">
+                            <div class="flex flex-col lg:flex-row gap-3">
                                 <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
                                     href="{{ route('seller.sharedproducts.index') }}">
                                     <i class="mdi mdi-select-all"></i>
@@ -94,15 +79,15 @@
                                 </a>
 
 
+                                <button type="button" class="accordion-button collapsed m-auto" data-bs-toggle="collapse"
+                                    data-bs-target="#accordionWithIcon-1" aria-expanded="false">
+                                </button>
                             </div>
-                            <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse"
-                                data-bs-target="#accordionWithIcon-1" aria-expanded="false">
-                            </button>
                         </div>
 
                         <div id="accordionWithIcon-1" class="accordion-collapse collapse" style="">
                             <div class="accordion-body">
-                                <form id="formAuthentication" class="mb-3 row"
+                                <form id="formAuthentication" class="flex flex-col lg:flex-row gap-3"
                                     action="{{ route('search.shared.product') }}" method="post">
                                     @csrf
                                     <div class="form-floating form-floating-outline mb-3 col ">
@@ -168,7 +153,8 @@
                                     class="absolute w-full h-full bg-black opacity-0 ease-in-out duration-300 group-hover:opacity-40">
                                 </div>
                                 <img class="w-full h-full object-cover"
-                                    src="{{ asset('assets/products/sharedproduct/images/' . $product->image) }}" alt="..."
+                                    src="{{ asset('assets/products/sharedproduct/images/' . $product->image) }}"
+                                    alt="..."
                                     onerror="this.onerror=null;this.src='https://app.codpartner.com/images/no_image_found.jpg';" />
                             </div>
 

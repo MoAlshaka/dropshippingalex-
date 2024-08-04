@@ -53,7 +53,7 @@
         }
 
         .rank_icon {
-            z-index: 9999 !important;
+            z-index: 99 !important;
             position: relative;
         }
 
@@ -390,7 +390,7 @@
                                     GCC Market
                                 </span>
                                 <div class="text-center tx-14 mb-3">Hello, I am your professional account manager, Contact
-                                    me now if you have any questions <span
+                                    me now if you have any questions {{__('site.QuestionsManager')}}<span
                                         class="text-primary">{{ auth()->user()->manger->email }}</span>
 
                                 </div>
@@ -409,13 +409,13 @@
                             </div>
                             <!--[if ENDBLOCK]><![endif]-->
                             <div class="text-center mt-3">
-                                <h5 class="pro-user-username text-dark mt-2 mb-0"> No Agent yet
+                                <h5 class="pro-user-username text-dark mt-2 mb-0"> {{ __('site.NoAgent') }}
                                 </h5>
                                 <span class="mt-1 mb-3 badge badge-advanced">
                                     GCC Market
                                 </span>
-                                <div class="text-center tx-14 mb-3">Hello, If you need a professional account manager,
-                                    Contact us now <span class="text-primary">{{ $admin->email ?? '' }}</span>
+                                <div class="text-center tx-14 mb-3"> {{ __('site.ContactManager') }}<span
+                                        class="text-primary">{{ $admin->email ?? '' }}</span>
 
                                 </div>
                             </div>
@@ -431,8 +431,9 @@
             <div wire:id="b0xEBzV3oSrOnAgmNtOZ" class="col-xxl-9 col-xl-9 col-md-12 col-lg-12">
                 <div class="card custom-card">
                     <div class="card-header border-bottom-0 pb-1">
-                        <label class="main-content-label mb-2 pt-1">Top products</label>
-                        <p class="tx-12 mb-0 text-muted">Your best-selling products</p>
+                        <label class="main-content-label mb-2 pt-1"> {{ __('site.TopProducts') }}</label>
+                        <p class="tx-12 mb-0 text-muted"> {{ __('site.BestSellingProducts') }}
+                        </p>
                     </div>
                     <div class="card-body pt-0">
                         <ul class="top-selling-products pb-0 mb-0 pl-0">
@@ -456,13 +457,14 @@
                                             </div>
                                             <h3 class="text-md font-bold capitalize ">
                                                 {{ $product->title }}</h3>
-                                            {{-- <span class="text-black text-md font-bold">{{ $highestCommission['amount'] }}
+                                            {{-- <span class=" text-md font-bold">{{ $highestCommission['amount'] }}
                                                 $</span> --}}
                                         </div>
                                     @endforeach
                                 @endisset
                                 @if (!isset($limitedProductsArray))
-                                    <h3 class="empty-text text-center" style="color: #bbb !important;">No data to display
+                                    <h3 class="empty-text text-center" style="color: #bbb !important;">
+                                        {{ __('site.NoData') }}
                                     </h3>
                                 @endif
                             </div>

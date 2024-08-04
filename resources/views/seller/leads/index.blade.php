@@ -168,80 +168,86 @@
                 <h5 class="card-header col-7"> {{ __('site.Leads') }}</h5>
 
             </div>
-            <div class="table-responsive text-nowrap">
-                <table class="table" id="em_data">
-                    <thead>
-                        <tr class="text-nowrap">
-                            <th>#</th>
-                            <th>{{ __('site.REF') }}</th>
-                            <th>{{ __('site.CreatedAt') }}</th>
-                            <th>{{ __('site.Customer') }}</th>
-                            <th>{{ __('site.Phone') }}</th>
-                            <th>{{ __('site.SKU') }}</th>
-                            <th>{{ __('site.Total') }}</th>
-                            <th>{{ __('site.Type') }}</th>
-                            <th>{{ __('site.Status') }}</th>
-                            <th>{{ __('site.Actions') }}</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-border-bottom-0">
-                        @if (isset($leads))
-                            @php
-                                $i = 1;
-                            @endphp
-                            @foreach ($leads as $lead)
-                                <tr>
-                                    <th scope="row">{{ $i++ }}</th>
-                                    <td>{{ $lead->store_reference }}</td>
-                                    <td>{{ $lead->order_date }}</td>
-                                    <td>{{ $lead->customer_name }}</td>
-                                    <td>{{ $lead->customer_phone }}</td>
-                                    <td>{{ $lead->item_sku }}</td>
-                                    <td>{{ $lead->total }}</td>
-                                    <td> {{ $lead->type }}</td>
-                                    <td> {{ $lead->status }}</td>
-                                    <td style="display: flex;
-                                        gap: 6px;">
-                                        <a class="  text-primary hover:bg-success hover:text-white"
-                                            href="{{ route('leads.show', $lead->id) }}">
-                                            <button type="button" class="btn btn-icon btn-info waves-effect waves-light">
-                                                <span class="tf-icons mdi mdi-information-outline"></span>
+            <div class="text-nowrap">
+                <div id="exportButtons">
 
-                                            </button>
-                                        </a>
-                                        @if ($lead->status == 'pending')
+                </div>
+                <div class="card-datatable table-responsive pt-0">
+                    <table class="datatables-basic table table-bordered">
+                        <thead>
+                            <tr class="text-nowrap">
+                                <th>#</th>
+                                <th>{{ __('site.REF') }}</th>
+                                <th>{{ __('site.CreatedAt') }}</th>
+                                <th>{{ __('site.Customer') }}</th>
+                                <th>{{ __('site.Phone') }}</th>
+                                <th>{{ __('site.SKU') }}</th>
+                                <th>{{ __('site.Total') }}</th>
+                                <th>{{ __('site.Type') }}</th>
+                                <th>{{ __('site.Status') }}</th>
+                                <th>{{ __('site.Actions') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-border-bottom-0">
+                            @if (isset($leads))
+                                @php
+                                    $i = 1;
+                                @endphp
+                                @foreach ($leads as $lead)
+                                    <tr>
+                                        <th scope="row">{{ $i++ }}</th>
+                                        <td>{{ $lead->store_reference }}</td>
+                                        <td>{{ $lead->order_date }}</td>
+                                        <td>{{ $lead->customer_name }}</td>
+                                        <td>{{ $lead->customer_phone }}</td>
+                                        <td>{{ $lead->item_sku }}</td>
+                                        <td>{{ $lead->total }}</td>
+                                        <td> {{ $lead->type }}</td>
+                                        <td> {{ $lead->status }}</td>
+                                        <td style="display: flex;
+                                            gap: 6px;">
                                             <a class="  text-primary hover:bg-success hover:text-white"
-                                                href="{{ route('leads.edit', $lead->id) }}">
+                                                href="{{ route('leads.show', $lead->id) }}">
                                                 <button type="button"
-                                                    class="btn btn-icon btn-primary waves-effect waves-light">
-                                                    <span class="tf-icons mdi mdi-tag-edit-outline"></span>
+                                                    class="btn btn-icon btn-info waves-effect waves-light">
+                                                    <span class="tf-icons mdi mdi-information-outline"></span>
 
                                                 </button>
                                             </a>
-                                            <form action="{{ route('leads.destroy', $lead->id) }}" method="post">
-                                                @csrf
-                                                @method('DELETE')
+                                            @if ($lead->status == 'pending')
+                                                <a class="  text-primary hover:bg-success hover:text-white"
+                                                    href="{{ route('leads.edit', $lead->id) }}">
+                                                    <button type="button"
+                                                        class="btn btn-icon btn-primary waves-effect waves-light">
+                                                        <span class="tf-icons mdi mdi-tag-edit-outline"></span>
 
-                                                <button type="submit"
-                                                    class="btn btn-icon btn-danger waves-effect waves-light">
-                                                    <span class="tf-icons mdi mdi-trash-can-outline"></span>
+                                                    </button>
+                                                </a>
+                                                <form action="{{ route('leads.destroy', $lead->id) }}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
 
-                                                </button>
-                                            </form>
-                                        @endif
+                                                    <button type="submit"
+                                                        class="btn btn-icon btn-danger waves-effect waves-light">
+                                                        <span class="tf-icons mdi mdi-trash-can-outline"></span>
+
+                                                    </button>
+                                                </form>
+                                            @endif
 
 
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="11" class="px-4 py-4 text-center ">{{ __('site.NoData') }}
                                     </td>
                                 </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <td colspan="11" class="px-4 py-4 text-center ">{{ __('site.NoData') }}
-                                </td>
-                            </tr>
-                        @endif
-                    </tbody>
-                </table>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
                 {{ $leads->links() }}
             </div>
         </div>

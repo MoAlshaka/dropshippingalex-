@@ -20,6 +20,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
+
         $admin = Admin::where('roles_name', 'admin')->first();
         $leads = Lead::where('seller_id', auth()->guard('seller')->id())->count();
         $approvedLeadsCount = Lead::where('seller_id', auth()->guard('seller')->id())->where('status', 'confirmed')->count();
@@ -137,10 +138,14 @@ class DashboardController extends Controller
         // Filter groups with more than one product and limit to 6 products
         $productsWithMultipleSKUs = $groupedProducts->filter(function ($group) {
             return $group->count() >= 1;
-        })->flatten()->take(6);
+        })->flatten();
+
+        // Return unique products based on SKU and limit to 6
+        $uniqueProducts = $productsWithMultipleSKUs->unique('sku')->take(6);
 
         // Convert the result to an array if needed
-        $limitedProductsArray = $productsWithMultipleSKUs->values()->all();
+        $limitedProductsArray = $uniqueProducts->values()->all();
+
 
         $revenue = Invoice::where('seller_id', auth()->guard('seller')->id())->sum('revenue');
         return view('seller.dashboard', compact('leads', 'approvedLeadsCount', 'deliveredLeadsCount', 'revenue', 'sellers', 'leads_count', 'orders_count', 'admin', 'limitedProductsArray'));

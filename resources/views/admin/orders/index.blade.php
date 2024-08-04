@@ -175,23 +175,23 @@
         @endif
         <div class="card p-4">
             <div class="row">
-                <h5 class="card-header col-7"> {{ __('site.Orders') }}</h5>
-                <div class="col-5">
-                    <form action="{{ route('admin.orders.search') }}" method="post">
-                        @csrf
-                        <div class="form-floating form-floating-outline  d-flex ms-4 mb-4">
-                            <input type="text" id="ref" name="ref" class="form-control"
-                                placeholder="{{ __('site.REF') }}" />
-                            <label for="ref"> {{ __('site.REF') }}</label>
-                            <button type="submit" class="btn btn-primary btn-next btn-submit ms-2">
-                                {{ __('site.Search') }}</button>
-                        </div>
-                        @error('ref')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
+                <h5 class="card-header col-5"> {{ __('site.Orders') }}</h5>
 
-                    </form>
-                </div>
+                <form action="{{ route('admin.orders.search') }}" method="post" class="col-7">
+                    @csrf
+                    <div class="form-floating form-floating-outline  d-flex">
+                        <input type="text" id="ref" name="ref" class="form-control"
+                            placeholder="{{ __('site.REF') }}" />
+                        <label for="ref"> {{ __('site.REF') }}</label>
+                        <button type="submit" class="btn btn-primary btn-next btn-submit ms-2">
+                            {{ __('site.Search') }}</button>
+                    </div>
+                    @error('ref')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+
+                </form>
+
             </div>
             <div class="table-responsive text-nowrap">
                 <table class="table">

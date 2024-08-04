@@ -27,16 +27,16 @@
     @endif
     <!-- Multilingual -->
     <div class="card">
-        <h5 class="card-header">Roles</h5>
+        <h5 class="card-header">{{ __('site.Roles') }}</h5>
         <div class="card-body">
             <div class="table-responsive">
                 <table id="em_data" class="display table table-bordered" style="width:100%">
 
                     <thead>
                         <tr>
-                            <th>#ID</th>
-                            <th>Role Name</th>
-                            <th class="text-center">Action</th>
+                            <th>#{{ __('site.ID') }}</th>
+                            <th> {{ __('site.Name') }}</th>
+                            <th class="text-center">{{ __('site.Actions') }}</th>
 
                         </tr>
                     </thead>
@@ -50,18 +50,18 @@
                                     <td class="text-center">
                                         @can('Show Role')
                                             <a href="{{ route('roles.show', $role->id) }}" class="btn btn-sm btn-info">
-                                                <i class="fa fa-eye"></i> Show
+                                                <i class="fa fa-eye"></i> {{ __('site.Show') }}
                                             </a>
                                         @endcan
                                         @can('Edit Role')
                                             <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-sm btn-info">
-                                                <i class="fa fa-edit"></i> Edit
+                                                <i class="fa fa-edit"></i> {{ __('site.Edit') }}
                                             </a>
                                         @endcan
                                         @can('Delete Role')
                                             <a href="javascript:;" class="btn btn-sm btn-danger sa-delete"
                                                 data-from-id="role-delete-{{ $role->id }}">
-                                                <i class="fa fa-trash"></i> Delete
+                                                <i class="fa fa-trash"></i> {{ __('site.Delete') }}
                                             </a>
                                         @endcan
 

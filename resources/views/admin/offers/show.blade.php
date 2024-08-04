@@ -48,13 +48,13 @@
         {{--                                <h3 class="text-md  lg:text-xl font-bold mr-6 lg:mr-2"> --}}
         {{--                                    {{ __('site.StartDate') }}: --}}
         {{--                                </h3> --}}
-        {{--                                <span class="text-black">{{ $offer->start_date }}</span> --}}
+        {{--                                <span class="">{{ $offer->start_date }}</span> --}}
         {{--                            </div> --}}
         {{--                            <div class="flex items-center"> --}}
         {{--                                <h3 class="text-md  lg:text-xl font-bold mr-6 lg:mr-2"> --}}
         {{--                                    {{ __('site.EndDate') }}: --}}
         {{--                                </h3> --}}
-        {{--                                <span class="text-black">{{ $offer->end_date }}</span> --}}
+        {{--                                <span class="">{{ $offer->end_date }}</span> --}}
         {{--                            </div> --}}
         {{--                        </div> --}}
         {{--                    </div> --}}
@@ -83,10 +83,10 @@
                 </div>
             </div>
             <div class="p-4 sm:m-6 lg:m-8 card_bg rounded-xl drop-shadow-md">
-                <h2 class="my-2 text-2xl font-bold">{{ __('site.Description') }}</h2>
+                <h2 class="my-2 text-2xl font-bold">{{ __('site.Title') }}</h2>
                 <hr class="bg-black mb-4 h-[1px]" />
                 <p class="text-pretty">
-                    {{ $offer->description }}
+                    {{ $offer->title }}
                 </p>
             </div>
         </div>

@@ -140,15 +140,22 @@ class OrderController extends Controller
                     }
                 } else {
                     $product = SharedProduct::where('sku', $lead->item_sku)->first();
+
+                    $country = Country::where('name', $lead->warehouse)->first();
+
                     if ($product) {
                         $money = $lead->total / $lead->quantity;
+                        $x = (($money - $product->unit_cost) * $lead->quantity) - $country->shipping_cost;
+                        if ($x < 0) {
+                            $x = 0;
+                        }
                         if (!empty($revenue)) {
                             $revenue->update([
-                                'revenue' => $revenue->revenue + (($money - $product->unit_cost) * $lead->quantity) - $product->sharedcountries->shipping_cost,
+                                'revenue' => $revenue->revenue + $x,
                             ]);
                         } else {
                             Revenue::create([
-                                'revenue' => (($money - $product->unit_cost) * $lead->quantity) - $product->country->shipping_cost,
+                                'revenue' => $x,
                                 'seller_id' => $order->seller_id,
                                 'lead_id' => $order->lead_id,
                                 'order_id' => $order->id,

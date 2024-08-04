@@ -13,6 +13,19 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <h4 class="py-3 mb-4"><span class="text-muted fw-light"> {{ __('site.Dashboard') }} /</span> {{ __('site.Editlead') }}
         </h4>
+
+        @if (session()->has('Add'))
+            <div class="alert alert-success" role="alert">{{ session()->get('Add') }}</div>
+        @endif
+        @if (session()->has('Update'))
+            <div class="alert alert-primary" role="alert">{{ session()->get('Update') }}</div>
+        @endif
+        @if (session()->has('Delete'))
+            <div class="alert alert-danger" role="alert">{{ session()->get('Delete') }}</div>
+        @endif
+        @if (session()->has('Warning'))
+            <div class="alert alert-warning" role="alert">{{ session()->get('Warning') }}</div>
+        @endif
         <div class="row">
             <div class="col-xl">
                 <div class="card mb-4">
@@ -24,27 +37,20 @@
                             @csrf
                             @method('PUT')
                             <div class="form-floating form-floating-outline mb-4">
-                                <input type="date" class="form-control" id="basic-default-fullname"
-                                    placeholder="Order Date" />
+                                <input type="order_date" class="form-control" id="basic-default-fullname"
+                                    placeholder="{{ __('site.OrderDate') }}"
+                                    value="{{ old('order_date', $lead->order_date) }}" name="order_date" />
                                 <label for="basic-default-fullname"> {{ __('site.OrderDate') }}</label>
                             </div>
-                            @error('date')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                            <div class="form-floating form-floating-outline mb-4">
-                                <input type="text" class="form-control" id="basic-default-company"
-                                    placeholder="Store Reference" value="{{ $lead->store_reference }}"
-                                    name="store_reference" />
-                                <label for="basic-default-company"> {{ __('site.StoreReference') }}</label>
-                            </div>
-                            @error('store_reference')
+                            @error('order_date')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
 
                             <div class="form-floating form-floating-outline mb-4">
-                                <input type="text" class="form-control" id="basic-default-company"
-                                    placeholder="Store Name" value="{{ $lead->store_name }}" name="store_name" />
-                                <label for="basic-default-company"> {{ __('site.StoreName') }}</label>
+                                <input type="text" class="form-control" id="basic-default-StoreName"
+                                    placeholder="{{ __('site.StoreName') }}"
+                                    value="{{ old('store_name', $lead->store_name) }}" name="store_name" />
+                                <label for="basic-default-StoreName"> {{ __('site.StoreName') }}</label>
                             </div>
                             @error('store_name')
                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -65,25 +71,28 @@
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                             <div class="form-floating form-floating-outline mb-4">
-                                <input type="text" class="form-control" id="basic-default-company"
-                                    placeholder="Customer Name" value="{{ $lead->customer_name }}" name="customer_name" />
-                                <label for="basic-default-company"> {{ __('site.CustomerName') }}</label>
+                                <input type="text" class="form-control" id="basic-default-CustomerName"
+                                    placeholder="{{ __('site.CustomerName') }}"
+                                    value="{{ old('customer_name', $lead->customer_name) }}" name="customer_name" />
+                                <label for="basic-default-CustomerName"> {{ __('site.CustomerName') }}</label>
                             </div>
                             @error('customer_name')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                             <div class="form-floating form-floating-outline mb-4">
                                 <input type="text" id="basic-default-phone" class="form-control phone-mask"
-                                    value="{{ $lead->customer_phone }}" name="customer_phone" />
+                                    placeholder="{{ __('site.Phone') }}"
+                                    value="{{ old('customer_phone', $lead->customer_phone) }}" name="customer_phone" />
                                 <label for="basic-default-phone"> {{ __('site.Phone') }}</label>
                             </div>
                             @error('customer_phone')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                             <div class="form-floating form-floating-outline mb-4">
-                                <input type="text" id="basic-default-phone" class="form-control phone-mask"
-                                    value="{{ $lead->customer_mobile }}" name="customer_mobile" />
-                                <label for="basic-default-phone"> {{ __('site.Mobile') }}</label>
+                                <input type="text" id="basic-default-Mobile" class="form-control phone-mask"
+                                    placeholder="{{ __('site.Mobile') }}"
+                                    value="{{ old('customer_mobile', $lead->customer_mobile) }}" name="customer_mobile" />
+                                <label for="basic-default-Mobile"> {{ __('site.Mobile') }}</label>
                             </div>
                             @error('customer_mobile')
                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -92,40 +101,43 @@
                                 <div class="input-group input-group-merge">
                                     <div class="form-floating form-floating-outline">
                                         <input type="text" id="basic-default-email" class="form-control"
-                                            placeholder="Email" value="{{ $lead->customer_email }}"
+                                            placeholder="{{ __('site.Email') }}"
+                                            value="{{ old('customer_email', $lead->customer_email) }}"
                                             name="customer_email" />
                                         <label for="basic-default-email"> {{ __('site.Email') }}</label>
                                     </div>
                                     <span class="input-group-text" id="basic-default-email2">@example.com</span>
                                 </div>
 
-                                <div class="form-text">You can use letters, numbers & periods</div>
                             </div>
                             @error('customer_email')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                             <div class="form-floating form-floating-outline mb-4">
-                                <input type="text" class="form-control" id="basic-default-company"
-                                    placeholder="Customer Country" value="{{ $lead->customer_country }}"
+                                <input type="text" class="form-control" id="basic-default-CustomerCountry"
+                                    placeholder="{{ __('site.CustomerCountry') }}"
+                                    value="{{ old('customer_country', $lead->customer_country) }}"
                                     name="customer_country" />
-                                <label for="basic-default-company"> {{ __('site.CustomerCountry') }}</label>
+                                <label for="basic-default-CustomerCountry"> {{ __('site.CustomerCountry') }}</label>
                             </div>
                             @error('customer_country')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                             <div class="form-floating form-floating-outline mb-4">
-                                <input type="text" class="form-control" id="basic-default-company"
-                                    placeholder="Customer City" value="{{ $lead->customer_city }}" name="customer_city" />
-                                <label for="basic-default-company"> {{ __('site.CustomerCity') }}</label>
+                                <input type="text" class="form-control" id="basic-default-CustomerCity"
+                                    placeholder="{{ __('site.CustomerCity') }}"
+                                    value="{{ old('customer_city', $lead->customer_city) }}" name="customer_city" />
+                                <label for="basic-default-CustomerCity"> {{ __('site.CustomerCity') }}</label>
                             </div>
                             @error('customer_city')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                             <div class="form-floating form-floating-outline mb-4">
-                                <input type="text" class="form-control" id="basic-default-company"
-                                    placeholder="Customer Address" value="{{ $lead->customer_address }}"
+                                <input type="text" class="form-control" id="basic-default-CustomerAddress"
+                                    placeholder="{{ __('site.CustomerAddress') }}"
+                                    value="{{ old('customer_address', $lead->customer_address) }}"
                                     name="customer_address" />
-                                <label for="basic-default-company"> {{ __('site.CustomerAddress') }}</label>
+                                <label for="basic-default-CustomerAddress"> {{ __('site.CustomerAddress') }}</label>
                             </div>
                             @error('customer_address')
                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -146,25 +158,40 @@
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                             <div class="form-floating form-floating-outline mb-4">
-                                <input type="number" step="0.01" class="form-control" id="basic-default-company"
-                                    placeholder="Quantity" value="{{ $lead->quantity }}" name="quantity" />
-                                <label for="basic-default-company"> {{ __('site.Quantity') }}</label>
+                                <input type="number" step="0.01" class="form-control" id="basic-default-Quantity"
+                                    placeholder="{{ __('site.Quantity') }}"
+                                    value="{{ old('quantity', $lead->quantity) }}" name="quantity" />
+                                <label for="basic-default-Quantity"> {{ __('site.Quantity') }}</label>
                             </div>
                             @error('quantity')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                             <div class="form-floating form-floating-outline mb-4">
-                                <input type="number" step="0.01" class="form-control" id="basic-default-company"
-                                    placeholder="Total" value="{{ $lead->total }}" name="total" />
-                                <label for="basic-default-company"> {{ __('site.Total') }}</label>
+                                <input type="number" step="0.01" class="form-control" id="basic-default-Total"
+                                    placeholder="{{ __('site.Total') }}" value="{{ old('total', $lead->total) }}"
+                                    name="total" />
+                                <label for="basic-default-Total"> {{ __('site.Total') }}</label>
                             </div>
                             @error('total')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                             <div class="form-floating form-floating-outline mb-4">
-                                <input type="text" class="form-control" id="basic-default-company"
-                                    placeholder="Currency" value="{{ $lead->currency }}" name="currency" />
-                                <label for="basic-default-company"> {{ __('site.Currency') }}</label>
+                                <input type="text" class="form-control" id="basic-default-Currency"
+                                    placeholder="{{ __('site.Currency') }}" value="{{ $lead->currency }}"
+                                    name="currency" />
+                                <select id="basic-default-Currency" class="select2 form-select" data-allow-clear="true"
+                                    name="currency">
+                                    <option value="AED" @if (old('currency') == 'AED' || $lead->currency == 'AED') selected @endif> AED</option>
+                                    <option value="BHD" @if (old('currency') == 'BHD' || $lead->currency == 'BHD') selected @endif> BHD</option>
+                                    <option value="KWD" @if (old('currency') == 'KWD' || $lead->currency == 'KWD') selected @endif> KWD</option>
+                                    <option value="MAD" @if (old('currency') == 'MAD' || $lead->currency == 'MAD') selected @endif> MAD</option>
+                                    <option value="OMR" @if (old('currency') == 'OMR' || $lead->currency == 'OMR') selected @endif> OMR</option>
+                                    <option value="SAR" @if (old('currency') == 'SAR' || $lead->currency == 'SAR') selected @endif> SAR</option>
+                                    <option value="USD" @if (old('currency') == 'USD' || $lead->currency == 'USD') selected @endif> USD</option>
+                                    <option value="XOF" @if (old('currency') == 'XOF' || $lead->currency == 'XOF') selected @endif> XOF</option>
+                                </select>
+
+                                <label for="basic-default-Currency"> {{ __('site.Currency') }}</label>
                             </div>
                             @error('currency')
                                 <div class="alert alert-danger">{{ $message }}</div>

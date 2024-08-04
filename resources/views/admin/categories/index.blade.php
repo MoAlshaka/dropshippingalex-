@@ -27,12 +27,12 @@
         @endif
 
         <div class="card">
-            <div class="row">
+            <div class="d-flex">
                 <h5 class="card-header col-10"> {{ __('site.Categories') }}</h5>
-                <div class="col-2 mt-3">
-                    <a href="{{ route('categories.create') }}"
-                        class="btn rounded btn-success waves-effect waves-light">{{ __('site.Add') }}</a>
-                </div>
+
+                <a href="{{ route('categories.create') }}"
+                    class="btn rounded btn-success waves-effect waves-light col-2 mt-3">{{ __('site.Add') }}</a>
+
             </div>
             <div class="table-responsive text-nowrap">
                 <table class="table">

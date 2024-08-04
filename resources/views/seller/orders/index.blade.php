@@ -190,8 +190,8 @@
                 <h5 class="card-header col-7"> {{ __('site.Orders') }}</h5>
 
             </div>
-            <div class="table-responsive text-nowrap">
-                <table class="table">
+            <div class="card-datatable table-responsive pt-0">
+                <table class="datatables-basic table table-bordered">
                     <thead>
                         <tr class="text-nowrap">
                             <th>#</th>

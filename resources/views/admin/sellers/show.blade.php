@@ -144,7 +144,7 @@
                     @endcan
                 </div>
             </div>
-            <div class="product-disc col-span-8 lg:col-span-5 card_bg rounded-md drop-shadow">
+            <div class="product-disc col-span-8 lg:col-span-5 card_bg rounded-md drop-shadow p-2">
                 <div class="py-8 px-4">
                     <h3 class="text-2xl font-bold">{{ $seller->first_name . ' ' . $seller->last_name }}</h3>
                 </div>
@@ -154,44 +154,44 @@
                         <h3 class="text-md font-bold mb-4">{{ __('site.SellerInformations') }}:</h3>
                         <div class="flex flex-col gap-2 lg:items-start">
                             <div class="flex items-center">
-                                <h3 class="text-md   font-bold mr-6 lg:mr-2">
+                                <h3 class="text-md   font-bold mr-2 lg:mr-2">
                                     {{ __('site.Email') }}:
                                 </h3>
-                                <span class="text-black">{{ $seller->email }}
+                                <span class="">{{ $seller->email }}
                                 </span>
                             </div>
                             <div class="flex items-center">
-                                <h3 class="text-md   font-bold mr-6 lg:mr-2">
+                                <h3 class="text-md   font-bold mr-2 lg:mr-2">
                                     {{ __('site.Phone') }}:
                                 </h3>
-                                <span class="text-black">{{ $seller->phone }}</span>
+                                <span class="">{{ $seller->phone }}</span>
                             </div>
                             <div class="flex items-center">
-                                <h3 class="text-md   font-bold mr-6 lg:mr-2">
+                                <h3 class="text-md   font-bold mr-2 lg:mr-2">
                                     {{ __('site.WhereDidYouHearAboutUs') }}:
                                 </h3>
-                                <span class="text-black">{{ $seller->about_us }}</span>
+                                <span class="">{{ $seller->about_us }}</span>
                             </div>
                             {{--                            <div class="flex items-center"> --}}
-                            {{--                                <h3 class="text-md   font-bold mr-6 lg:mr-2"> --}}
+                            {{--                                <h3 class="text-md   font-bold mr-2 lg:mr-2"> --}}
                             {{--                                    {{ __('site.PaymentMethod') }}: --}}
                             {{--                                </h3> --}}
-                            {{--                                <span class="text-black">{{ $seller->payment_method }}</span> --}}
+                            {{--                                <span class="">{{ $seller->payment_method }}</span> --}}
                             {{--                            </div> --}}
                             {{--                            <div class="flex items-center"> --}}
-                            {{--                                <h3 class="text-md   font-bold mr-6 lg:mr-2"> --}}
+                            {{--                                <h3 class="text-md   font-bold mr-2 lg:mr-2"> --}}
                             {{--                                    {{ __('site.AccountNumber') }}: --}}
                             {{--                                </h3> --}}
-                            {{--                                <span class="text-black">{{ $seller->account }}</span> --}}
+                            {{--                                <span class="">{{ $seller->account }}</span> --}}
                             {{--                            </div> --}}
                         </div>
                     </div>
                     <hr />
-                    <div class="flex items-center">
-                        <h3 class="text-md   font-bold mr-6 lg:mr-2">
+                    <div class="flex items-center mt-3 mb-3">
+                        <h3 class="text-md   font-bold mr-2 lg:mr-2">
                             {{ __('site.Manger') }}:
                         </h3>
-                        <span class="text-black">{{ $seller->manger->name ?? __('site.NoMangerYet') }}</span>
+                        <span class="">{{ $seller->manger->name ?? __('site.NoMangerYet') }}</span>
                     </div>
                 </div>
             </div>

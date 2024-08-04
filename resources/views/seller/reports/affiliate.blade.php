@@ -207,7 +207,7 @@
                     <div class="flex items-center justify-between w-full">
                         <div class="flex flex-col gap-2">
                             <h3 class="text-xl font-bold">{{ __('site.Totalcommisoins') }}</h3>
-                            <span class="price text-black text-2xl font-bold">
+                            <span class="price  text-2xl font-bold">
                                 {{ $total_commission }} $
                             </span>
                             <p class=" text-sm font-bold capitalize">over {{ $leads }} leads</p>
@@ -224,7 +224,7 @@
                     <div class="flex items-center justify-between w-full">
                         <div class="flex flex-col gap-2">
                             <h3 class="text-xl font-bold">{{ __('site.Averagecommission') }}</h3>
-                            <span class="price text-black text-2xl font-bold">
+                            <span class="price  text-2xl font-bold">
                                 {{ $average_commission }} $
                             </span>
                             <p class=" text-sm font-bold capitalize">over {{ $leads }} leads</p>
@@ -240,7 +240,7 @@
                     <div class="flex items-center justify-between w-full">
                         <div class="flex flex-col gap-2">
                             <h3 class="text-xl font-bold">{{ __('site.Highestcommission') }}</h3>
-                            <span class="price text-black text-2xl font-bold">
+                            <span class="price  text-2xl font-bold">
                                 {{ $highest_commission->commission ?? 0 }} $
                             </span>
                             <p class=" text-sm font-bold capitalize">{{ $highest_commission->title ?? '' }}
@@ -265,13 +265,13 @@
                     <svg viewBox="0 0 36 36" class="circular-chart green">
                         <path class="circle-bg"
                             d="M18 2.0845
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
                         <!-- place the 60 in the stroke-dasharray with the persentage -->
                         <path class="circle" stroke-dasharray="{{ $confirmed_rate }}, 100"
                             d="M18 2.0845
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
                     </svg>
                 </div>
                 <div class="flex flex-col justify-center px-4 ">
@@ -286,8 +286,8 @@
 
             <div class="hightest_prod p-6 card_bg flex flex-col rounded-xl  drop-shadow-lg lg:col-span-3">
                 <div class="mb-4">
-                    <h3 class="text-md font-bold text-black capitalize">5 Hiest Selling Products</h3>
-                    <p class=" text-sm capitalize">Hiest Ranking Products</p>
+                    <h3 class="text-md font-bold  capitalize"> {{ __('site.HiestProducts') }}</h3>
+                    <p class=" text-sm capitalize">{{ __('site.HiestRanking') }}</p>
                 </div>
                 <div class="flex flex-col gap-2 overflow-x-auto h-[120px] ">
 
@@ -298,9 +298,9 @@
                                 <span class="mdi mdi-chart-line-stacked">
                                 </span>
                             </div>
-                            <h3 class="text-md font-bold text-black capitalize ">
+                            <h3 class="text-md font-bold  capitalize ">
                                 {{ $highestCommission['highest_commission']->title }}</h3>
-                            <span class="text-black text-md font-bold">{{ $highestCommission['amount'] }} $</span>
+                            <span class=" text-md font-bold">{{ $highestCommission['amount'] }} $</span>
                         </div>
                     @endforeach
 

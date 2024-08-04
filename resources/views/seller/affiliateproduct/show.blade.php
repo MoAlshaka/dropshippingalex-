@@ -7,7 +7,7 @@
 
 
 @section('css')
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/tailwindcss@^2.2/dist/tailwind.min.css" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -65,23 +65,23 @@
                 <div class="px-2">
                     <div class="py-6 px-2 flex flex-col lg:flex-row gap-2 lg:gap-12 lg:items-center">
                         <div class="flex items-center">
-                            <h3 class="text-md  lg:text-xl font-bold mr-1">
+                            <h3 class="text-md  lg:text-xl font-bold mb-0">
                                 {{ __('site.MinimumSellingPrice') }}:
                             </h3>
-                            <span class="text-green-600">{{ $product->minimum_selling_price }}$</span>
+                            <span class="text-green-600 ml-3 text-xl ">{{ $product->minimum_selling_price }}$</span>
                         </div>
                         <div class="flex items-center">
-                            <h3 class="text-md  lg:text-xl font-bold mr-1">
+                            <h3 class="text-md  lg:text-xl font-bold mb-0">
                                 {{ __('site.Commission') }}:
                             </h3>
-                            <span class="text-green-600">{{ $product->commission }}$</span>
+                            <span class="text-green-600 ml-3 text-xl">{{ $product->commission }}$</span>
                         </div>
                     </div>
                     <hr />
                     <div class="py-6 px-2">
                         <h3 class="text-md font-bold mb-4"> {{ __('site.Specifications') }}:</h3>
                         <div class="flex items-center">
-                            <h3 class="text-md  lg:text-xl font-bold mr-6 lg:mr-2">
+                            <h3 class="text-md  lg:text-xl font-bold mb-0 mr-6 lg:mr-2">
                                 {{ __('site.SKU') }}:
                             </h3>
                             <span class="text-white bg-violet-500 px-3 py-1 rounded hover:bg-violet-600"
@@ -91,16 +91,16 @@
                         </div>
                         <div class="flex flex-col gap-2 lg:items-start">
                             <div class="flex items-center">
-                                <h3 class="text-md  lg:text-xl font-bold mr-6 lg:mr-2">
+                                <h3 class="text-md  lg:text-xl font-bold mb-0 mr-6 lg:mr-2">
                                     {{ __('site.Brand') }}:
                                 </h3>
-                                <span class="text-black">{{ $product->brand }}</span>
+                                <span class="">{{ $product->brand }}</span>
                             </div>
                             <div class="flex items-center">
-                                <h3 class="text-md  lg:text-xl font-bold mr-6 lg:mr-2">
+                                <h3 class="text-md  lg:text-xl font-bold mb-0 mr-6 lg:mr-2">
                                     {{ __('site.Wieght') }}:
                                 </h3>
-                                <span class="text-black">{{ $product->weight }} KG</span>
+                                <span class="">{{ $product->weight }} KG</span>
                             </div>
                         </div>
                     </div>
@@ -108,7 +108,7 @@
                 </div>
             </div>
             <!-- But Table hre -->
-            <div class="col-span-8 card_bg drop-shadow rounded-md px-4 py-4">
+            <div class="col-span-8 card_bg drop-shadow rounded-md px-4 py-4 overflow-auto">
                 <table class="table">
                     <thead>
                         <tr class="text-nowrap">

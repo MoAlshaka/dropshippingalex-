@@ -96,8 +96,9 @@ class LeadController extends Controller
             foreach ($filteredData as $index  => $row) {
 
                 if ($row[7] !== $row[2]) {
-                    $errors['country'] = "Customer country must be = product warehouse at row " . $index + 1 . " cell 7";
+                    $errors['message'] = "Customer country must be = product warehouse at row " . ($index + 1) . " cell 7";
                 }
+
 
 
                 $SharedProduct = SharedProduct::where('sku', $row[10])->first();
@@ -105,12 +106,12 @@ class LeadController extends Controller
                 if ($SharedProduct) {
                     $price = $row[12] / $row[11];
                     if ($price < $SharedProduct->unit_cost) {
-                        $errors['message'] = "Unit price must be = product unit price bigger at row" .  " . $index + 1 . "  + 1 . "cell 12";
+                        $errors['message'] = "At least Unit price must be = product unit price or bigger at row" . $index + 1 . "cell 12";
                     }
                 } else {
                     $price = $row[12] / $row[11];
                     if ($price < $AffiliateProduct->minimum_selling_price) {
-                        $errors['message'] = "Unit price must be = product minimum_selling_price at row " . $index + 1 . " cell 12";
+                        $errors['message'] = "At least Unit price must be = product minimum_selling_price at row " . $index + 1 . " cell 12";
                     }
                 }
             }
@@ -122,7 +123,7 @@ class LeadController extends Controller
             if (!empty($errors)) {
                 $allErrors['data'] = [
                     'errors' => $errors,
-                    'lock' => ['row' => $index + 1, 'cell' => $errors[0] ?? '']
+                    //'lock' => ['row' => $index + 1, 'cell' => $errors[0] ?? '']
                 ];
             }
         }
@@ -234,26 +235,54 @@ class LeadController extends Controller
      */
     public function update(UpdateLeadRequest $request, string $id)
     {
+        $request->validate([
+
+            'warehouse' => 'required',
+            'customer_name' => 'required',
+            'customer_phone' => 'required|max:25',
+            'item_sku' => 'required',
+            'quantity' => 'required|numeric',
+            'total' => 'required|numeric',
+            'currency' => 'required',
+
+        ]);
         $lead = Lead::findorfail($id);
-        if ($request->order_date !== null) {
-            $order_date = $request->order_date;
+        $regular = SharedProduct::where('sku', $request->item_sku)->first();
+        $commission = AffiliateProduct::where('sku', $request->item_sku)->first();
+
+        if ($request->customer_country != $request->warehouse) {
+            return redirect()->back()->with(['Delete' => 'Customer country should equal warehouse']);
         }
+        if ($regular) {
+            $price = $request->total / $request->quantity;
+            if ($price < $regular->unit_cost) {
+                $errors['message'] = "At least Unit price must be = product unit price or bigger ";
+            }
+        } else {
+            $price = $request->total / $request->quantity;
+            if ($price < $commission->minimum_selling_price) {
+
+                return redirect()->back()->with(['Delete' => 'At least Unit price must be = product minimum_selling_price']);
+            }
+        }
+
         $lead->update([
-            'order_date' => $order_date ?? $lead->order_date,
-            'store_reference' => $request->store_reference,
-            'store_name' => $request->store_name,
+            'order_date' => $request->order_date ?? $lead->order_date,
+            'store_name' => $request->order_date ?? null,
             'warehouse' => $request->warehouse,
             'customer_name' => $request->customer_name,
-            'customer_email' => $request->customer_email,
             'customer_phone' => $request->customer_phone,
-            'customer_mobile' => $request->customer_mobile,
-            'customer_address' => $request->customer_address,
-            'customer_city' => $request->customer_city,
+            'customer_mobile' => $request->customer_mobile ?? null,
+            'customer_email' => $request->customer_email ?? null,
             'customer_country' => $request->customer_country,
+            'customer_city' => $request->customer_city ?? null,
+            'customer_address' => $request->customer_address ?? null,
             'item_sku' => $request->item_sku,
             'quantity' => $request->quantity,
             'total' => $request->total,
             'currency' => $request->currency,
+            'notes' => $request->notes ?? null,
+            'type' => $commission ? 'commission' : ($regular ? 'regular' : null),
 
         ]);
         return redirect()->route('leads.index')->with(['Update' => 'Lead updated successfully.']);

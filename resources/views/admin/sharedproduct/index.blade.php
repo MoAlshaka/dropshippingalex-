@@ -66,11 +66,11 @@
             <div class="col-md mb-4 mb-md-2">
 
                 <div class="accordion mt-3" id="accordionWithIcon">
-                    <div class="accordion-item">
+                    <div class="accordion-item p-3">
 
-                        <div class=" d-flex align-items-center">
+                        <div>
 
-                            <div class=" h-full flex flex-fill gap-6">
+                            <div class="flex flex-col lg:flex-row gap-3">
                                 <a class="hover:border-b-4 hover:border-purple-700 flex gap-2 items-center justify-center"
                                     href="{{ route('shared-products.index') }}">
                                     <i class="mdi mdi-select-all"></i>
@@ -88,15 +88,15 @@
                                 </a>
 
 
+                                <button type="button" class="accordion-button collapsed m-auto" data-bs-toggle="collapse"
+                                    data-bs-target="#accordionWithIcon-1" aria-expanded="false">
+                                </button>
                             </div>
-                            <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse"
-                                data-bs-target="#accordionWithIcon-1" aria-expanded="false">
-                            </button>
                         </div>
 
                         <div id="accordionWithIcon-1" class="accordion-collapse collapse" style="">
                             <div class="accordion-body">
-                                <form id="formAuthentication" class="mb-3 row"
+                                <form id="formAuthentication" class="flex flex-col lg:flex-row gap-3"
                                     action="{{ route('admin.search.shared.product') }}" method="post">
                                     @csrf
                                     <div class="form-floating form-floating-outline mb-3 col ">
@@ -182,8 +182,8 @@
                                 <div class="d-flex gap-2 my-2" style="grid-row-gap: 0.3rem; grid-column-gap: 0.3rem">
                                     @foreach ($product->sharedcountries as $country)
                                         <span class="rounded-md font-bold text-sm">
-                                            <img src="{{ asset('assets/countries/flags/' . $country->flag) }}" width="20"
-                                                height="20">
+                                            <img src="{{ asset('assets/countries/flags/' . $country->flag) }}" width="60"
+                                                height="60">
                                         </span>
                                     @endforeach
                                 </div>

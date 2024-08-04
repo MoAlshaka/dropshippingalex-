@@ -292,6 +292,25 @@ return [
     'Wieght' => 'Wieght',
     'NoMangerYet' => 'No Manger Yet',
     'SelectStatus' => 'Select status',
+    'LeadInformation' => 'Lead Information',
+    'ID' => 'ID',
+    'HiestProducts' => '5 Hiest Selling Products',
+    'HiestRanking' => 'Hiest Ranking Products',
+    'AmoutOfMoney' => 'An amount of money has been transferred to the account',
+    'Is' => 'is',
+    'StatusIs' => 'status is',
+    'Permissions' => 'Permissions',
+    'SelectAll' => 'Select All',
+    'Whoops!' => 'Whoops!',
+    'SomethingWentWrong' => 'Something went wrong',
+    'ShowRole' => 'Show Role',
+    'TopProducts' => 'Top Products',
+    'BestSellingProducts' => 'Your best-selling products',
+    'NoAgent' => 'No Agent yet',
+    'ContactManager' => 'Hello, If you need a professional account manager , Contact us now',
+    'QuestionsManager' => 'Hello, I am your professional account manager, Contact me now if you have any questions',
+
+
 
 
 

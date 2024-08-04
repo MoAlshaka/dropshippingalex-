@@ -1,11 +1,7 @@
 <!DOCTYPE html>
-<html
-    lang="en"
-    class="light-style layout-navbar-fixed layout-menu-fixed layout-compact"
-    dir="{{ LaravelLocalization::getCurrentLocaleDirection() }}"
-    data-theme="theme-default"
-    data-assets-path="{{asset('assets').'/'}}"
-    data-template="vertical-menu-template">
+<html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact"
+    dir="{{ LaravelLocalization::getCurrentLocaleDirection() }}" data-theme="theme-default"
+    data-assets-path="{{ asset('assets') . '/' }}" data-template="vertical-menu-template">
 
 <head>
     <meta charset="utf-8" />
@@ -115,13 +111,13 @@
                     <div class="card-body mt-2">
                         <h4 class="mb-2"> {{ __('site.Notification') }} ✉️</h4>
                         <div class="d-flex flex-column flex-grow-1 overflow-hidden w-px-200">
-                            <h6 class="mb-1 text-truncate">Transaction </h6>
-                            <p class="text-body">An amount of money has been
-                                transferred to the account {{ $notification->data->account_number }}
-                                is
+                            <h6 class="mb-1 text-truncate"> {{ __('site.Transaction') }} </h6>
+                            <p class="text-body"> {{ __('site.AmoutOfMoney') }}
+                                {{ $notification->data->account_number }}
+                                {{ __('site.Is') }}
                                 {{ $notification->data->amount }} via
                                 {{ $notification->data->payment_method }} its
-                                status is {{ $notification->data->status }}</p>
+                                {{ __('site.StatusIs') }} {{ $notification->data->status }}</p>
                         </div>
                         <div class="flex-shrink-0 dropdown-notifications-actions">
                             <small class="text-muted">{{ $notification->created_at }}</small>

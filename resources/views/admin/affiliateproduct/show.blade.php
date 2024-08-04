@@ -77,13 +77,13 @@
                                 <h3 class="text-md  lg:text-xl font-bold mr-6 lg:mr-2">
                                     {{ __('site.Brand') }}:
                                 </h3>
-                                <span class="text-black">{{ $product->brand }}</span>
+                                <span class="">{{ $product->brand }}</span>
                             </div>
                             <div class="flex items-center">
                                 <h3 class="text-md  lg:text-xl font-bold mr-6 lg:mr-2">
                                     {{ __('site.Weight') }}:
                                 </h3>
-                                <span class="text-black">{{ $product->weight }} KG</span>
+                                <span class="">{{ $product->weight }} KG</span>
                             </div>
                         </div>
                     </div>
@@ -106,8 +106,8 @@
                         @foreach ($product->affiliatecountries as $country)
                             <tr>
 
-                                <td><img src="{{ asset('assets/countries/flags/' . $country->flag) }}" width="20"
-                                        height="20"></td>
+                                <td><img src="{{ asset('assets/countries/flags/' . $country->flag) }}" width="50"
+                                        height="50"></td>
                                 <td>${{ $product->minimum_selling_price }}</td>
                                 <td>${{ $product->commission }}</td>
 

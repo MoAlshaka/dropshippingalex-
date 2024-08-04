@@ -291,5 +291,23 @@ return [
     'Wieght' => 'الوزن',
     'NoMangerYet' => 'لا يوجد مدير حتى الآن',
     'SelectStatus' => 'اختر الحالة',
+    'LeadInformation' => 'معلومات العميل المحتمل',
+    'ID' => 'مسلسل',
+    'HiestProducts' => 'أعلى 5 منتجات مبيعاً',
+    'HiestRanking' => 'أعلى المنتجات تصنيفاً',
+    'AmoutOfMoney' => 'تم تحويل مبلغ من المال إلى الحساب',
+    'Is' => 'هو',
+    'StatusIs' => 'الحالة هي',
+    'Permissions' => 'أذونات',
+    'SelectAll' => 'تحديد الكل',
+    'Whoops!' => 'عذراً!',
+    'SomethingWentWrong' => 'حدث خطأ ما',
+    'ShowRole' => 'عرض الدور',
+    'TopProducts' => 'أفضل المنتجات',
+    'BestSellingProducts' => 'أفضل المنتجات مبيعاً',
+    'NoAgent' => 'لا يوجد وكيل حتى الآن',
+    'ContactManager' => 'مرحبًا، إذا كنت بحاجة إلى مدير حساب محترف، اتصل بنا الآن',
+    'QuestionsManager' => 'مرحبًا، أنا مدير حسابك المحترف، اتصل بي الآن إذا كان لديك أي أسئلة',
+
 
 ];

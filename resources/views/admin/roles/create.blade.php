@@ -8,10 +8,11 @@
         <!-- Bootstrap Validation -->
         <div class="col-md">
             <div class="card">
-                <h5 class="card-header">Add Role</h5>
+                <h5 class="card-header">{{ __('site.CreateRole') }}</h5>
                 @if (count($errors) > 0)
                     <div class="alert alert-danger">
-                        <strong>Whoops!</strong> Something went wrong.<br><br>
+                        <strong> {{ __('site.Whoops!') }} </strong>
+                        {{ __('site.SomethingWentWrong') }}<br><br>
                         <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
@@ -25,17 +26,17 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
-                                <strong>Name:</strong>
+                                <strong>{{ __('site.Name') }}:</strong>
                                 {!! Form::text('name', null, ['placeholder' => 'Name', 'class' => 'form-control']) !!}
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
-                                <strong>Permission:</strong>
+                                <strong>{{ __('site.Permissions') }}:</strong>
                                 <br />
                                 <label>
                                     {{ Form::checkbox('select_all', null, false, ['class' => 'select-all']) }}
-                                    Select All
+                                    {{ __('site.SelectAll') }}
                                 </label>
                                 <br />
                                 @foreach ($permission as $value)
@@ -46,7 +47,7 @@
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">{{ __('site.Add') }}</button>
                         </div>
                     </div>
                     {!! Form::close() !!}

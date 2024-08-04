@@ -53,7 +53,7 @@
         }
 
         .rank_icon {
-            z-index: 9999 !important;
+            z-index: 99 !important;
             position: relative;
         }
 
