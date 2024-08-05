@@ -13,7 +13,7 @@ document.querySelector('[type="submit"]').addEventListener('click', (event) => {
     formData.append('title', document.querySelector('[name="title"]').value);
     formData.append('sku', document.querySelector('[name="sku"]').value);
     formData.append('brand', document.querySelector('[name="brand"]').value);
-    formData.append('description', document.querySelector('.note-editor .note-editing-area').innerHTML);
+    formData.append('description', document.querySelector('div.note-editable').innerHTML);
     formData.append('unit_cost', document.querySelector('[name="unit_cost"]').value);
     formData.append('recommended_price', document.querySelector('[name="recommended_price"]').value);
     formData.append('weight', document.querySelector('[name="weight"]').value);

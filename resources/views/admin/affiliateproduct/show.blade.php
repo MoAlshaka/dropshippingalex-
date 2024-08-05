@@ -39,13 +39,13 @@
 
                 </div>
             </div>
-            <div class="product-disc col-span-8 lg:col-span-5 card_bg rounded-md drop-shadow">
+            {{-- <div class="product-disc col-span-8 lg:col-span-5 card_bg rounded-md drop-shadow">
                 <div class="py-8 px-4">
                     <h3 class="text-2xl font-bold">{{ $product->title }}</h3>
                 </div>
                 <hr />
                 <div class="px-2">
-                    <div class="py-6 px-2 flex flex-col lg:flex-row gap-2 lg:gap-12 lg:items-center">
+                    <div class="py-6 px-2 flex flex-col lg:flex-row gap-2 lg:gap-12 lg:items-center ">
                         <div class="flex items-center">
                             <h3 class="text-md  lg:text-xl font-bold mr-1">
                                 {{ __('site.minimumsellingprice') }}:
@@ -62,6 +62,58 @@
                     <hr />
                     <div class="py-6 px-2">
                         <h3 class="text-md font-bold mb-4">{{ __('site.Specifications') }}:</h3>
+                        <div class="flex flex-col gap-2 lg:items-start">
+                            <div class="flex items-center">
+                                <h3 class="text-md  lg:text-xl font-bold mr-6 lg:mr-2">
+                                    {{ __('site.SKU') }}:
+                                </h3>
+                                <span class="text-white bg-violet-500 px-3 py-1 rounded hover:bg-violet-600"
+                                    id="sku">{{ $product->sku }}
+                                    <i class="mdi mdi-content-copy ml-2 cursor-pointer text-white text-xl "
+                                        id="copySku"></i>
+                                </span>
+                            </div>
+                            <div class="flex items-center">
+                                <h3 class="text-md  lg:text-xl font-bold mr-6 lg:mr-2">
+                                    {{ __('site.Brand') }}:
+                                </h3>
+                                <span class="">{{ $product->brand }}</span>
+                            </div>
+                            <div class="flex items-center">
+                                <h3 class="text-md  lg:text-xl font-bold mr-6 lg:mr-2">
+                                    {{ __('site.Weight') }}:
+                                </h3>
+                                <span class="">{{ $product->weight }} KG</span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                </div>
+            </div> --}}
+
+            <div class="product-disc col-span-8 lg:col-span-5 card_bg rounded-md drop-shadow">
+                <div class="py-8 px-4">
+                    <h3 class="text-2xl font-bold">{{ $product->title }}</h3>
+                </div>
+                <hr />
+                <div class="px-2">
+                    <div class="py-6 px-2 flex flex-col lg:flex-row gap-2 lg:gap-12 lg:items-center">
+                        <div class="flex items-center">
+                            <h3 class="text-md  lg:text-xl font-bold mr-1">
+                                {{ __('site.minimumsellingprice') }}:
+                            </h3>
+                            <span class="text-green-600 text-xl">{{ $product->minimum_selling_price }}$</span>
+                        </div>
+                        <div class="flex items-center">
+                            <h3 class="text-md  lg:text-xl font-bold mr-1">
+                                {{ __('site.Commission') }}:
+                            </h3>
+                            <span class="text-green-600 text-xl">{{ $product->commission }}$</span>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="py-6 px-2">
+                        <h3 class="text-md font-bold mb-4"> {{ __('site.Specifications') }}:</h3>
                         <div class="flex flex-col gap-2 lg:items-start">
                             <div class="flex items-center">
                                 <h3 class="text-md  lg:text-xl font-bold mr-6 lg:mr-2">

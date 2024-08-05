@@ -141,13 +141,7 @@
                                     </div>
 
                                     <div>
-                                        <div class="col-md-6 mb-4">
-                                            <div class="form-floating form-floating-outline">
-                                                <input class="form-control" type="number" name="calls" id="calls"
-                                                    value="{{ $order->calls }}">
-                                                <label for="calls">{{ __('site.Calls') }}</label>
-                                            </div>
-                                        </div>
+
                                         <button type="submit" class="btn btn-primary">{{ __('site.Update') }}</button>
                                     </div>
                                 </form>

@@ -217,7 +217,7 @@
                                             <a class="  text-primary hover:bg-success hover:text-white"
                                                 href="{{ route('admin.lead.show', $lead->id) }}">
                                                 <button type="button" class="btn btn-icon btn-info waves-effect waves-light">
-                                                    <span class="tf-icons mdi mdi-information-outline"></span>
+                                                    <span class="tf-icons mdi mdi-eye-outline"></span>
 
                                                 </button>
                                             </a>
@@ -227,7 +227,7 @@
                                                 href="{{ route('admin.leads.edit', $lead->id) }}">
                                                 <button type="button"
                                                     class="btn btn-icon btn-primary waves-effect waves-light">
-                                                    <span class="tf-icons mdi mdi-tag-edit-outline"></span>
+                                                    <span class="tf-icons mdi mdi-tools"></span>
 
                                                 </button>
                                             </a>

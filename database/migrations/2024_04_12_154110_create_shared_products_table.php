@@ -18,9 +18,9 @@ return new class extends Migration
             $table->longText('description');
             $table->string('image');
             $table->string('brand');
-            $table->double('weight')->default(0);
-            $table->double('unit_cost')->default(0);
-            $table->double('recommended_price')->default(0);
+            $table->decimal('weight', 10, 2)->default(0);
+            $table->decimal('unit_cost', 10, 2)->default(0);
+            $table->decimal('recommended_price', 10, 2)->default(0);
             $table->foreignId('category_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('admin_id')->constrained('admins');
             $table->timestamps();

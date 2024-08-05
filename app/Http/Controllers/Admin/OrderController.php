@@ -30,6 +30,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::orderBy('id', 'DESC')->paginate(COUNT);
+
         $countries = Country::all();
         $types = Lead::distinct()->pluck('type');
         $shipment_status = Order::distinct()->pluck('shipment_status');
@@ -97,7 +98,7 @@ class OrderController extends Controller
             'shipment_status' => $request->shipment_status,
             'payment_status' => $request->payment_status,
             'payment_type' => $request->payment_type,
-            'calls' => $request->calls,
+
         ]);
 
 

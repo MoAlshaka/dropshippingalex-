@@ -216,8 +216,8 @@
                                 <div class="d-flex gap-2 my-2" style="grid-row-gap: 0.3rem; grid-column-gap: 0.3rem">
                                     @foreach ($product->affiliatecountries as $country)
                                         <span class="rounded-md font-bold text-sm">
-                                            <img src="{{ asset('assets/countries/flags/' . $country->flag) }}" width="50"
-                                                height="50">
+                                            <img src="{{ asset('assets/countries/flags/' . $country->flag) }}" width="35"
+                                                height="35">
                                         </span>
                                     @endforeach
                                 </div>

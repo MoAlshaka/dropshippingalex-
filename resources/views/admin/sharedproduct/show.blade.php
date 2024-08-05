@@ -49,13 +49,13 @@
                             <h3 class="text-md  lg:text-xl font-bold mr-1">
                                 {{ __('site.RecommendedPrice') }}:
                             </h3>
-                            <span class="text-green-600">{{ $product->recommended_price }}$</span>
+                            <span class="text-green-600 text-xl">{{ $product->recommended_price }}$</span>
                         </div>
                         <div class="flex items-center">
                             <h3 class="text-md  lg:text-xl font-bold mr-1">
                                 {{ __('site.UnitCost') }}:
                             </h3>
-                            <span class="text-green-600">{{ $product->unit_cost }}$</span>
+                            <span class="text-green-600 text-xl">{{ $product->unit_cost }}$</span>
                         </div>
                     </div>
                     <hr />

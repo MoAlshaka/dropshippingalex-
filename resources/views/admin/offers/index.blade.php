@@ -83,7 +83,7 @@
                                                 href="{{ route('offers.edit', $offer->id) }}">
                                                 <button type="button"
                                                     class="btn btn-icon btn-primary waves-effect waves-light">
-                                                    <span class="tf-icons mdi mdi-tag-edit-outline"></span>
+                                                    <span class="tf-icons mdi mdi-tools"></span>
 
                                                 </button>
                                             </a>

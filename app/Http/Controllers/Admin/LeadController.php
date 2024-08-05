@@ -39,7 +39,8 @@ class LeadController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'status' => 'required'
+            'status' => 'required',
+            'notes' => 'nullable|string|max:65000'
         ]);
         $lead = Lead::findorfail($id);
         $flag = $lead->update([

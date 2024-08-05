@@ -27,6 +27,7 @@ class Lead extends Model
         'status',
         'type',
         'seller_id',
+        'notes',
     ];
 
     public function seller()
@@ -34,7 +35,16 @@ class Lead extends Model
         return $this->belongsTo(Seller::class);
     }
 
-    public function order(){
+    public function order()
+    {
         return $this->hasOne(Order::class);
+    }
+    public function sharedproduct()
+    {
+        return $this->belongsTo(SharedProduct::class, 'item_sku');
+    }
+    public function affiliateproduct()
+    {
+        return $this->belongsTo(AffiliateProduct::class, 'item_sku');
     }
 }

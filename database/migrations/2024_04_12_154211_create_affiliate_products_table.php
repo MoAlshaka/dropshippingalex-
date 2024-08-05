@@ -18,9 +18,9 @@ return new class extends Migration
             $table->longText('description');
             $table->string('image');
             $table->string('brand');
-            $table->double('weight')->default(0);
-            $table->double('minimum_selling_price')->default(0);
-            $table->double('commission')->default(0);
+            $table->decimal('weight', 10, 2)->default(0);
+            $table->decimal('minimum_selling_price', 10, 2)->default(0);
+            $table->decimal('commission', 10, 2)->default(0);
             $table->string('type');
             $table->foreignId('category_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('admin_id')->constrained('admins');

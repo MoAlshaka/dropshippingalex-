@@ -25,7 +25,6 @@ class ProfileController extends Controller
             'first_name' => 'required|max:50',
             'last_name' => 'required|max:50',
             'email' => 'required|email|max:50',
-            'address' => 'required|max:250',
             'phone' => 'required|max:50',
             'image' => 'nullable|mimes:png,jpg,jpeg|max:2048',
 
@@ -52,7 +51,7 @@ class ProfileController extends Controller
             'last_name' => $request->last_name,
             'email' => $request->email,
             'phone' => str_replace(' ', '', $request->phone),
-            'address' => $request->address,
+            'address' => $request->address ?? null,
             'image' => $image_name ?? $old_image,
 
         ]);
@@ -95,13 +94,12 @@ class ProfileController extends Controller
         $seller = Seller::findOrFail($id);
         if ($request->payment_method === 'vodafone') {
             $request->validate([
-                'account' => 'required|max:50',
-
+                'account' => 'required|regex:/^[0-9]{1,11}$/', // Ensure account is 1 to 11 digits long
             ]);
+
             $seller->update([
                 'payment_method' => $request->payment_method,
                 'account' => $request->account,
-
             ]);
         } else {
             $request->validate([

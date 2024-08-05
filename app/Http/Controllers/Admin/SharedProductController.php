@@ -26,7 +26,7 @@ class SharedProductController extends Controller
      */
     public function index()
     {
-        $offer = Offer::where('end_date', '>', now())->where('start_date', '=<', now())->orderBy('id', 'DESC')->get();
+        $offer = Offer::where('end_date', '>', now())->where('start_date', '<=', now())->orderBy('id', 'DESC')->get();
 
         $countries = Country::all();
         $categories = Category::all();
@@ -46,9 +46,9 @@ class SharedProductController extends Controller
             'brand' => 'required|max:100',
             'image' => 'required|mimes:png,jpg',
             'description' => 'required|max:830938',
-            'unit_cost' => 'required|numeric',
-            'recommended_price' => 'required|numeric',
-            'weight' => 'required|numeric',
+            'unit_cost' => 'required|numeric|max:99999999.99',
+            'recommended_price' => 'required|numeric|max:99999999.99',
+            'weight' => 'required|numeric|max:99999999.99',
             'category_id' => 'required',
             'country' => [
                 'required',
@@ -155,9 +155,9 @@ class SharedProductController extends Controller
             'brand' => 'required|max:100',
             'image' => 'nullable|mimes:png,jpg',
             'description' => 'required|max:830938',
-            'unit_cost' => 'required|numeric',
-            'recommended_price' => 'required|numeric',
-            'weight' => 'required|numeric',
+            'unit_cost' => 'required|numeric|max:99999999.99',
+            'recommended_price' => 'required|numeric|max:99999999.99',
+            'weight' => 'required|numeric|max:99999999.99',
             'category_id' => 'required',
             'country' => [
                 'required',

@@ -33,7 +33,7 @@ class TransactionController extends Controller
             'seller_id' => 'required|exists:sellers,id',
             'payment_method' => 'required|exists:sellers,payment_method',
             'account' => 'required|exists:sellers,account',
-            'amount' => 'required|numeric',
+            'amount' => 'required|numeric|max:99999999.99',
             'status' => 'required|max:50',
         ]);
 
