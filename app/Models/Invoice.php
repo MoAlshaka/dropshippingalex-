@@ -15,6 +15,7 @@ class Invoice extends Model
         'updated_by',
         'status',
 
+
     ];
 
 
@@ -27,5 +28,9 @@ class Invoice extends Model
     public function seller()
     {
         return $this->belongsTo(Seller::class);
+    }
+    public function transaction()
+    {
+        return $this->belongsTo(Transaction::class);
     }
 }

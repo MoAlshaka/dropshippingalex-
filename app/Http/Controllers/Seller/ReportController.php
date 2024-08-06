@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use App\Models\Lead;
 use App\Models\Order;
 use App\Models\Country;
+use App\Models\Invoice;
+use App\Models\Revenue;
 use Illuminate\Http\Request;
 use App\Models\SharedProduct;
 use App\Models\AffiliateProduct;
@@ -33,7 +35,9 @@ class ReportController extends Controller
         $under_process = Order::where('seller_id', auth()->guard('seller')->user()->id)->where('shipment_status', 'pending')->count();
         $confirmed = Lead::where('seller_id', auth()->guard('seller')->user()->id)->where('status', 'confirmed')->count();
         $canceled = Order::where('seller_id', auth()->guard('seller')->user()->id)->where('shipment_status', 'canceled')->count();
-        $balance = Order::where('seller_id', auth()->guard('seller')->user()->id)->where('shipment_status', 'balance')->count();
+        $revenue_confirmed  = Revenue::where('seller_id', auth()->guard('seller')->id())->sum('revenue');
+        $invoice_balance = Invoice::where('seller_id', auth()->guard('seller')->id())->sum('revenue');
+        $balance = $invoice_balance + $revenue_confirmed;
         $shipped = Order::where('seller_id', auth()->guard('seller')->user()->id)->where('shipment_status', 'shipping')->count();
         $delivered = Order::where('seller_id', auth()->guard('seller')->user()->id)->where('shipment_status', 'delivered')->count();
         $returned = Order::where('seller_id', auth()->guard('seller')->user()->id)->where('shipment_status', 'returned')->count();
@@ -59,9 +63,9 @@ class ReportController extends Controller
         $canceled = Order::where('seller_id', auth()->guard('seller')->user()->id)->whereHas('lead', function ($query) use ($country) {
             $query->where('warehouse', $country->name);
         })->where('shipment_status', 'canceled')->count();
-        $balance = Order::where('seller_id', auth()->guard('seller')->user()->id)->whereHas('lead', function ($query) use ($country) {
-            $query->where('warehouse', $country->name);
-        })->where('shipment_status', 'balance')->count();
+        $revenue_confirmed  = Revenue::where('seller_id', auth()->guard('seller')->id())->sum('revenue');
+        $invoice_balance = Invoice::where('seller_id', auth()->guard('seller')->id())->sum('revenue');
+        $balance = $invoice_balance + $revenue_confirmed;
         $shipped = Order::where('seller_id', auth()->guard('seller')->user()->id)->whereHas('lead', function ($query) use ($country) {
             $query->where('warehouse', $country->name);
         })->where('shipment_status', 'shipping')->count();
@@ -122,9 +126,9 @@ class ReportController extends Controller
                         ->whereBetween('created_at', [$start_date, $end_date])
                         ->count();
 
-                    $balance = Order::where('seller_id', auth()->guard('seller')->user()->id)->where('shipment_status', 'balance')
-                        ->whereBetween('created_at', [$start_date, $end_date])
-                        ->count();
+                    $revenue_confirmed  = Revenue::where('seller_id', auth()->guard('seller')->id())->sum('revenue');
+                    $invoice_balance = Invoice::where('seller_id', auth()->guard('seller')->id())->sum('revenue');
+                    $balance = $invoice_balance + $revenue_confirmed;
 
                     $shipped = Order::where('seller_id', auth()->guard('seller')->user()->id)->where('shipment_status', 'shipping')
                         ->whereBetween('created_at', [$start_date, $end_date])
@@ -152,10 +156,9 @@ class ReportController extends Controller
                         ->whereHas('lead', function ($query) use ($country) {
                             $query->where('warehouse', $country->name);
                         })->where('shipment_status', 'canceled')->count();
-                    $balance = Order::where('seller_id', auth()->guard('seller')->user()->id)->whereBetween('created_at', [$start_date, $end_date])
-                        ->whereHas('lead', function ($query) use ($country) {
-                            $query->where('warehouse', $country->name);
-                        })->where('shipment_status', 'balance')->count();
+                    $revenue_confirmed  = Revenue::where('seller_id', auth()->guard('seller')->id())->sum('revenue');
+                    $invoice_balance = Invoice::where('seller_id', auth()->guard('seller')->id())->sum('revenue');
+                    $balance = $invoice_balance + $revenue_confirmed;
                     $shipped = Order::where('seller_id', auth()->guard('seller')->user()->id)->whereBetween('created_at', [$start_date, $end_date])
                         ->whereHas('lead', function ($query) use ($country) {
                             $query->where('warehouse', $country->name);
@@ -314,7 +317,6 @@ class ReportController extends Controller
             // Retrieve order counts by status
             $confirmed = Lead::whereIn('id', $leadIds)->where('status', 'confirmed')->count();
             $cancelled = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'canceled')->count();
-            $balance = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'balance')->count();
             $shipped = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'shipping')->count();
             $delivered = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'delivered')->count();
             $returned = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'returned')->count();
@@ -330,7 +332,7 @@ class ReportController extends Controller
                 'leads' => $leadsCount,
                 'confirmed' => $confirmed,
                 'cancelled' => $cancelled,
-                'balance' => $balance,
+
                 'shipped' => $shipped,
                 'delivered' => $delivered,
                 'returned' => $returned,
@@ -356,7 +358,6 @@ class ReportController extends Controller
             // Retrieve order counts by status
             $confirmed = Lead::whereIn('id', $leadIds)->where('status', 'confirmed')->count();
             $cancelled = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'canceled')->count();
-            $balance = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'balance')->count();
             $shipped = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'shipping')->count();
             $delivered = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'delivered')->count();
             $returned = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'returned')->count();
@@ -372,7 +373,7 @@ class ReportController extends Controller
                 'leads' => $leadsCount,
                 'confirmed' => $confirmed,
                 'cancelled' => $cancelled,
-                'balance' => $balance,
+
                 'shipped' => $shipped,
                 'delivered' => $delivered,
                 'returned' => $returned,
@@ -426,7 +427,6 @@ class ReportController extends Controller
             // Retrieve order counts by status
             $confirmed = Lead::whereIn('id', $leadIds)->where('status', 'confirmed')->count();
             $cancelled = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'canceled')->count();
-            $balance = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'balance')->count();
             $shipped = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'shipping')->count();
             $delivered = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'delivered')->count();
             $returned = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'returned')->count();
@@ -442,7 +442,6 @@ class ReportController extends Controller
                 'leads' => $leadsCount,
                 'confirmed' => $confirmed,
                 'cancelled' => $cancelled,
-                'balance' => $balance,
                 'shipped' => $shipped,
                 'delivered' => $delivered,
                 'returned' => $returned,
@@ -468,7 +467,6 @@ class ReportController extends Controller
             // Retrieve order counts by status
             $confirmed = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'approved')->count();
             $cancelled = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'canceled')->count();
-            $balance = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'balance')->count();
             $shipped = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'shipping')->count();
             $delivered = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'delivered')->count();
             $returned = Order::whereIn('lead_id', $leadIds)->where('shipment_status', 'returned')->count();
@@ -484,7 +482,6 @@ class ReportController extends Controller
                 'leads' => $leadsCount,
                 'confirmed' => $confirmed,
                 'cancelled' => $cancelled,
-                'balance' => $balance,
                 'shipped' => $shipped,
                 'delivered' => $delivered,
                 'returned' => $returned,

@@ -41,10 +41,10 @@ class Lead extends Model
     }
     public function sharedproduct()
     {
-        return $this->belongsTo(SharedProduct::class, 'item_sku');
+        return $this->belongsTo(SharedProduct::class, 'item_sku', 'sku');
     }
     public function affiliateproduct()
     {
-        return $this->belongsTo(AffiliateProduct::class, 'item_sku');
+        return $this->belongsTo(AffiliateProduct::class, 'item_sku', 'sku');
     }
 }

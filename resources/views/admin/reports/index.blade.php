@@ -154,8 +154,8 @@
                             </div>
                             <button type="submit" class="btn btn-primary waves-effect waves-light">
                                 {{ __('site.Filter') }}</button>
-                            <button type="reset" class="btn btn-outline-danger waves-effect">
-                                {{ __('site.Reset') }}</button>
+                            <a href="{{ route('admin.reports.index') }}" class="btn btn-outline-danger waves-effect">
+                                {{ __('site.Back') }}</a>
                         </form>
                     </div>
                 </div>
@@ -330,13 +330,13 @@
                     <svg viewBox="0 0 36 36" class="circular-chart orange">
                         <path class="circle-bg"
                             d="M18 2.0845
-                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 -31.831" />
                         <!-- place the 60 in the stroke-dasharray with the persentage -->
                         <path class="circle" stroke-dasharray="{{ $delivered_rate }}, 100"
                             d="M18 2.0845
-                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 -31.831" />
                     </svg>
                 </div>
                 <div class="flex flex-col justify-center px-4 ">
@@ -357,13 +357,13 @@
                     <svg viewBox="0 0 36 36" class="circular-chart green">
                         <path class="circle-bg"
                             d="M18 2.0845
-                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 -31.831" />
                         <!-- place the 60 in the stroke-dasharray with the persentage -->
                         <path class="circle" stroke-dasharray="{{ $confirmed_rate }}, 100"
                             d="M18 2.0845
-                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                                                                                        a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 -31.831" />
                     </svg>
                 </div>
                 <div class="flex flex-col justify-center px-4 ">

@@ -27,4 +27,8 @@ class Transaction extends Model
     {
         return $this->belongsTo(Seller::class);
     }
+    public function invoice()
+    {
+        return $this->hasOne(Invoice::class);
+    }
 }

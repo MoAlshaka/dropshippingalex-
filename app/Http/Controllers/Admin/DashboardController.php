@@ -39,6 +39,7 @@ class DashboardController extends Controller
 
 
         $leads = Lead::count();
+        // dd($leads);
         $approvedLeadsCount = Lead::where('status', 'confirmed')->count();
         $deliveredLeadsCount = Order::where('shipment_status', 'delivered')->count();
         $pendingLeadsCount = Lead::where('status', 'pending')->count();

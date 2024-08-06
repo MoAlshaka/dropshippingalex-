@@ -84,7 +84,7 @@
                 <button class="btn btn-outline-primary waves-effect waves-light" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                     <span class="tf-icons mdi mdi-filter-check-outline me-1"></span>
-                    Filter
+                    {{ __('site.Filter') }}
                 </button>
                 {{--                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button> --}}
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
@@ -106,7 +106,8 @@
                             </div>
                             <button type="submit"
                                 class="btn btn-primary waves-effect waves-light">{{ __('site.Filter') }}</button>
-                            <button type="reset" class="btn btn-outline-danger waves-effect">reset</button>
+                            <a href="{{ route('seller.dashboard') }}"
+                                class="btn btn-outline-danger waves-effect">{{ __('site.Back') }}</a>
                         </form>
                     </div>
                 </div>
@@ -138,7 +139,7 @@
                         </h2>
                         <div class="flex justify-between items-center">
                             <div class="bg-green-700 rounded-full text-white px-4 py-2 flex justify-center items-center">
-                                <span class="mdi mdi-currency-usd mdi-20px">
+                                <span class=" mdi mdi-source-fork mdi-20px">
 
                                 </span>
                             </div>
@@ -153,7 +154,7 @@
                         </h2>
                         <div class="flex justify-between items-center">
                             <div class="bg-yellow-300 rounded-full text-white px-4 py-2 flex justify-center items-center">
-                                <span class="mdi mdi-bus-school mdi-20px">
+                                <span class=" mdi mdi-phone-outline">
 
                                 </span>
                             </div>
@@ -168,7 +169,7 @@
                         </h2>
                         <div class="flex justify-between items-center">
                             <div class="bg-red-500 rounded-full text-white px-4 py-2 flex justify-center items-center">
-                                <span class="mdi mdi-phone-outline"></span>
+                                <span class="mdi mdi-bus-school mdi-20px"></span>
                             </div>
                             <span class=" text-xl line-clamp-1 font-bold">{{ $deliveredLeadsCount }}</span>
                         </div>
@@ -181,7 +182,7 @@
                         </h2>
                         <div class="flex justify-between items-center">
                             <div class="bg-purple-700 rounded-full text-white px-4 py-2 flex justify-center items-center">
-                                <span class="mdi mdi-source-fork mdi-20px">
+                                <span class="mdi mdi-currency-usd mdi-20px">
 
                                 </span>
                             </div>
@@ -428,9 +429,10 @@
                                 <span class="mt-1 mb-3 badge badge-advanced">
                                     GCC Market
                                 </span>
-                                <div class="text-center tx-14 mb-3">Hello, I am your professional account manager, Contact
-                                    me now if you have any questions {{ __('site.QuestionsManager') }}<span
-                                        class="text-primary">{{ auth()->user()->manger->email }}</span>
+                                <div class="text-center tx-14 mb-3"> {{ __('site.QuestionsManager') }}<a target="_blank"
+                                        href="https://wa.me/+2{{ auth()->user()->manger->phone ?? '' }}"> <span
+                                            class="mdi mdi-whatsapp text-success">
+                                        </span></a>
 
                                 </div>
                             </div>
@@ -444,7 +446,7 @@
                         <div class="card-body">
                             <div class="picture avatar-lg online text-center p-2 m-auto">
                                 <img alt="avatar" class="rounded-circle"
-                                    src="https://app.codpartner.com/assets/img/pngs/manager-women.png">
+                                    src="{{ asset('assets/svg/customer-service.svg') }}">
                             </div>
                             <!--[if ENDBLOCK]><![endif]-->
                             <div class="text-center mt-3">
@@ -453,8 +455,12 @@
                                 <span class="mt-1 mb-3 badge badge-advanced">
                                     GCC Market
                                 </span>
-                                <div class="text-center tx-14 mb-3"> {{ __('site.ContactManager') }}<span
-                                        class="text-primary">{{ $admin->email ?? '' }}</span>
+                                <div class="text-center tx-14 mb-3">
+                                    {{ __('site.ContactManager') }}
+
+                                    <a target="_blank" href="https://wa.me/+2{{ $admin->phone ?? '' }}"> <span
+                                            class="mdi mdi-whatsapp text-success">
+                                        </span></a>
 
                                 </div>
                             </div>

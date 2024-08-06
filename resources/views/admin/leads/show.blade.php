@@ -333,6 +333,16 @@
                     </table>
                 </div>
             </div>
+            <div class="col-span-8 card_bg drop-shadow rounded-md px-4 py-4 ">
+                <div>
+                    <h4 class="text-sm uppercase  font-bold mb-4">
+                        {{ __('site.Notes') }}
+                    </h4>
+                </div>
+                <div class="overflow-auto">
+                    <p>{{ $lead->notes }}</p>
+                </div>
+            </div>
         </div>
     </div>
     <!-- / Content -->

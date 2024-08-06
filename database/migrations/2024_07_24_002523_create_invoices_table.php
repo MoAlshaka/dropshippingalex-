@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('seller_id')->constrained()->onDelete('cascade')->onUpdate('cascade');;
             $table->decimal('revenue', 10, 2)->default(0)->nullable();
             $table->foreignId('updated_by')->nullable()->constrained('admins', 'id')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('transaction_id')->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('status')->nullable();
             $table->date('date');
             $table->timestamps();

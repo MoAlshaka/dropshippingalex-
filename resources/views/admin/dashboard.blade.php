@@ -137,8 +137,8 @@
                             </div>
                             <button type="submit" class="btn btn-primary waves-effect waves-light">
                                 {{ __('site.Filter') }}</button>
-                            <button type="reset" class="btn btn-outline-danger waves-effect">
-                                {{ __('site.Reset') }}</button>
+                            <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-danger waves-effect">
+                                {{ __('site.Back') }}</a>
                         </form>
                     </div>
                 </div>
@@ -172,7 +172,7 @@
                         </h2>
                         <div class="flex justify-between items-center">
                             <div class="bg-green-700 rounded-full text-white px-4 py-2 flex justify-center items-center">
-                                <span class="mdi mdi-currency-usd mdi-20px">
+                                <span class="mdi mdi-source-fork mdi-20px">
 
                                 </span>
                             </div>
@@ -187,7 +187,7 @@
                         </h2>
                         <div class="flex justify-between items-center">
                             <div class="bg-yellow-300 rounded-full text-white px-4 py-2 flex justify-center items-center">
-                                <span class="mdi mdi-bus-school mdi-20px">
+                                <span class="mdi mdi-phone-outline">
 
                                 </span>
                             </div>
@@ -202,7 +202,7 @@
                         </h2>
                         <div class="flex justify-between items-center">
                             <div class="bg-red-500 rounded-full text-white px-4 py-2 flex justify-center items-center">
-                                <span class="mdi mdi-phone-outline"></span>
+                                <span class=" mdi mdi-bus-school mdi-20px"></span>
                             </div>
                             <span class=" text-3xl font-bold">{{ $deliveredLeadsCount }}</span>
                         </div>

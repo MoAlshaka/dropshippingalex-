@@ -126,6 +126,16 @@
                                 @enderror
                                 <div class="col-md-6">
                                     <div class="form-floating form-floating-outline">
+                                        <input class="form-control" type="text" id="phone" name="phone"
+                                            value="{{ Auth::guard('admin')->user()->phone }}" autofocus />
+                                        <label for="phone"> {{ __('site.Phone') }}</label>
+                                    </div>
+                                </div>
+                                @error('phone')
+                                    <div class="text-danger mb-3">{{ $message }}</div>
+                                @enderror
+                                <div class="col-md-6">
+                                    <div class="form-floating form-floating-outline">
                                         <input class="form-control" type="text" id="email" name="email"
                                             value="{{ Auth::guard('admin')->user()->email }}"
                                             placeholder="{{ __('site.Email') }}" />

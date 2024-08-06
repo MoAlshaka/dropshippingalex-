@@ -153,8 +153,8 @@
                             </div>
                             <button type="submit"
                                 class="btn btn-primary waves-effect waves-light">{{ __('site.Filter') }}</button>
-                            <button type="reset"
-                                class="btn btn-outline-danger waves-effect">{{ __('site.Reset') }}</button>
+                            <a href="{{ route('orders.index') }}"
+                                class="btn btn-outline-danger waves-effect">{{ __('site.Back') }}</a>
                         </form>
                     </div>
                 </div>
@@ -227,13 +227,13 @@
                                     {{--                                    {{ $shippingdetail->details }} --}}
                                     {{--                                    @endforeach</td> --}}
                                     <td> {{ $order->lead->type }}
-                                        @if ($order->lead->type == 'commission')
+                                        {{-- @if ($order->lead->type == 'commission')
                                             @if ($order->lead->affiliateproduct->type == 'delivered')
                                                 {{ __('site.PerDelivered') }}
                                             @else
                                                 {{ __('site.PerConfirmed') }}
                                             @endif
-                                        @endif
+                                        @endif --}}
 
                                     </td>
                                     <td>{{ $order->shipment_status }}</td>

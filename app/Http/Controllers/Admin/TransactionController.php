@@ -49,13 +49,6 @@ class TransactionController extends Controller
         ]);
         if ($transaction) {
             $user->notify(new CreateTransaction($transaction->amount, $transaction->status, $transaction->payment_method, $transaction->account_number));
-            Invoice::create([
-                'seller_id' => $request->seller_id,
-                'revenue' => $request->amount,
-                'date' => date('Y-m-d'),
-                'created_at' => date('Y-m-d H:i:s'),
-                'status' => $request->status,
-            ]);
         }
         return redirect()->route('transactions.index')->with(['Add' => 'Add Transaction Successfully']);
     }
@@ -109,6 +102,7 @@ class TransactionController extends Controller
             'status' => $request->status,
             'admin_id' => auth()->guard('admin')->user()->id,
         ]);
+        Invoice::where('transaction_id', $transaction->id)->update('revenue', $request->amount);
 
         return redirect()->route('transactions.index')->with(['Update' => 'Update successfully']);
     }

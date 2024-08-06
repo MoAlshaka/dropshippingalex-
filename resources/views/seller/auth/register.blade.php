@@ -331,7 +331,8 @@
                                                         {{ __('site.Phone') }}</label>
                                                     <div class="iti">
 
-                                                        <input type="tel" name="phone" placeholder="phone" />
+                                                        <input type="tel" name="phone" placeholder="phone"
+                                                            value="{{ old('phone') }}" />
                                                     </div>
                                                 </div>
                                                 @error('phone')

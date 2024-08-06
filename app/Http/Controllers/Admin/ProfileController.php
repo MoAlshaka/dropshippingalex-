@@ -74,15 +74,18 @@ class ProfileController extends Controller
         $request->validate([
             'name' => 'required|max:50',
             'username' => 'required|max:50',
-            'email' => 'required|email|max:50',
+            'phone' => 'required|max:12',
+            'email' => 'nullable|email|max:50',
             'image' => 'nullable|mimes:png,jpg,jpeg|max:2048',
 
         ]);
         $admin = Admin::findorfail($id);
+        if ($request->email) {
 
-        $exists = Admin::where(['email' => $request->email])->where('id', '!=', $id)->first();
-        if ($exists) {
-            return redirect()->back()->with(['Delete' => 'Email already exists']);
+            $exists = Admin::where(['email' => $request->email])->where('id', '!=', $id)->first();
+            if ($exists) {
+                return redirect()->back()->with(['Delete' => 'Email already exists']);
+            }
         }
         $old_image = $admin->image;
 
@@ -100,7 +103,8 @@ class ProfileController extends Controller
         $admin->update([
             'name' => $request->name,
             'username' => $request->username,
-            'email' => $request->email,
+            'email' => $request->email ?? null,
+            'phone' => $request->phone,
             'image' => $image_name ?? $old_image,
         ]);
         return redirect()->route('admin.profile')->with(['Update' => 'update Profile successfully']);

@@ -138,8 +138,8 @@
                             </div>
                             <button type="submit" class="btn btn-primary waves-effect waves-light">
                                 {{ __('site.Filter') }}</button>
-                            <button type="reset" class="btn btn-outline-danger waves-effect">
-                                {{ __('site.Reset') }}</button>
+                            <a href="{{ route('leads.index') }}" class="btn btn-outline-danger waves-effect">
+                                {{ __('site.Back') }}</a>
                         </form>
                     </div>
                 </div>
@@ -202,7 +202,15 @@
                                         <td>{{ $lead->customer_phone }}</td>
                                         <td>{{ $lead->item_sku }}</td>
                                         <td>{{ $lead->total }}</td>
-                                        <td> {{ $lead->type }}</td>
+                                        <td> {{ $lead->type }}
+                                            @if ($lead->type == 'commission')
+                                                @if ($lead->affiliateproduct->type == 'delivered')
+                                                    {{ __('site.PerDelivered') }}
+                                                @else
+                                                    {{ __('site.PerConfirmed') }}
+                                                @endif
+                                            @endif
+                                        </td>
                                         <td> {{ $lead->status }}</td>
                                         <td style="display: flex;
                                             gap: 6px;">

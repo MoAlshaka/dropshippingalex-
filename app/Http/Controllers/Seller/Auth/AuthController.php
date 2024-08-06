@@ -23,7 +23,7 @@ class AuthController extends Controller
             'password' => 'required|min:8|max:50',
             'confirm_password' => 'required|same:password|max:50|min:8',
             // 'address' => 'required|max:250',
-            'phone' => 'required|max:50',
+            'phone' => 'required|max:13',
             // 'about_us' => 'required|max:800',
             'national_id' => 'required|image|mimes:png,jpg,jpeg|max:2048',
         ]);

@@ -8,6 +8,8 @@ use App\Models\Admin;
 use App\Models\Order;
 use App\Models\Seller;
 use App\Models\Country;
+use App\Models\Invoice;
+use App\Models\Revenue;
 use Illuminate\Http\Request;
 use App\Models\SharedProduct;
 use App\Models\AffiliateProduct;
@@ -40,7 +42,9 @@ class ReportController extends Controller
         $under_process = Order::where('shipment_status', 'pending')->count();
         $confirmed = Lead::where('status', 'confirmed')->count();
         $canceled = Order::where('shipment_status', 'canceled')->count();
-        $balance = Order::where('shipment_status', 'balance')->count();
+        $revenue_confirmed  = Revenue::sum('revenue');
+        $invoice_balance = Invoice::sum('revenue');
+        $balance = $invoice_balance + $revenue_confirmed;
         $shipped = Order::where('shipment_status', 'shipping')->count();
         $delivered = Order::where('shipment_status', 'delivered')->count();
         $returned = Order::where('shipment_status', 'returned')->count();
@@ -140,7 +144,6 @@ class ReportController extends Controller
         if ($id == 0) {
             $leads = Lead::WhereBetween('created_at', [$start_date, $end_date] ?? [])
                 ->WhereIn('seller_id', $sellerIds ?? [])
-
                 ->count();
 
 
@@ -160,11 +163,9 @@ class ReportController extends Controller
                     });
             })->count();
 
-            $canceled = Order::where('shipment_status', 'canceled')
-                ->WhereBetween('created_at', [$start_date, $end_date] ?? [])
-                ->WhereIn('seller_id', $sellerIds ?? [])
-
-                ->count();
+            $revenue_confirmed  = Revenue::WhereIn('seller_id', $sellerIds ?? [])->sum('revenue');
+            $invoice_balance = Invoice::WhereIn('seller_id', $sellerIds ?? [])->sum('revenue');
+            $balance = $invoice_balance + $revenue_confirmed;
 
             $canceled = Order::where(function ($query) use ($start_date, $end_date, $sellerIds) {
                 $query->where('shipment_status', 'canceled')
@@ -174,13 +175,7 @@ class ReportController extends Controller
                     });
             })->count();
 
-            $balance = Order::where(function ($query) use ($start_date, $end_date, $sellerIds) {
-                $query->where('shipment_status', 'balance')
-                    ->where(function ($query) use ($start_date, $end_date, $sellerIds) {
-                        $query->WhereBetween('created_at', [$start_date, $end_date] ?? [])
-                            ->WhereIn('seller_id', $sellerIds ?? []);
-                    });
-            })->count();
+
             $delivered = Order::where(function ($query) use ($start_date, $end_date, $sellerIds) {
                 $query->where('shipment_status', 'delivered')
                     ->where(function ($query) use ($start_date, $end_date, $sellerIds) {

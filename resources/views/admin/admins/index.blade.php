@@ -28,8 +28,8 @@
                                 <tr>
                                     <th>#{{ __('site.ID') }}</th>
                                     <th>{{ __('site.Name') }}</th>
-                                    <th>{{ __('site.Username') }}</th>
-                                    <th>{{ __('site.Role') }}</th>
+                                    <th>{{ __('site.UserName') }}</th>
+                                    <th>{{ __('site.Roles') }}</th>
                                     <th>{{ __('site.CreatedAt') }}</th>
                                     <th class="text-center">{{ __('site.Actions') }}</th>
 

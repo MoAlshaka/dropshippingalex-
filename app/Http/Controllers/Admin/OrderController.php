@@ -102,102 +102,99 @@ class OrderController extends Controller
         ]);
 
 
+        // if ($flag) {
+        //     if ($order->shipment_status == 'delivered' && $order->shipment_status !== $old_status) {
+        //         $lead = Lead::findorfail($order->lead_id);  // Use find() for efficiency
+        //         $revenue = Revenue::where('seller_id', $order->seller_id)->first();
+
+        //         if ($revenue) {
+        //             if ($revenue->revenue >= 50 && Carbon::now()->isSunday()) {
+        //                 $flag = Invoice::create([
+        //                     'seller_id' => $order->seller_id,
+        //                     'revenue' => $revenue->revenue,
+        //                     'date' => date('Y-m-d'),
+        //                     'created_at' => date('Y-m-d H:i:s'),
+        //                     'status' => 'unpaid',
+        //                 ]);
+        //                 if ($flag) {
+        //                     $revenue->update(['revenue' => 0]);
+        //                 }
+        //             }
+        //         }
+
+        //         if ($lead->type == 'regular') {
+        //             $product = SharedProduct::where('sku', $lead->item_sku)->first();
+
+        //             $country = Country::where('name', $lead->warehouse)->first();
+
+        //             if ($product) {
+        //                 $money = $lead->total / $lead->quantity;
+        //                 $x = (($money - $product->unit_cost) * $lead->quantity) - $country->shipping_cost;
+        //                 if ($x < 0) {
+        //                     $x = 0;
+        //                 }
+        //                 if (!empty($revenue)) {
+        //                     $revenue->update([
+        //                         'revenue' => $revenue->revenue + $x,
+        //                     ]);
+        //                 } else {
+        //                     Revenue::create([
+        //                         'revenue' => $x,
+        //                         'seller_id' => $order->seller_id,
+        //                         'lead_id' => $order->lead_id,
+        //                         'order_id' => $order->id,
+        //                         'date' => date('Y-m-d'),
+        //                     ]);
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
         if ($flag) {
-            if ($order->shipment_status == 'delivered' && $order->shipment_status !== $old_status) {
-                $lead = Lead::findorfail($order->lead_id);  // Use find() for efficiency
+            if ($order->shipment_status === 'delivered' && $order->shipment_status !== $old_status) {
+                $lead = Lead::findOrFail($order->lead_id); // Use findOrFail to ensure existence
                 $revenue = Revenue::where('seller_id', $order->seller_id)->first();
 
-                if ($revenue) {
-                    if ($revenue->revenue >= 50 && Carbon::now()->isSunday()) {
-                        $flag = Invoice::create([
-                            'seller_id' => $order->seller_id,
-                            'revenue' => $revenue->revenue,
-                            'date' => date('Y-m-d'),
-                            'created_at' => date('Y-m-d H:i:s'),
-                            'status' => 'unpaid',
-                        ]);
-                        if ($flag) {
-                            $revenue->update(['revenue' => 0]);
-                        }
+                if ($revenue && $revenue->revenue >= 50 && Carbon::now()->isSunday()) {
+                    $invoice = Invoice::create([
+                        'seller_id' => $order->seller_id,
+                        'revenue' => $revenue->revenue,
+                        'date' => now()->toDateString(),
+                        'created_at' => now(),
+                        'status' => 'unpaid',
+                    ]);
+
+                    if ($invoice) {
+                        $revenue->update(['revenue' => 0]);
                     }
                 }
-                if ($lead->type == 'commission') {
-                    $product = AffiliateProduct::where('sku', $lead->item_sku)->first();
 
-                    if ($product) {
-                        if (!empty($revenue)) {
-                            $revenue->update([
-                                'revenue' => $revenue->revenue + ($product->commission * $lead->quantity),
-                            ]);
-                        } else {
-                            Revenue::create([
-                                'revenue' => ($product->commission * $lead->quantity),
-                                'seller_id' => $order->seller_id,
-                                'lead_id' => $order->lead_id,
-                                'order_id' => $order->id,
-                                'date' => date('Y-m-d'),
-                            ]);
-                        }
-                    }
-                } else {
+                if ($lead->type === 'regular') {
                     $product = SharedProduct::where('sku', $lead->item_sku)->first();
-
                     $country = Country::where('name', $lead->warehouse)->first();
 
-                    if ($product) {
-                        $money = $lead->total / $lead->quantity;
-                        $x = (($money - $product->unit_cost) * $lead->quantity) - $country->shipping_cost;
-                        if ($x < 0) {
-                            $x = 0;
-                        }
-                        if (!empty($revenue)) {
+                    if ($product && $country) {
+                        $unitPrice = $lead->total / $lead->quantity;
+                        $profit = (($unitPrice - $product->unit_cost) * $lead->quantity) - $country->shipping_cost;
+                        $profit = max($profit, 0); // Ensure profit is not negative
+
+                        if ($revenue) {
                             $revenue->update([
-                                'revenue' => $revenue->revenue + $x,
+                                'revenue' => $revenue->revenue + $profit,
                             ]);
                         } else {
                             Revenue::create([
-                                'revenue' => $x,
+                                'revenue' => $profit,
                                 'seller_id' => $order->seller_id,
                                 'lead_id' => $order->lead_id,
                                 'order_id' => $order->id,
-                                'date' => date('Y-m-d'),
+                                'date' => now()->toDateString(),
                             ]);
                         }
                     }
                 }
             }
         }
-        // $orders = Order::where('seller_id', auth()->user()->id)->get();
-        // $revenue = 0;
-        // if ($orders->isNotEmpty()) {
-        //     foreach ($orders as $order) {
-        //         if ($order->shipment_status == 'delivered') {
-        //             $lead = Lead::find($order->lead_id);  // Use find() for efficiency
-        //             if ($lead) {
-        //                 if ($lead->type == 'commission') {
-        //                     $product = AffiliateProduct::where('sku', $lead->item_sku)->first();
-        //                     if ($product) {
-        //                         $revenue += $product->commission;
-        //                     }
-        //                 } else {
-        //                     $product = SharedProduct::where('sku', $lead->item_sku)->first();
-        //                     if ($product) {
-        //                         $money = $lead->total / $lead->quantity;
-        //                         // if($lead->Currency ==){
-
-        //                         // }
-        //                         $revenue += ($money - $product->unit_cost);
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
-
-        // Seller::where('id', auth()->user()->id)->update([
-        //     'revenue' => $revenue,
-        // ]);
-
         return redirect()->route('orders.index')->with(['Update' => 'Update Successfully']);
     }
 

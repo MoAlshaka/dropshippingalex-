@@ -87,7 +87,7 @@
                                         </label>
                                         <button type="button" class="btn btn-outline-danger account-image-reset mb-3">
                                             <i class="mdi mdi-reload d-block d-sm-none"></i>
-                                            <span class="d-none d-sm-block"> {{ __('site.Reset') }}</span>
+                                            <span class="d-none d-sm-block"> {{ __('site.Back') }}</span>
                                         </button>
 
                                         <div class="small">Allowed JPG, GIF or PNG. Max size of 800K</div>

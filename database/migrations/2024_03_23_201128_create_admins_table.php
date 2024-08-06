@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('username');
             $table->string('password');
             $table->string('email')->nullable()->unique();
+            $table->string('phone')->nullable()->unique();
             $table->string('image')->nullable();
             $table->string('access_token')->nullable();
 

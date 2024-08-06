@@ -116,8 +116,8 @@
                             </div>
                             <button type="submit" class="btn btn-primary waves-effect waves-light">
                                 {{ __('site.Filter') }}</button>
-                            <button type="reset" class="btn btn-outline-danger waves-effect">
-                                {{ __('site.Reset') }}</button>
+                            <a href="{{ route('transactions.index') }}" class="btn btn-outline-danger waves-effect">
+                                {{ __('site.Back') }}</a>
                         </form>
                     </div>
                 </div>

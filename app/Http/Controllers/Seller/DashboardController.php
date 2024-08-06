@@ -147,7 +147,8 @@ class DashboardController extends Controller
         $limitedProductsArray = $uniqueProducts->values()->all();
 
 
-        $revenue = Invoice::where('seller_id', auth()->guard('seller')->id())->sum('revenue');
+        $revenue = Revenue::where('seller_id', auth()->guard('seller')->id())->sum('revenue');
+
         return view('seller.dashboard', compact('leads', 'approvedLeadsCount', 'deliveredLeadsCount', 'revenue', 'sellers', 'leads_count', 'orders_count', 'admin', 'limitedProductsArray'));
     }
 

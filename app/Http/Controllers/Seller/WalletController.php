@@ -16,9 +16,9 @@ class WalletController extends Controller
      */
     public function index()
     {
-        $balance = Invoice::where('seller_id', auth()->guard('seller')->id())->sum('revenue');
-        $revenue_confirmed = Invoice::where(['seller_id' => auth()->guard('seller')->id(), 'status' => 'unpaid'])->sum('revenue');
-
+        $revenue_confirmed  = Revenue::where('seller_id', auth()->guard('seller')->id())->sum('revenue');
+        $invoice_balance = Invoice::where('seller_id', auth()->guard('seller')->id())->sum('revenue');
+        $balance = $invoice_balance + $revenue_confirmed;
         return view('seller.wallet.index', compact('balance', 'revenue_confirmed'));
     }
 

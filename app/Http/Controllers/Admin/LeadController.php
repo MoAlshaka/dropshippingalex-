@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use App\Models\Lead;
 use App\Models\Order;
 use App\Models\Country;
+use App\Models\Invoice;
+use App\Models\Revenue;
 use Illuminate\Http\Request;
 use App\Models\SharedProduct;
 use App\Models\AffiliateProduct;
@@ -42,20 +44,67 @@ class LeadController extends Controller
             'status' => 'required',
             'notes' => 'nullable|string|max:65000'
         ]);
-        $lead = Lead::findorfail($id);
-        $flag = $lead->update([
-            'status' => $request->status
-        ]);
-        if ($flag && $lead->status == 'confirmed') {
 
-            Order::create([
-                'lead_id' => $lead->id,
-                'quantity' => $lead->quantity,
-                'seller_id' => $lead->seller_id,
-            ]);
+        $lead = Lead::findOrFail($id);
+        $old_status = $lead->status;
+        $flag = $lead->update([
+            'status' => $request->status,
+            'notes' => $request->notes
+        ]);
+
+        if ($flag) {
+            if ($lead->status == 'confirmed' && $lead->status !== $old_status) {
+                $order = Order::create([
+                    'lead_id' => $lead->id,
+                    'quantity' => $lead->quantity,
+                    'seller_id' => $lead->seller_id,
+                ]);
+
+                if ($lead->type == 'commission') {
+                    $product = AffiliateProduct::where('sku', $lead->item_sku)->first();
+
+                    if ($product) {
+                        $revenue = Revenue::where('seller_id', $lead->seller_id)->first();
+
+                        if ($revenue) {
+                            // Check if revenue is greater than or equal to 50 and today is Sunday
+                            if ($revenue->revenue >= 50 && Carbon::now()->isSunday()) {
+                                $invoice = Invoice::create([
+                                    'seller_id' => $lead->seller_id,
+                                    'revenue' => $revenue->revenue,
+                                    'date' => now()->toDateString(),
+                                    'created_at' => now(),
+                                    'status' => 'unpaid',
+                                ]);
+
+                                // Reset revenue if the invoice was successfully created
+                                if ($invoice) {
+                                    $revenue->update(['revenue' => 0]);
+                                }
+                            }
+
+                            // Update the revenue
+                            $revenue->update([
+                                'revenue' => $revenue->revenue + ($product->commission * $lead->quantity),
+                            ]);
+                        } else {
+                            // Create a new revenue record
+                            Revenue::create([
+                                'revenue' => ($product->commission * $lead->quantity),
+                                'seller_id' => $lead->seller_id,
+                                'lead_id' => $lead->id,
+                                'order_id' => $order->id,
+                                'date' => now()->toDateString(),
+                            ]);
+                        }
+                    }
+                }
+            }
         }
+
         return redirect()->route('admin.leads.index')->with(['Update' => 'Lead status updated successfully']);
     }
+
 
     public function delete($id)
     {
