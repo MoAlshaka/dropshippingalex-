@@ -37,6 +37,11 @@ Route::group([
     Route::post('register', [AuthController::class, 'register'])->name('seller.register');
     Route::get('/login', [AuthController::class, 'get_seller_login'])->name('get.seller.login');
     Route::post('login', [AuthController::class, 'login'])->name('seller.login');
+
+
+    Route::post('mail-reset-password', [AuthController::class, 'mail_reset_password'])->name('seller.mail.reset.password');
+    Route::get('reset-password/{email}', [AuthController::class, 'reset_password_page'])->name('seller.reset.password.page');
+    Route::post('reset-password-store/{email}', [AuthController::class, 'reset_password_store'])->name('seller.reset.password.store');
 });
 Route::group([
     //    'namespace' => 'Admin',
@@ -85,7 +90,7 @@ Route::group([
         Route::get('edit-password', [ProfileController::class, 'edit_password'])->name('seller.edit.password');
         Route::match(['post', 'put', 'patch'], 'update-password/{id}', [ProfileController::class, 'change_password'])->name('seller.change.password');
         Route::match(['post', 'put', 'patch'], 'payment-details/update/{id}', [ProfileController::class, 'payment_details'])->name('seller.update.payment');
-
+        // Route::post('mail-reset-password', [ProfileController::class, 'reset_password'])->name('seller.reset.password');
         //transaction
         Route::get('transactions', [TransactionController::class, 'index'])->name('seller.transactions.index');
         Route::get('notification/{id}', [TransactionController::class, 'notification'])->name('seller.notification');

@@ -75,6 +75,7 @@
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
+
         <h4 class="py-3 mb-4 d-flex justify-content-between">
             <div>
                 <span class="text-muted fw-light"> {{ __('site.Seller') }} /</span>
@@ -113,7 +114,9 @@
                 </div>
             </div>
         </h4>
-
+        @if (session()->has('Add'))
+            <div class="alert alert-success" role="alert">{{ session()->get('Add') }}</div>
+        @endif
         <div class="card_chart_cont  lg:flex ">
             <div class="chart_container mt-4 mx-4 md:mx-6 ">
                 <div class="card">

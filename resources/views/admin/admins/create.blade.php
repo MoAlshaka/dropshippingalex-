@@ -78,7 +78,8 @@
                     <div class="mb-3">
                         <label class="form-label" for="bs-validation-name">{{ __('site.Name') }} <span
                                 class="text-danger">*</span></label>
-                        <input name="name" type="text" class="form-control" placeholder="{{ __('site.Name') }}">
+                        <input name="name" type="text" class="form-control" placeholder="{{ __('site.Name') }}"
+                            value="{{ old('name') }}">
                         @if ($errors->has('name'))
                             <span class="text-danger">{{ $errors->first('name') }}</span>
                         @endif
@@ -87,7 +88,8 @@
 
                         <label class="form-label" for="bs-validation-email">{{ __('site.UserName') }} <span
                                 class="text-danger">*</span></label>
-                        <input name="username" type="text" class="form-control" placeholder="{{ __('site.UserName') }}">
+                        <input name="username" type="text" class="form-control" placeholder="{{ __('site.UserName') }}"
+                            value="{{ old('username') }}">
                         @if ($errors->has('username'))
                             <span class="text-danger">{{ $errors->first('username') }}</span>
                         @endif
@@ -118,9 +120,16 @@
                                     class="ti ti-eye-off"></i></span>
                         </div>
                     </div>
-                    @php
+                    <div class="mb-3">
 
-                    @endphp
+                        <label class="form-label" for="bs-validation-phone">{{ __('site.Phone') }} <span
+                                class="text-danger">*</span></label>
+                        <input name="phone" type="text" class="form-control" placeholder="{{ __('site.Phone') }} "
+                            value="{{ old('phone') }}">
+                        @if ($errors->has('phone'))
+                            <span class="text-danger">{{ $errors->first('phone') }}</span>
+                        @endif
+                    </div>
                     <div class="mb-3">
                         <label class="form-label" for="bs-validation-role">{{ __('site.Roles') }} <span
                                 class="text-danger">*</span></label>
@@ -128,7 +137,8 @@
                             <option value="" selected disabled></option>
                             @foreach ($roles as $role)
                                 @if ($role !== 'Owner')
-                                    <option value="{{ $role }}">{{ $role }}</option>
+                                    <option value="{{ $role }}" @if (old('roles_name') == $role) selected @endif>
+                                        {{ $role }}</option>
                                 @endif
                             @endforeach
                         </select>

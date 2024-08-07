@@ -72,7 +72,7 @@
                         @endif
                     </div>
                     <div class="mb-3">
-                        <label class="form-label" for="bs-validation-email">{{ __('site.Username') }} <span
+                        <label class="form-label" for="bs-validation-email">{{ __('site.UserName') }} <span
                                 class="text-danger">*</span></label>
                         <input name="username" type="text" class="form-control" placeholder="{{ __('site.UserName') }}"
                             value="{{ $user->username ?? '' }}">
@@ -99,7 +99,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label" for="bs-validation-role">{{ __('site.Role') }} <span
+                        <label class="form-label" for="bs-validation-role">{{ __('site.Roles') }} <span
                                 class="text-danger">*</span></label>
                         <select name="roles_name" class="select2 form-control" id="select2_role">
                             <option value="" selected disabled></option>

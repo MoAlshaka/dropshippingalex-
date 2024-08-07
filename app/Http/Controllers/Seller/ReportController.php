@@ -228,23 +228,24 @@ class ReportController extends Controller
         }
 
         // Retrieve confirmed leads and their SKUs
-        $lead_confirmed = Lead::where('seller_id', $sellerId)->whereIn('id', $lead_ids)->where('status', 'confirmed')->pluck('id');
+        $lead_confirmedId = Lead::where('seller_id', $sellerId)->whereIn('id', $lead_ids)->where('status', 'confirmed')->pluck('id');
+        $lead_confirmed = Lead::where('seller_id', $sellerId)->whereIn('id', $lead_ids)->where('status', 'confirmed')->get();
 
 
-        $lead_sku = Lead::whereIn('id', $lead_confirmed)->pluck('item_sku')->unique();
+        $lead_sku = Lead::whereIn('id', $lead_confirmedId)->pluck('item_sku')->unique();
         // Retrieve affiliate product commissions
 
 
         // Calculate total commission
-        $orders = Order::whereIn('lead_id', $lead_confirmed)->where('shipment_status', 'delivered')->get();
+        // $orders = Order::whereIn('lead_id', $lead_confirmed)->where('shipment_status', 'delivered')->get();
 
 
         $total_commission = 0;
         $total_quantity = 0;
-        if ($orders) {
-            foreach ($orders as $order) {
-                $quantity = Lead::where('id', $order->lead_id)->pluck('quantity')->first();
-                $total_commission += AffiliateProduct::where('sku', $order->lead->item_sku)->pluck('commission')->first()  * $quantity;
+        if ($lead_confirmed) {
+            foreach ($lead_confirmed as $lead) {
+                $quantity = Lead::where('id', $lead->id)->pluck('quantity')->first();
+                $total_commission += AffiliateProduct::where('sku', $lead->item_sku)->pluck('commission')->first()  * $quantity;
                 $total_quantity += $quantity;
             }
         }
@@ -274,7 +275,8 @@ class ReportController extends Controller
 
         // Calculate average commission
         if ($confirmed > 0 && $total_quantity > 0) {
-            $average_commission = $total_commission / $total_quantity;
+            $average_commission = ($total_commission / $total_quantity);
+            $average_commission = number_format($average_commission, 2);
         }
 
         // Return view with compacted variables
@@ -544,19 +546,23 @@ class ReportController extends Controller
         }
 
         // Retrieve confirmed leads and their SKUs
-        $lead_confirmed = Lead::where('seller_id', $sellerId)->whereIn('id', $lead_ids)->where('status', 'confirmed')->whereBetween('created_at', [$start_date, $end_date])->pluck('id');
-        $lead_sku = Lead::whereIn('id', $lead_confirmed)->pluck('item_sku')->unique();
+        $lead_confirmedId = Lead::where('seller_id', $sellerId)->whereIn('id', $lead_ids)->where('status', 'confirmed')->whereBetween('created_at', [$start_date, $end_date])->pluck('id');
+        $lead_confirmed = Lead::where('seller_id', $sellerId)->whereIn('id', $lead_ids)->where('status', 'confirmed')->whereBetween('created_at', [$start_date, $end_date])->get();
+
+
+
+        $lead_sku = Lead::whereIn('id', $lead_confirmedId)->pluck('item_sku')->unique();
 
         // Retrieve affiliate product commissions
 
 
         // Calculate total commission
-        $orders = Order::whereIn('lead_id', $lead_confirmed)->where('shipment_status', 'delivered')->get();
+        // $orders = Order::whereIn('lead_id', $lead_confirmed)->where('shipment_status', 'delivered')->get();
         $total_commission = 0;
-        if ($orders) {
-            foreach ($orders as $order) {
-                $quantity = Lead::where('id', $order->lead_id)->pluck('quantity')->first();
-                $total_commission += AffiliateProduct::where('sku', $order->lead->item_sku)->pluck('commission')->first()  * $quantity;
+        if ($lead_confirmed) {
+            foreach ($lead_confirmed as $lead) {
+                $quantity = Lead::where('id', $lead->id)->pluck('quantity')->first();
+                $total_commission += AffiliateProduct::where('sku', $lead->item_sku)->pluck('commission')->first()  * $quantity;
             }
         }
 
@@ -586,6 +592,7 @@ class ReportController extends Controller
         // Calculate average commission
         if ($confirmed > 0) {
             $average_commission = $total_commission / $confirmed;
+            $average_commission = number_format($average_commission, 2);
         }
 
         // Return view with compacted variables

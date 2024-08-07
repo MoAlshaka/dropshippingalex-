@@ -176,9 +176,7 @@
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                             <div class="form-floating form-floating-outline mb-4">
-                                <input type="text" class="form-control" id="basic-default-Currency"
-                                    placeholder="{{ __('site.Currency') }}" value="{{ $lead->currency }}"
-                                    name="currency" />
+
                                 <select id="basic-default-Currency" class="select2 form-select" data-allow-clear="true"
                                     name="currency">
                                     <option value="AED" @if (old('currency') == 'AED' || $lead->currency == 'AED') selected @endif> AED</option>

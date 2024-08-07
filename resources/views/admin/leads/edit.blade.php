@@ -59,20 +59,37 @@
                                             <select id="select2Basic" class="select2 form-select form-select-lg"
                                                 data-allow-clear="true" name="status">
 
-                                                <option value="{{ $lead->status }}" selected>
-                                                    {{ $lead->status }}</option>
-                                                <option value="confirmed">{{ __('site.Confirmed') }}</option>
-                                                <option value="in_process">{{ __('site.InProcess') }}</option>
-                                                <option value="no_reply">{{ __('site.NoReply') }}</option>
-                                                <option value="wrong">{{ __('site.Wrong') }}</option>
-                                                <option value="call_later">{{ __('site.CallLater') }}</option>
-                                                <option value="scheduled">{{ __('site.Scheduled') }}</option>
-                                                <option value="canceled">{{ __('site.Canceled') }}</option>
-                                                <option value="expired">{{ __('site.Expired') }}</option>
-                                                <option value="duplicate">{{ __('site.Duplicate') }}</option>
-                                                <option value="taken">{{ __('site.Taken') }}</option>
-                                                <option value="wait_for_stock">{{ __('site.WaitForStock') }}</option>
-                                                <option value="reassigned">{{ __('site.ReAssigned') }}</option>
+
+                                                <option value="pending" @if ($lead->status == 'pending') selected @endif>
+                                                    {{ __('site.Pending') }}</option>
+                                                <option value="confirmed" @if ($lead->status == 'confirmed') selected @endif>
+                                                    {{ __('site.Confirmed') }}</option>
+                                                <option value="in_process"
+                                                    @if ($lead->status == 'in_process') selected @endif>
+                                                    {{ __('site.InProcess') }}</option>
+                                                <option value="no_reply" @if ($lead->status == 'no_reply') selected @endif>
+                                                    {{ __('site.NoReply') }}</option>
+                                                <option value="wrong" @if ($lead->status == 'wrong') selected @endif>
+                                                    {{ __('site.Wrong') }}</option>
+                                                <option value="call_later"
+                                                    @if ($lead->status == 'call_later') selected @endif>
+                                                    {{ __('site.CallLater') }}</option>
+                                                <option value="scheduled" @if ($lead->status == 'scheduled') selected @endif>
+                                                    {{ __('site.Scheduled') }}</option>
+                                                <option value="canceled" @if ($lead->status == 'canceled') selected @endif>
+                                                    {{ __('site.Canceled') }}</option>
+                                                <option value="expired" @if ($lead->status == 'expired') selected @endif>
+                                                    {{ __('site.Expired') }}</option>
+                                                <option value="duplicate" @if ($lead->status == 'duplicate') selected @endif>
+                                                    {{ __('site.Duplicate') }}</option>
+                                                <option value="taken" @if ($lead->status == 'taken') selected @endif>
+                                                    {{ __('site.Taken') }}</option>
+                                                <option value="wait_for_stock"
+                                                    @if ($lead->status == 'wait_for_stock') selected @endif>
+                                                    {{ __('site.WaitForStock') }}</option>
+                                                <option value="reassigned"
+                                                    @if ($lead->status == 'reassigned') selected @endif>
+                                                    {{ __('site.ReAssigned') }}</option>
 
                                             </select>
                                             <label for="select2Basic">{{ __('site.Status') }}</label>

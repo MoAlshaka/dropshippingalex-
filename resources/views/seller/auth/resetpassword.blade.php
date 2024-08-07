@@ -1,5 +1,4 @@
 <!doctype html>
-
 <html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact"
     dir="{{ LaravelLocalization::getCurrentLocaleDirection() }}" data-theme="theme-default"
     data-assets-path="{{ asset('assets') . '/' }}" data-template="vertical-menu-template">
@@ -9,7 +8,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title> {{ __('site.SellerLogin') }}</title>
+    <title> {{ __('site.ChangePassword') }} </title>
 
     <meta name="description" content="" />
 
@@ -60,10 +59,9 @@
     <div class="position-relative">
         <div class="authentication-wrapper authentication-basic container-p-y">
             <div class="authentication-inner py-4">
-                <!-- Login -->
                 <div class="card p-2">
                     <!-- Logo -->
-                    <div class="app-brand justify-content-center mt-5">
+                    <div class="app-brand justify-content-center mt-5 mb-4">
                         <a href="index.html" class="app-brand-link gap-2">
                             <span class="app-brand-logo demo">
                                 <span style="color: #666cff">
@@ -106,20 +104,18 @@
                         </a>
                     </div>
                     <!-- /Logo -->
-
-                    <div class="card-body mt-2">
-                        <h4 class="mb-2"> {{ __('site.Welcome') }} 👋</h4>
-                        <p class="mb-4"> {{ __('site.MessageLogin') }}</p>
-                        @if (session()->has('error'))
-                            <div role="alert">
-                                <span class="text-danger">{{ session()->get('error') }}</span>
-                            </div>
-                        @endif
+                    <!-- Reset Password -->
+                    <div class="card-body">
                         @if (session()->has('Add'))
                             <div class="alert alert-success" role="alert">{{ session()->get('Add') }}</div>
                         @endif
-                        <form id="formAuthentication" class="mb-3" action="{{ route('seller.login') }}"
-                            method="POST">
+                        @if (session()->has('Delete'))
+                            <div class="alert alert-danger" role="alert">{{ session()->get('Delete') }}</div>
+                        @endif
+                        <h4 class="mb-2"> {{ __('site.ResetPassword') }} 🔒</h4>
+                        <p class="mb-4"> {{ __('site.ResetPasswordText') }}</p>
+                        <form id="formAuthentication" class="mb-3"
+                            action="{{ route('seller.reset.password.store', $email) }}" method="POST">
                             @csrf
                             <div class="form-floating form-floating-outline mb-3">
                                 <input type="text" class="form-control" id="email" name="email"
@@ -129,89 +125,50 @@
                             @error('email')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-                            <div class="mb-3">
-                                <div class="form-password-toggle">
-                                    <div class="input-group input-group-merge">
-                                        <div class="form-floating form-floating-outline">
-                                            <input type="password" id="password" class="form-control"
-                                                name="password"
-                                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                                aria-describedby="password" />
-                                            <label for="password"> {{ __('site.Password') }}</label>
-                                        </div>
-                                        <span class="input-group-text cursor-pointer"><i
-                                                class="mdi mdi-eye-off-outline"></i></span>
+                            <div class="mb-3 form-password-toggle">
+                                <div class="input-group input-group-merge">
+                                    <div class="form-floating form-floating-outline">
+                                        <input type="password" id="new_password" class="form-control"
+                                            name="new_password"
+                                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                            aria-describedby="password" />
+                                        <label for="new_password"> {{ __('site.NewPassword') }}</label>
                                     </div>
+                                    <span class="input-group-text cursor-pointer"><i
+                                            class="mdi mdi-eye-off-outline"></i></span>
                                 </div>
                             </div>
-                            @error('password')
-                                <span class="text-danger">{{ $message }}</span>
+                            @error('new_password')
+                                <div class="text-danger mb-3">{{ $message }}</div>
                             @enderror
-                            <div class="mb-3">
-                                <button class="btn btn-primary d-grid w-100" type="submit">
-                                    {{ __('site.Signin') }}</button>
-                            </div>
-                        </form>
-
-                        <div class="modal fade" id="smallModal" tabindex="-1" aria-hidden="true">
-                            <div class="modal-dialog modal-sm" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title" id="exampleModalLabel2">
-                                            {{ __('site.ForgetPassword') }}</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
+                            <div class="mb-3 form-password-toggle">
+                                <div class="input-group input-group-merge">
+                                    <div class="form-floating form-floating-outline">
+                                        <input type="password" id="confirm_password" class="form-control"
+                                            name="confirm_password"
+                                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                            aria-describedby="password" />
+                                        <label for="confirm_password"> {{ __('site.ConfirmPassword') }}</label>
                                     </div>
-                                    <form action="{{ route('seller.mail.reset.password') }}" method="POST">
-                                        @csrf
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col mb-4 mt-2">
-                                                    <div class="form-floating form-floating-outline">
-                                                        <input name="email" type="email" id="Email"
-                                                            class="form-control" placeholder="{{ __('site.Email') }}"
-                                                            required />
-                                                        <label for="Email">{{ __('site.Email') }}</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-outline-secondary"
-                                                data-bs-dismiss="modal">
-                                                Close
-                                            </button>
-                                            <button type="submit" class="btn btn-primary">Go</button>
-                                        </div>
-                                    </form>
+                                    <span class="input-group-text cursor-pointer"><i
+                                            class="mdi mdi-eye-off-outline"></i></span>
                                 </div>
                             </div>
-                        </div>
+                            @error('confirm_password')
+                                <div class="text-danger mb-3">{{ $message }}</div>
+                            @enderror
+                            <button class="btn btn-primary d-grid w-100 mb-3" type="submit">
+                                {{ __('site.ResetPassword') }}</button>
 
-
-                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal"
-                            data-bs-target="#smallModal">
-                            {{ __('site.ForgetPassword') }}
-                        </button>
-
-
-                        <p class="text-center">
-                            <span> {{ __('site.Guest') }}</span>
-                            <a href="{{ route('get.seller.register') }}">
-                                <span> {{ __('site.CreateAccount') }}</span>
-                            </a>
-                        </p>
-
-
-
-
+                        </form>
                     </div>
                 </div>
-                <!-- /Login -->
-                <img alt="mask" src="{{ asset('assets/img/illustrations/auth-basic-login-mask-light.png') }}"
+                <!-- /Reset Password -->
+                <img alt="mask"
+                    src="{{ asset('assets/img/illustrations/auth-basic-reset-password-mask-light.png') }}"
                     class="authentication-image d-none d-lg-block"
-                    data-app-light-img="illustrations/auth-basic-login-mask-light.png"
-                    data-app-dark-img="illustrations/auth-basic-login-mask-dark.png" />
+                    data-app-light-img="illustrations/auth-basic-reset-password-mask-light.png"
+                    data-app-dark-img="illustrations/auth-basic-reset-password-mask-dark.png" />
             </div>
         </div>
     </div>

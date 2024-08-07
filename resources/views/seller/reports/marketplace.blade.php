@@ -105,7 +105,7 @@
                         <th>{{ __('site.Confirmed') }}</th>
                         <th>{{ __('site.Canceled') }}</th>
                         <th>{{ __('site.ConfirmedRate') }}</th>
-                        <th>{{ __('site.Balance') }}</th>
+
                         <th>{{ __('site.Shipped') }}</th>
                         <th>{{ __('site.Delivered') }}</th>
                         <th>{{ __('site.Returned') }}</th>
@@ -135,7 +135,7 @@
                                 <td>{{ $product['confirmed'] }}</td>
                                 <td>{{ $product['cancelled'] }}</td>
                                 <td>{{ $product['confirmed_rate'] }}%</td>
-                                <td>{{ $product['balance'] }}</td>
+
                                 <td> {{ $product['shipped'] }}</td>
                                 <td> {{ $product['delivered'] }}</td>
                                 <td> {{ $product['returned'] }}</td>

@@ -166,9 +166,22 @@
                                     <td>{{ $invoice->status }}</td>
 
                                     <td>
-                                        @if ($invoice->updatedBy)
-                                            {{ $invoice->updated_at . ' ' . __('site.By') . ' ' . $invoice->updatedBy->name }}
+                                        @php
+                                            $created_at = \Carbon\Carbon::parse($invoice->created_at);
+                                            $due_date = $created_at->addDays(14);
+                                            $now = \Carbon\Carbon::now();
+                                            $days_left = $due_date->diffInDays($now, false); // false to calculate negative differences
+                                            $days_left = abs($days_left); // Get the absolute value
+                                        @endphp
+
+                                        @if ($days_left == 0)
+                                            o days
+                                        @else
+                                            {{ $days_left }} days left
                                         @endif
+                                        {{-- @if ($invoice->updatedBy)
+                                            {{ $invoice->updated_at . ' ' . __('site.By') . ' ' . $invoice->updatedBy->name }}
+                                        @endif --}}
                                     </td>
 
 

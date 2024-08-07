@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Seller\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Models\Seller;
 use Illuminate\Http\Request;
+use App\Mail\ResetPasswordMail;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -23,7 +25,7 @@ class AuthController extends Controller
             'password' => 'required|min:8|max:50',
             'confirm_password' => 'required|same:password|max:50|min:8',
             // 'address' => 'required|max:250',
-            'phone' => 'required|max:13',
+            'phone' => 'required|max:14',
             // 'about_us' => 'required|max:800',
             'national_id' => 'required|image|mimes:png,jpg,jpeg|max:2048',
         ]);
@@ -91,5 +93,47 @@ class AuthController extends Controller
     public function deactivate()
     {
         return view('seller.auth.deactivate');
+    }
+
+    public function mail_reset_password(Request $request)
+    {
+
+        $request->validate([
+            'email' => 'required|email|max:50',
+        ]);
+
+        $seller = Seller::where('email', $request->email)->first();
+        if (!$seller) {
+            return redirect()->back()->with(['Delete' => 'Email not found']);
+        }
+
+        Mail::to($request->email)->send(new ResetPasswordMail($request->email));
+        return redirect()->back()->with(['Add' => 'Password reset link sent to your email, check your email']);
+    }
+
+    public function reset_password_page($email)
+    {
+        return view('seller.auth.resetpassword', compact('email'));
+    }
+
+    public function reset_password_store(Request $request, $email)
+    {
+        $request->validate([
+            'email' => 'required|email|max:50',
+            'new_password' => 'required|max:50',
+            'confirm_password' => 'required|max:50|same:new_password',
+
+        ]);
+        if ($request->email != $email) {
+            return redirect()->back()->with('Delete', 'Your Email is defferent from the email that we sent to you');
+        }
+        $seller = Seller::where('email', $request->email)->first();
+        if (!$seller) {
+            return redirect()->back()->with(['Delete' => 'Email not found']);
+        }
+        $seller->update([
+            'password' => bcrypt($request->new_password),
+        ]);
+        return redirect()->route('seller.login')->with('Add', 'Password reset successfully');
     }
 }

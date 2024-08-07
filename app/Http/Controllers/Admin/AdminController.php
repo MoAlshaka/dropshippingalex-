@@ -50,6 +50,7 @@ class AdminController extends Controller
         $this->validate($request, [
             'name' => 'required|min:3|max:100',
             'username' => 'required|unique:admins',
+            'phone' => 'required|regex:/^[0-9]{1,13}$/',
             'password' => 'required|min:4|max:50|confirmed',
             'roles_name' => 'required',
         ]);

@@ -233,13 +233,14 @@ class LeadController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateLeadRequest $request, string $id)
+    public function update(Request $request, $id)
     {
+
         $request->validate([
 
             'warehouse' => 'required',
             'customer_name' => 'required',
-            'customer_phone' => 'required|max:25',
+            'customer_phone' => 'required|max:14',
             'item_sku' => 'required',
             'quantity' => 'required|numeric',
             'total' => 'required|numeric',
@@ -256,7 +257,7 @@ class LeadController extends Controller
         if ($regular) {
             $price = $request->total / $request->quantity;
             if ($price < $regular->unit_cost) {
-                $errors['message'] = "At least Unit price must be = product unit price or bigger ";
+                return redirect()->back()->with(['Delete' => 'At least Unit price must be = product unit price or bigger ']);
             }
         } else {
             $price = $request->total / $request->quantity;
@@ -266,9 +267,9 @@ class LeadController extends Controller
             }
         }
 
-        $lead->update([
+        $flag = $lead->update([
             'order_date' => $request->order_date ?? $lead->order_date,
-            'store_name' => $request->order_date ?? null,
+            'store_name' => $request->store_name ?? null,
             'warehouse' => $request->warehouse,
             'customer_name' => $request->customer_name,
             'customer_phone' => $request->customer_phone,
@@ -285,6 +286,7 @@ class LeadController extends Controller
             'type' => $commission ? 'commission' : ($regular ? 'regular' : null),
 
         ]);
+
         return redirect()->route('leads.index')->with(['Update' => 'Lead updated successfully.']);
     }
 

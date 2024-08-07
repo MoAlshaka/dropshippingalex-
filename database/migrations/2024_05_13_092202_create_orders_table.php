@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('shipment_status')->default('pending');
-            $table->string('payment_status')->nullable();
-            $table->string('payment_type')->nullable();
+            $table->string('payment_status')->default('pending');
+            $table->string('payment_type')->default('pending');
             $table->integer('calls')->nullable();
             $table->unsignedInteger('quantity');
             $table->foreignId('lead_id')->constrained('leads')->onDelete('cascade')->onUpdate('cascade');;
