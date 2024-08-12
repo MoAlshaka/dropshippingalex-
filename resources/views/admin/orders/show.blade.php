@@ -44,8 +44,8 @@
 
         <!-- <div class="card">
 
-                                                                                                </div> -->
-        {{-- <div class="leed_container mx-4 grid md:grid-cols-12 gap-4 lg:mx-10 lg:gap-6 my-6">
+                                                                                                                                </div> -->
+        <div class="leed_container mx-4 grid md:grid-cols-12 gap-4 lg:mx-10 lg:gap-6 my-6">
             <!-- leed info  -->
             <div class="leed_info card_bg rounded-2xl p-6 shadow-md md:col-span-5">
                 <div>
@@ -56,7 +56,7 @@
                 <hr />
                 <div>
                     <h2 class="text-2xl font-bold  capitalize my-5">
-                        lead information
+                        {{ __('site.LeadInformation') }}
                     </h2>
                     <div class="mobile flex items-center gap-1 ">
                         <span class="mdi mdi-phone-outline"></span>
@@ -65,7 +65,7 @@
                     <div class="adrdress">
                         <div class="adrdress_title flex items-center gap-1  text-md mt-4 mb-2">
                             <span class="mdi mdi-map-outline"></span>
-                            <span class="font-bold  text-sm">Address</span>
+                            <span class="font-bold  text-sm"> {{ __('site.Address') }}</span>
                         </div>
                         <p class=" text-sm text-pretty">
                             {{ $order->lead->customer_addrress }}{{ $order->lead->customer_city }}
@@ -74,7 +74,7 @@
                     <div class="country">
                         <div class="country_title flex items-center gap-1  text-md mt-4 mb-2">
                             <span class="mdi mdi-map-marker-outline"></span>
-                            <span class="font-bold  text-sm"> Country </span>
+                            <span class="font-bold  text-sm"> {{ __('site.Country') }} </span>
                         </div>
                         <div class=" text-md mt-2 mb-2 flex gap-2 items-center">
                             <span class="material-symbols-outlined relative top-[0px]">
@@ -94,10 +94,10 @@
                 <hr />
                 <div>
                     <h2 class="text-xl font-bold  capitalize my-2">
-                        Store refrence
+                        {{ __('site.StoreReference') }}
                     </h2>
                     <div>
-                        <span class=" capitalize">store refrence:</span>
+                        <span class=" capitalize">{{ __('site.StoreReference') }}:</span>
                         <span class=" text-sm"> {{ $order->lead->store_reference }} </span>
                     </div>
                 </div>
@@ -107,7 +107,7 @@
                 <div class="details flex flex-col gap-6 lg:gap-4">
                     <div class="detail_nav card_bg rounded-t-lg px-6 py-4 shadow-sm">
                         <h4 class="uppercase text-sm md:text-md text-purple-600 font-bold">
-                            details
+                            {{ __('site.Details') }}
                         </h4>
                     </div>
                     <div class="details_table_container card_bg rounded-2xl shadow-md p-6">
@@ -138,7 +138,7 @@
                                                 <td>{{ $product->weight }}</td>
                                                 <td>{{ $order->shipment_status }}</td>
                                                 <td>{{ $order->payment_status }}</td>
-                                                <td>{{ $order->lead->total }}</td>
+                                                <td>{{ $order->lead->total . ' ' . $order->lead->currency }}</td>
 
                                             </tr>
 
@@ -154,7 +154,7 @@
                     <div class="details_table_container card_bg rounded-2xl shadow-md p-6">
                         <div class="details_table_header">
                             <h4 class="text-sm uppercase  font-bold mb-4">
-                                Products
+                                {{ __('site.Product') }}
                             </h4>
                             <hr />
                             <div class="overflow-auto">
@@ -163,6 +163,7 @@
                                         <thead>
                                             <tr class="text-nowrap">
                                                 <th>{{ __('site.Item') }}</th>
+                                                <th> {{ __('site.SKU') }}</th>
                                                 <th>{{ __('site.Quantity') }}</th>
                                                 <th>{{ __('site.Total') }}</th>
 
@@ -181,6 +182,7 @@
                                                     @endif
 
                                                 </td>
+                                                <td>{{ $order->lead->item_sku }}</td>
                                                 <td>{{ $order->lead->quantity }}</td>
                                                 <td>{{ $order->lead->total }}</td>
 
@@ -197,8 +199,8 @@
                     </div>
                 </div>
             </div>
-        </div> --}}
-        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-8 gap-4 p-4">
+        </div>
+        {{-- <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-8 gap-4 p-4">
             <div class="col-span-8">
                 <div class="product-disc col-span-8 lg:col-span-5 card_bg rounded-md drop-shadow p-3">
                     <div>
@@ -338,7 +340,7 @@
                     </table>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
 
 

@@ -201,7 +201,7 @@
                                         <td>{{ $lead->customer_name }}</td>
                                         <td>{{ $lead->customer_phone }}</td>
                                         <td>{{ $lead->item_sku }}</td>
-                                        <td>{{ $lead->total }}</td>
+                                        <td>{{ $lead->total . ' ' . $lead->currency }}</td>
                                         <td> {{ $lead->type }}
                                             @if ($lead->type == 'commission')
                                                 @if ($lead->affiliateproduct->type == 'delivered')

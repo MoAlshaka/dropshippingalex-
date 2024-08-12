@@ -123,34 +123,52 @@
                                         <label for="bs-rangepicker-range">{{ __('site.Date') }}</label>
                                     </div>
                                 </div>
-                                <div class=" mb-4">
-                                    <div class="form-floating form-floating-outline">
-                                        <select name="admin_id[]" id="admin_id" class="selectpicker w-100"
-                                            data-style="btn-default" multiple data-actions-box="true">
-                                            @isset($admins)
-                                                @foreach ($admins as $admin)
-                                                    <option value="{{ $admin->id }}">{{ $admin->name }}</option>
-                                                @endforeach
-                                            @endisset
-                                        </select>
-                                        <label for="admin_id">{{ __('site.Manger') }}</label>
+                                @if (auth()->user()->roles_name == 'Admin')
+                                    <div class=" mb-4">
+                                        <div class="form-floating form-floating-outline">
+                                            <select name="admin_id[]" id="admin_id" class="selectpicker w-100"
+                                                data-style="btn-default" multiple data-actions-box="true">
+                                                @isset($admins)
+                                                    @foreach ($admins as $admin)
+                                                        <option value="{{ $admin->id }}">{{ $admin->name }}</option>
+                                                    @endforeach
+                                                @endisset
+                                            </select>
+                                            <label for="admin_id">{{ __('site.Manger') }}</label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class=" mb-4">
-                                    <div class="form-floating form-floating-outline">
-                                        <select name="seller_id[]" id="seller_id" class="selectpicker w-100"
-                                            data-style="btn-default" multiple data-actions-box="true">
-                                            @isset($sellers)
-                                                @foreach ($sellers as $seller)
-                                                    <option value="{{ $seller->id }}">
-                                                        {{ $seller->first_name . ' ' . $seller->last_name }}</option>
-                                                @endforeach
-                                            @endisset
-                                        </select>
-                                        <label for="seller_id">{{ __('site.Seller') }}</label>
+                                    <div class=" mb-4">
+                                        <div class="form-floating form-floating-outline">
+                                            <select name="seller_id[]" id="seller_id" class="selectpicker w-100"
+                                                data-style="btn-default" multiple data-actions-box="true">
+                                                @isset($sellers)
+                                                    @foreach ($sellers as $seller)
+                                                        <option value="{{ $seller->id }}">
+                                                            {{ $seller->first_name . ' ' . $seller->last_name . ' ref: ' . $seller->id }}
+                                                        </option>
+                                                    @endforeach
+                                                @endisset
+                                            </select>
+                                            <label for="seller_id">{{ __('site.Seller') }}</label>
+                                        </div>
                                     </div>
-                                </div>
-
+                                @else
+                                    <div class=" mb-4">
+                                        <div class="form-floating form-floating-outline">
+                                            <select name="seller_id[]" id="seller_id" class="selectpicker w-100"
+                                                data-style="btn-default" multiple data-actions-box="true">
+                                                @isset($all_sellers)
+                                                    @foreach ($all_sellers as $seller)
+                                                        <option value="{{ $seller->id }}">
+                                                            {{ $seller->first_name . ' ' . $seller->last_name . ' ref: ' . $seller->id }}
+                                                        </option>
+                                                    @endforeach
+                                                @endisset
+                                            </select>
+                                            <label for="seller_id">{{ __('site.Seller') }}</label>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                             <button type="submit" class="btn btn-primary waves-effect waves-light">
                                 {{ __('site.Filter') }}</button>
@@ -330,13 +348,13 @@
                     <svg viewBox="0 0 36 36" class="circular-chart orange">
                         <path class="circle-bg"
                             d="M18 2.0845
-                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 -31.831" />
                         <!-- place the 60 in the stroke-dasharray with the persentage -->
                         <path class="circle" stroke-dasharray="{{ $delivered_rate }}, 100"
                             d="M18 2.0845
-                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 -31.831" />
                     </svg>
                 </div>
                 <div class="flex flex-col justify-center px-4 ">
@@ -357,13 +375,13 @@
                     <svg viewBox="0 0 36 36" class="circular-chart green">
                         <path class="circle-bg"
                             d="M18 2.0845
-                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 -31.831" />
                         <!-- place the 60 in the stroke-dasharray with the persentage -->
                         <path class="circle" stroke-dasharray="{{ $confirmed_rate }}, 100"
                             d="M18 2.0845
-                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 31.831
-                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 31.831
+                                                                                                                                                                                                                a 15.9155 15.9155 0 0 1 0 -31.831" />
                     </svg>
                 </div>
                 <div class="flex flex-col justify-center px-4 ">

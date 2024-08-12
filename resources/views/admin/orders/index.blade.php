@@ -226,14 +226,15 @@
                                     {{--                                <td> @foreach ($order->shippingdetails as $shippingdetail) --}}
                                     {{--                                    {{ $shippingdetail->details }} --}}
                                     {{--                                    @endforeach</td> --}}
-                                    <td> {{ $order->lead->type }}
-                                        {{-- @if ($order->lead->type == 'commission')
+                                    <td>
+                                        {{ $order->lead->type }}
+                                        @if ($order->lead->type == 'commission')
                                             @if ($order->lead->affiliateproduct->type == 'delivered')
                                                 {{ __('site.PerDelivered') }}
                                             @else
                                                 {{ __('site.PerConfirmed') }}
                                             @endif
-                                        @endif --}}
+                                        @endif
 
                                     </td>
                                     <td>{{ $order->shipment_status }}</td>

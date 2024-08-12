@@ -219,12 +219,21 @@
                                     <td>{{ $order->lead->store_reference }}</td>
                                     <td>{{ $order->lead->order_date }}</td>
                                     <td>{{ $order->lead->customer_name }}</td>
-                                    <td>{{ $order->lead->total }}</td>
+                                    <td>{{ $order->lead->total . ' ' . $order->lead->currency }}</td>
                                     <td>{{ $order->lead->warehouse }}</td>
                                     {{--                                <td> @foreach ($order->shippingdetails as $shippingdetail) --}}
                                     {{--                                    {{ $shippingdetail->details }} --}}
                                     {{--                                    @endforeach</td> --}}
-                                    <td> {{ $order->lead->type }}</td>
+                                    <td>
+                                        {{ $order->lead->type }}
+                                        @if ($order->lead->type == 'commission')
+                                            @if ($order->lead->affiliateproduct->type == 'delivered')
+                                                {{ __('site.PerDelivered') }}
+                                            @else
+                                                {{ __('site.PerConfirmed') }}
+                                            @endif
+                                        @endif
+                                    </td>
                                     <td>{{ $order->shipment_status }}</td>
                                     <td>{{ $order->payment_status }}</td>
                                     <td> {{ $order->payment_type }}</td>

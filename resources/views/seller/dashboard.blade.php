@@ -344,7 +344,7 @@
                                 @elseif($seller['revenue'] < 100 && $seller['revenue'] >= 50)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
-                                        <img src="{{ asset('assets/rank/Work.png') }}" alt="rank_Icon"
+                                        <img src="{{ asset('assets/rank/Worker.png') }}" alt="rank_Icon"
                                             class="rank_icon !w-20" />
                                         <div class="overflow-hidden rounded-full h-20 absolute top-0 left-0">
                                             <!-- avatar image -->
@@ -423,7 +423,7 @@
                         <div class="card-body">
                             <div class="picture avatar-lg online text-center p-2 m-auto">
                                 <img alt="avatar" class="rounded-circle"
-                                    src="https://app.codpartner.com/assets/img/pngs/manager-women.png">
+                                    src="{{ asset('assets/svg/customer-service.svg') }}">
                             </div>
                             <!--[if ENDBLOCK]><![endif]-->
                             <div class="text-center mt-3">

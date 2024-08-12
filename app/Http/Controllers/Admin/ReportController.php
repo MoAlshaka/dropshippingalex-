@@ -53,9 +53,15 @@ class ReportController extends Controller
             $confirmed_rate = intval(($confirmed / $orders) * 100);
             $delivered_rate = intval(($delivered / $orders) * 100);
         }
-        $admins = Admin::where('roles_name', '!=', 'Owner')->get();
-        $sellers = Seller::where('is_active', 1)->get();
-        return view('admin.reports.index', compact('leads', 'under_process', 'confirmed', 'canceled', 'balance', 'shipped', 'delivered', 'returned', 'countries', 'confirmed_rate', 'delivered_rate', 'admins', 'sellers'));
+        $admins = Admin::where('roles_name', '!=', 'Owner')
+            ->whereHas('sellers')
+            ->get();
+
+        $sellers = Seller::where('is_active', 1)->where('admin_id', auth()->user()->id)->get();
+
+        $all_sellers = Seller::where('is_active', 1)->get();
+
+        return view('admin.reports.index', compact('leads', 'under_process', 'confirmed', 'canceled', 'balance', 'shipped', 'delivered', 'returned', 'countries', 'confirmed_rate', 'delivered_rate', 'admins', 'sellers', 'all_sellers'));
     }
 
     public function filter_country($countryId)

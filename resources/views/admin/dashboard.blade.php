@@ -106,7 +106,53 @@
                                 @error('date')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
-                                <div class=" mb-4">
+                                @if (auth()->user()->roles_name == 'Admin')
+                                    <div class=" mb-4">
+                                        <div class="form-floating form-floating-outline">
+                                            <select name="admin_id[]" id="admin_id" class="selectpicker w-100"
+                                                data-style="btn-default" multiple data-actions-box="true">
+                                                @isset($admins)
+                                                    @foreach ($admins as $admin)
+                                                        <option value="{{ $admin->id }}">{{ $admin->name }}</option>
+                                                    @endforeach
+                                                @endisset
+                                            </select>
+                                            <label for="admin_id">{{ __('site.Manger') }}</label>
+                                        </div>
+                                    </div>
+                                    <div class=" mb-4">
+                                        <div class="form-floating form-floating-outline">
+                                            <select name="seller_id[]" id="allSellers" class="selectpicker w-100"
+                                                data-style="btn-default" multiple data-actions-box="true">
+                                                @isset($allSellers)
+                                                    @foreach ($allSellers as $seller)
+                                                        <option value="{{ $seller->id }}">
+                                                            {{ $seller->first_name . ' ' . $seller->last_name . ' ref: ' . $seller->id }}
+                                                        </option>
+                                                    @endforeach
+                                                @endisset
+                                            </select>
+                                            <label for="allSellers">{{ __('site.Seller') }}</label>
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class=" mb-4">
+                                        <div class="form-floating form-floating-outline">
+                                            <select name="seller_id[]" id="seller_id" class="selectpicker w-100"
+                                                data-style="btn-default" multiple data-actions-box="true">
+                                                @isset($all_sellers)
+                                                    @foreach ($all_sellers as $seller)
+                                                        <option value="{{ $seller->id }}">
+                                                            {{ $seller->first_name . ' ' . $seller->last_name . ' ref: ' . $seller->id }}
+                                                        </option>
+                                                    @endforeach
+                                                @endisset
+                                            </select>
+                                            <label for="seller_id">{{ __('site.Seller') }}</label>
+                                        </div>
+                                    </div>
+                                @endif
+                                {{-- <div class=" mb-4">
                                     <div class="form-floating form-floating-outline">
                                         <select name="admin_id[]" id="admin_id" class="selectpicker w-100"
                                             data-style="btn-default" multiple data-actions-box="true">
@@ -132,7 +178,7 @@
                                         </select>
                                         <label for="seller_id">{{ __('site.Seller') }}</label>
                                     </div>
-                                </div>
+                                </div> --}}
 
                             </div>
                             <button type="submit" class="btn btn-primary waves-effect waves-light">
@@ -342,7 +388,7 @@
                                 @elseif($seller['revenue'] <= 1000 && $seller['revenue'] > 500)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
-                                        <img src="{{ asset('assets/rank/Work.png') }}" alt="rank_Icon"
+                                        <img src="{{ asset('assets/rank/Worker.png') }}" alt="rank_Icon"
                                             class="rank_icon !w-20" />
                                         <div class="overflow-hidden rounded-full h-20 absolute top-0 left-0">
                                             <!-- avatar image -->
@@ -538,7 +584,7 @@
                                 @elseif($seller['revenue'] < 100 && $seller['revenue'] >= 50)
                                     <div class="rank_Avatar relative ">
                                         <!-- rank icon -->
-                                        <img src="{{ asset('assets/rank/Work.png') }}" alt="rank_Icon"
+                                        <img src="{{ asset('assets/rank/Worker.png') }}" alt="rank_Icon"
                                             class="rank_icon !w-20" />
                                         <div class="overflow-hidden rounded-full h-20 absolute top-0 left-0">
                                             <!-- avatar image -->

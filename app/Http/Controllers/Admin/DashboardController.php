@@ -55,12 +55,18 @@ class DashboardController extends Controller
             $seller = Seller::findOrFail($revenue->seller_id);
             $sellers[] = ['seller' => $seller, 'revenue' => $revenue->revenue];
         }
-        $admins =  Admin::whereDoesntHave('roles', function ($query) {
-            $query->where('name', 'Owner');
-        })->get();
-        $allSellers = Seller::orderby('id', 'desc')->get();
+        // $admins =  Admin::whereDoesntHave('roles', function ($query) {
+        //     $query->where('name', 'Owner');
+        // })->get();
+        // $allSellers = Seller::orderby('id', 'desc')->get();
 
+        $admins = Admin::where('roles_name', '!=', 'Owner')
+            ->whereHas('sellers')
+            ->get();
 
+        $allSellers = Seller::where('is_active', 1)->where('admin_id', auth()->user()->id)->get();
+
+        $all_sellers = Seller::where('is_active', 1)->get();
 
         // charts
 

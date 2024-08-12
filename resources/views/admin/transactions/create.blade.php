@@ -61,7 +61,8 @@
                                         <option value="">{{ __('site.SelectSeller') }}</option>
                                         @foreach ($sellers as $seller)
                                             <option value="{{ $seller->id }}">
-                                                {{ $seller->first_name . ' ' . $seller->last_name }}</option>
+                                                {{ $seller->first_name . ' ' . $seller->last_name . ' ref: ' . $seller->id }}
+                                            </option>
                                         @endforeach
                                     </select>
 
