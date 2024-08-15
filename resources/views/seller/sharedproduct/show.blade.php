@@ -124,8 +124,8 @@
                         @foreach ($product->sharedcountries as $country)
                             <tr>
 
-                                <td><img src="{{ asset('assets/countries/flags/' . $country->flag) }}" width="20"
-                                        height="20"></td>
+                                <td><img src="{{ asset('assets/countries/flags/' . $country->flag) }}" width="35"
+                                        height="35"></td>
                                 <td>${{ $product->unit_cost }}</td>
                                 <td>${{ $product->recommended_price }}</td>
                                 <td>${{ $country->shipping_cost }}</td>

@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Models\SharedProduct;
 use App\Models\AffiliateProduct;
 use App\Http\Controllers\Controller;
+use App\Models\Note;
 
 class LeadController extends Controller
 {
@@ -42,15 +43,23 @@ class LeadController extends Controller
     {
         $request->validate([
             'status' => 'required',
-            'notes' => 'nullable|string|max:65000'
+            'notes' => 'nullable|string|max:255'
         ]);
 
         $lead = Lead::findOrFail($id);
         $old_status = $lead->status;
         $flag = $lead->update([
             'status' => $request->status,
-            'notes' => $request->notes
+
         ]);
+        if ($request->notes) {
+            if ($flag) {
+                Note::create([
+                    'title' => $request->notes,
+                    'lead_id' => $lead->id
+                ]);
+            }
+        }
 
         if ($flag) {
             if ($lead->status == 'confirmed' && $lead->status !== $old_status) {
@@ -63,7 +72,7 @@ class LeadController extends Controller
                 if ($lead->type == 'commission') {
                     $product = AffiliateProduct::where('sku', $lead->item_sku)->first();
 
-                    if ($product) {
+                    if ($product->type == 'confirmed') {
                         $revenue = Revenue::where('seller_id', $lead->seller_id)->first();
 
                         if ($revenue) {

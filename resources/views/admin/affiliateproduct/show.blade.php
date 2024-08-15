@@ -158,8 +158,8 @@
                         @foreach ($product->affiliatecountries as $country)
                             <tr>
 
-                                <td><img src="{{ asset('assets/countries/flags/' . $country->flag) }}" width="50"
-                                        height="50"></td>
+                                <td><img src="{{ asset('assets/countries/flags/' . $country->flag) }}" width="35"
+                                        height="35"></td>
                                 <td>${{ $product->minimum_selling_price }}</td>
                                 <td>${{ $product->commission }}</td>
 

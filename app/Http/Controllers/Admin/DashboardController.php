@@ -122,7 +122,7 @@ class DashboardController extends Controller
             $orders_count[] = (object)['date' => $date, 'count' => $count];
         }
 
-        return view('admin.dashboard', compact('leads', 'pendingLeadsCount', 'approvedLeadsCount', 'deliveredLeadsCount', 'revenue', 'sellers', 'leads_count', 'orders_count', 'allSellers', 'admins'));
+        return view('admin.dashboard', compact('leads', 'pendingLeadsCount', 'approvedLeadsCount', 'deliveredLeadsCount', 'revenue', 'sellers', 'leads_count', 'orders_count', 'all_sellers', 'admins'));
     }
 
 

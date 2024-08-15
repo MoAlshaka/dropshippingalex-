@@ -31,7 +31,6 @@ return new class extends Migration
             $table->decimal('total', 10, 2);
             $table->string('currency');
             $table->string('status')->default('pending');
-            $table->text('notes')->nullable();
             $table->foreignId('seller_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

@@ -27,7 +27,7 @@ class Lead extends Model
         'status',
         'type',
         'seller_id',
-        'notes',
+
     ];
 
     public function seller()
@@ -38,6 +38,10 @@ class Lead extends Model
     public function order()
     {
         return $this->hasOne(Order::class);
+    }
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
     }
     public function sharedproduct()
     {

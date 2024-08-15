@@ -101,7 +101,7 @@
                                     <div class="col-md-6 mb-4">
                                         <div class="form-floating form-floating-outline">
                                             <input class="form-control" type="text" name="notes" id="notes"
-                                                value="{{ old('notes', $lead->notes) }}">
+                                                value="{{ old('notes') }}">
                                             <label for="notes">{{ __('site.Notes') }}</label>
                                         </div>
                                     </div>

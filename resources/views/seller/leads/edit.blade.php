@@ -195,7 +195,7 @@
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                             <div class="form-floating form-floating-outline mb-4">
-                                <textarea id="basic-default-message" class="form-control" name="notes" style="height: 60px">{{ $lead->notes }}</textarea>
+                                <textarea id="basic-default-message" class="form-control" name="notes" style="height: 60px"></textarea>
                                 <label for="basic-default-message"> {{ __('site.Notes') }}</label>
                             </div>
                             <button type="submit" class="btn btn-primary"> {{ __('site.Send') }}</button>

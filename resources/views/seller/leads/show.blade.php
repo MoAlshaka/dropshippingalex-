@@ -102,108 +102,201 @@
             </div>
             <!-- product details -->
             <div class="product_details md:col-span-7 flex flex-col gap-6">
-                <div class="details flex flex-col gap-6 lg:gap-4">
-                    <div class="detail_nav card_bg rounded-t-lg px-6 py-4 shadow-sm">
-                        <h4 class="uppercase text-sm md:text-md text-purple-600 font-bold">
-                            {{ __('site.Details') }}
-                        </h4>
-                    </div>
-                    <div class="details_table_container card_bg rounded-2xl shadow-md p-6">
-                        <div class="details_table_header">
-                            <h4 class="text-sm uppercase  font-bold mb-4">
-                                {{ __('site.LeadDetails') }}
-                            </h4>
-                            <hr />
-                            <div class="overflow-auto">
-                                <!-- but table here -->
-                                <div class="col-span-8 card_bg drop-shadow rounded-md px-4 py-4">
-                                    <table class="table">
-                                        <thead>
-                                            <tr class="text-nowrap">
-                                                <th>{{ __('site.REF') }}</th>
-                                                <th>{{ __('site.CreatedAt') }}</th>
-                                                <th>{{ __('site.Status') }}</th>
-                                                <th> {{ __('site.Type') }}</th>
-                                                <th> {{ __('site.Total') }}</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-border-bottom-0">
+                {{-- <div class="details flex flex-col gap-6 lg:gap-4">
+                            <div class="detail_nav card_bg rounded-t-lg px-6 py-4 shadow-sm">
+                                <h4 class="uppercase text-sm md:text-md text-purple-600 font-bold">
+                                    {{ __('site.Details') }}
+                                </h4>
+                            </div>
+                            <div class="details_table_container card_bg rounded-2xl shadow-md p-6">
+                                <div class="details_table_header">
+                                    <h4 class="text-sm uppercase  font-bold mb-4">
+                                        {{ __('site.LeadDetails') }}
+                                    </h4>
+                                    <hr />
+                                    <div class="overflow-auto">
+                                        <!-- but table here -->
+                                        <div class="col-span-8 card_bg drop-shadow rounded-md px-4 py-4">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr class="text-nowrap">
+                                                        <th>{{ __('site.REF') }}</th>
+                                                        <th>{{ __('site.CreatedAt') }}</th>
+                                                        <th>{{ __('site.Status') }}</th>
+                                                        <th> {{ __('site.Type') }}</th>
+                                                        <th> {{ __('site.Total') }}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="table-border-bottom-0">
 
-                                            <tr>
-                                                <td>{{ $lead->store_reference }}</td>
-                                                <td>{{ $lead->created_at }}</td>
-                                                <td>{{ $lead->status }}</td>
-                                                <td>{{ $lead->type }}
-                                                    @if ($lead->type == 'commission')
-                                                        @if ($lead->affiliateproduct->type == 'delivered')
-                                                            {{ __('site.PerDelivered') }}
-                                                        @else
-                                                            {{ __('site.PerConfirmed') }}
-                                                        @endif
-                                                    @endif
-                                                </td>
-                                                <td>{{ $lead->total . ' ' . $lead->currency }}</td>
+                                                    <tr>
+                                                        <td>{{ $lead->store_reference }}</td>
+                                                        <td>{{ $lead->created_at }}</td>
+                                                        <td>{{ $lead->status }}</td>
+                                                        <td>{{ $lead->type }}
+                                                            @if ($lead->type == 'commission')
+                                                                @if ($lead->affiliateproduct->type == 'delivered')
+                                                                    {{ __('site.PerDelivered') }}
+                                                                @else
+                                                                    {{ __('site.PerConfirmed') }}
+                                                                @endif
+                                                            @endif
+                                                        </td>
+                                                        <td>{{ $lead->total . ' ' . $lead->currency }}</td>
 
-                                            </tr>
+                                                    </tr>
 
 
-                                        </tbody>
-                                    </table>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> --}}
+                <div class="row">
+                    <div class="details flex flex-col gap-6 lg:gap-4">
+
+                        <div class="card mb-4">
+                            <div class="card-header p-0">
+                                <div class="nav-align-top">
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <button type="button" class="nav-link active" role="tab"
+                                                data-bs-toggle="tab" data-bs-target="#navs-top-home"
+                                                aria-controls="navs-top-home" aria-selected="true">
+                                                {{ __('site.Details') }}
+                                            </button>
+                                        </li>
+                                        <li class="nav-item">
+                                            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                                data-bs-target="#navs-top-profile" aria-controls="navs-top-profile"
+                                                aria-selected="false">
+                                                {{ __('site.History') }}
+                                            </button>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="tab-content p-0">
+                                    <div class="tab-pane fade show active" id="navs-top-home" role="tabpanel">
+                                        <div class="details flex flex-col gap-6 lg:gap-4 mb-4">
+                                            <div class="details_table_container card_bg rounded-2xl">
+                                                <div class="details_table_header">
+                                                    <h4 class="text-sm uppercase  font-bold mb-4">
+                                                        {{ __('site.LeadDetails') }}
+                                                    </h4>
+                                                    <hr />
+                                                    <div class="overflow-auto">
+                                                        <!-- but table here -->
+                                                        <div class="col-span-8 card_bg drop-shadow rounded-md px-4 py-4">
+                                                            <table class="table">
+                                                                <thead>
+                                                                    <tr class="text-nowrap">
+                                                                        <th>{{ __('site.REF') }}</th>
+                                                                        <th>{{ __('site.CreatedAt') }}</th>
+                                                                        <th>{{ __('site.Status') }}</th>
+                                                                        <th> {{ __('site.Type') }}</th>
+                                                                        <th> {{ __('site.Total') }}</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody class="table-border-bottom-0">
+
+                                                                    <tr>
+                                                                        <td>{{ $lead->store_reference }}</td>
+                                                                        <td>{{ $lead->created_at }}</td>
+                                                                        <td>{{ $lead->status }}</td>
+                                                                        <td>{{ $lead->type }}
+                                                                            @if ($lead->type == 'commission')
+                                                                                @if ($lead->affiliateproduct->type == 'delivered')
+                                                                                    {{ __('site.PerDelivered') }}
+                                                                                @else
+                                                                                    {{ __('site.PerConfirmed') }}
+                                                                                @endif
+                                                                            @endif
+                                                                        </td>
+                                                                        <td>{{ $lead->total . ' ' . $lead->currency }}</td>
+
+                                                                    </tr>
+
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr class="border-xl">
+                                        <div class="details flex flex-col gap-6 lg:gap-4 mt-4">
+                                            <div class="details_table_container card_bg rounded-2xl">
+                                                <div class="details_table_header">
+                                                    <h4 class="text-sm uppercase  font-bold mb-4">
+                                                        {{ __('site.Product') }}
+                                                    </h4>
+                                                    <hr />
+                                                    <div class="overflow-auto">
+                                                        <div class="col-span-8 card_bg drop-shadow rounded-md px-4 py-4">
+                                                            <table class="table">
+                                                                <thead>
+                                                                    <tr class="text-nowrap">
+                                                                        <th>{{ __('site.Item') }}</th>
+                                                                        <th>{{ __('site.SKU') }}</th>
+                                                                        <th>{{ __('site.Quantity') }}</th>
+                                                                        <th>{{ __('site.Total') }}</th>
+
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody class="table-border-bottom-0">
+
+                                                                    <tr>
+                                                                        <td>
+                                                                            @if ($affiliateproduct)
+                                                                                <img src="{{ asset('assets/products/affiliateProduct/images/' . $affiliateproduct->image) }}"
+                                                                                    alt="{{ $affiliateproduct->title }}"
+                                                                                    width="50" height="50">
+                                                                            @else
+                                                                                <img src="{{ asset('assets/products/sharedproduct/images/' . $sharedproduct->image) }}"
+                                                                                    alt="{{ $sharedproduct->title }}"
+                                                                                    width="50" height="50">
+                                                                            @endif
+
+                                                                        </td>
+                                                                        <td>{{ $lead->item_sku }}</td>
+                                                                        <td>{{ $lead->quantity }}</td>
+                                                                        <td>{{ $lead->total . ' ' . $lead->currency }}</td>
+
+
+                                                                    </tr>
+
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade min-h-[400px]" id="navs-top-profile" role="tabpanel">
+                                        @foreach ($lead->notes as $note)
+                                            <p>
+                                                {{ $note->created_at->format('Y-m-d') . ' => ' . $note->title }}
+                                            </p>
+                                        @endforeach
+
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
-                <div class="details flex flex-col gap-6">
-                    <div class="details_table_container card_bg rounded-2xl shadow-md p-6">
-                        <div class="details_table_header">
-                            <h4 class="text-sm uppercase  font-bold mb-4">
-                                {{ __('site.Product') }}
-                            </h4>
-                            <hr />
-                            <div class="overflow-auto">
-                                <div class="col-span-8 card_bg drop-shadow rounded-md px-4 py-4">
-                                    <table class="table">
-                                        <thead>
-                                            <tr class="text-nowrap">
-                                                <th>{{ __('site.Item') }}</th>
-                                                <th>{{ __('site.SKU') }}</th>
-                                                <th>{{ __('site.Quantity') }}</th>
-                                                <th>{{ __('site.Total') }}</th>
 
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-border-bottom-0">
-
-                                            <tr>
-                                                <td>
-                                                    @if ($affiliateproduct)
-                                                        <img src="{{ asset('assets/products/affiliateProduct/images/' . $affiliateproduct->image) }}"
-                                                            alt="{{ $affiliateproduct->title }}" width="50"
-                                                            height="50">
-                                                    @else
-                                                        <img src="{{ asset('assets/products/sharedproduct/images/' . $sharedproduct->image) }}"
-                                                            alt="{{ $sharedproduct->title }}" width="50"
-                                                            height="50">
-                                                    @endif
-
-                                                </td>
-                                                <td>{{ $lead->item_sku }}</td>
-                                                <td>{{ $lead->quantity }}</td>
-                                                <td>{{ $lead->total . ' ' . $lead->currency }}</td>
-
-
-                                            </tr>
-
-
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 

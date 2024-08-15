@@ -310,6 +310,7 @@ return [
     'ContactManager' => 'Hello, If you need a professional account manager , Contact us now',
     'QuestionsManager' => 'Hello, I am your professional account manager, Contact me now if you have any questions',
     'ForgetPassword' => 'Forget Password',
+    'History' => 'History',
 
 
 

@@ -122,22 +122,6 @@
                                     </div>
                                     <div class=" mb-4">
                                         <div class="form-floating form-floating-outline">
-                                            <select name="seller_id[]" id="allSellers" class="selectpicker w-100"
-                                                data-style="btn-default" multiple data-actions-box="true">
-                                                @isset($allSellers)
-                                                    @foreach ($allSellers as $seller)
-                                                        <option value="{{ $seller->id }}">
-                                                            {{ $seller->first_name . ' ' . $seller->last_name . ' ref: ' . $seller->id }}
-                                                        </option>
-                                                    @endforeach
-                                                @endisset
-                                            </select>
-                                            <label for="allSellers">{{ __('site.Seller') }}</label>
-                                        </div>
-                                    </div>
-                                @else
-                                    <div class=" mb-4">
-                                        <div class="form-floating form-floating-outline">
                                             <select name="seller_id[]" id="seller_id" class="selectpicker w-100"
                                                 data-style="btn-default" multiple data-actions-box="true">
                                                 @isset($all_sellers)
@@ -149,6 +133,22 @@
                                                 @endisset
                                             </select>
                                             <label for="seller_id">{{ __('site.Seller') }}</label>
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class=" mb-4">
+                                        <div class="form-floating form-floating-outline">
+                                            <select name="seller_id[]" id="allSellers" class="selectpicker w-100"
+                                                data-style="btn-default" multiple data-actions-box="true">
+                                                @isset($allSellers)
+                                                    @foreach ($allSellers as $seller)
+                                                        <option value="{{ $seller->id }}">
+                                                            {{ $seller->first_name . ' ' . $seller->last_name . ' ref: ' . $seller->id }}
+                                                        </option>
+                                                    @endforeach
+                                                @endisset
+                                            </select>
+                                            <label for="allSellers">{{ __('site.Seller') }}</label>
                                         </div>
                                     </div>
                                 @endif

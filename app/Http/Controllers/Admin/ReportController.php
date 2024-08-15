@@ -25,9 +25,15 @@ class ReportController extends Controller
     public function index()
     {
 
-        $orders = Order::count();
+        $leads = Lead::where('type', 'regular')->count();
+        $lead_ids = Lead::where('type', 'regular')->pluck('id');
+
+
+
+        $orders = Order::whereIn('lead_id', $lead_ids)->count();
+        $orders_ids = Order::whereIn('lead_id', $lead_ids)->pluck('id');
         $countries = Country::all();
-        $leads = Lead::count();
+
 
         $under_process = 0;
         $confirmed = 0;
@@ -39,15 +45,15 @@ class ReportController extends Controller
         $confirmed_rate = 0;
         $delivered_rate = 0;
 
-        $under_process = Order::where('shipment_status', 'pending')->count();
-        $confirmed = Lead::where('status', 'confirmed')->count();
-        $canceled = Order::where('shipment_status', 'canceled')->count();
+        $under_process = Order::whereIn('lead_id', $orders_ids)->where('shipment_status', 'pending')->count();
+        $confirmed = Lead::whereIn('id', $lead_ids)->where('status', 'confirmed')->count();
+        $canceled = Order::whereIn('lead_id', $orders_ids)->where('shipment_status', 'canceled')->count();
         $revenue_confirmed  = Revenue::sum('revenue');
         $invoice_balance = Invoice::sum('revenue');
         $balance = $invoice_balance + $revenue_confirmed;
-        $shipped = Order::where('shipment_status', 'shipping')->count();
-        $delivered = Order::where('shipment_status', 'delivered')->count();
-        $returned = Order::where('shipment_status', 'returned')->count();
+        $shipped = Order::whereIn('lead_id', $orders_ids)->where('shipment_status', 'shipping')->count();
+        $delivered = Order::whereIn('lead_id', $orders_ids)->where('shipment_status', 'delivered')->count();
+        $returned = Order::whereIn('lead_id', $orders_ids)->where('shipment_status', 'returned')->count();
 
         if ($orders > 0) {
             $confirmed_rate = intval(($confirmed / $orders) * 100);
@@ -66,27 +72,31 @@ class ReportController extends Controller
 
     public function filter_country($countryId)
     {
-        $orders = Order::count();
+        $lead_ids = Lead::where('type', 'regular')->pluck('id');
+        $orders_ids = Order::whereIn('lead_id', $lead_ids)->pluck('id');
+
+
+        $orders = Order::whereIn('lead_id', $orders_ids)->count();
         $countries = Country::all();
         $country = Country::findOrFail($countryId);
-        $leads = Lead::where('warehouse', $country->name)->count();
-        $under_process = Order::whereHas('lead', function ($query) use ($country) {
+        $leads = Lead::whereIn('id', $lead_ids)->where('warehouse', $country->name)->count();
+        $under_process = Order::whereIn('lead_id', $orders_ids)->whereHas('lead', function ($query) use ($country) {
             $query->where('warehouse', $country->name);
         })->where('shipment_status', 'pending')->count();
-        $confirmed = Lead::where('warehouse', $country->name)->where('status', 'confirmed')->count();
-        $canceled = Order::whereHas('lead', function ($query) use ($country) {
+        $confirmed = Lead::whereIn('id', $lead_ids)->where('warehouse', $country->name)->where('status', 'confirmed')->count();
+        $canceled = Order::whereIn('lead_id', $orders_ids)->whereHas('lead', function ($query) use ($country) {
             $query->where('warehouse', $country->name);
         })->where('shipment_status', 'canceled')->count();
-        $balance = Order::whereHas('lead', function ($query) use ($country) {
+        $balance = Order::whereIn('lead_id', $orders_ids)->whereHas('lead', function ($query) use ($country) {
             $query->where('warehouse', $country->name);
         })->where('shipment_status', 'balance')->count();
-        $shipped = Order::whereHas('lead', function ($query) use ($country) {
+        $shipped = Order::whereIn('lead_id', $orders_ids)->whereHas('lead', function ($query) use ($country) {
             $query->where('warehouse', $country->name);
         })->where('shipment_status', 'shipping')->count();
-        $delivered = Order::whereHas('lead', function ($query) use ($country) {
+        $delivered = Order::whereIn('lead_id', $orders_ids)->whereHas('lead', function ($query) use ($country) {
             $query->where('warehouse', $country->name);
         })->where('shipment_status', 'delivered')->count();
-        $returned = Order::whereHas('lead', function ($query) use ($country) {
+        $returned = Order::whereIn('lead_id', $orders_ids)->whereHas('lead', function ($query) use ($country) {
             $query->where('warehouse', $country->name);
         })->where('shipment_status', 'returned')->count();
 
@@ -94,10 +104,15 @@ class ReportController extends Controller
             $confirmed_rate = intval(($confirmed / $orders) * 100);
             $delivered_rate = intval(($delivered / $orders) * 100);
         }
-        $admins = Admin::where('roles_name', '!=', 'Owner')->get();
-        $sellers = Seller::where('is_active', 1)->get();
+        $admins = Admin::where('roles_name', '!=', 'Owner')
+            ->whereHas('sellers')
+            ->get();
+
+        $sellers = Seller::where('is_active', 1)->where('admin_id', auth()->user()->id)->get();
+
+        $all_sellers = Seller::where('is_active', 1)->get();
         $country = Country::where('id', $countryId)->pluck('id')->first();
-        return view('admin.reports.index', compact('leads', 'under_process', 'confirmed', 'canceled', 'balance', 'shipped', 'delivered', 'returned', 'countries', 'confirmed_rate', 'delivered_rate', 'admins', 'sellers', 'country'));
+        return view('admin.reports.index', compact('leads', 'under_process', 'confirmed', 'canceled', 'balance', 'shipped', 'delivered', 'returned', 'countries', 'confirmed_rate', 'delivered_rate', 'admins', 'sellers', 'country', 'all_sellers'));
     }
 
 
@@ -276,8 +291,13 @@ class ReportController extends Controller
             $confirmed_rate = intval(($confirmed / $orders) * 100);
             $delivered_rate = intval(($delivered / $orders) * 100);
         }
-        $admins = Admin::where('roles_name', '!=', 'Owner')->get();
-        $sellers = Seller::where('is_active', 1)->get();
+        $admins = Admin::where('roles_name', '!=', 'Owner')
+            ->whereHas('sellers')
+            ->get();
+
+        $sellers = Seller::where('is_active', 1)->where('admin_id', auth()->user()->id)->get();
+
+        $all_sellers = Seller::where('is_active', 1)->get();
         return view('admin.reports.index', compact(
             'leads',
             'under_process',
@@ -293,6 +313,7 @@ class ReportController extends Controller
             'admins',
             'sellers',
             'country',
+            'all_sellers',
         ));
     }
 

@@ -106,8 +106,8 @@
                             <tr>
 
                                 <td>
-                                    <img src="{{ asset('assets/countries/flags/' . $country->flag) }}" width="50"
-                                        height="50">
+                                    <img src="{{ asset('assets/countries/flags/' . $country->flag) }}" width="35"
+                                        height="35">
                                 </td>
                                 <td>${{ $product->unit_cost }}</td>
                                 <td>${{ $product->recommended_price }}</td>

@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Seller;
 
+use App\Models\Lead;
+use App\Models\Note;
+use App\Models\Order;
+use App\Models\Country;
+use Illuminate\Http\Request;
+use App\Models\SharedProduct;
+use App\Models\AffiliateProduct;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateLeadRequest;
-use App\Models\AffiliateProduct;
-use App\Models\Country;
-use App\Models\Lead;
-use App\Models\Order;
-use App\Models\SharedProduct;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
 
 
 class LeadController extends Controller
@@ -149,10 +150,18 @@ class LeadController extends Controller
                     'quantity' => $row[11],
                     'total' => $row[12],
                     'currency' => $row[13],
-                    'notes' => $row[14] ?? null,
+
                     'type' => $commission ? 'commission' : ($regular ? 'regular' : null),
                     'seller_id' => auth()->guard('seller')->id(),
                 ]);
+                if (!empty($row[14])) {
+                    if ($lead) {
+                        Note::create([
+                            'title' => $row[14],
+                            'lead_id' => $lead->id
+                        ]);
+                    }
+                }
             }
         }
 
@@ -245,6 +254,8 @@ class LeadController extends Controller
             'quantity' => 'required|numeric',
             'total' => 'required|numeric',
             'currency' => 'required',
+            'notes' => 'nullable|string|max:255'
+
 
         ]);
         $lead = Lead::findorfail($id);
@@ -282,10 +293,18 @@ class LeadController extends Controller
             'quantity' => $request->quantity,
             'total' => $request->total,
             'currency' => $request->currency,
-            'notes' => $request->notes ?? null,
             'type' => $commission ? 'commission' : ($regular ? 'regular' : null),
 
         ]);
+        if ($request->notes) {
+            if ($flag) {
+                Note::create([
+                    'title' => $request->notes,
+                    'lead_id' => $lead->id
+                ]);
+            }
+        }
+
 
         return redirect()->route('leads.index')->with(['Update' => 'Lead updated successfully.']);
     }

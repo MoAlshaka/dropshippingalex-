@@ -192,6 +192,44 @@ class OrderController extends Controller
                             ]);
                         }
                     }
+                } else {
+                    $product = AffiliateProduct::where('sku', $lead->item_sku)->first();
+
+                    if ($product->type == 'delivered') {
+                        $revenue = Revenue::where('seller_id', $lead->seller_id)->first();
+
+                        if ($revenue) {
+                            // Check if revenue is greater than or equal to 50 and today is Sunday
+                            if ($revenue->revenue >= 50 && Carbon::now()->isSunday()) {
+                                $invoice = Invoice::create([
+                                    'seller_id' => $lead->seller_id,
+                                    'revenue' => $revenue->revenue,
+                                    'date' => now()->toDateString(),
+                                    'created_at' => now(),
+                                    'status' => 'unpaid',
+                                ]);
+
+                                // Reset revenue if the invoice was successfully created
+                                if ($invoice) {
+                                    $revenue->update(['revenue' => 0]);
+                                }
+                            }
+
+                            // Update the revenue
+                            $revenue->update([
+                                'revenue' => $revenue->revenue + ($product->commission * $lead->quantity),
+                            ]);
+                        } else {
+                            // Create a new revenue record
+                            Revenue::create([
+                                'revenue' => ($product->commission * $lead->quantity),
+                                'seller_id' => $lead->seller_id,
+                                'lead_id' => $lead->id,
+                                'order_id' => $order->id,
+                                'date' => now()->toDateString(),
+                            ]);
+                        }
+                    }
                 }
             }
         }
