@@ -4,30 +4,23 @@
     {{ __('site.Roles') }}
 @endsection
 @section('content')
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 
-    @if ($message = Session::get('success'))
-        <div class="bs-toast toast toast-ex animate__animated my-2 fade animate__tada hide" role="alert"
-            aria-live="assertive" aria-atomic="true" data-bs-delay="2000">
-            <div class="toast-header">
-                <i class="ti ti-bell ti-xs me-2 text-primary"></i>
-                <div class="me-auto fw-medium">Alert</div>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">{{ $message }}</div>
-        </div>
-    @endif
     <!-- Multilingual -->
     <div class="card">
+
         <h5 class="card-header">{{ __('site.Roles') }}</h5>
+        @if (session()->has('Add'))
+            <div class="alert alert-success" role="alert">{{ session()->get('Add') }}</div>
+        @endif
+        @if (session()->has('Update'))
+            <div class="alert alert-primary" role="alert">{{ session()->get('Update') }}</div>
+        @endif
+        @if (session()->has('Delete'))
+            <div class="alert alert-danger" role="alert">{{ session()->get('Delete') }}</div>
+        @endif
+        @if (session()->has('Warning'))
+            <div class="alert alert-warning" role="alert">{{ session()->get('Warning') }}</div>
+        @endif
         <div class="card-body">
             <div class="table-responsive">
                 <table id="em_data" class="display table table-bordered" style="width:100%">
@@ -45,7 +38,10 @@
                             @if ($role->name !== 'Owner')
                                 <tr>
                                     <td>{{ ++$key }}</td>
-                                    <td>{{ $role->name }}</td>
+                                    <td>{{ $role->name }} @if ($role->name == auth()->user()->roles_name)
+                                            (your role)
+                                        @endif
+                                    </td>
 
                                     <td class="text-center">
                                         @can('Show Role')
@@ -59,18 +55,19 @@
                                             </a>
                                         @endcan
                                         @can('Delete Role')
-                                            <a href="javascript:;" class="btn btn-sm btn-danger sa-delete"
-                                                data-from-id="role-delete-{{ $role->id }}">
-                                                <i class="fa fa-trash"></i> {{ __('site.Delete') }}
-                                            </a>
+                                            @if ($role->name != auth()->user()->roles_name)
+                                                <form id="role-delete-{{ $role->id }}"
+                                                    action="{{ route('roles.destroy', $role->id) }}" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger sa-delete">
+                                                        <i class="fa fa-trash"></i> {{ __('site.Delete') }}
+                                                    </button>
+                                                </form>
+                                            @endif
                                         @endcan
 
 
-                                        <form id="role-delete-{{ $role->id }}"
-                                            action="{{ route('roles.destroy', $role->id) }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                        </form>
 
                                     </td>
 

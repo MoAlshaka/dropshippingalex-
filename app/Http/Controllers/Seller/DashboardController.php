@@ -26,18 +26,22 @@ class DashboardController extends Controller
         $approvedLeadsCount = Lead::where('seller_id', auth()->guard('seller')->id())->where('status', 'confirmed')->count();
         $deliveredLeadsCount = Order::where('seller_id', auth()->guard('seller')->id())->where('shipment_status', 'delivered')->count();
 
-
-        $revenues = Invoice::select('seller_id', DB::raw('SUM(revenue) as revenue'))
-            ->groupBy('seller_id')
-            ->orderBy('revenue', 'desc')
+        $revenues = Revenue::orderBy('revenue', 'desc')
             ->limit(10)
             ->get();
 
+
         $sellers = [];
         foreach ($revenues as $revenue) {
+
             $seller = Seller::findOrFail($revenue->seller_id);
+
+            $invoice_balance = Invoice::where('seller_id', $seller->id)->sum('revenue');
+            $revenue->revenue += $invoice_balance;
             $sellers[] = ['seller' => $seller, 'revenue' => $revenue->revenue];
         }
+
+
 
         // charts
 
@@ -156,15 +160,18 @@ class DashboardController extends Controller
     {
         // Get top sellers and their transaction amounts
         $admin = Admin::where('roles_name', 'admin')->count();
-        $revenues = Invoice::select('seller_id', DB::raw('SUM(revenue) as revenue'))
-            ->groupBy('seller_id')
-            ->orderBy('revenue', 'desc')
+        $revenues = Revenue::orderBy('revenue', 'desc')
             ->limit(10)
             ->get();
 
+
         $sellers = [];
         foreach ($revenues as $revenue) {
+
             $seller = Seller::findOrFail($revenue->seller_id);
+
+            $invoice_balance = Invoice::where('seller_id', $seller->id)->sum('revenue');
+            $revenue->revenue += $invoice_balance;
             $sellers[] = ['seller' => $seller, 'revenue' => $revenue->revenue];
         }
 

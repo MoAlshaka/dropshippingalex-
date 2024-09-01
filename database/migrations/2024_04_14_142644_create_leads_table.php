@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('leads', function (Blueprint $table) {
             $table->id();
-            $table->date('order_date')->default(DB::raw('CURRENT_DATE'));
+            $table->date('order_date');
             $table->string('store_reference');
             $table->string('store_name')->nullable();
             $table->string('customer_name');

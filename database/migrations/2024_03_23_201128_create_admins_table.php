@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email')->nullable()->unique();
             $table->string('phone')->nullable()->unique();
             $table->string('image')->nullable();
+            $table->tinyInteger('is_manager')->default(0)->nullable();
             $table->string('access_token')->nullable();
 
             $table->timestamps();

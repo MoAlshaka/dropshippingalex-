@@ -49,11 +49,21 @@ class AdminController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|min:3|max:100',
-            'username' => 'required|unique:admins',
+            'username' => 'required|unique:admins,username',
             'phone' => 'required|regex:/^[0-9]{1,13}$/',
             'password' => 'required|min:4|max:50|confirmed',
             'roles_name' => 'required',
+            'is_manager' => 'required',
         ]);
+        $exists = Admin::where('username', $request->username)->first();
+        if ($exists) {
+            return redirect()->back()->withInput()->with(['Delete' => 'Admin this username is aleardy exists']);
+        }
+
+        $exists_phone = Admin::where('phone', $request->phone)->first();
+        if ($exists_phone) {
+            return redirect()->back()->withInput()->with(['Delete' => 'Admin this phone is aleardy exists']);
+        }
 
 
         $input = $request->all();
@@ -92,15 +102,22 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $this->validate($request, [
             'name' => 'nullable|min:3|max:100',
-            'username' => 'nullable|unique:users,username,' . $id,
+            'username' => 'nullable|unique:admins,username,' . $id,
             'password' => 'nullable|min:8|max:50',
             'status' => 'nullable',
+            'manager_id' => 'nullable',
             'roles_name' => 'required',
         ]);
 
         $user = Admin::findOrFail($id);
+        $exists = Admin::where('username', $request->username)->where('id', '!=', $id)->first();
+        if ($exists) {
+            return redirect()->back()->withInput()->with(['Delete' => 'Admin this username is aleardy exists']);
+        }
+
 
         // Update user information
         $input = $request->except(['_token', '_method', 'password_confirmation']);
@@ -118,25 +135,17 @@ class AdminController extends Controller
         DB::table('model_has_roles')->where('model_id', $id)->delete();
         $user->assignRole($request->input('roles_name'));
 
-        $message = ' User updated successfully.';
-        $notification = array(
-            'message' => $message,
-            'alert-type' => 'success'
-        );
 
-        return redirect()->route('users.index')->with($notification);
+
+        return redirect()->route('admins.index')->with(['Update' => 'Admin updated successfully.']);
     }
 
     public function destroy($id)
     {
         $user = Admin::findOrFail($id);
         $user->delete();
-        $message = ' User deleted successfully.';
-        $notification = array(
-            'message' => $message,
-            'alert-type' => 'success'
-        );
 
-        return redirect()->route('users.index')->with($notification);
+
+        return redirect()->route('admins.index')->with(['Delete' => 'Admin deleted successfully.']);
     }
 }

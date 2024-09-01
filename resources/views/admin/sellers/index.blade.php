@@ -49,10 +49,9 @@
                                 </td>
                             </tr>
                         @else
-                            @php $i = 1; @endphp
                             @foreach ($sellers as $seller)
                                 <tr>
-                                    <th scope="row">{{ $i++ }}</th>
+                                    <th scope="row">{{ $seller->id }}</th>
                                     <td>{{ $seller->first_name . ' ' . $seller->last_name }}</td>
                                     <td>{{ $seller->email }}</td>
                                     <td>{{ $seller->phone }}</td>

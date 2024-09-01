@@ -308,6 +308,8 @@ return [
     'NoAgent' => 'لا يوجد وكيل حتى الآن',
     'ContactManager' => 'مرحبًا، إذا كنت بحاجة إلى مدير حساب محترف، اتصل بنا الآن',
     'QuestionsManager' => 'مرحبًا، أنا مدير حسابك المحترف، اتصل بي الآن إذا كان لديك أي أسئلة',
-
+    'ForgetPassword' => 'Forget Password',
+    'History' => 'History',
+    'RemoveManger' => 'ازاله المانجر',
 
 ];

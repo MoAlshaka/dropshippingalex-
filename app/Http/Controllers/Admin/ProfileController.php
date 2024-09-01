@@ -74,12 +74,20 @@ class ProfileController extends Controller
         $request->validate([
             'name' => 'required|max:50',
             'username' => 'required|max:50',
-            'phone' => 'required|max:12',
+            'phone' => 'required|min:11|max:12',
             'email' => 'nullable|email|max:50',
             'image' => 'nullable|mimes:png,jpg,jpeg|max:2048',
 
         ]);
         $admin = Admin::findorfail($id);
+        $exists_username = Admin::where(['username' => $request->username])->where('id', '!=', $id)->first();
+        if ($exists_username) {
+            return redirect()->back()->with(['Delete' => 'Username already exists']);
+        }
+        $exists_phone = Admin::where(['phone' => $request->phone])->where('id', '!=', $id)->first();
+        if ($exists_phone) {
+            return redirect()->back()->with(['Delete' => 'phone already exists']);
+        }
         if ($request->email) {
 
             $exists = Admin::where(['email' => $request->email])->where('id', '!=', $id)->first();

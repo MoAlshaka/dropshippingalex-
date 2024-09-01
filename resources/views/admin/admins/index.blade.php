@@ -4,23 +4,25 @@
     {{ __('site.Admins') }}
 @endsection
 @section('content')
-    @if ($message = Session::get('success'))
-        <div class="bs-toast toast toast-ex animate__animated my-2 fade animate__tada hide" role="alert"
-            aria-live="assertive" aria-atomic="true" data-bs-delay="2000">
-            <div class="toast-header">
-                <i class="ti ti-bell ti-xs me-2 text-primary"></i>
-                <div class="me-auto fw-medium">Alert</div>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">{{ $message }}</div>
-        </div>
-    @endif
+
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title mb-0">Admins</h5>
                 </div>
+                @if (session()->has('Add'))
+                    <div class="alert alert-success" role="alert">{{ session()->get('Add') }}</div>
+                @endif
+                @if (session()->has('Update'))
+                    <div class="alert alert-primary" role="alert">{{ session()->get('Update') }}</div>
+                @endif
+                @if (session()->has('Delete'))
+                    <div class="alert alert-danger" role="alert">{{ session()->get('Delete') }}</div>
+                @endif
+                @if (session()->has('Warning'))
+                    <div class="alert alert-warning" role="alert">{{ session()->get('Warning') }}</div>
+                @endif
                 <div class="card-body">
                     <div class="table-responsive">
                         <table id="em_data" class="display table table-bordered" style="width:100%">
@@ -63,14 +65,13 @@
                                                 @endcan
                                                 @can('Delete Admin')
                                                     @if (auth()->id() != $user->id)
-                                                        <a href="javascript:;" class="btn btn-sm btn-danger sa-delete"
-                                                            data-from-id="user-delete-{{ $user->id }}">
-                                                            <i class="fa fa-trash"></i> {{ __('site.Delete') }}
-                                                        </a>
                                                         <form id="user-delete-{{ $user->id }}"
                                                             action="{{ route('admins.destroy', $user->id) }}" method="post">
                                                             @csrf
                                                             @method('DELETE')
+                                                            <button type="submit" class="btn btn-sm btn-danger sa-delete">
+                                                                <i class="fa fa-trash"></i> {{ __('site.Delete') }}
+                                                            </button>
                                                         </form>
                                                     @endcan
                                                 @endif

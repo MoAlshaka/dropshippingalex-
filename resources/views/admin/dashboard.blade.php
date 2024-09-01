@@ -106,7 +106,7 @@
                                 @error('date')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
-                                @if (auth()->user()->roles_name == 'Admin')
+                                @if (auth()->user()->is_manager == 0)
                                     <div class=" mb-4">
                                         <div class="form-floating form-floating-outline">
                                             <select name="admin_id[]" id="admin_id" class="selectpicker w-100"

@@ -189,7 +189,7 @@
 
                                 </span>
                             </div>
-                            <span class=" text-xl line-clamp-1 font-bold">{{ $revenue * 1 }}</span>
+                            <span class=" text-xl line-clamp-1 font-bold">${{ $revenue }}</span>
                         </div>
                     </div>
                 </div>
@@ -443,7 +443,7 @@
                         </div>
                     </div>
                 </div>
-            @else
+                {{-- @else
                 <div class="col-xxl-3 col-xl-3 col-md-12 col-lg-12">
                     <div class="card custom-card our-team">
                         <div class="card-body">
@@ -470,7 +470,7 @@
                             <!--[if ENDBLOCK]><![endif]-->
                         </div>
                     </div>
-                </div>
+                </div> --}}
             @endif
 
             <!--[if ENDBLOCK]><![endif]-->

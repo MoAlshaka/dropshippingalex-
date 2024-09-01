@@ -63,20 +63,34 @@
             <!-- User -->
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                    <div class="avatar avatar-online">
-                        <img src="{{ asset('assets/admins/images/' . auth()->user()->image) }}" alt
-                            class="w-40 h-40 rounded-circle" />
-                    </div>
+                    @if (auth()->user()->image)
+                        <div class="avatar avatar-online">
+                            <img src="{{ asset('assets/admins/images/' . auth()->user()->image) }}" alt
+                                class="w-40 h-40 rounded-circle" />
+                        </div>
+                    @else
+                        <div class="avatar avatar-online">
+                            <img src="{{ asset('assets/img/avatars/1.png') }}" alt class="w-40 h-40 rounded-circle" />
+                        </div>
+                    @endif
+
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li>
                         <a class="dropdown-item" href="{{ route('admin.profile') }}">
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
-                                    <div class="avatar avatar-online">
-                                        <img src="{{ asset('assets/admins/images/' . auth()->user()->image) }}"
-                                            alt="" class="w-40 h-40 rounded-circle" />
-                                    </div>
+                                    @if (auth()->user()->image)
+                                        <div class="avatar avatar-online">
+                                            <img src="{{ asset('assets/admins/images/' . auth()->user()->image) }}"
+                                                alt="" class="w-40 h-40 rounded-circle" />
+                                        </div>
+                                    @else
+                                        <div class="avatar avatar-online">
+                                            <img src="{{ asset('assets/img/avatars/1.png') }}" alt=""
+                                                class="w-40 h-40 rounded-circle" />
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="flex-grow-1">
                                     <span class="fw-medium d-block">{{ auth()->user()->name }}</span>

@@ -134,6 +134,47 @@ class LeadController extends Controller
 
                 $regular = SharedProduct::where('sku', $row[10])->exists();
                 $commission = AffiliateProduct::where('sku', $row[10])->exists();
+
+                if ($regular) {
+                    $x = [];
+                    foreach ($regular->sharedcountries as $country) {
+                        array_push($x, $country);
+                        if ($country->name == $row[2]) {
+                            if ($country->pivot->stock  < $row[11]) {
+                                $errors['message'] = "product is not enought in this stock";
+                            }
+                        }
+                    }
+                    if (!in_array($row[2], $x)) {
+                        $errors['message'] = "product is not in this country ";
+                    }
+
+                    $allErrors['data'] = [
+                        'errors' => $errors,
+                        //'lock' => ['row' => $index + 1, 'cell' => $errors[0] ?? '']
+                    ];
+                    return response()->json(['errors' => $allErrors], 422);
+                }
+                if ($commission) {
+                    $x = [];
+                    foreach ($commission->affiliatecountries as $country) {
+                        array_push($x, $country);
+                        if ($country->name == $row[2]) {
+                            if ($country->pivot->stock  < $row[11]) {
+                                $errors['message'] = "product is not enought in this stock";
+                            }
+                        }
+                    }
+                    if (!in_array($row[2], $x)) {
+                        $errors['message'] = "product is not in this country ";
+                    }
+
+                    $allErrors['data'] = [
+                        'errors' => $errors,
+                        //'lock' => ['row' => $index + 1, 'cell' => $errors[0] ?? '']
+                    ];
+                    return response()->json(['errors' => $allErrors], 422);
+                }
                 $lead = Lead::create([
                     'order_date' => $row[0] ?? now()->toDateString(),
                     'store_reference' => auth()->guard('seller')->user()->id,
@@ -178,6 +219,7 @@ class LeadController extends Controller
      */
     public function create()
     {
+
         $seller = auth()->guard('seller')->user();
         $importedAffiliateProducts = AffiliateProduct::whereHas('affiliatesellers', function ($query) use ($seller) {
             $query->where('seller_id', $seller->id);

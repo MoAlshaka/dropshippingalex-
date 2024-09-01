@@ -143,6 +143,17 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="bs-validation-role">{{ __('site.IsManger') }} <span
+                                class="text-danger">*</span></label>
+                        <select name="is_manager" class="select2 form-select" id="select2_role">
+                            <option value="0" @if (old('is_manager') == '0') selected @endif>
+                                {{ __('site.No') }}</option>
+                            <option value="1" @if (old('is_manager') == '1') selected @endif>
+                                {{ __('site.Yes') }}</option>
+
+                        </select>
+                    </div>
 
                     <div class="row">
                         <div class="col-12">

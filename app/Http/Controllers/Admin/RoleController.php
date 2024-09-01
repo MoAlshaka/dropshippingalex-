@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
@@ -74,13 +75,8 @@ class RoleController extends Controller
 
         $role->syncPermissions($permissions);
 
-        $message = ' Role created successfully.';
-        $notification = array(
-            'message' => $message,
-            'alert-type' => 'success'
-        );
 
-        return redirect()->route('roles.index')->with($notification);
+        return redirect()->route('roles.index')->with(['Add' => ' Role created successfully. ']);
     }
 
     /**
@@ -147,13 +143,9 @@ class RoleController extends Controller
 
         $role->syncPermissions($permissions);
 
-        $message = ' Role updated successfully.';
-        $notification = array(
-            'message' => $message,
-            'alert-type' => 'success'
-        );
 
-        return redirect()->route('roles.index')->with($notification);
+
+        return redirect()->route('roles.index')->with(['Update' => 'Role updated successfully.']);
     }
 
     /**
@@ -164,13 +156,18 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        DB::table("roles")->where('id', $id)->delete();
-        $message = ' Role deleted successfully.';
-        $notification = array(
-            'message' => $message,
-            'alert-type' => 'success'
-        );
+        $role = DB::table("roles")->where('id', $id)->first();
+        $admins = Admin::all();
 
-        return redirect()->route('roles.index')->with($notification);
+
+        foreach ($admins as $admin) {
+            if ($admin->roles_name == $role->name) {
+                return redirect()->back()->with(['Warning' => 'This Role can not deleted beacuse it is used.']);
+            }
+        }
+
+
+        DB::table("roles")->where('id', $id)->delete();
+        return redirect()->route('roles.index')->with(['Delete' => ' Role deleted successfully.']);
     }
 }

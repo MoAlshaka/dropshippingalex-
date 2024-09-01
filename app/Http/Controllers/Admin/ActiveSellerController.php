@@ -61,4 +61,18 @@ class ActiveSellerController extends Controller
         ]);
         return redirect()->back()->with(['Add' => 'Add Account Manager successfully']);
     }
+    public function remove_manager(Request $request, $id)
+    {
+
+
+        $seller = Seller::findorfail($id);
+
+        if ($seller->admin_id == null) {
+            return redirect()->back()->with(['Delete' => 'This seller do not have Account Manager ']);
+        }
+        $seller->update([
+            'admin_id' => null
+        ]);
+        return redirect()->back()->with(['Add' => 'Remove Account Manager successfully']);
+    }
 }

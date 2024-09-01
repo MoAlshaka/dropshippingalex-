@@ -22,6 +22,7 @@ class Admin extends Authenticatable
         'email',
         'phone',
         'roles_name',
+        'is_manager',
     ];
 
     public function offers()

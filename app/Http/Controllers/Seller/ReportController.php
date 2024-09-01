@@ -38,8 +38,8 @@ class ReportController extends Controller
         $delivered_rate = 0;
 
         $under_process = Order::whereIn('lead_id', $orders_ids)->where('seller_id', auth()->guard('seller')->user()->id)->where('shipment_status', 'pending')->count();
-        $confirmed = Lead::whereIn('id', $lead_ids)->where('seller_id', auth()->guard('seller')->user()->id)->where('status', 'confirmed')->count();
         $canceled = Order::whereIn('lead_id', $orders_ids)->where('seller_id', auth()->guard('seller')->user()->id)->where('shipment_status', 'canceled')->count();
+        $confirmed = Lead::whereIn('id', $lead_ids)->where('seller_id', auth()->guard('seller')->user()->id)->where('status', 'confirmed')->count();
         $revenue_confirmed  = Revenue::where('seller_id', auth()->guard('seller')->id())->sum('revenue');
         $invoice_balance = Invoice::where('seller_id', auth()->guard('seller')->id())->sum('revenue');
         $balance = $invoice_balance + $revenue_confirmed;
@@ -68,11 +68,12 @@ class ReportController extends Controller
         $under_process = Order::whereIn('lead_id', $orders_ids)->where('seller_id', auth()->guard('seller')->user()->id)->whereHas('lead', function ($query) use ($country) {
             $query->where('warehouse', $country->name);
         })->where('shipment_status', 'pending')->count();
-        $confirmed = Lead::whereIn('id', $lead_ids)->where('seller_id', auth()->guard('seller')->user()->id)->where('warehouse', $country->name)->where('status', 'confirmed')->count();
-
         $canceled = Order::whereIn('lead_id', $orders_ids)->where('seller_id', auth()->guard('seller')->user()->id)->whereHas('lead', function ($query) use ($country) {
             $query->where('warehouse', $country->name);
         })->where('shipment_status', 'canceled')->count();
+        $confirmed = Lead::whereIn('id', $lead_ids)->where('seller_id', auth()->guard('seller')->user()->id)->where('warehouse', $country->name)->where('status', 'confirmed')->count();
+
+
         $revenue_confirmed  = Revenue::where('seller_id', auth()->guard('seller')->id())->sum('revenue');
         $invoice_balance = Invoice::where('seller_id', auth()->guard('seller')->id())->sum('revenue');
         $balance = $invoice_balance + $revenue_confirmed;
@@ -97,13 +98,7 @@ class ReportController extends Controller
 
     public function filter(Request $request, $id)
     {
-        $lead_ids = Lead::where('seller_id', auth()->guard('seller')->user()->id)->where('type', 'regular')->pluck('id');
 
-        $orders = Order::whereIn('lead_id', $lead_ids)->where('seller_id', auth()->guard('seller')->user()->id)->count();
-        $orders_ids = Order::whereIn('lead_id', $lead_ids)->where('seller_id', auth()->guard('seller')->user()->id)->pluck('id');
-
-        $countries = Country::all();
-        $country = 0;
 
         // Initialize variables to default values
         $under_process = 0;
@@ -122,8 +117,16 @@ class ReportController extends Controller
 
             // Ensure both start and end dates are available
             if (count($dates) === 2) {
-                $start_date = Carbon::createFromFormat('m/d/Y', $dates[0])->startOfDay();
-                $end_date = Carbon::createFromFormat('m/d/Y', $dates[1])->endOfDay();
+                $start_date = \Carbon\Carbon::createFromFormat('m/d/Y', trim($dates[0]))->format('Y-m-d');
+                $end_date = \Carbon\Carbon::createFromFormat('m/d/Y', trim($dates[1]))->format('Y-m-d');
+
+                $lead_ids = Lead::where(['seller_id' => auth()->guard('seller')->user()->id, 'type' => 'regular'])->whereBetween('order_date', [$start_date, $end_date])->pluck('id');
+
+                $orders = Order::whereIn('lead_id', $lead_ids)->where('seller_id', auth()->guard('seller')->user()->id)->count();
+                $orders_ids = Order::whereIn('lead_id', $lead_ids)->where('seller_id', auth()->guard('seller')->user()->id)->pluck('id');
+
+                $countries = Country::all();
+                $country = 0;
                 if ($id == 0) {
 
                     $leads = Lead::whereIn('id', $lead_ids)->where('seller_id', auth()->guard('seller')->user()->id)->whereBetween('order_date', [$start_date, $end_date])->count();
@@ -158,7 +161,7 @@ class ReportController extends Controller
                 } else {
 
                     $country = Country::findOrFail($id);
-                    $leads = Lead::whereIn('id', $lead_ids)->where('seller_id', auth()->guard('seller')->user()->id)->whereBetween('created_at', [$start_date, $end_date])
+                    $leads = Lead::whereIn('id', $lead_ids)->where('seller_id', auth()->guard('seller')->user()->id)->whereBetween('order_date', [$start_date, $end_date])
                         ->where('warehouse', $country->name)->count();
                     $under_process = Order::whereIn('lead_id', $orders_ids)->where('seller_id', auth()->guard('seller')->user()->id)->whereBetween('created_at', [$start_date, $end_date])->whereHas('lead', function ($query) use ($country) {
                         $query->where('warehouse', $country->name);

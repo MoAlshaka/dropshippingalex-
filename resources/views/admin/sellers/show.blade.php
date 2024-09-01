@@ -81,7 +81,7 @@
                                     @csrf
                                     <div class="form-floating form-floating-outline">
                                         <select id="Manger" class="select2 form-select Manger" name="admin_id">
-                                            <option value="">{{ __('site.SelectManger') }}
+                                            <option value="">{{ __('site.SelectManager') }}
                                             </option>
 
                                             @foreach ($admins as $admin)
@@ -130,10 +130,17 @@
                             </button>
                         </form>
                     @endcan
-                    @can('Add Seller')
+                    @can('Add Manager')
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#smallModal">
                             + {{ __('site.Manger') }}
                         </button>
+                    @endcan
+                    @can('Remove Manager')
+                        <form action="{{ route('admin.sellers.remove.manager', $seller->id) }}" method="post">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="btn bg-danger text-white">{{ __('site.RemoveManger') }}</button>
+                        </form>
                     @endcan
                     @can('Delete Seller')
                         <form action="{{ route('admin.sellers.delete', $seller->id) }}" method="post">
@@ -142,6 +149,7 @@
                             <button type="submit" class="btn bg-danger text-white">{{ __('site.Delete') }}</button>
                         </form>
                     @endcan
+
                 </div>
             </div>
             <div class="product-disc col-span-8 lg:col-span-5 card_bg rounded-md drop-shadow p-2">

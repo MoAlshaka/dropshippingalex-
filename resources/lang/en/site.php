@@ -260,7 +260,7 @@ return [
     'Url' => 'Url',
     'Wallet' => 'Wallet',
     'Manger' => 'Manger',
-    'SelectManger' => 'Select manger',
+    'SelectManager' => 'Select manager',
     'AddManger' => 'Add manger',
     'Refunding' => 'Refunding',
     'Refunded' => 'Refunded',
@@ -290,7 +290,7 @@ return [
     'EditInvoices' => 'Edit Invoices',
     'By' => 'By',
     'Wieght' => 'Wieght',
-    'NoMangerYet' => 'No Manger Yet',
+    'NoMangerYet' => 'No Manager Yet',
     'SelectStatus' => 'Select status',
     'LeadInformation' => 'Lead Information',
     'ID' => 'ID',
@@ -311,6 +311,10 @@ return [
     'QuestionsManager' => 'Hello, I am your professional account manager, Contact me now if you have any questions',
     'ForgetPassword' => 'Forget Password',
     'History' => 'History',
+    'RemoveManger' => 'Remove Manager',
+    'IsManger' => 'Is Manager',
+    'Yes' => 'Yes',
+    'No' => 'No',
 
 
 

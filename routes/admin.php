@@ -90,6 +90,7 @@ Route::group([
     Route::get('sellers', [ActiveSellerController::class, 'index'])->name('admin.sellers.index');
     Route::get('seller/show/{id}', [ActiveSellerController::class, 'show'])->name('admin.sellers.show');
     Route::post('seller/add-manager/{id}', [ActiveSellerController::class, 'add_manager'])->name('admin.sellers.add.manager');
+    Route::match(['post', 'put', 'patch'], 'seller/remove-manager/{id}', [ActiveSellerController::class, 'remove_manager'])->name('admin.sellers.remove.manager');
     Route::match(['post', 'put', 'patch'], 'active-sellers/{id}', [ActiveSellerController::class, 'active'])->name('admin.sellers.active');
     Route::delete('sellers/delete/{id}', [ActiveSellerController::class, 'delete'])->name('admin.sellers.delete');
     //Leads
