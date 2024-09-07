@@ -158,10 +158,10 @@
             <div class="alert alert-warning" role="alert">{{ session()->get('Warning') }}</div>
         @endif
         <div class="d-flex flex-row-reverse mb-4">
-            <button class="btn rounded btn-success  col-2">
-                <a href="{{ route('leads.create') }}" class="text-white">
-                    {{ __('site.Add') }}</a>
-            </button>
+            <a href="{{ route('leads.create') }}" class="btn rounded btn-success  col-2">
+                <span class="text-white">
+                    {{ __('site.Add') }}</span>
+            </a>
         </div>
         <div class="card p-4">
             <div class="row">

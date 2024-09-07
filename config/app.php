@@ -184,6 +184,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Spatie\Html\HtmlServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        // Mattwebsite\Excel\ExcelServiceProvider::class,
 
         /*
          * Package Service Providers...

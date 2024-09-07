@@ -101,6 +101,9 @@ Route::group([
     Route::get('lead/show/{id}', [LeadController::class, 'show'])->name('admin.lead.show');
     Route::post('lead/search', [LeadController::class, 'search'])->name('admin.leads.search');
     Route::post('lead/filter', [LeadController::class, 'filter'])->name('admin.leads.filter');
+    Route::get('lead/export-leads', [LeadController::class, 'export'])->name('export.leads');
+
+
     // orders
     Route::resource('orders', OrderController::class);
     Route::post('orders/search', [OrderController::class, 'search'])->name('admin.orders.search');

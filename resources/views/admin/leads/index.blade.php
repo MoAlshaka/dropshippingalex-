@@ -65,6 +65,7 @@
                     <span class="tf-icons mdi mdi-filter-check-outline me-1"></span>
                     {{ __('site.Filter') }}
                 </button>
+                <a href="{{ route('export.leads') }}">Export</a>
                 {{--                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Toggle right offcanvas</button> --}}
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
                     aria-labelledby="offcanvasRightLabel">

@@ -10,11 +10,13 @@ use App\Models\Seller;
 use App\Models\Country;
 use App\Models\Invoice;
 use App\Models\Revenue;
+use App\Exports\LeadExport;
 use Illuminate\Http\Request;
 use App\Models\SharedProduct;
 use App\Models\AffiliateProduct;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LeadController extends Controller
 {
@@ -303,5 +305,9 @@ class LeadController extends Controller
             // return redirect()->route('admin.leads.index', compact('leads', 'countries', 'status', 'types'));
             return view('admin.leads.index', compact('leads', 'countries', 'status', 'types'));
         }
+    }
+
+    public function export(){
+        return Excel::download(new LeadExport(), 'leads.xlsx');
     }
 }
